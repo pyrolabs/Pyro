@@ -10,6 +10,7 @@ window.pyroAdmin = (function () {
 		    console.log('PyroAdmin called');
 	      this.url = argPyroData.url;
 	      this.secret = argPyroData.secret;
+
 			}
 			else {
 				var err = 'Incorrect parameters for new PyroAdmin';
@@ -23,6 +24,7 @@ window.pyroAdmin = (function () {
         createInstance: function (argPyroData) {
         	//Check for existance of
          	console.log('createInstance called');
+          
          	return new PyroAdmin(argPyroData);
         },
         addToPyro:function(argPyro) {

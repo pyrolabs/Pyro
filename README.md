@@ -7,6 +7,6 @@ Pyro is a platform that allows simple setup of standard app features with Fireba
 
 
 ##Planned Modules
-*Pyro Push - Push notifications based on firebase data events
-*Pyro Analytics - Crunch data on your firebase application
-*Pyro Integrations - Custom plugin interface
+* Pyro Push - Push notifications based on firebase data events
+* Pyro Analytics - Crunch data on your firebase application
+* Pyro Integrations - Custom plugin interface

@@ -1,14 +1,29 @@
-/* PyroAdmin - Administration/Analytics pannel for Firebase*/
+/* Pyro for Firebase*/
 window.pyro = (function (Firebase) {
   console.log('Firebase', firebase);
 	//Save previous value of pyroAdmin
 	var previousPyro = window.pyro;
 	
   function Pyro (argPyroData) {
-    console.log('New Pyro created:', arguments);
-    this.url = argPyroData.url;
-    this.secret = argPyroData.secret;
-    //use email from auth token
+    //Check for existance of Firebase
+    if(Firebase) {
+      if(argPyroData.hasOwnProperty('url') && argPyroData.hasOwnProperty('secret')){
+        console.log('New Pyro created:', arguments);
+        this.url = argPyroData.url;
+        this.secret = argPyroData.secret;
+        this.secret = argPyroData.secret;
+        //create admin account using provided email
+        if(argLoginData) {
+
+        }
+        //Login to firebase
+        this.mainRef = new Firebase(this.url);
+        this.mainRef.authWithPassword()
+      }
+      else throw Error('Incorrect Pyro Object Format');
+    }
+    else throw Error('Firebase library does not exist. Check that firebase.js is included in your index.html file.');
+
   }
    
   var pyro = {
