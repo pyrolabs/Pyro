@@ -1,0 +1,10 @@
+/* Empty. Add your own CSS if you like */
+
+.list.card {
+  max-width: 20em !important;
+  margin-right: 1em !important;
+}
+
+.item.item-input {
+border:none;padding-right:1em;
+}

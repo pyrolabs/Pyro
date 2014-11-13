@@ -3,28 +3,33 @@ module.exports = function(grunt) {
     grunt.initConfig({
       pkg: grunt.file.readJSON('package.json'),
       conf: grunt.file.readJSON('config.json'),
-      //Trying for storing variables else where,
       connect: {
         server: {
           options: {
-              port: '<%= conf.port %>',
-              // keepalive: true, keeping grunt running
-              livereload:true,
-              base: './app/',
-              open: {
-                  target: 'http://localhost:<%= conf.port %>',
-                  appName: 'Google Chrome',
-              }
+            port: '<%= conf.port %>',
+            // keepalive: true, keeping grunt running
+            livereload:true,
+            base: './app/',
+            open: {
+              target: 'http://localhost:<%= conf.port %>',
+              appName: 'Google Chrome',
+            }
           }
         }
       },
       watch: {
-          html: {
-              files: ['app/index.html'],
-              options: {
-                  livereload: true
-              }
+        html: {
+            files: ['app/**/*.html'],
+            options: {
+              livereload: true
+            }
+        },
+        js: {
+          files: ['app/**/*.js'],
+          options: {
+            livereload:true
           }
+        }
       }
     });
 

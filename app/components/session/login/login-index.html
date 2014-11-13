@@ -1,0 +1,25 @@
+<ion-view hide-back-button="true">
+  <ion-header-bar>
+    <h1 class="title">Login</h1>
+  </ion-header-bar>
+  <ion-content class="has-header">
+
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">Email</span>
+          <input type="text" ng-model="loginData.email">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Password</span>
+          <input type="password" ng-model="loginData.password">
+        </label>
+        <label class="item">
+          <button class="button button-block button-positive" ng-click="emailLogin()">Log in</button>
+        </label>
+        <label class="item">
+          <button class="button button-block button-assertive" ui-sref="signup">Sign Up</button>
+        </label>
+      </div>
+
+  </ion-content>
+</ion-view>

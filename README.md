@@ -2,6 +2,8 @@
 
 Pyro is a platform that allows simple setup of standard app features with Firebase
 
+Angularjs and Ionic Framework have been used in the creation of the front end of this library. The functionality of the library does not have dependencies other than Firebase.
+
 ##Current Modules
 *	Pyro Platform - User Administration/Analytics
 

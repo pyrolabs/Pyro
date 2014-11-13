@@ -1,0 +1,45 @@
+<ion-view hide-back-button="true" ng-init="init()" title="Dashboard">
+	<ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+	<ion-content class="has-header">
+
+  <div class="list card" style="border:1px solid #b3b3b3;">
+    <div class="list">
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">APP NAME</span>
+        <input type="text" placeholder="" style="border:1px solid #e3e3e3" ng-model="newAppData.name">
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">APP SECRET</span>
+        <input type="text" placeholder="" style="border:1px solid #e3e3e3" ng-model="newAppData.secret">
+      </label>
+      <p ng-show="error">{{error.message}}</p>
+    </div>
+
+    <button class="button button-block button-positive" style="margin-bottom:-1px;" ng-click="createApp()">
+    Create App
+    </button>
+  </div>
+
+  <div class="list card" style="border:1px solid #b3b3b3;" ng-repeat="app in list | orderBy:'createdAt':true">
+    <div class="item item-divider">
+      {{app.name}}
+    </div>
+
+    <div class="item item-body">
+      <p>
+        <i class="icon ion-android-developer"></i> {{app.name}}.firebaseIO.com
+      </p>
+      <p>
+        <i class="icon ion-android-earth"></i> {{app.name}}.firebaseapp.com
+      </p>
+    </div>
+
+    <button class="button button-block button-royal" style="margin-bottom:-1px;" ng-click="viewDetail(app.$id)">
+      Launch FireAdmin
+    </button>
+  </div>
+
+	</ion-content>
+</ion-view>

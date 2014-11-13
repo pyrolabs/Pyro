@@ -4,19 +4,29 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title>Pyro</title>
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- Libs -->
+    <script src="lib/underscore/underscore.js"></script>
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
     <!-- Firebase -->
     <script src="https://cdn.firebase.com/js/client/2.0.2/firebase.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
     <script src="dist/pyro.js"></script>
     <script src="dist/pyroadmin.js"></script>
 
+    <!-- Angular App -->
+    <script src="app.js"></script>
+    <script src="controllers.js"></script>
+    <script src="components/instance/instance-controller.js"></script>
+    <script src="components/session/login/login-controller.js"></script>
+    <script src="components/session/account/account-controller.js"></script>
     <script>
     function setup() {
       // console.log('pyroAdmin:', pyroAdmin);
-
       var dataObj = {secret:'CRTmmIeeSmeEUrxoPLSSWfTj2hewqVxSq8fTSMgQ', name: 'kyper-tech'}
       var instance = pyro.createInstance(dataObj);
-
     }
     function fireadmin() {
       var dataObj = {secret:'CRTmmIeeSmeEUrxoPLSSWfTj2hewqVxSq8fTSMgQ', name: 'kyper-tech'};
@@ -25,11 +35,7 @@
     }
     </script>
   </head>
-  <body>
-    <div style="text-align:center; margin-top:30%">
-      <input id="test1" type="button" value="Setup" onclick="setup();" />
-      <input id="test1" type="button" value="Add FireAdmin" onclick="fireadmin();" style="margin-top:50px;"/>
-
-    </div>
+  <body ng-app="pyroApp">
+    <ion-nav-view></ion-nav-view>
   </body>
 </html>
