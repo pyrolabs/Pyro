@@ -5,6 +5,14 @@ angular.module('pyroApp.controllers')
   // Form data for the login modal
  $scope.newAppData = {};
  $scope.err = {};
+ $scope.loading = true;
+ $scope.instanceList = {};
+
+ $rootScope.pyro.getInstances(function(returnedList){
+ 	console.log('getInstances successful:', returnedList);
+ 	$scope.instanceList = returnedList;
+ 	$scope.$apply();
+ });
   $scope.viewDetail = function(argId) {
     console.log('viewDetail called with: ', argId);
     console.log('loading:', $scope.list.$getRecord(argId));
@@ -18,8 +26,7 @@ angular.module('pyroApp.controllers')
   	}, function(err){
   		console.error('error creating instance:', err);
   		$scope.err = err;
-
-  	})
+  	});
   }
 })
 .controller('InstanceDetailCtrl', function($scope, $state, $rootScope, $stateParams) {
