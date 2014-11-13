@@ -6,8 +6,9 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('pyroApp', ['ionic', 'pyroApp.controllers'])
 .constant('FBURL', 'https://pyro.firebaseio.com/')
-.run(function() {
+.run(function($rootScope) {
   console.log('Angular is running');
+  $rootScope.pyro = new Pyro();
 })
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider

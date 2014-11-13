@@ -86,27 +86,3 @@
         });
       }
     };
-     // Single Checking function for all user types (should be in one folder)
-    function checkForUser(argUserData, argUsersRef, callback) {
-      console.log('CheckForUser:', argUserData);
-      argUsersRef.orderByChild('email').equalTo(argUserData.email).limitToFirst(1).once("value", function(querySnapshot) {
-        if(querySnapshot.val() != null) {
-          // Update existing moderator
-          console.log('Usersnap:', querySnapshot.val());
-          querySnapshot.set({lastLogin: Date.now()}, function(){
-            callback(querySnapshot.val());
-          });
-        } else {
-          // New Moderator
-          var userObj = {email: argUserData.email, createdAt: Date.now(), role:10}
-          var newUserRef = argUsersRef.push(userObj);
-          console.log('New user pushed successfully');
-          newUserRef.setPriority(argUserData.email, function(){
-            console.log('email priority set');
-            newUserRef.once('value', function(querySnapshot){
-              callback(querySnapshot.val());
-            });
-          });
-        }
-      });
-    }

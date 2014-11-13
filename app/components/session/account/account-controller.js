@@ -1,9 +1,17 @@
 
 angular.module('pyroApp.controllers')
-.controller('SignupCtrl', function($scope, $state) {
+.controller('SignupCtrl', function($rootScope, $scope, $state) {
 	$scope.signupData = {};
+  $scope.err = '';
   $scope.createAccount = function() {
-  	console.log('createAccount called')
+  	console.log('createAccount called');
+    $rootScope.pyro.signup($scope.signupData, function(userAccount) {
+      console.log('signup + login successful:', userAccount);
+      $state.go('home');
+    }, function(err) {
+      console.warn('pyroSignup returned:', err);
+      $scope.err = err;
+    })
   };
 
     function assertValidAccountProps() {
