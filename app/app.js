@@ -35,41 +35,42 @@ angular.module('pyroApp', ['ui.router', 'pyroApp.controllers'])
       abstract:true,
       views: {
         'main':{
-          templateUrl: "templates/side-menu.html",
-          controller: 'InstanceListCtrl'
+          template:'<ui-view></ui-view>'
         },
         'navbar': {
           templateUrl:"templates/nav-bar.html"
         }
       }
     })
-    .state('home', {
+    .state('sideNav', {
       parent:'nav',
-      url: "/home",
+      templateUrl: "templates/side-menu.html",
+      abstract:true
+    })
+    .state('sidemenu', {
+      parent:'sideNav',
+      abstract:true,
       views: {
-        'sidemenu' :{
-          templateUrl: "components/dash/dash-index.html",
-          controller: 'InstanceListCtrl'
+        'sidemenu':{
+          templateUrl:'templates/sidebar.html'
         },
-        'center': {
-          templateUrl:"components/dash/dash-home.html",
-          controller: 'InstanceListCtrl'
+        'center':{
+          template:'<ui-view></ui-view>'
         }
       }
     })
-    // .state('home', {
-    //   parent:'menu',
-    //   url: "/home",
-    //   views: {
-    //     'menuContent' :{
-    //       templateUrl: "components/instance/instance-list.html",
-    //       controller: 'InstanceListCtrl'
-    //     },
-    //     'sideMenu': {
-    //       templateUrl:"components/instance/instance-list-sidemenu.html"
-    //     }
-    //   }
-    // })
+    .state('home', {
+      parent:'nav',
+      url: "/home",
+      templateUrl:"components/instance/instance-list.html",
+      controller: 'InstanceListCtrl'
+    })
+    .state('dash', {
+      parent:'sidemenu',
+      url: "/dash",
+      templateUrl:"components/dash/dash-home.html",
+      controller: 'InstanceListCtrl'
+    })
     .state('instance-list', {
       parent:'menu',
       url: "/apps",
