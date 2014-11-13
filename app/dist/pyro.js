@@ -27,13 +27,13 @@
           instanceList.child(argPyro.name).set(instanceData);
           argPyro.pyroRef = instanceList.child(argPyro.name);
           if(callback) {
-            callback();
+            callback(argPyro.pyroRef);
           }
         }
         else {
           console.log('app already exists');
           if(callback) {
-            callback();
+            callback(instanceList.child(argPyro.name));
           }
         }
       });
@@ -52,12 +52,13 @@
           this.secret = argPyroData.secret;
           this.url = "https://"+ this.name +".firebaseio.com";
           this.mainRef = new Firebase(this.url);
-          checkForInstance(this);
+          checkForInstance(this, function(returnedInstance){
+            successCb(returnedInstance);
+          });
           //for incorrect scope
           if (window === this) {
               return new _(id);
            }
-          return this
           //request admin auth token
           
           // var xmlhttp = new XMLHttpRequest();
@@ -74,6 +75,13 @@
           //Login to firebase
           
           // this.mainRef.authWithPassword()
+        } else {
+          console.log('Missing app info.');
+          if(argPyroData.hasOwnProperty('name')) {
+            errorCb({message:'Please enter the name of your firebase instance.'});
+          } else {
+            errorCb({message:'Please enter your firebase secret'})
+          }
         }
       },
       login: function(argLoginData, successCb, errorCb) {

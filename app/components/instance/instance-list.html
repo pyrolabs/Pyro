@@ -8,10 +8,12 @@
         <span class="input-label">APP SECRET</span>
         <input type="text" placeholder="" style="border:1px solid #e3e3e3" ng-model="newAppData.secret">
       </label>
-      <p ng-show="error">{{error.message}}</p>
+      <label class="item item-input item-stacked-label">
+        <p ng-show="err" style="color:red;">{{err.message}}</p>
+      </label>
     </div>
 
-    <button class="button button-block button-positive" style="margin-bottom:-1px;" ng-click="createApp()">
+    <button class="button button-block button-positive" style="margin-bottom:-1px;" ng-click="createInstance()">
     Create App
     </button>
   </div>

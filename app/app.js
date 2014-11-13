@@ -60,13 +60,13 @@ angular.module('pyroApp', ['ui.router', 'pyroApp.controllers'])
     })
     .state('home', {
       parent:'nav',
-      url: "/home",
+      url: "/pyro",
       templateUrl:"components/instance/instance-list.html",
       controller: 'InstanceListCtrl'
     })
     .state('dash', {
       parent:'sidemenu',
-      url: '/:appId',
+      url: '/pyro/:appId/dash',
       templateUrl:"components/instance/instance-index.html",
       controller: 'InstanceDetailCtrl'
     })
