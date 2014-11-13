@@ -103,6 +103,18 @@
           } 
         });
       },
+      loadInstance: function(argInstanceData, successCb, errorCb) {
+        console.log('loadInstance:', argInstanceData);
+        this.currentInstance = {name:argInstanceData.name}
+        checkForInstance(this, function(instanceRef){
+          successCb(instanceRef.val());
+        }, errorCb);
+      },
+      instanceRef: function(argInstanceData, successCb, errorCb) {
+        console.log('loadInstance:', argInstanceData);
+        this.currentInstance = {name:argInstanceData.name}
+        checkForInstance(this, successCb, errorCb);
+      },
       addAdminModule: function() {
         console.log('add admin module called', this);
         if(PyroAdmin) {
@@ -192,28 +204,40 @@
       }
       
     }
+    function createNewInstance(argPyro, successCb, errorCb) {
+      checkForInstance(argPyro, function(returnedInstance){
+        if(returnedInstance == null) {
+          instanceList.child(argPyro.name).set(instanceData, function(){
+            argPyro.pyroRef = instanceList.child(argPyro.name);
+            if(successCb) {
+              successCb(argPyro.pyroRef);
+            }
+          });
+        } else {
+          var err = {message:'App already exists'}
+          console.warn(err.message);
+          errorCb(err);
+        }
+      });
+    }
+
     function checkForInstance(argPyro, callback) {
       // [TODO] Add user's id to author object?
-      var instanceData = {name:argPyro.name, secret: argPyro.secret, url: argPyro.url, author:argPyro.getAuth().password.email};
-      var pyroBase = argPyro.pyroRef;
       //check for app existance on pyroBase
-      var instanceList = pyroBase.child("instances");
-      instanceList.orderByChild("name").equalTo(argPyro.name).once('value', function(usersSnap){
+      console.log('checkForInstance:', argPyro);
+      var instanceList = argPyro.pyroRef.child("instances");
+      var instanceName = argPyro.currentInstance.name;
+      instanceList.orderByChild("name").equalTo(instanceName).once('value', function(usersSnap){
         console.log('usersSnap:', usersSnap);
         if(usersSnap.val() == null) {
           console.log('App does not already exist');
           // Add instance to instance list under the instance name
-          instanceList.child(argPyro.name).set(instanceData, function(){
-            argPyro.pyroRef = instanceList.child(argPyro.name);
-            if(callback) {
-              callback(argPyro.pyroRef);
-            }
-          });
+          callback(null);
         }
         else {
           console.log('app already exists');
           if(callback) {
-            callback(instanceList.child(argPyro.name));
+            callback(usersSnap.child(instanceName));
           }
         }
       });
