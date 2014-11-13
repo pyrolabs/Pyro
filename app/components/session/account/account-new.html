@@ -1,33 +1,103 @@
-<ion-view>
-  <ion-header-bar>
-    <h1 class="title">New Account</h1>
-  </ion-header-bar>
-  <ion-content>
+<br />
+<br />
+<br />
+<div class="container eternity-form dark">
+ <div class="registration-form-section">
+      <form>
+          <div class="section-title reg-header animated fadeInDown">
+              <h3>Get your Account Here </h3>
 
-    <form ng-submit="createAccount()">
-      <div class="list">
-        <label class="item" style="text-align:center;">
-          <span style="color:red;">{{err.message}}</span>
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Email</span>
-          <input type="text" ng-model="signupData.email">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Password</span>
-          <input type="password" ng-model="signupData.password">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Confirm</span>
-          <input type="password" ng-model="signupData.confirm">
-        </label>
-        <label class="item">
-          <button class="button button-block button-positive" type="submit">Create New Account</button>
-        </label>
-        <label class="item">
-          <button class="button button-block button-assertive" ui-sref="login">Login</button>
-        </label>
-      </div>
-    </form>
-  </ion-content>
-</ion-view>
+          </div>
+          <div class="clearfix">
+              <div class="col-sm-6 registration-left-section  animated fadeInUp">
+                  <div class="reg-content">
+                      <div class="textbox-wrap">
+                          <div class="input-group">
+                              <span class="input-group-addon "><i class="icon-user icon-color"></i></span>
+                              <input type="text" class="form-control " placeholder="FirstName" required="required" />
+                          </div>
+                      </div>
+                      <div class="textbox-wrap">
+                          <div class="input-group">
+                              <span class="input-group-addon "><i class="icon-user icon-color"></i></span>
+                              <input type="text" class="form-control " placeholder="LastName" required="required" />
+                          </div>
+                      </div>
+                      <div class="textbox-wrap">
+                          <div class="input-group">
+                              <span class="input-group-addon "><i class="icon-envelope icon-color"></i></span>
+                              <input type="email" class="form-control " placeholder="Email Id" required="required" />
+                          </div>
+                      </div>
+
+
+                  </div>
+              </div>
+              <div class="col-sm-6 registration-right-section animated fadeInUp" >
+                  <div class="reg-content">
+                      <div class="textbox-wrap">
+                          <div class="input-group">
+                              <span class="input-group-addon "><i class="icon-user icon-color"></i></span>
+                              <input type="text" class="form-control " placeholder="Email" required="required" ng-model="signupData.email"/>
+                          </div>
+                      </div>
+                      <div class="textbox-wrap">
+                          <div class="input-group">
+                              <span class="input-group-addon "><i class="icon-key icon-color"></i></span>
+                              <input type="password" class="form-control " placeholder="Password" required="required" ng-model="signupData.password"/>
+                          </div>
+                      </div>
+                      <div class="textbox-wrap">
+                          <div class="input-group">
+                              <span class="input-group-addon "><i class="icon-key icon-color"></i></span>
+                              <input type="password" class="form-control " placeholder="Confirm-Password" required="required" ng-model="signupData.confirm"/>
+                          </div>
+                      </div>
+
+
+                  </div>
+              </div>
+          </div>
+          <div class="registration-form-action clearfix animated fadeInUp">
+              <a ui-sref="login" class="btn btn-success pull-left blue-btn ">
+                  <i class="icon-chevron-left"></i>&nbsp; &nbsp;Back To Login  
+              </a>
+              <button type="submit" class="btn btn-success pull-right green-btn " ng-click="signup()">Register Now &nbsp; <i class="icon-chevron-right"></i></button>
+
+          </div>
+      </form>
+  </div>
+</div>
+<br />
+<br />
+<br />
+
+
+
+    <!-- For Initializing Checkbox And Focus Event For Textbox -->
+    <script type="text/javascript">
+        $(function () {
+
+            //Custom Checkbox For Light Theme
+            $("input").iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                increaseArea: '20%'
+            });
+
+
+            //Custom Checkbox For Dark Theme
+            $(".dark input").iCheck({
+                checkboxClass: 'icheckbox_polaris',
+                increaseArea: '20%'
+            });
+
+
+            //TextBox Focus Event
+            $(".form-control").focus(function () {
+                $(this).closest(".textbox-wrap").addClass("focused");
+            }).blur(function () {
+                $(this).closest(".textbox-wrap").removeClass("focused");
+            });
+
+        });
+    </script>

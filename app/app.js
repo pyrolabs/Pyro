@@ -29,7 +29,6 @@ angular.module('pyroApp', ['ui.router', 'pyroApp.controllers'])
           controller: 'SignupCtrl'
         }
       }
-      
     })
     .state('nav', {
       abstract:true,
@@ -67,48 +66,15 @@ angular.module('pyroApp', ['ui.router', 'pyroApp.controllers'])
     })
     .state('dash', {
       parent:'sidemenu',
-      url: "/dash",
-      templateUrl:"components/dash/dash-home.html",
-      controller: 'InstanceListCtrl'
-    })
-    .state('instance-list', {
-      parent:'menu',
-      url: "/apps",
-      views: {
-        'menuContent' :{
-          templateUrl: "components/instance/instance-list.html",
-          controller: 'InstanceListCtrl'
-        },
-        'sideMenu': {
-          templateUrl:"components/instance/instance-list-sidemenu.html"
-        }
-      }
-    })
-    .state('instance-detail', {
-      parent:'menu',
-      url: "/apps/:appId",
-      views: {
-        'menuContent' :{
-          templateUrl: "components/instance/instance-detail.html",
-          controller: 'InstanceDetailCtrl'
-        },
-        'sideMenu': {
-          templateUrl:"components/instance/instance-detail-sidemenu.html"
-        }
-      }
+      url: '/:appId',
+      templateUrl:"components/instance/instance-index.html",
+      controller: 'InstanceDetailCtrl'
     })
     .state('account', {
-      parent:'menu',
+      parent:'nav',
       url: "/account",
-      views: {
-        'menuContent' :{
-          templateUrl: "components/session/account/account-index.html",
-          controller: 'AccountCtrl'
-        },
-        'sideMenu': {
-          templateUrl:"components/instance/instance-list-sidemenu.html"
-        }
-      }
+      templateUrl: "components/session/account/account-index.html",
+      controller: 'AccountCtrl'
     })
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');

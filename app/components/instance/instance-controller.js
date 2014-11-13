@@ -7,7 +7,7 @@ angular.module('pyroApp.controllers')
   $scope.viewDetail = function(argId) {
     console.log('viewDetail called with: ', argId);
     console.log('loading:', $scope.list.$getRecord(argId));
-    $state.go('app-detail', {appId:argId});
+    $state.go('dash', {appId:argId});
   }
 })
 .controller('InstanceDetailCtrl', function($scope, $state, $rootScope, $stateParams) {

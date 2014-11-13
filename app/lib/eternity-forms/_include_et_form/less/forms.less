@@ -1,0 +1,462 @@
+﻿@import "mixin.less";
+@import "variables.less";
+
+.eternity-form-modal {
+    background-color: rgb(112, 125, 133);
+}
+
+.eternity-form {
+    font-family: @fontFamily;
+    font-weight: @fontWeight;
+    color: @fgColor;
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: @fontFamily;
+        font-weight: @fontWeight;
+    }
+
+
+    .login-form-section, .forgot-password-section {
+        width: 100%;
+        max-width: 360px;
+        margin: 0 auto;
+    }
+
+
+
+    .login-content, .forgot-password-section, .reg-content {
+        background-color: white;
+        .multiBoxShadow(0 0 3px rgba(0,0,0,.3));
+    }
+
+    .section-title {
+        padding: 10px 20px;
+        background-color: white;
+
+        h3 {
+            color: @peter-river;
+        }
+    }
+
+
+    .textbox-wrap {
+        padding: 20px 20px 20px 15px;
+        border-left: 5px solid transparent;
+        .transition-nArgs(border-left-color .5s,box-shadow .5s,background-color .5s);
+
+
+
+        .input-group {
+            border: 1px solid @textBoxBorder;
+            background-color: @white;
+
+            .input-group-addon, input, .form-control {
+                background-color: transparent;
+                border: none;
+            }
+
+            input, .form-control {
+                &, &:focus {
+                    box-shadow: none;
+                    outline: none;
+                }
+            }
+
+            [class^="icon-"], [class*=" icon-"], i {
+                color: @gray-25;
+            }
+        }
+
+        &.focused {
+            border-left-color: @textBoxWrapBorder;
+            background-color: @textBoxWrapBg;
+            .multiBoxShadow(~"inset 0 0 3px rgba(0,0,0,.1)");
+        }
+    }
+
+
+    .green-btn, .green-btn:hover, .blue-btn {
+        background-color: @emerald;
+        border: none;
+    }
+
+        .blue-btn, .blue-btn:hover {
+            background-color: @belize-hole;
+        }
+
+    .login-form-action {
+        padding: 15px 20px 30px 20px;
+    }
+
+    input[type="checkbox"] {
+        width: 30px;
+    }
+
+    .blue {
+        color: @peter-river;
+    }
+
+    .green {
+        color: @emerald;
+    }
+
+    .login-form-links {
+        padding: 20px;
+        margin-top: 5px;
+        .multiBoxShadow(0 0 4px rgba(0,0,0,.4));
+        background-color: white;
+
+        a {
+            &.blue:hover, a.blue:focus {
+                color: @peter-river;
+                text-decoration: underline;
+            }
+
+            &.green:hover, a.green:focus {
+                color: @emerald;
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .forget-form-action {
+        padding: 20px;
+    }
+
+    .registration-form-section {
+        max-width: 620px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .reg-header {
+        .multiBoxShadow(0 0 3px rgba(0,0,0,.3));
+    }
+
+    .registration-left-section {
+        padding-left: 0;
+        padding-right: 2.5px;
+    }
+
+    .registration-right-section {
+        padding-left: 2.5px;
+        padding-right: 0;
+    }
+
+    .reg-content {
+        margin-top: 5px;
+        padding: 20px 0;
+    }
+
+    .registration-form-action {
+        margin-top: 5px;
+        padding: 20px;
+        .multiBoxShadow(0 0 3px rgba(0,0,0,.3));
+        background-color: white;
+    }
+
+
+
+    .custom-checkbox {
+        float: left;
+    }
+
+
+
+    .checkbox {
+        display: inline-block;
+        // display: table;
+        padding-left: 1px;
+        margin-top: 7px;
+        margin-bottom: 0;
+    }
+
+
+
+    .checkbox-text {
+        line-height: 24px;
+        padding-left:5px;
+    }
+
+    .form-control:-moz-placeholder {
+        font-weight: @fontWeight;
+    }
+
+    .form-control::-moz-placeholder {
+        font-weight: @fontWeight;
+    }
+
+    .form-control:-ms-input-placeholder {
+        font-weight: @fontWeight;
+    }
+
+    .form-control::-webkit-input-placeholder {
+        font-weight: @fontWeight;
+    }
+
+    &.dark, .dark {
+        color: @white;
+
+        .checkbox {
+            margin-left: -7px;
+
+            .checkbox-text {
+                line-height: 28px;
+            }
+        }
+        
+        .form-control{
+            color:white;
+        }
+
+        .form-control:-moz-placeholder {
+            color: @gray-50;
+        }
+
+        .form-control::-moz-placeholder {
+            color: @gray-50;
+        }
+
+        .form-control:-ms-input-placeholder {
+            color: @gray-50;
+        }
+
+        .form-control::-webkit-input-placeholder {
+            color: @gray-50;
+        }
+
+        .login-content, .forgot-password-section, .reg-content {
+            background-color: @darkbgColor;
+        }
+
+        .section-title {
+            background-color: @darkbgColor;
+
+            h3 {
+                color: @darktitle;
+            }
+        }
+
+        .textbox-wrap {
+            .input-group {
+                border: 1px solid rgb(70, 70, 70);
+                background-color: rgb(56, 56, 56);
+
+
+                [class^="icon-"], [class*=" icon-"], i {
+                    color: @gray-25;
+                }
+            }
+
+            &.focused {
+                border-left: 5px solid @textBoxWrapBorder;
+                background-color: darken(@darkbgColor,4.2);
+                .multiBoxShadow(~"inset 0 0 3px rgba(0,0,0,.1)");
+            }
+        }
+
+        .icon-color {
+            color: white;
+        }
+
+        .input-group-addon1 {
+            background-color: darken(@darkbgColor,10);
+            border: none;
+        }
+
+        .addon {
+            border: 1px solid rgb(197, 197, 197);
+            background-color: darken(@darkbgColor,5);
+        }
+
+        .green-btn, .green-btn:hover, .blue-btn {
+            background-color: @darkbtn;
+            color: @darkbgColor;
+        }
+
+            .blue-btn, .blue-btn:hover {
+                background-color: @darkbtn;
+                color: @darkbgColor;
+            }
+
+        .blue {
+            color: @shine;
+        }
+
+        .green {
+            color: @peter-river;
+        }
+
+        .login-form-links {
+            background-color: @darkbgColor;
+
+            a {
+                &.blue:hover, a.blue:focus {
+                    color: @shine;
+                }
+
+                &.green:hover, a.green:focus {
+                    color: @peter-river;
+                }
+            }
+        }
+
+        .registration-form-action {
+            background-color: @darkbgColor;
+        }
+
+        .checkbox {
+            margin-top: 4px;
+        }
+    }
+
+
+
+    .radio label, .checkbox label {
+        font-weight: @fontWeight;
+    }
+    /* iCheck plugin Polaris skin
+----------------------------------- */
+    .icheckbox_polaris,
+    .iradio_polaris {
+        display: block;
+        margin: 0;
+        padding: 0;
+        width: 29px;
+        height: 29px;
+        background: url(../img/polaris.png) no-repeat;
+        border: none;
+        cursor: pointer;
+    }
+
+    .icheckbox_polaris {
+        background-position: 0 0;
+    }
+
+        .icheckbox_polaris.hover {
+            background-position: -31px 0;
+        }
+
+        .icheckbox_polaris.checked {
+            background-position: -62px 0;
+        }
+
+        .icheckbox_polaris.disabled {
+            background-position: -93px 0;
+            cursor: default;
+        }
+
+        .icheckbox_polaris.checked.disabled {
+            background-position: -124px 0;
+        }
+
+    .iradio_polaris {
+        background-position: -155px 0;
+    }
+
+        .iradio_polaris.hover {
+            background-position: -186px 0;
+        }
+
+        .iradio_polaris.checked {
+            background-position: -217px 0;
+        }
+
+        .iradio_polaris.disabled {
+            background-position: -248px 0;
+            cursor: default;
+        }
+
+        .iradio_polaris.checked.disabled {
+            background-position: -279px 0;
+        }
+    /* Retina support */
+    @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (-moz-min-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 3/2), only screen and (min-device-pixel-ratio: 1.5) {
+        .icheckbox_polaris,
+        .iradio_polaris {
+            background-image: url(../img/polaris@2x.png);
+            -webkit-background-size: 310px 31px;
+            background-size: 310px 31px;
+        }
+    }
+    /* iCheck plugin Square skin, blue
+----------------------------------- */
+    .icheckbox_square-blue,
+    .iradio_square-blue {
+        display: block;
+        margin: 0;
+        padding: 0;
+        width: 22px;
+        height: 22px;
+        background: url(../img/blue.png) no-repeat;
+        border: none;
+        cursor: pointer;
+    }
+
+    .icheckbox_square-blue {
+        background-position: 0 0;
+    }
+
+        .icheckbox_square-blue.hover {
+            background-position: -24px 0;
+        }
+
+        .icheckbox_square-blue.checked {
+            background-position: -48px 0;
+        }
+
+        .icheckbox_square-blue.disabled {
+            background-position: -72px 0;
+            cursor: default;
+        }
+
+        .icheckbox_square-blue.checked.disabled {
+            background-position: -96px 0;
+        }
+
+    .iradio_square-blue {
+        background-position: -120px 0;
+    }
+
+        .iradio_square-blue.hover {
+            background-position: -144px 0;
+        }
+
+        .iradio_square-blue.checked {
+            background-position: -168px 0;
+        }
+
+        .iradio_square-blue.disabled {
+            background-position: -192px 0;
+            cursor: default;
+        }
+
+        .iradio_square-blue.checked.disabled {
+            background-position: -216px 0;
+        }
+    /* Retina support */
+    @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (-moz-min-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 3/2), only screen and (min-device-pixel-ratio: 1.5) {
+        .icheckbox_square-blue,
+        .iradio_square-blue {
+            background-image: url(../img/blue@2x.png);
+            -webkit-background-size: 240px 24px;
+            background-size: 240px 24px;
+        }
+    }
+
+    @media (max-width:767px) {
+        .registration-left-section {
+            padding-right: 0px;
+        }
+
+        .registration-right-section {
+            padding-left: 0px;
+        }
+    }
+
+    @media (max-width:380px) {
+        .blue-btn, .green-btn {
+            font-size: .8em;
+        }
+    }
+}

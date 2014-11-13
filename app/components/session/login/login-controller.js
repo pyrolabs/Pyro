@@ -4,7 +4,7 @@ angular.module('pyroApp.controllers')
   // Form data for the login modal
   $scope.loginData = {};
   $scope.err = {};
-  $scope.emailLogin = function() {
+  $scope.login = function() {
     console.log('emailLogin called:');
     $scope.err = null;
     $rootScope.pyro.login($scope.loginData, function(userData) {
