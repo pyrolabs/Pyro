@@ -5,6 +5,7 @@
     console.log('NewPyro');
     if(typeof Firebase != 'undefined') {
       this.pyroRef = new Firebase('http://pyro.firebaseio.com');
+      this.usersRef = this.pyroRef.child('users');
       //for incorrect scope
       if (window === this) {
         return new _(id);
@@ -82,11 +83,11 @@
           if (error === null) {
             // user authenticated with Firebase
             console.log("User ID: " + authData.uid + ", Provider: " + authData.provider);
-            successCb(authData);
+            // successCb(authData);
             // Add account if it doesn't already exist
-            // checkForUser(argLoginData, currentThis.usersRef, function(userAccount){
-            //   successCb(userAccount);
-            // });
+            checkForUser(argLoginData, currentThis.usersRef, function(userAccount){
+              successCb(userAccount);
+            });
           } else {
             console.error("Error authenticating user:", error);
             // [TODO] Return object if available
@@ -109,33 +110,36 @@
                 });
               });
             } else {
-              console.error("Error creating user:", error);
-              errorCb(error);
+              console.error("Error creating user:", error.message);
+              errorCb(error.message);
             }
           });
         } else {
           //some data is missing
+          var dataError = 'Invalid Data';
           if(!argSignupData.email) {
             //email must be whats missing
-            errorCb('Please enter an email');
+            dataError ='Please enter an email';
           } else {
-            errorCb('Please enter a password');
+            dataError = 'Please enter a password';
           }
+          errorCb(dataError);
         }
       }
   };
        // Single Checking function for all user types (should be in one folder)
     function checkForUser(argUserData, argUsersRef, callback) {
       console.log('CheckForUser:', argUserData);
-      argUsersRef.orderByChild('email').equalTo(argUserData.email).limitToFirst(1).once("value", function(querySnapshot) {
+      argUsersRef.startAt(argUserData.email).endAt(argUserData.email).once("value", function(querySnapshot) {
         if(querySnapshot.val() != null) {
           // Update existing moderator
           console.log('Usersnap:', querySnapshot.val());
-          querySnapshot.set({lastLogin: Date.now()}, function(){
-            callback(querySnapshot.val());
+          var userAccount = _.find(querySnapshot.val(), function(user){
+            return user.email == argUserData.email; 
           });
+          callback(userAccount);
         } else {
-          // New Moderator
+          // User account does not exist
           var userObj = {email: argUserData.email, createdAt: Date.now(), role:10}
           var newUserRef = argUsersRef.push(userObj);
           console.log('New user pushed successfully');

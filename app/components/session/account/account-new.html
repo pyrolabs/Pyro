@@ -7,7 +7,7 @@
     <form ng-submit="createAccount()">
       <div class="list">
         <label class="item" style="text-align:center;">
-          <span style="color:red;">{{err}}</span>
+          <span style="color:red;">{{err.message}}</span>
         </label>
         <label class="item item-input">
           <span class="input-label">Email</span>
@@ -23,6 +23,9 @@
         </label>
         <label class="item">
           <button class="button button-block button-positive" type="submit">Create New Account</button>
+        </label>
+        <label class="item">
+          <button class="button button-block button-assertive" ui-sref="login">Login</button>
         </label>
       </div>
     </form>

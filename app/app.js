@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('pyroApp', ['ionic', 'pyroApp.controllers'])
+angular.module('pyroApp', ['ui.router', 'pyroApp.controllers'])
 .constant('FBURL', 'https://pyro.firebaseio.com/')
 .run(function($rootScope) {
   console.log('Angular is running');
@@ -14,19 +14,62 @@ angular.module('pyroApp', ['ionic', 'pyroApp.controllers'])
   $stateProvider
     .state('login', {
       url: '/login',
-      templateUrl: 'components/session/login/login-index.html',
-      controller: 'LoginCtrl'
+      views:{
+        'main':{
+          templateUrl: 'components/session/login/login-index.html',
+          controller: 'LoginCtrl'
+        }
+      }
     })
     .state('signup', {
       url: '/signup',
-      templateUrl: 'components/session/account/account-new.html',
-      controller: 'SignupCtrl'
+      views:{
+        'main':{
+          templateUrl: 'components/session/account/account-new.html',
+          controller: 'SignupCtrl'
+        }
+      }
+      
     })
-    .state('menu', {
-      url: "/app",
-      abstract: true,
-      templateUrl: "templates/menu.html"
+    .state('nav', {
+      abstract:true,
+      views: {
+        'main':{
+          templateUrl: "templates/side-menu.html",
+          controller: 'InstanceListCtrl'
+        },
+        'navbar': {
+          templateUrl:"templates/nav-bar.html"
+        }
+      }
     })
+    .state('home', {
+      parent:'nav',
+      url: "/home",
+      views: {
+        'sidemenu' :{
+          templateUrl: "components/dash/dash-index.html",
+          controller: 'InstanceListCtrl'
+        },
+        'center': {
+          templateUrl:"components/dash/dash-home.html",
+          controller: 'InstanceListCtrl'
+        }
+      }
+    })
+    // .state('home', {
+    //   parent:'menu',
+    //   url: "/home",
+    //   views: {
+    //     'menuContent' :{
+    //       templateUrl: "components/instance/instance-list.html",
+    //       controller: 'InstanceListCtrl'
+    //     },
+    //     'sideMenu': {
+    //       templateUrl:"components/instance/instance-list-sidemenu.html"
+    //     }
+    //   }
+    // })
     .state('instance-list', {
       parent:'menu',
       url: "/apps",

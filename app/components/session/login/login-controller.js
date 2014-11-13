@@ -3,7 +3,7 @@ angular.module('pyroApp.controllers')
   console.log('LoginCtrl')
   // Form data for the login modal
   $scope.loginData = {};
-
+  $scope.err = {};
   $scope.emailLogin = function() {
     console.log('emailLogin called:');
     $scope.err = null;
@@ -11,7 +11,7 @@ angular.module('pyroApp.controllers')
       console.log('login successful:', userData);
       $state.go('home');
     }, function(err) {
-      $scope.err = err;
+      $scope.err.message = err;
     });
   };
 })

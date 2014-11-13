@@ -1,8 +1,9 @@
 
 angular.module('pyroApp.controllers')
 .controller('SignupCtrl', function($rootScope, $scope, $state) {
+  console.log('SignupCtrl');
 	$scope.signupData = {};
-  $scope.err = '';
+  $scope.err = {};
   $scope.createAccount = function() {
   	console.log('createAccount called');
     $rootScope.pyro.signup($scope.signupData, function(userAccount) {
@@ -10,8 +11,13 @@ angular.module('pyroApp.controllers')
       $state.go('home');
     }, function(err) {
       console.warn('pyroSignup returned:', err);
-      $scope.err = err;
-    })
+      $scope.err.message = err;
+      // [TODO] Understand why fb error needs apply
+      if(!$scope.$$phase) {
+        //$digest is not in progress
+        $scope.$apply();
+      }
+    });
   };
 
     function assertValidAccountProps() {

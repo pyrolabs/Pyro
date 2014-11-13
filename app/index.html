@@ -4,15 +4,36 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title>Pyro</title>
+
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+
+    <!-- Detail Admin Theme -->
+    <!-- bootstrap -->
+    <link href="lib/detail-admin/css/bootstrap/bootstrap.css" rel="stylesheet" />
+    <link href="lib/detail-admin/css/bootstrap/bootstrap-overrides.css" type="text/css" rel="stylesheet" />
+    <!-- libraries -->
+    <link href="lib/detail-admin/css/lib/jquery-ui-1.10.2.custom.css" rel="stylesheet" type="text/css" />
+    <link href="lib/detail-admin/css/lib/font-awesome.css" type="text/css" rel="stylesheet" />
+    <!-- global styles -->
+    <link rel="stylesheet" type="text/css" href="lib/detail-admin/css/compiled/layout.css">
+    <link rel="stylesheet" type="text/css" href="lib/detail-admin/css/compiled/elements.css">
+    <link rel="stylesheet" type="text/css" href="lib/detail-admin/css/compiled/icons.css">
+    <!-- this page specific styles -->
+    <link rel="stylesheet" href="lib/detail-admin/css/compiled/index.css" type="text/css" media="screen" />
+
+
+    <!-- Custom CSS -->
     <link href="css/style.css" rel="stylesheet">
 
     <!-- Libs -->
     <script src="lib/underscore/underscore.js"></script>
     <!-- ionic/angularjs js -->
-    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular.js"></script>
     <!-- Firebase -->
     <script src="https://cdn.firebase.com/js/client/2.0.2/firebase.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.11/angular-ui-router.js"></script>
+
+    
     <script src="dist/pyro.js"></script>
     <script src="dist/pyroadmin.js"></script>
 
@@ -22,20 +43,14 @@
     <script src="components/instance/instance-controller.js"></script>
     <script src="components/session/login/login-controller.js"></script>
     <script src="components/session/account/account-controller.js"></script>
-    <script>
-    function setup() {
-      // console.log('pyroAdmin:', pyroAdmin);
-      var dataObj = {secret:'CRTmmIeeSmeEUrxoPLSSWfTj2hewqVxSq8fTSMgQ', name: 'kyper-tech'}
-      var instance = pyro.createInstance(dataObj);
-    }
-    function fireadmin() {
-      var dataObj = {secret:'CRTmmIeeSmeEUrxoPLSSWfTj2hewqVxSq8fTSMgQ', name: 'kyper-tech'};
-      var pyro = new Pyro(dataObj);
-      pyro.addAdminModule();
-    }
-    </script>
   </head>
   <body ng-app="pyroApp">
-    <ion-nav-view></ion-nav-view>
+     <!-- navbar -->
+    <div ui-view="navbar"></div>
+
+
+  <!-- main container -->
+    <div ui-view="main">
+    </div>
   </body>
 </html>

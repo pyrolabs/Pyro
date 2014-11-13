@@ -1,6 +1,6 @@
 angular.module('pyroApp.controllers')
 
-.controller('InstanceListCtrl', function($scope, $state, $rootScope, $ionicLoading) {
+.controller('InstanceListCtrl', function($scope, $state, $rootScope) {
   console.log('InstanceListCtrl');
   // Form data for the login modal
 
@@ -10,6 +10,6 @@ angular.module('pyroApp.controllers')
     $state.go('app-detail', {appId:argId});
   }
 })
-.controller('InstanceDetailCtrl', function($scope, $state, $rootScope, $stateParams, $ionicLoading) {
+.controller('InstanceDetailCtrl', function($scope, $state, $rootScope, $stateParams) {
   console.log('AppDetailCtrl');
 })
