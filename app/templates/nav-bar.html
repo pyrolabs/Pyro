@@ -11,20 +11,18 @@
         <ul class="nav navbar-nav pull-right hidden-xs">
           
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle hidden-xs hidden-sm" data-toggle="dropdown">
+                <a class="dropdown-toggle hidden-xs hidden-sm" data-toggle="dropdown">
                     Your account
                     <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="personal-info.html">Personal info</a></li>
-                    <li><a href="#">Account settings</a></li>
-                    <li><a href="#">Billing</a></li>
-                    <li><a href="#">Export your data</a></li>
-                    <li><a href="#">Send feedback</a></li>
+                    <li><a ui-sref="account">Account</a></li>
+                    <li><a>Billing</a></li>
+                    <li><a ng-click="logout()">Logout</a></li>
                 </ul>
             </li>
             <li class="settings hidden-xs hidden-sm">
-                <a href="personal-info.html" role="button">
+                <a role="button">
                     <i class="icon-cog"></i>
                 </a>
             </li>
