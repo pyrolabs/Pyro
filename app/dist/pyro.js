@@ -1,10 +1,10 @@
 /* Pyro for Firebase*/
-	
+	var pyroRef = new Firebase('http://pyro.firebaseio.com');
   function Pyro () {
     //Check for existance of Firebase
     console.log('NewPyro');
     if(typeof Firebase != 'undefined') {
-      this.pyroRef = new Firebase('http://pyro.firebaseio.com');
+      this.pyroRef = pyroRef;
       this.usersRef = this.pyroRef.child('users');
       this.instancesRef = this.pyroRef.child('instances');
 
@@ -26,7 +26,8 @@
           if (error === null) {
             // user authenticated with Firebase
             console.log("User ID: " + authData.uid + ", Provider: " + authData.provider);
-            // successCb(authData);
+            // Manage presense
+
             // Add account if it doesn't already exist
             checkForUser(argLoginData, currentThis.usersRef, function(userAccount){
               successCb(userAccount);
@@ -179,7 +180,7 @@
         }
         argUsersRef.startAt(userEmail).endAt(userEmail).on("value", function(querySnapshot) {
           if(querySnapshot.val() != null) {
-            // Update existing moderator
+            // Update existing user
             console.log('Usersnap:', querySnapshot.val());
             var userAccount = _.find(querySnapshot.val(), function(user){
               return user.email == userEmail; 
@@ -187,7 +188,7 @@
             callback(userAccount);
           } else {
             // User account does not exist
-            var userObj = {email: userEmail, createdAt: Date.now(), role:10}
+            var userObj = {email: userEmail, createdAt: Date.now(), role:10};
             var newUserRef = argUsersRef.push(userObj);
             console.log('New user pushed successfully');
             newUserRef.setPriority(userEmail, function(){
@@ -199,7 +200,7 @@
           }
         });
       }
-       else {
+      else {
         console.error('Incorrect user info');
       }
       
@@ -241,4 +242,43 @@
           }
         }
       });
+   }
+   function User(argAuthData) {
+    console.log('NEW User');
+
+    return this;
+   }
+   User.prototype = {
+    account: function() {
+      
+    }
+   }
+   function setupPresence(argUserId, argMainRef, callback) {
+    console.log('setupPresence:', arguments);
+    var amOnline = argMainRef.child('.info/connected');
+    var onlineRef = argMainRef.child('online').child(argUserId);
+    var sessionsRef = argMainRef.child('sessions');
+    var userRef = argMainRef.child('users').child(argUserId);
+    var userSessionRef = argMainRef.child('users').child(argUserId).child('sessions');
+
+    amOnline.on('value', function(snapShot){
+      if(snapShot.val()) {
+        //user is online
+        // add session and set disconnect
+        var session = sessionsRef.push({began: Firebase.ServerValue.TIMESTAMP, user:argUserId});
+        session.onDisconnect().child('ended').set(Firebase.ServerValue.TIMESTAMP);
+        // add to past sessions list
+        sessionsRef.onDisconnect().push(sessionInfo);
+        //add correct session id to user
+        // adding session id to current list under user's session
+        userSessionRef.child('current').set(session.name());
+        // Remove session id from users current session folder
+        userSessionRef.child('current').onDisconnect().remove();
+        // Add session id to past sessions on disconnect
+        userSessionRef.child('past').onDisconnect().set(session.name());
+        // remove from presense list
+        onlineRef.set(true);
+        onlineRef.onDisconnect().remove();
+      }
+    });
    }

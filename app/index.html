@@ -59,8 +59,12 @@
     <script src="components/instance/instance-controller.js"></script>
     <script src="components/session/login/login-controller.js"></script>
     <script src="components/session/account/account-controller.js"></script>
+    <script src="components/dash/dash-controller.js"></script>
+    <script src="components/admin/admin-controller.js"></script>
+
+
   </head>
-  <body ng-app="pyroApp">
+  <body ng-app="pyroApp" ng-controller="RootCtrl" ng-init="init()">
      <!-- navbar -->
     <div ui-view="navbar"></div>
     <!-- main container -->
