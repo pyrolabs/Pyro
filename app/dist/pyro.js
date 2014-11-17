@@ -1,5 +1,5 @@
 /* Pyro for Firebase*/
-	var pyroRef = new Firebase('http://pyro.firebaseio.com');
+  var pyroRef = new Firebase('http://pyro.firebaseio.com');
   function Pyro (argPyroData) {
     //Check for existance of Firebase
     console.log('NewPyro');
@@ -10,9 +10,10 @@
         this.url = "https://"+ this.name +".firebaseio.com";
         // [TODO] Check that url is firebase
         this.mainRef = new Firebase(this.url);
-        checkForInstance(this, function(returnedInstance){
-          successCb(returnedInstance);
-        });
+        this.pyroRef = pyroRef;
+        // checkForInstance(this, function(returnedInstance){
+        //   successCb(returnedInstance);
+        // });
         //for incorrect scope
         // if (window === this) {
         //     return new _(id);
@@ -34,6 +35,25 @@
       userSignup: function(argUserData, successCb, errorCb) {
         emailSignup(argSignupData, successCb, errorCb);
       },
+      authAnonymously: function(){
+        //check for auth info
+        var auth = this.mainRef.getAuth();
+        console.log('authAnonymously', auth);
+        var currentThis = this;
+        if(auth != null) {
+          this.mainRef.authAnonymously(function(error, authData){
+            if (error) {
+              console.log('Login Failed!', error);
+            } else {
+              console.log('Authenticated successfully with payload:', authData);
+              var anon = {uid: authData.uid, provider:authData.provider};
+              currentThis.mainRef.child('users').child(authData.uid).set(anon);
+            }
+          });
+        } else {
+          //auth exists
+        }
+      },
       login: function(argLoginData, successCb, errorCb) {
         console.log('Pyro login:', arguments);
         var currentThis = this;
@@ -49,6 +69,12 @@
           console.log('Not Authenticated');
           return null;
         }
+      },
+
+      getList: function(argRefName, callback) {
+        this.mainRef.child(argRefName).on('value', function(listSnap){
+          callback(listSnap.val()) ;
+        });
       },
       getUser: function(callback) {
         if (this.getAuth() != null) {
@@ -132,7 +158,6 @@
           }
         }
       }
-    }
   };
   //------------ Instance action functions -----------------//
   function createNewInstance(argPyro, successCb, errorCb) {
