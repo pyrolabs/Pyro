@@ -70,11 +70,25 @@
           return null;
         }
       },
-
-      getList: function(argRefName, callback) {
-        this.mainRef.child(argRefName).on('value', function(listSnap){
-          callback(listSnap.val()) ;
-        });
+      getListByAuthor: function(argListName, callback) {
+        var auth = this.getAuth();
+        if(auth != null) {
+          this.mainRef.child(argListName).orderByChild('author').startAt(auth.uid).endAt(auth.uid).on('value', function(listSnap){
+            callback(listSnap.val());
+          });
+        } else {
+          console.warn('listByAuthor cannot load list without current user');
+        }
+      },
+      createObject: function(argListName, argObject, callback) {
+        var auth = this.getAuth();
+        if(auth) {
+          argObject.author = auth.uid;
+        }
+        var newObj = this.mainRef.child(argListName).push(argObject, function(){
+          console.log('New object of type:' + argListName + ' was created successfully:', newObj);
+          callback(newObj);
+        })
       },
       getUser: function(callback) {
         if (this.getAuth() != null) {
