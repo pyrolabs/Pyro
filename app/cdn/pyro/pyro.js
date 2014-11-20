@@ -1,23 +1,165 @@
 /* Pyro for Firebase*/
   var pyroRef = new Firebase('http://pyro.firebaseio.com');
   function Pyro (argPyroData) {
-    //Check for existance of Firebase
-    console.log('NewPyro');
-    if(typeof Firebase != 'undefined') {
-      if(argPyroData.hasOwnProperty('name') && argPyroData.hasOwnProperty('secret')){
-        this.name = argPyroData.name;
-        this.secret = argPyroData.secret;
-        this.url = "https://"+ this.name +".firebaseio.com";
-        // [TODO] Check that url is firebase
-        this.mainRef = new Firebase(this.url);
-        this.pyroRef = pyroRef;
-        // checkForInstance(this, function(returnedInstance){
-        //   successCb(returnedInstance);
-        // });
         //for incorrect scope
         // if (window === this) {
         //     return new _(id);
         //  }
+    console.log('NewPyro');
+    //Check for existance of Firebase
+    if(typeof Firebase != 'undefined' && typeof argPyroData != 'undefined') {
+      if(argPyroData.hasOwnProperty('url')){
+        // [TODO] Check that url is firebase
+        this.url = argPyroData.url;
+        this.mainRef = new Firebase(this.url);
+        this.pyroRef = pyroRef;
+        // Not Required variables
+        if(argPyroData.hasOwnProperty('secret')) {
+          this.secret = argPyroData.secret;
+        }
+        if(argPyroData.hasOwnProperty('name')) {
+          this.name = argPyroData.name;
+        } else {
+          //Regex name from url
+          // this.name = 
+        }
+      } else {
+        console.error('Missing firebase url.');
+        errorCb({message:'Please provide your when running new Pyro() firebase URL'});
+      }
+      return this
+    } else if(typeof argPyroData == 'undefined') {
+      console.error('New pyro object does not include nessesary information.');
+    }
+    else throw Error('Firebase library does not exist. Check that firebase.js is included in your index.html file.');
+
+  }
+  Pyro.prototype = {
+    userSignup: function(argUserData, successCb, errorCb) {
+      emailSignup(argSignupData, successCb, errorCb);
+    },
+    authAnonymously: function(){
+      //check for auth info
+      var auth = this.mainRef.getAuth();
+      console.log('authAnonymously', auth);
+      var currentThis = this;
+      if(auth != null) {
+        this.mainRef.authAnonymously(function(error, authData){
+          if (error) {
+            console.log('Login Failed!', error);
+          } else {
+            console.log('Authenticated successfully with payload:', authData);
+            var anon = {uid: authData.uid, provider:authData.provider};
+            currentThis.mainRef.child('users').child(authData.uid).set(anon);
+          }
+        });
+      } else {
+        //auth exists
+      }
+    },
+    login: function(argLoginData, successCb, errorCb) {
+      console.log('Pyro login:', arguments);
+      var currentThis = this;
+      // check for existnace of main ref
+      this.authWithPassword(argLoginData, this.mainRef, successCb, errorCb);
+    },
+    getAuth: function() {
+      console.log('getAuth called');
+      var authData = this.mainRef.getAuth();
+      if (authData) {
+        console.log('getAuth returned:', authData);
+        return authData;
+      } else {
+        console.warn('Not Authenticated');
+        return null;
+      }
+    },
+    getListByAuthor: function(argListName, callback) {
+      var auth = this.getAuth();
+      if(auth != null) {
+        this.mainRef.child(argListName).orderByChild('author').startAt(auth.uid).endAt(auth.uid).on('value', function(listSnap){
+          callback(listSnap.val());
+        });
+      } else {
+        console.warn('listByAuthor cannot load list without current user');
+      }
+    },
+    createObject: function(argListName, argObject, callback) {
+      var auth = this.getAuth();
+      if(auth) {
+        argObject.author = auth.uid;
+      }
+      var newObj = this.mainRef.child(argListName).push(argObject, function(){
+        console.log('New object of type:' + argListName + ' was created successfully:', newObj);
+        callback(newObj);
+      })
+    },
+    getUser: function(callback) {
+      if (this.getAuth() != null) {
+        console.log('Authenticated user with email:', this.getAuth().password.email);
+        checkForUser(this.getAuth().password, this.usersRef, function(returnedAccount){
+          console.log('checkForUser loaded user:', returnedAccount);
+          callback(returnedAccount);
+        });
+      } else {
+        callback(null);
+      }
+    },
+    // Functions specific to managing Pyro instances (Pyro inception)
+    getInstances: function(callback) {
+      // [TODO] Better method of checking auth
+      var instancesRef = this.instancesRef;
+      this.getUser(function(account){
+        if(account != null) {
+          console.log('getInstances running for:', account);
+          instancesRef.orderByChild('author').equalTo(account.email).on('value', function(userInstancesSnap){
+            callback(userInstancesSnap.val());
+          });
+        } 
+      });
+    },
+    loadInstance: function(argInstanceData, successCb, errorCb) {
+      console.log('loadInstance:', argInstanceData);
+      this.currentInstance = {name:argInstanceData.name}
+      checkForInstance(this, function(instanceRef){
+        successCb(instanceRef.val());
+      }, errorCb);
+    },
+    instanceRef: function(argInstanceData, successCb, errorCb) {
+      console.log('loadInstance:', argInstanceData);
+      this.currentInstance = {name:argInstanceData.name}
+      checkForInstance(this, successCb, errorCb);
+    },
+    addAdminModule: function() {
+      console.log('add admin module called', this);
+      if(PyroAdmin) {
+        console.log('PyroAdmin exists... Creating instance');
+        var pyroAdmin = new PyroAdmin(this);
+      }
+    },
+    createInstance: function (argPyroData, successCb, errorCb) {
+      if(argPyroData.hasOwnProperty('name') && argPyroData.hasOwnProperty('secret')){
+        // [TODO] Check that url is firebase
+        this.mainRef = new Firebase(this.url);
+        checkForInstance(this, function(returnedInstance){
+          successCb(returnedInstance);
+        });
+        //request admin auth token
+        
+        // var xmlhttp = new XMLHttpRequest();
+        //   xmlhttp.open("POST", "http://pyro-server.herokuapp.com/auth");
+        //   xmlhttp.onreadystatechange = function() {
+        //     if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+        //       console.log('xmlresponse:', xmlhttp.responseText);
+        //       // document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+        //     }
+        //   }
+        //   xmlhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded", true);
+
+        //   xmlhttp.send("secret=" + this.secret);
+        //Login to firebase
+        
+        // this.mainRef.authWithPassword()
       } else {
         console.log('Missing app info.');
         if(argPyroData.hasOwnProperty('name')) {
@@ -26,152 +168,7 @@
           errorCb({message:'Please enter your firebase secret'})
         }
       }
-      return this
     }
-    else throw Error('Firebase library does not exist. Check that firebase.js is included in your index.html file.');
-
-  }
-   Pyro.prototype = {
-      userSignup: function(argUserData, successCb, errorCb) {
-        emailSignup(argSignupData, successCb, errorCb);
-      },
-      authAnonymously: function(){
-        //check for auth info
-        var auth = this.mainRef.getAuth();
-        console.log('authAnonymously', auth);
-        var currentThis = this;
-        if(auth != null) {
-          this.mainRef.authAnonymously(function(error, authData){
-            if (error) {
-              console.log('Login Failed!', error);
-            } else {
-              console.log('Authenticated successfully with payload:', authData);
-              var anon = {uid: authData.uid, provider:authData.provider};
-              currentThis.mainRef.child('users').child(authData.uid).set(anon);
-            }
-          });
-        } else {
-          //auth exists
-        }
-      },
-      login: function(argLoginData, successCb, errorCb) {
-        console.log('Pyro login:', arguments);
-        var currentThis = this;
-        // check for existnace of main ref
-        this.authWithPassword(argLoginData, this.mainRef, successCb, errorCb);
-      },
-      getAuth: function() {
-        var authData = this.mainRef.getAuth();
-        if (authData) {
-          console.log('getAuth returned:', authData);
-          return authData;
-        } else {
-          console.log('Not Authenticated');
-          return null;
-        }
-      },
-      getListByAuthor: function(argListName, callback) {
-        var auth = this.getAuth();
-        if(auth != null) {
-          this.mainRef.child(argListName).orderByChild('author').startAt(auth.uid).endAt(auth.uid).on('value', function(listSnap){
-            callback(listSnap.val());
-          });
-        } else {
-          console.warn('listByAuthor cannot load list without current user');
-        }
-      },
-      createObject: function(argListName, argObject, callback) {
-        var auth = this.getAuth();
-        if(auth) {
-          argObject.author = auth.uid;
-        }
-        var newObj = this.mainRef.child(argListName).push(argObject, function(){
-          console.log('New object of type:' + argListName + ' was created successfully:', newObj);
-          callback(newObj);
-        })
-      },
-      getUser: function(callback) {
-        if (this.getAuth() != null) {
-          console.log('Authenticated user with email:', this.getAuth().password.email);
-          checkForUser(this.getAuth().password, this.usersRef, function(returnedAccount){
-            console.log('checkForUser loaded user:', returnedAccount);
-            callback(returnedAccount);
-          });
-        } else {
-          callback(null);
-        }
-      },
-      // Functions specific to managing Pyro instances (Pyro inception)
-      getInstances: function(callback) {
-        // [TODO] Better method of checking auth
-        var instancesRef = this.instancesRef;
-        this.getUser(function(account){
-          if(account != null) {
-            console.log('getInstances running for:', account);
-            instancesRef.orderByChild('author').equalTo(account.email).on('value', function(userInstancesSnap){
-              callback(userInstancesSnap.val());
-            });
-          } 
-        });
-      },
-      loadInstance: function(argInstanceData, successCb, errorCb) {
-        console.log('loadInstance:', argInstanceData);
-        this.currentInstance = {name:argInstanceData.name}
-        checkForInstance(this, function(instanceRef){
-          successCb(instanceRef.val());
-        }, errorCb);
-      },
-      instanceRef: function(argInstanceData, successCb, errorCb) {
-        console.log('loadInstance:', argInstanceData);
-        this.currentInstance = {name:argInstanceData.name}
-        checkForInstance(this, successCb, errorCb);
-      },
-      addAdminModule: function() {
-        console.log('add admin module called', this);
-        if(PyroAdmin) {
-          console.log('PyroAdmin exists... Creating instance');
-          var pyroAdmin = new PyroAdmin(this);
-        }
-      },
-      createInstance: function (argPyroData, successCb, errorCb) {
-        if(argPyroData.hasOwnProperty('name') && argPyroData.hasOwnProperty('secret')){
-          this.name = argPyroData.name;
-          this.secret = argPyroData.secret;
-          this.url = "https://"+ this.name +".firebaseio.com";
-          // [TODO] Check that url is firebase
-          this.mainRef = new Firebase(this.url);
-          checkForInstance(this, function(returnedInstance){
-            successCb(returnedInstance);
-          });
-          //for incorrect scope
-          // if (window === this) {
-          //     return new _(id);
-          //  }
-          //request admin auth token
-          
-          // var xmlhttp = new XMLHttpRequest();
-          //   xmlhttp.open("POST", "http://pyro-server.herokuapp.com/auth");
-          //   xmlhttp.onreadystatechange = function() {
-          //     if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-          //       console.log('xmlresponse:', xmlhttp.responseText);
-          //       // document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
-          //     }
-          //   }
-          //   xmlhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded", true);
-
-          //   xmlhttp.send("secret=" + this.secret);
-          //Login to firebase
-          
-          // this.mainRef.authWithPassword()
-        } else {
-          console.log('Missing app info.');
-          if(argPyroData.hasOwnProperty('name')) {
-            errorCb({message:'Please enter the name of your firebase instance.'});
-          } else {
-            errorCb({message:'Please enter your firebase secret'})
-          }
-        }
-      }
   };
   //------------ Instance action functions -----------------//
   function createNewInstance(argPyro, successCb, errorCb) {

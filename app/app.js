@@ -1,17 +1,10 @@
-// Ionic Starter App
-
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-// 'starter.controllers' is found in controllers.js
 angular.module('pyroApp', ['ui.router', 'pyroApp.controllers'])
 .constant('FBURL', 'https://pyro.firebaseio.com/')
-.run(function($rootScope) {
+.run(function($rootScope, FBURL) {
   console.log('Angular is running');
-  $rootScope.pyro = new Pyro();
+  $rootScope.pyro = new Pyro({url:FBURL});
   $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){ 
     console.log('route change from:', fromState, ' to: ', toState);
-
   });
 
 })
@@ -46,19 +39,6 @@ angular.module('pyroApp', ['ui.router', 'pyroApp.controllers'])
         }
       }
     })
-      .state('home', {
-        parent:'nav',
-        url: "/pyro",
-        templateUrl:"components/instance/instance-list.html",
-        controller: 'InstanceListCtrl'
-      })
-      
-      .state('account', {
-        parent:'nav',
-        url: "/account",
-        templateUrl: "components/session/account/account-index.html",
-        controller: 'AccountCtrl'
-      })
     // Load Sidemenu template
     .state('sideNav', {
       parent:'nav',
@@ -77,6 +57,20 @@ angular.module('pyroApp', ['ui.router', 'pyroApp.controllers'])
           }
         }
       })
+      .state('home', {
+        parent:'nav',
+        url: "/pyro",
+        templateUrl:"components/instance/instance-list.html",
+        controller: 'InstanceListCtrl'
+      })
+      
+      .state('account', {
+        parent:'nav',
+        url: "/account",
+        templateUrl: "components/session/account/account-index.html",
+        controller: 'AccountCtrl'
+      })
+
       // fill sidebar and center(empty view)
       // [TODO] load instance data here only
       .state('instance', {
