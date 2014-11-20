@@ -144,9 +144,9 @@
             successCb(returnedInstance);
           });
           //for incorrect scope
-          if (window === this) {
-              return new _(id);
-           }
+          // if (window === this) {
+          //     return new _(id);
+          //  }
           //request admin auth token
           
           // var xmlhttp = new XMLHttpRequest();
@@ -190,6 +190,7 @@
       }
     });
   }
+
     function checkForInstance(argPyro, callback) {
       // [TODO] Add user's id to author object?
       //check for app existance on pyroBase
