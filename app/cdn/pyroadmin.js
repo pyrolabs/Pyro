@@ -97,32 +97,30 @@
     },
     
    }
-   function setupPresence(argUserId, argMainRef, callback) {
-    console.log('setupPresence:', arguments);
-    var amOnline = argMainRef.child('.info/connected');
-    var onlineRef = argMainRef.child('online').child(argUserId);
-    var sessionsRef = argMainRef.child('sessions');
-    var userRef = argMainRef.child('users').child(argUserId);
-    var userSessionRef = argMainRef.child('users').child(argUserId).child('sessions');
+   // function setupPresence(argUserId, argMainRef, callback) {
+   //  console.log('setupPresence:', arguments);
+   //  var amOnline = argMainRef.child('.info/connected');
+   //  var onlineRef = argMainRef.child('presense').child(argUserId);
+   //  var sessionsRef = argMainRef.child('sessions');
+   //  var userRef = argMainRef.child('users').child(argUserId);
+   //  var userSessionRef = argMainRef.child('users').child(argUserId).child('sessions');
 
-    amOnline.on('value', function(snapShot){
-      if(snapShot.val()) {
-        //user is online
-        // add session and set disconnect
-        var session = sessionsRef.push({began: Firebase.ServerValue.TIMESTAMP, user:argUserId});
-        sessionRef.child(session.key()).child('ended').onDisconnect().set(Firebase.ServerValue.TIMESTAMP);
-        // add to past sessions list
-        sessionsRef.onDisconnect().push(sessionInfo);
-        //add correct session id to user
-        // adding session id to current list under user's session
-        userSessionRef.child('current').set(session.name());
-        // Remove session id from users current session folder
-        userSessionRef.child('current').onDisconnect().remove();
-        // Add session id to past sessions on disconnect
-        userSessionRef.child('past').onDisconnect().set(session.name());
-        // remove from presense list
-        onlineRef.set(true);
-        onlineRef.onDisconnect().remove();
-      }
-    });
-   }
+   //  amOnline.on('value', function(snapShot){
+   //    if(snapShot.val()) {
+   //      //user is online
+   //      // add session and set disconnect
+   //      var session = sessionsRef.push({began: Firebase.ServerValue.TIMESTAMP, user:argUserId});
+   //      session.child('ended').onDisconnect().set(Firebase.ServerValue.TIMESTAMP);
+   //      //add correct session id to user
+   //      // adding session id to current list under user's session
+   //      var currentSesh = userSessionRef.child('current').push(session.name());
+   //      // Remove session id from users current session folder
+   //      currentSesh.onDisconnect().remove();
+   //      // Add session id to past sessions on disconnect
+   //      userSessionRef.child('past').onDisconnect().push(session.name());
+   //      // remove from presense list
+   //      onlineRef.set(true);
+   //      onlineRef.onDisconnect().remove();
+   //    }
+   //  });
+   // }

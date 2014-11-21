@@ -65,6 +65,9 @@
 
       authWithPassword(argLoginData, self.mainRef, successCb, errorCb);
     },
+    logout:function(){
+      this.mainRef.unauth();
+    },
     getAuth: function() {
       console.log('getAuth called');
       var authData = this.mainRef.getAuth();
@@ -320,29 +323,28 @@
    function setupPresence(argUserId, argMainRef) {
     console.log('setupPresence:', arguments);
     var amOnline = argMainRef.child('.info/connected');
-    var onlineRef = argMainRef.child('online').child(argUserId);
+    var onlineRef = argMainRef.child('presense').child(argUserId);
     var sessionsRef = argMainRef.child('sessions');
     var userRef = argMainRef.child('users').child(argUserId);
     var userSessionRef = argMainRef.child('users').child(argUserId).child('sessions');
-
+    var pastSessionsRef = userSessionRef.child('past');
     amOnline.on('value', function(snapShot){
       if(snapShot.val()) {
         //user is online
+        var onDisconnectRef = argMainRef.onDisconnect();
         // add session and set disconnect
         var session = sessionsRef.push({began: Firebase.ServerValue.TIMESTAMP, user:argUserId});
-        session.onDisconnect().child('ended').set(Firebase.ServerValue.TIMESTAMP);
-        // add to past sessions list
-        sessionsRef.onDisconnect().push(sessionInfo);
+        session.child('ended').onDisconnect().set(Firebase.ServerValue.TIMESTAMP);
         //add correct session id to user
         // adding session id to current list under user's session
-        userSessionRef.child('current').set(session.name());
+        var currentSesh = userSessionRef.child('current').push(session.name());
         // Remove session id from users current session folder
-        userSessionRef.child('current').onDisconnect().remove();
-        // Add session id to past sessions on disconnect
-        userSessionRef.child('past').onDisconnect().set(session.name());
+        currentSesh.onDisconnect().remove();
         // remove from presense list
         onlineRef.set(true);
         onlineRef.onDisconnect().remove();
+        // Add session id to past sessions on disconnect
+        // pastSessionsRef.onDisconnect().push(session.name());
       }
     });
    }
