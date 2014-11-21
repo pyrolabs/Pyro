@@ -1,85 +1,33 @@
-<br />
-<br />
-<br />
-  <div class="container eternity-form dark">
-    <div class="login-form-section">
-      <div class="login-content animated bounceIn">
+  <section id="content" class="m-t-lg wrapper-md animated fadeInUp">    
+    <div class="container aside-xl">
+      <a class="navbar-brand block" href="index.html">Pyro</a>
+      <section class="m-b-lg">
+<!--         <header class="wrapper text-center">
+          <strong>Sign in to get in touch</strong>
+        </header> -->
         <form>
-          <div class="section-title">
-            <h3>LogIn to your Account</h3>
-          </div>
-          <div style="text-align:center;">
-            <h4 style="color:red;">
-              {{err.message}}
-            </h4>
-          </div>
-          <div class="textbox-wrap">
-            <div class="input-group">
-              <span class="input-group-addon "><i class="icon-user icon-color"></i></span>
-              <input type="text" required="required" class="form-control" placeholder="Email" ng-model="loginData.email"/>
+          <div class="list-group">
+            <div class="list-group-item">
+              <input type="email" placeholder="Email" class="form-control no-border" ng-model="loginData.email">
+            </div>
+            <div class="list-group-item">
+               <input type="password" placeholder="Password" class="form-control no-border" ng-model="loginData.password">
             </div>
           </div>
-          <div class="textbox-wrap">
-            <div class="input-group">
-              <span class="input-group-addon "><i class="icon-key icon-color"></i></span>
-              <input type="password" required="required" class="form-control " placeholder="Password" ng-model="loginData.password"/>
-            </div>
-          </div>
-          <div class="login-form-action clearfix">
-            <div class="checkbox pull-left">
-              <div class="custom-checkbox">
-                  <input type="checkbox" checked name="iCheck">
-              </div>
-              <span class="checkbox-text pull-left">&nbsp;Remember Me</span>
-            </div>
-            <button type="submit" class="btn btn-success pull-right green-btn" ng-click="login()">LogIn &nbsp; <i class="icon-chevron-right"></i></button>
-          </div>
+          <button type="submit" class="btn btn-lg btn-primary btn-block" ng-click="login()">Sign in</button>
+          <div class="text-center m-t m-b"><a href=""><small>Forgot password?</small></a></div>
+          <div class="line line-dashed"></div>
+          <p class="text-muted text-center"><small>Do not have an account?</small></p>
+          <a href="" ui-sref="signup" class="btn btn-lg btn-default btn-block">Create an account</a>
         </form>
-      </div>
-      <div class="login-form-links link1 animated fadeInLeftBig">
-          <h4 class="blue">Don't have an Account?</h4>
-          <span>No worry</span>
-          <a class="blue" ui-sref="signup">Click Here</a>
-          <span>to Register</span>
-      </div>
-      <div class="login-form-links link2 animated fadeInRightBig">
-          <h4 class="green">Forget your Password?</h4>
-          <span>Dont worry</span>
-          <a class="green" ui-sref="forgot">Click Here</a>
-          <span>to Get New One</span>
-      </div>
+      </section>
     </div>
-  </div>
-<br />
-<br />
-<br />
-<!-- Jquery For Login Form  -->
-<script src="lib/eternity-forms/_include_et_form/js/jquery-1.9.1.min.js"></script>
-<!-- PlaceHolder For Older Browsers -->
-<script src="lib/eternity-forms/_include_et_form/js/placeholders.min.js"></script>
-<!-- Custom Checkbox PLugin -->
-<script src="lib/eternity-forms/_include_et_form/js/jquery.icheck.js"></script>
-<!-- Media Query Support For Older Browsers [Ie 8 & lower] -->
-<script src="lib/eternity-forms/_include_et_form/js/respond.min.js"></script>
-
-<!-- For Initializing Checkbox And Focus Event For Textbox -->
-<script type="text/javascript">
-  $(function () {
-    //Custom Checkbox For Light Theme
-    $("input").iCheck({
-      checkboxClass: 'icheckbox_square-red',
-      increaseArea: '20%'
-    });
-    //Custom Checkbox For Dark Theme
-    $(".dark input").iCheck({
-      checkboxClass: 'icheckbox_polaris',
-      increaseArea: '20%'
-    });
-    //TextBox Focus Event
-    $(".form-control").focus(function () {
-      $(this).closest(".textbox-wrap").addClass("focused");
-    }).blur(function () {
-      $(this).closest(".textbox-wrap").removeClass("focused");
-    });
-  });
-</script>
+  </section>
+  <!-- footer -->
+  <footer id="footer">
+    <div class="text-center padder">
+      <p>
+        <small>Web app framework base on Bootstrap<br>&copy; 2013</small>
+      </p>
+    </div>
+  </footer>
