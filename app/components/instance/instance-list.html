@@ -1,41 +1,51 @@
-<div class="list card" style="border:1px solid #b3b3b3;">
-    <div class="list">
-      <label class="item item-input item-stacked-label">
-        <span class="input-label">APP NAME</span>
-        <input type="text" placeholder="" style="border:1px solid #e3e3e3" ng-model="newAppData.name">
-      </label>
-      <label class="item item-input item-stacked-label">
-        <span class="input-label">APP SECRET</span>
-        <input type="text" placeholder="" style="border:1px solid #e3e3e3" ng-model="newAppData.secret">
-      </label>
-      <label class="item item-input item-stacked-label">
-        <p ng-show="err" style="color:red;">{{err.message}}</p>
-      </label>
-    </div>
 
-    <button class="button button-block button-positive" style="margin-bottom:-1px;" ng-click="createInstance()">
-    Create App
-    </button>
-  </div>
-  <div ng-show="loading" style="color:black;">
-      <i ng-show="loading" class="fa fa-circle-o-notch fa-spin"></i>
-  </div>
-  
-  <div class="list card" style="border:1px solid #b3b3b3;" ng-repeat="app in instanceList | orderBy:'createdAt':true">
-    <div class="item item-divider">
-      {{app.name}}
-    </div>
-
-    <div class="item item-body">
-      <p>
-        <i class="icon ion-android-developer"></i> {{app.name}}.firebaseIO.com
-      </p>
-      <p>
-        <i class="icon ion-android-earth"></i> {{app.name}}.firebaseapp.com
-      </p>
-    </div>
-
-    <button class="button button-block button-royal" style="margin-bottom:-1px;" ng-click="viewDetail(app.name)">
-      Launch FireAdmin
-    </button>
-  </div>
+  <section>
+    <section class="hbox stretch">
+      <section id="content">
+        <section class="vbox">
+          <section class="scrollable wrapper-lg">
+            <div class="m-b h2">
+              <span class="font-thin">Applications</span> 
+            </div>
+            <div class="row m-b">
+              <div class="col-sm-6 col-md-4" ng-repeat="instance in instanceList | search:search.term">
+                <section class="panel b-a" >
+                  <div class="panel-heading no-border" ng-class="cardClasses[$index]">
+                    <!-- Might be good for notifications
+                    <span class="pull-right badge dk m-t-sm">17</span> -->
+                    <a href="#" class="h4 text-lt m-t-sm m-b-sm block font-bold">{{instance.name}}</a>
+                  </div>
+                  <div class="panel-body">
+                    <span class="pull-right text-muted">{{instance.createdAt || "At Some Point"}}</span>
+                    <h3 class="font-thin">{{instance.url || "unknown url"}}</h3>
+                    <div class="row text-center m-t">
+                      <div class="col-xs-6">
+                        <p>Total Users</p>
+                        <h3 class="font-thin">12</h3>
+                      </div>
+                      <div class="col-xs-6">
+                        <p>Online</p>
+                        <h3 class="font-thin">2</h3>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="clearfix panel-footer">
+                    <a href="#" class="pull-right"><i class="i i-trashcan text-muted"></i></a>
+                    <a href="#" class="m-r"><i class="i i-calendar text-muted"></i></a>
+                    <a href="#" class=""><i class="i i-graph text-muted"></i></a>                      
+                  </div>
+                </section>
+              </div>
+            </div>
+<!--             <div>
+              <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-default btn-rounded"><i class="i i-arrow-left4"></i></button>
+                <button type="button" class="btn btn-sm btn-default btn-rounded"><i class="i i-arrow-right4"></i></button>
+              </div>
+            </div> -->
+          </section>
+        </section>
+        <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen,open" data-target="#nav,html"></a>
+      </section>
+    </section>
+  </section>

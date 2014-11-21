@@ -6,6 +6,7 @@ angular.module('pyroApp.controllers')
  $scope.newAppData = {};
  $scope.err = {};
  $scope.loading = true;
+ $scope.cardClasses = ['bg-primary lt', 'bg-info lt', 'bg-success lter', 'bg-warning lter', 'bg-light dk'];
   $scope.viewDetail = function(argId) {
     console.log('viewDetail called with: ', argId);
     console.log('loading:', $scope.instanceList[argId]);

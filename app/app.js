@@ -6,7 +6,6 @@ angular.module('pyroApp', ['ui.router', 'pyroApp.controllers'])
   $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){ 
     console.log('route change from:', fromState, ' to: ', toState);
   });
-
 })
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
@@ -29,7 +28,7 @@ angular.module('pyroApp', ['ui.router', 'pyroApp.controllers'])
       }
     })
     .state('nav', {
-      abstract:true,
+      controller:'NavbarCtrl',
       views: {
         'main':{
           template:'<ui-view></ui-view>'
@@ -39,24 +38,24 @@ angular.module('pyroApp', ['ui.router', 'pyroApp.controllers'])
         }
       }
     })
-    // Load Sidemenu template
-    .state('sideNav', {
-      parent:'nav',
-      templateUrl: "templates/side-menu.html",
-      abstract:true
-    })
-      .state('sidemenu', {
-        parent:'sideNav',
-        abstract:true,
-        views: {
-          'sidemenu':{
-            templateUrl:'templates/sidebar.html'
-          },
-          'center':{
-            template:'<ui-view></ui-view>'
-          }
-        }
-      })
+    // // Load Sidemenu template
+    // .state('sideNav', {
+    //   parent:'nav',
+    //   templateUrl: "templates/side-menu.html",
+    //   abstract:true
+    // })
+    //   .state('sidemenu', {
+    //     parent:'sideNav',
+    //     abstract:true,
+    //     views: {
+    //       'sidemenu':{
+    //         templateUrl:'templates/sidebar.html'
+    //       },
+    //       'center':{
+    //         template:'<ui-view></ui-view>'
+    //       }
+    //     }
+    //   })
       .state('home', {
         parent:'nav',
         url: "/pyro",
