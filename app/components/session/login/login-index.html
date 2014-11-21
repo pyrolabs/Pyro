@@ -8,6 +8,11 @@
           <div class="section-title">
             <h3>LogIn to your Account</h3>
           </div>
+          <div style="text-align:center;">
+            <h4 style="color:red;">
+              {{err.message}}
+            </h4>
+          </div>
           <div class="textbox-wrap">
             <div class="input-group">
               <span class="input-group-addon "><i class="icon-user icon-color"></i></span>
@@ -62,7 +67,7 @@
   $(function () {
     //Custom Checkbox For Light Theme
     $("input").iCheck({
-      checkboxClass: 'icheckbox_square-blue',
+      checkboxClass: 'icheckbox_square-red',
       increaseArea: '20%'
     });
     //Custom Checkbox For Dark Theme

@@ -110,7 +110,7 @@
         //user is online
         // add session and set disconnect
         var session = sessionsRef.push({began: Firebase.ServerValue.TIMESTAMP, user:argUserId});
-        session.onDisconnect().child('ended').set(Firebase.ServerValue.TIMESTAMP);
+        sessionRef.child(session.key()).child('ended').onDisconnect().set(Firebase.ServerValue.TIMESTAMP);
         // add to past sessions list
         sessionsRef.onDisconnect().push(sessionInfo);
         //add correct session id to user

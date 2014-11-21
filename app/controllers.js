@@ -12,7 +12,7 @@ angular.module('pyroApp.controllers', [])
   });
 
       $scope.init = function() {
-    	 $rootScope.pyro.getInstances(function(returnedList){
+    	 $rootScope.pyro.getListByAuthor('instances', function(returnedList){
 			 	console.log('getInstances successful:', returnedList);
 			 	$rootScope.instanceList = returnedList;
 			 	$rootScope.$apply();

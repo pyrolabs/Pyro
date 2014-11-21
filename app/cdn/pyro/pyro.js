@@ -59,11 +59,11 @@
     },
     login: function(argLoginData, successCb, errorCb) {
       console.log('Pyro login:', arguments);
-      var currentThis = this;
+      var self = this;
       // check for existnace of main ref
-      console.log('before authWithPassword',argLoginData, currentThis, successCb, errorCb);
+      console.log('before authWithPassword',argLoginData, self, successCb, errorCb);
 
-      authWithPassword(argLoginData, currentThis.mainRef, successCb, errorCb);
+      authWithPassword(argLoginData, self.mainRef, successCb, errorCb);
     },
     getAuth: function() {
       console.log('getAuth called');
@@ -99,13 +99,27 @@
     getUser: function(callback) {
       if (this.getAuth() != null) {
         console.log('Authenticated user with email:', this.getAuth().password.email);
-        checkForUser(this.getAuth().password, this.usersRef, function(returnedAccount){
+        var self = this;
+        checkForUser(this.getAuth().password, self.mainRef.child('users'), function(returnedAccount){
           console.log('checkForUser loaded user:', returnedAccount);
           callback(returnedAccount);
         });
       } else {
         callback(null);
       }
+    },
+    getListByAuthor:function(argListName, callback){
+      // [TODO] Better method of checking auth
+      console.log('getListByAuthor:', argListName);
+      var listRef = this.mainRef.child(argListName);
+      this.getUser(function(account){
+        if(account != null) {
+          console.log('getInstances running for:', account);
+          listRef.orderByChild('author').equalTo(account.email).limitToFirst(1).on('value', function(userInstancesSnap){
+            callback(userInstancesSnap.val());
+          });
+        } 
+      });
     },
     // Functions specific to managing Pyro instances (Pyro inception)
     getInstances: function(callback) {
@@ -134,15 +148,17 @@
     },
     addAdminModule: function() {
       console.log('add admin module called', this);
+      var self = this;
       if(PyroAdmin) {
         console.log('PyroAdmin exists... Creating instance');
-        var pyroAdmin = new PyroAdmin(this);
+        var pyroAdmin = new PyroAdmin(self);
       }
     },
     createInstance: function (argPyroData, successCb, errorCb) {
+      var self = this;
       if(argPyroData.hasOwnProperty('name') && argPyroData.hasOwnProperty('secret')){
         // [TODO] Check that url is firebase
-        this.mainRef = new Firebase(this.url);
+        this.mainRef = new Firebase(self.url);
         checkForInstance(this, function(returnedInstance){
           successCb(returnedInstance);
         });
@@ -266,7 +282,7 @@
           // Manage presense
           setupPresence(authData.uid, argRef);
           // Add account if it doesn't already exist
-          checkForUser(argLoginData, currentThis.usersRef, function(userAccount){
+          checkForUser(argLoginData, argRef.child('users'), function(userAccount){
             successCb(userAccount);
           });
         } else {
@@ -345,7 +361,8 @@
           // object contains email
           userEmail = argUserData.email;
         }
-        argUsersRef.child(argUserData.uid).on("value", function(querySnapshot) {
+        argUsersRef.orderByChild('email').startAt(userEmail).endAt(userEmail).limitToFirst(1).on("value", function(querySnapshot) {
+            console.log('check for user returned:', querySnapshot.val());
             callback(querySnapshot.val());
           if(querySnapshot.val() != null) {
             console.log('Usersnap:', querySnapshot.val());

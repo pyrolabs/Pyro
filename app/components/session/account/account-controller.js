@@ -19,7 +19,6 @@ angular.module('pyroApp.controllers')
       }
     });
   };
-
     function assertValidAccountProps() {
       if( !$scope.signupData.email ) {
         $scope.err = 'Please enter an email address';
