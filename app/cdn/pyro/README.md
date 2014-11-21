@@ -44,7 +44,7 @@ Creating a New User through pyro also sets up a profile, and setup presense/sess
 
 ```JavaScript
     //pyro.signup(argSignupData, successCb, errorCb)
-    pyro.signup({
+    pyro.userSignup({
         email:userEmail, 
         password:userPassword
         }, 

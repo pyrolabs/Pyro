@@ -25,6 +25,3 @@ Pyro Platform:
 [Angularjs](http://angularjs.org)
 
 [Ionic Framework](http://ionicframework.com)
-
-##Contact
-If you have any questions please feel free to contact us

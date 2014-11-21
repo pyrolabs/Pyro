@@ -1,17 +1,14 @@
 /* Pyro for Firebase*/
+  // Pyro Platform Firebase:
   var pyroRef = new Firebase('http://pyro.firebaseio.com');
+  // Constructor:
   function Pyro (argPyroData) {
-        //for incorrect scope
-        // if (window === this) {
-        //     return new _(id);
-        //  }
-    console.log('NewPyro');
     //Check for existance of Firebase
     if(typeof Firebase != 'undefined' && typeof argPyroData != 'undefined') {
       if(argPyroData.hasOwnProperty('url')){
         // [TODO] Check that url is firebase
         this.url = argPyroData.url;
-        this.mainRef = new Firebase(this.url);
+        this.mainRef = new Firebase(argPyroData.url);
         this.pyroRef = pyroRef;
         // Not Required variables
         if(argPyroData.hasOwnProperty('secret')) {
@@ -27,12 +24,15 @@
         console.error('Missing firebase url.');
         errorCb({message:'Please provide your when running new Pyro() firebase URL'});
       }
-      return this
+      return this;
     } else if(typeof argPyroData == 'undefined') {
       console.error('New pyro object does not include nessesary information.');
     }
     else throw Error('Firebase library does not exist. Check that firebase.js is included in your index.html file.');
-
+    //for incorrect scope
+    // if (window === this) {
+    //     return new _(id);
+    //  }
   }
   Pyro.prototype = {
     userSignup: function(argUserData, successCb, errorCb) {
@@ -61,7 +61,9 @@
       console.log('Pyro login:', arguments);
       var currentThis = this;
       // check for existnace of main ref
-      this.authWithPassword(argLoginData, this.mainRef, successCb, errorCb);
+      console.log('before authWithPassword',argLoginData, currentThis, successCb, errorCb);
+
+      authWithPassword(argLoginData, currentThis.mainRef, successCb, errorCb);
     },
     getAuth: function() {
       console.log('getAuth called');
@@ -236,24 +238,7 @@
       }
     })
    }
-  function authWithPassword(argLoginData, argRef, successCb, errorCb) {
-    this.mainRef.authWithPassword(argLoginData, function(error, authData) {
-      if (error === null) {
-        // user authenticated with Firebase
-        console.log("User ID: " + authData.uid + ", Provider: " + authData.provider);
-        // Manage presense
-        setupPresence(authData.uid, argRef);
-        // Add account if it doesn't already exist
-        checkForUser(argLoginData, currentThis.usersRef, function(userAccount){
-          successCb(userAccount);
-        });
-      } else {
-        console.error("Error authenticating user:", error);
-        // [TODO] Return object if available
-        errorCb(error);
-      }
-    });
-  }
+  
   function emailSignup(argSignupData, successCb, errorCb) {
     this.mainRef.createUser(argSignupData, function(error) {
       if (error === null) {
@@ -271,7 +256,31 @@
       }
     });
   }
-            
+  function authWithPassword(argLoginData, argRef, successCb, errorCb) {
+    console.log('authWithPassword',argLoginData, argRef, successCb, errorCb);
+    if(argLoginData.hasOwnProperty('email') && argLoginData.hasOwnProperty('password')) {
+      argRef.authWithPassword(argLoginData, function(error, authData) {
+        if (error === null) {
+          // user authenticated with Firebase
+          console.log("User ID: " + authData.uid + ", Provider: " + authData.provider);
+          // Manage presense
+          setupPresence(authData.uid, argRef);
+          // Add account if it doesn't already exist
+          checkForUser(argLoginData, currentThis.usersRef, function(userAccount){
+            successCb(userAccount);
+          });
+        } else {
+          console.error("Error authenticating user:", error);
+          errorCb(error);
+        }
+      });
+    } else {
+      // [TODO] Use error handling from Firbase.authWithPassword()
+      console.error('Incorrect login info', argLoginData);
+      var err = {message:'Incorrect login info'}
+      errorCb('Incorrect login info:', argLoginData);
+    }
+  }          
   function createUserProfile(argAuthData, argRef, callback) {
     console.log('createUserAccount called');
     var userRef = argRef.child('users').child(argAuthData.uid);

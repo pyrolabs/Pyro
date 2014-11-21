@@ -6,7 +6,7 @@ angular.module('pyroApp.controllers')
   $scope.err = {};
   $scope.login = function() {
     console.log('emailLogin called:');
-    $scope.err = null;
+    console.log('$rootScope.pyro:', $rootScope.pyro);
     $rootScope.pyro.login($scope.loginData, function(userData) {
       console.log('login successful:', userData);
       $state.go('home');
