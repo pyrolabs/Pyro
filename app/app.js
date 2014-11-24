@@ -73,7 +73,7 @@ angular.module('pyroApp', ['ui.router', 'pyroApp.controllers'])
       // fill sidebar and center(empty view)
       // [TODO] load instance data here only
       .state('instance', {
-        parent:'sideNav',
+        parent:'nav',
         abstract:true,
         // controller:'InstanceDetailCtrl',
         url:'/pyro/:appId',
@@ -88,8 +88,8 @@ angular.module('pyroApp', ['ui.router', 'pyroApp.controllers'])
       })
     // Tabs
       .state('dash', {
-        parent:'instance',
-        url: '/dash',
+        parent:'nav',
+        url: '/:appId/dash',
         templateUrl:"components/dash/dash-index.html",
         controller: 'DashCtrl'
       })

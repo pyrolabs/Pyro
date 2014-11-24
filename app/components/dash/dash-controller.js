@@ -4,6 +4,7 @@ angular.module('pyroApp.controllers')
   console.log('DashCtrl');
 
   $scope.init = function() {
+    console.log('Dash init with:', $stateParams.appId);
     var instanceInfo = {name:$stateParams.appId};
     $rootScope.pyro.loadInstance(instanceInfo, function(returnedInstance){
       console.log('pyroInstance loaded:', returnedInstance);

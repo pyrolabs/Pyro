@@ -10,7 +10,7 @@ angular.module('pyroApp.controllers')
   $scope.viewDetail = function(argId) {
     console.log('viewDetail called with: ', argId);
     console.log('loading:', $scope.instanceList[argId]);
-    $state.go('dash', {appId:argId});
+    $state.go('dash', {appId:$scope.instanceList[argId].name});
   }
   $scope.createInstance = function() {
   	console.log('createInstance called', $scope.newAppData);

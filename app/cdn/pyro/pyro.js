@@ -207,7 +207,7 @@
     });
   }
 
-    function checkForInstance(argPyro, callback) {
+    function checkForInstance(argPyro, argName, callback) {
       // [TODO] Add user's id to author object?
       //check for app existance on pyroBase
       console.log('checkForInstance:', argPyro);

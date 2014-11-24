@@ -18,20 +18,19 @@ angular.module('pyroApp.controllers', [])
 	$rootScope.auth = function(){
 		return pyro.getAuth();
 	}
-	$rootScope.instanceList = [
-	{name:'Kyper',url:'kyper.firebaseio.com', createdAt:'3 Days ago'}, 
-	{name:'Scott', url:'scott.firebaseio.com'},
-	{name:'Example App', url:'example.firebaseio.com'},
-	{name:'Nerd', url:'nerd.firebaseio.com'},
-	{name:'VitAng', url:'vitang.firebaseio.com'}];
-  $scope.init = function() {
-	 // $rootScope.pyro.getListByAuthor('instances', function(returnedList){
-	 // 	console.log('getInstances successful:', returnedList);
-	 // 	$rootScope.instanceList = returnedList;
-	 // 	$rootScope.$apply();
-	 // });
- 	// $rootScope.instanceList = [{name:'Example App'}];
 
+  $scope.init = function() {
+	 $rootScope.pyro.getListByAuthor('instances', function(returnedList){
+	 	console.log('getInstances successful:', returnedList);
+	 	$rootScope.instanceList = returnedList;
+	 	$rootScope.$apply();
+	 });
+	// $rootScope.instanceList = [
+	// {name:'Kyper',url:'kyper.firebaseio.com', createdAt:'3 Days ago'}, 
+	// {name:'Scott', url:'scott.firebaseio.com'},
+	// {name:'Example App', url:'example.firebaseio.com'},
+	// {name:'Nerd', url:'nerd.firebaseio.com'},
+	// {name:'VitAng', url:'vitang.firebaseio.com'}];
   };
 	$scope.logout = function() {
 		$rootScope.pyro.logout();
@@ -56,30 +55,21 @@ angular.module('pyroApp.controllers', [])
 	};
 })
 .filter('search', function(){
-
 	// All filters must return a function. The first parameter
 	// is the data that is to be filtered, and the second is an
 	// argument that may be passed with a colon (searchFor:searchString)
-
 	return function(arr, searchString){
-
 		if(!searchString){
 			return arr;
 		}
-
 		var result = [];
-
 		searchString = searchString.toLowerCase();
-
 		// Using the forEach helper method to loop through the array
 		angular.forEach(arr, function(item){
-
 			if(item.name.toLowerCase() == searchString){
 				result.push(item);
 			}
-
 		});
-
 		return result;
 	};
 
