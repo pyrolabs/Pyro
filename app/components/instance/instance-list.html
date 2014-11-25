@@ -13,7 +13,7 @@
                   <div class="panel-heading no-border" ng-class="cardClasses[$index]">
                     <!-- Might be good for notifications
                     <span class="pull-right badge dk m-t-sm">17</span> -->
-                    <a href="" ng-click="viewDetail($index)" class="h4 text-lt m-t-sm m-b-sm block font-bold">{{instance.name}}</a>
+                    <a href="" ng-click="viewDetail(instance.name)" class="h4 text-lt m-t-sm m-b-sm block font-bold">{{instance.name}}</a>
                   </div>
                   <div class="panel-body">
                     <span class="pull-right text-muted">{{instance.createdAt || "At Some Point"}}</span>
@@ -58,7 +58,7 @@
                     </div>
                   </div>
                   <div class="clearfix panel-footer" ng-show="existingMode == true">
-                    <a href="#" class="pull-right"><i class="i i-trashcan text-muted"></i></a>
+                    <a href="" ng-click="existingMode = false" class="pull-right"><i class="i i-trashcan text-muted"></i></a>
                   </div>
                 </section>
               </div>

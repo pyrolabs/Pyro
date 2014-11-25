@@ -2,7 +2,7 @@
   // Pyro Platform Firebase:
   var pyroRef = new Firebase('http://pyro.firebaseio.com');
   // Constructor:
-  function Pyro (argPyroData) {
+  function Pyro (argPyroData, errorCb) {
     //Check for existance of Firebase
     if(typeof Firebase != 'undefined' && typeof argPyroData != 'undefined') {
       if(argPyroData.hasOwnProperty('url')){
@@ -22,7 +22,9 @@
         }
       } else {
         console.error('Missing firebase url.');
-        errorCb({message:'Please provide your when running new Pyro() firebase URL'});
+        if(errorCb) {
+          errorCb({message:'Please provide your when running new Pyro() firebase URL'});
+        }
       }
       return this;
     } else if(typeof argPyroData == 'undefined') {
@@ -147,13 +149,26 @@
       this.currentInstance = {name:argInstanceData.name}
       checkForInstance(this, successCb, errorCb);
     },
-    addAdminModule: function() {
-      console.log('add admin module called', this);
+    // addAdminModule: function() {
+    //   console.log('add admin module called', this);
+    //   var self = this;
+    //   if(PyroAdmin) {
+    //     console.log('PyroAdmin exists... Creating instance');
+    //     var pyroAdmin = new PyroAdmin(self);
+    //   }
+    // },
+    getUserCount: function(callback){
       var self = this;
-      if(PyroAdmin) {
-        console.log('PyroAdmin exists... Creating instance');
-        var pyroAdmin = new PyroAdmin(self);
-      }
+      console.log('getUserCount:', self.mainRef.child('users'));
+
+      this.mainRef.child('users').on('value', function(usersListSnap){
+        callback(usersListSnap.numChildren());
+      });
+    },
+    getUserList: function(callback){
+      this.mainRef.child('users').on('value', function(usersListSnap){
+        callback(usersListSnap.val());
+      });
     },
     createInstance: function (argPyroData, successCb, errorCb) {
       var self = this;
@@ -189,6 +204,11 @@
       }
     }
   };
+  function loadUsersList(argRef, callback){
+    argRef.child('users').on('value', function(usersListSnap){
+        callback(usersListSnap);
+      });
+  }
   //------------ Instance action functions -----------------//
   function createNewInstance(argPyro, successCb, errorCb) {
     checkForInstance(argPyro, function(returnedInstance){

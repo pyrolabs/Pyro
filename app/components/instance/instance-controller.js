@@ -7,10 +7,10 @@ angular.module('pyroApp.controllers')
  $scope.err = {};
  $scope.loading = true;
  $scope.cardClasses = ['bg-primary lt', 'bg-info lt', 'bg-success lter', 'bg-warning lter', 'bg-light dk'];
-  $scope.viewDetail = function(argId) {
-    console.log('viewDetail called with: ', argId);
-    console.log('loading:', $scope.instanceList[argId]);
-    $state.go('dash', {appId:$scope.instanceList[argId].name});
+  $scope.viewDetail = function(argName) {
+    console.log('viewDetail called with: ', argName);
+    console.log('loading:', $rootScope.instanceList[argName]);
+    $state.go('dash', {appId:$rootScope.instanceList[argName].name});
   }
   $scope.createInstance = function() {
   	console.log('createInstance called', $scope.newAppData);
