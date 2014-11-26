@@ -1,8 +1,7 @@
-angular.module('pyroApp', ['ui.router', 'pyroApp.controllers'])
-.constant('FBURL', 'https://pyro.firebaseio.com/')
+angular.module('pyroApp', ['ui.router', 'pyroApp.controllers', 'pyroApp.services'])
+.constant('FBURL', 'https://pruvit.firebaseio.com/')
 .run(function($rootScope, FBURL) {
   console.log('Angular is running');
-  $rootScope.pyro = new Pyro({url:FBURL});
   $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){ 
     console.log('route change from:', fromState, ' to: ', toState);
   });
@@ -60,6 +59,11 @@ angular.module('pyroApp', ['ui.router', 'pyroApp.controllers'])
         parent:'nav',
         url: "/pyro",
         templateUrl:"components/instance/instance-list.html",
+        resolve:{
+          instanceList:function(pyroMaster){
+            return pyroMaster.getListByAuthor('instances');
+          }
+        },
         controller: 'InstanceListCtrl'
       })
       
@@ -77,6 +81,7 @@ angular.module('pyroApp', ['ui.router', 'pyroApp.controllers'])
         abstract:true,
         // controller:'InstanceDetailCtrl',
         url:'/pyro/:appId',
+
         views: {
           'sidemenu':{
             templateUrl:'templates/sidebar.html'
@@ -91,7 +96,12 @@ angular.module('pyroApp', ['ui.router', 'pyroApp.controllers'])
         parent:'nav',
         url: '/:appId/dash',
         templateUrl:"components/dash/dash-index.html",
-        controller: 'DashCtrl'
+        controller: 'DashCtrl',
+        resolve:{
+          instance:function(pyroMaster, $stateParams){
+            return pyroMaster.loadObject('instances', $stateParams.appId);
+          }
+        },
       })
       .state('admin', {
         parent:'instance',

@@ -98,68 +98,36 @@
         argObject.author = auth.uid;
       }
       var newObj = this.mainRef.child(argListName).push(argObject, function(){
-        console.log('New object of type:' + argListName + ' was created successfully:', newObj);
         callback(newObj);
-      })
+      });
     },
     getUser: function(callback) {
       if (this.getAuth() != null) {
-        console.log('Authenticated user with email:', this.getAuth().password.email);
         var self = this;
         userById(this.getAuth().uid, self.mainRef.child('users'), function(returnedAccount){
-          console.log('checkForUser loaded user:', returnedAccount);
           callback(returnedAccount);
         });
       } else {
         callback(null);
       }
     },
-    getListByAuthor:function(argListName, callback){
-      // [TODO] Better method of checking auth
-      console.log('getListByAuthor:', argListName);
+    loadObject:function(argListName, argObjectId, callback){
       var listRef = this.mainRef.child(argListName);
-      this.getUser(function(account){
-        if(account != null) {
-          console.log('getInstances running for:', account);
-          listRef.orderByChild('author').equalTo(account.email).limitToFirst(1).on('value', function(userInstancesSnap){
-            callback(userInstancesSnap.val());
-          });
-        } 
+      listRef.child(argObjectId).on('value', function(objectSnap){
+        callback(objectSnap.val());
       });
-    },
-    // Functions specific to managing Pyro instances (Pyro inception)
-    getInstances: function(callback) {
-      // [TODO] Better method of checking auth
-      var instancesRef = this.instancesRef;
-      this.getUser(function(account){
-        if(account != null) {
-          console.log('getInstances running for:', account);
-          instancesRef.orderByChild('author').equalTo(account.email).on('value', function(userInstancesSnap){
-            callback(userInstancesSnap.val());
-          });
-        } 
-      });
-    },
-    loadInstance: function(argInstanceData, successCb, errorCb) {
-      console.log('loadInstance:', argInstanceData);
-      this.currentInstance = {name:argInstanceData.name}
-      checkForInstance(this, function(instanceRef){
-        successCb(instanceRef.val());
-      }, errorCb);
     },
     instanceRef: function(argInstanceData, successCb, errorCb) {
       console.log('loadInstance:', argInstanceData);
       this.currentInstance = {name:argInstanceData.name}
       checkForInstance(this, successCb, errorCb);
     },
-    // addAdminModule: function() {
-    //   console.log('add admin module called', this);
-    //   var self = this;
-    //   if(PyroAdmin) {
-    //     console.log('PyroAdmin exists... Creating instance');
-    //     var pyroAdmin = new PyroAdmin(self);
-    //   }
-    // },
+    getObjectCount: function(argListName, callback){
+      var self = this;
+      this.mainRef.child(argListName).on('value', function(usersListSnap){
+        callback(usersListSnap.numChildren());
+      });
+    },
     getUserCount: function(callback){
       var self = this;
       this.mainRef.child('users').on('value', function(usersListSnap){

@@ -4,7 +4,7 @@
   /* Services */
   angular.module('pyroApp.services',
     [
-    'pyro'
+    'pyro.service'
     ])
 
 })();

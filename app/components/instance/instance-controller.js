@@ -1,12 +1,13 @@
 angular.module('pyroApp.controllers')
 
-.controller('InstanceListCtrl', function($scope, $state, $rootScope) {
+.controller('InstanceListCtrl', function($scope, $state, $rootScope, pyroMaster, instanceList) {
   console.log('InstanceListCtrl');
   // Form data for the login modal
- $scope.newAppData = {};
- $scope.err = {};
- $scope.loading = true;
- $scope.cardClasses = ['bg-primary lt', 'bg-info lt', 'bg-success lter', 'bg-warning lter', 'bg-light dk'];
+  $scope.newAppData = {};
+  $scope.err = {};
+  $scope.loading = true;
+  $scope.cardClasses = ['bg-primary lt', 'bg-info lt', 'bg-success lter', 'bg-warning lter', 'bg-light dk'];
+  $rootScope.instanceList = instanceList;
   $scope.viewDetail = function(argName) {
     console.log('viewDetail called with: ', argName);
     console.log('loading:', $rootScope.instanceList[argName]);
@@ -14,7 +15,7 @@ angular.module('pyroApp.controllers')
   }
   $scope.createInstance = function() {
   	console.log('createInstance called', $scope.newAppData);
-  	$rootScope.pyro.createInstance($scope.newAppData, function(returnedInstance){
+  	pyroMaster.createInstance($scope.newAppData, function(returnedInstance){
   		console.log('instance created successfully:', returnedInstance);
   		$state.go('dash', {appId:returnedInstance.key()});
   	}, function(err){

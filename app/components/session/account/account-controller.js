@@ -1,13 +1,13 @@
 
 angular.module('pyroApp.controllers')
-.controller('SignupCtrl', function($rootScope, $scope, $state, pyroService) {
+.controller('SignupCtrl', function($rootScope, $scope, $state, pyroMaster) {
   console.log('SignupCtrl');
 	$scope.signupData = {};
   $scope.err = {};
   $scope.createAccount = function() {
   	console.log('createAccount called');
     assertValidAccountProps();
-    pyroService.signup($scope.signupData).then(function(userAccount){
+    pyroMaster.signup($scope.signupData).then(function(userAccount){
       console.log('Signup successful:', userAccount);
       $state.go('home');
     }, function(err){
