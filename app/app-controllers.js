@@ -1,4 +1,4 @@
-angular.module('pyroApp.controllers', [])
+angular.module('pyroApp.controllers', ['pyroApp.services'])
 .controller('RootCtrl', function($scope, $state, $rootScope, $stateParams) {
   console.log('RootCtrl');
   $scope.inDash = false;
@@ -39,16 +39,6 @@ angular.module('pyroApp.controllers', [])
 })
 .controller('NavbarCtrl', function($scope, $state, $rootScope, $stateParams) {
   console.log('NavbarCtrl');
-
-  $scope.init = function() {
-	 // $rootScope.pyro.getListByAuthor('instances', function(returnedList){
-	 // 	console.log('getInstances successful:', returnedList);
-	 // 	$rootScope.instanceList = returnedList;
-	 // 	$rootScope.$apply();
-	 // });
- 	// $rootScope.instanceList = [{name:'Example App'}];
-
-  };
 	$scope.logout = function() {
 		$rootScope.pyro.logout();
 		$state.go('login');

@@ -3,7 +3,9 @@
       <a class="navbar-brand block" href="index.html">Pyro</a>
       <section class="m-b-lg">
         <header class="wrapper text-center">
-          <strong>Please fill out the form below</strong>
+          <strong ng-hide="err.message">Please fill out the form below</strong>
+          <strong ng-show="err.message" style="color:red;">{{err.message || 'Error'}}</strong>
+
         </header>
         <form>
           <div class="list-group">
@@ -19,10 +21,10 @@
           </div>
           <div class="checkbox m-b">
             <label>
-              <input type="checkbox"> Agree the <a href="#">terms and policy</a>
+              <input type="checkbox"> Agree the <a href="">terms and policy</a>
             </label>
           </div>
-          <button type="submit" class="btn btn-lg btn-primary btn-block">Sign up</button>
+          <button type="submit" class="btn btn-lg btn-primary btn-block" ng-click="createAccount()">Sign up</button>
           <div class="line line-dashed"></div>
           <p class="text-muted text-center"><small>Already have an account?</small></p>
           <a href="" ui-sref="login" class="btn btn-lg btn-default btn-block">Sign in</a>
@@ -34,7 +36,7 @@
   <footer id="footer">
     <div class="text-center padder clearfix">
       <p>
-        <small>Web app framework built for Firebase<br>&copy; 2014 Pyro Labs LLC</small>
+        <small><br>&copy; 2014 Pyro Labs LLC</small>
       </p>
     </div>
   </footer>

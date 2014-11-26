@@ -37,8 +37,9 @@
     //  }
   }
   Pyro.prototype = {
-    userSignup: function(argUserData, successCb, errorCb) {
-      emailSignup(argSignupData, successCb, errorCb);
+    userSignup: function(argSignupData, successCb, errorCb) {
+      var self = this;
+      emailSignup(argSignupData, self, successCb, errorCb);
     },
     authAnonymously: function(){
       //check for auth info
@@ -65,14 +66,16 @@
       // check for existnace of main ref
       authWithPassword(argLoginData, self.mainRef, successCb, errorCb);
     },
-    logout:function(){
+    logout:function(callback){
       this.mainRef.unauth();
+      if(callback){
+        callback();
+      }
     },
     getAuth: function() {
       console.log('getAuth called');
       var authData = this.mainRef.getAuth();
       if (authData) {
-        console.log('getAuth returned:', authData);
         return authData;
       } else {
         console.warn('Not Authenticated');
@@ -159,8 +162,6 @@
     // },
     getUserCount: function(callback){
       var self = this;
-      console.log('getUserCount:', self.mainRef.child('users'));
-
       this.mainRef.child('users').on('value', function(usersListSnap){
         callback(usersListSnap.numChildren());
       });
@@ -276,20 +277,20 @@
     })
    }
   
-  function emailSignup(argSignupData, successCb, errorCb) {
-    this.mainRef.createUser(argSignupData, function(error) {
+  function emailSignup(argSignupData, argThis, successCb, errorCb) {
+    argThis.mainRef.createUser(argSignupData, function(error) {
       if (error === null) {
         console.log("User created successfully");
         // Login with new account and create profile
-          currentThis.login(argSignupData, function(authData){
-            createUserProfile(authData, currentThis.mainRef, function(userAccount){
+          argThis.login(argSignupData, function(authData){
+            createUserProfile(authData, argThis.mainRef, function(userAccount){
               var newUser = new User(authData);
-                successCb(newUser);
+              successCb(newUser);
             });
           });
       } else {
         console.error("Error creating user:", error.message);
-        errorCb(error.message);
+        errorCb(error);
       }
     });
   }

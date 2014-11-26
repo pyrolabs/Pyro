@@ -5,7 +5,7 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title>Pyro</title>
     <!-- Ionic Css -->
-    
+
     <!-- Scale Admin Theme CSS -->
     <link rel="stylesheet" href="lib/scale-admin/css/bootstrap.css" type="text/css" />
       <link rel="stylesheet" href="lib/scale-admin/css/animate.css" type="text/css" />
@@ -29,10 +29,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.11/angular-ui-router.js"></script>
     
     <script src="cdn/pyro/pyro.js"></script>
+    <script src="cdn/pyroService/pyroService.js"></script>
+
 
     <!-- Angular App -->
     <script src="app.js"></script>
-    <script src="controllers.js"></script>
+    <script src="app-controllers.js"></script>
+    <script src="app-services.js"></script>
     <script src="components/instance/instance-controller.js"></script>
     <script src="components/session/login/login-controller.js"></script>
     <script src="components/session/account/account-controller.js"></script>
@@ -41,7 +44,7 @@
 
 
   </head>
-  <body ng-app="pyroApp" ng-controller="RootCtrl" ng-init="init()">
+  <body ng-app="pyroApp" ng-controller="RootCtrl" ng-init="init()" ng-cloak>
      <!-- navbar -->
     <div ui-view="navbar"></div>
     <!-- main container -->
