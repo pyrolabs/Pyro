@@ -34,6 +34,7 @@ angular.module('pyroApp.controllers', ['pyroApp.services'])
   };
 	$scope.logout = function() {
 		$rootScope.pyro.logout();
+		$scope.err.message = 'Logout Successful';
 		$state.go('login');
 	};
 })

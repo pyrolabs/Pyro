@@ -1,17 +1,16 @@
 angular.module('pyroApp.controllers')
-.controller('LoginCtrl', function($scope, $state, $rootScope) {
+.controller('LoginCtrl', function($scope, $state, $rootScope, pyroService) {
   console.log('LoginCtrl')
   // Form data for the login modal
   $scope.loginData = {};
   $scope.login = function() {
-    console.log('emailLogin called:');
-    $rootScope.pyro.login($scope.loginData, function(userData) {
+    console.log('[LoginCtrl] Login called:');
+    pyroService.login($scope.loginData).then(function(userData){
       console.log('login successful:', userData);
-      $rootScope.account = userData;
       $state.go('home');
-    }, function(err) {
+    }, function(err){
       $scope.err = err;
-      $scope.$apply();
+      console.error('[LoginCtrl] Error Logging In:');
     });
   };
 })

@@ -20,8 +20,8 @@ angular.module('pyro', [])
 			var deferredLogin = $q.defer();
 			pyro.login(argLoginData, function(returnedAccount){
 				deferredLogin.resolve(returnedAccount);
-			}, function(){
-				deferredLogin.reject();
+			}, function(err){
+				deferredLogin.reject(err);
 			});
 			return deferredLogin.promise;
 		},
@@ -38,19 +38,15 @@ angular.module('pyro', [])
 			}
 			return deferred.promise;
 		},
-		passwordLogin: function(argUserData) {
+		passwordLogin: function(argLoginData) {
 			console.log('passwordLogin:', arguments);
-			var deferred = $q.defer();
-			fbutil.ref().authWithPassword(argUserData, function(error, authData){
-				if (error) {
-			    console.log('Login Failed!', error);
-			    deferred.reject(error);
-			  } else {
-			    console.log('Authenticated successfully with payload:', authData);
-			    deferred.resolve(authData);
-			  }
+			var deferredLogin = $q.defer();
+			pyro.login(argLoginData, function(returnedAccount){
+				deferredLogin.resolve(returnedAccount);
+			}, function(err){
+				deferredLogin.reject(err);
 			});
-			return deferred.promise;
+			return deferredLogin.promise;
 		},
 		logout: function() {
 			var deferred = $q.defer();

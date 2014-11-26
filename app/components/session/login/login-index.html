@@ -2,9 +2,10 @@
     <div class="container aside-xl">
       <a class="navbar-brand block" href="index.html">Pyro</a>
       <section class="m-b-lg">
-<!--         <header class="wrapper text-center">
-          <strong>Sign in to get in touch</strong>
-        </header> -->
+        <header class="wrapper text-center">
+          <strong ng-hide="err.message">Please login below</strong>
+          <strong ng-show="err.message" style="color:red;">{{err.message || 'Error'}}</strong>
+        </header>
         <form>
           <div class="list-group">
             <div class="list-group-item">
