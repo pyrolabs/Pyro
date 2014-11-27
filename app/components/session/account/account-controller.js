@@ -6,7 +6,6 @@ angular.module('pyroApp.controllers')
   $scope.err = {};
   $scope.createAccount = function() {
   	console.log('createAccount called');
-    assertValidAccountProps();
     pyroMaster.signup($scope.signupData).then(function(userAccount){
       console.log('Signup successful:', userAccount);
       $state.go('home');
@@ -18,24 +17,6 @@ angular.module('pyroApp.controllers')
       }
     });
   };
-    function assertValidAccountProps() {
-      if( !$scope.signupData.email ) {
-        $scope.err.message = 'Please enter an email address';
-      }
-      else if( !$scope.signupData.password || !$scope.signupData.confirm ) {
-        $scope.err.message = 'Please enter a password';
-      }
-      else if($scope.signupData.password !== $scope.signupData.confirm ) {
-        $scope.err.message = 'Passwords do not match';
-        $scope.signupData.password = null;
-        $scope.signupData.confirm = null;
-      }
-      return !$scope.err.message;
-    }
-
-    function errMessage(err) {
-      return angular.isObject(err) && err.message? err.message : err + '';
-    }
 })
 .controller('AccountCtrl', function($rootScope, $scope, $state) {
   console.log('AccountCtrl');
