@@ -66,6 +66,13 @@ angular.module('pyro.service', [])
 			getAuth: function(){
 				return pyro.getAuth();
 			},
+			getUser: function(){
+				var deferred = $q.defer();
+				pyro.getUser(function(userAccount){
+					deferred.resolve(userAccount);
+				});
+				return deferred.promise;
+			},
 			getListByAuthor: function(argListName) {
 				var deferredLoad = $q.defer();
 				pyro.getListByAuthor(argListName, function(returnedList){
@@ -73,7 +80,7 @@ angular.module('pyro.service', [])
 				});
 				return deferredLoad.promise;
 			},
-			createObject:function(argObjectName) {
+			createObject:function(argListName, argObject) {
 				var deferredCreate = $q.defer();
 				pyro.createObject(argListName, argObject, function(newObject){
 					deferredCreate.resolve(newObject);

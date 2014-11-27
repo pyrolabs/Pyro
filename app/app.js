@@ -28,6 +28,11 @@ angular.module('pyroApp', ['ui.router', 'pyroApp.controllers', 'pyroApp.services
     })
     .state('nav', {
       controller:'NavbarCtrl',
+      resolve:{
+        user:function(pyroMaster){
+          return pyroMaster.getUser();
+        }
+      },
       views: {
         'main':{
           template:'<ui-view></ui-view>'

@@ -50,10 +50,10 @@
                       <a href="" ng-click="simpleSetup()" class="btn btn-s-md btn-default disabled">Simple Setup</a>
                     </div>
                     <div ng-show="existingMode == true" ng-hide="existingMode != true">
-                      <a href="" ng-click="manage()"  class="btn btn-s-md btn-info">Start Managing</a>
+                      <a href="" ng-click="createInstance()"  class="btn btn-s-md btn-info">Start Managing</a>
                       <div class="form-group " style="margin-top:40px;">
                         <label class="pull-left">Firebase Url</label>
-                        <input type="text" ng-model="newApp.url" placeholder="https://yourApp.firebaseio.com" class="form-control" style="border-bottom:dotted; border-width:2px; border-color:#cbd5dd;">
+                        <input type="text" ng-model="newAppData.url" placeholder="https://yourApp.firebaseio.com" class="form-control" style="border-bottom:dotted; border-width:2px; border-color:#cbd5dd;">
                       </div>
                     </div>
                   </div>
