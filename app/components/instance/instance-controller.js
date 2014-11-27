@@ -7,7 +7,10 @@ angular.module('pyroApp.controllers')
   $scope.err = {};
   $scope.loading = true;
   $scope.cardClasses = ['bg-primary lt', 'bg-info lt', 'bg-success lter', 'bg-warning lter', 'bg-light dk'];
-  $rootScope.instanceList = instanceList;
+  // $rootScope.instanceList = instanceList;
+  pyroMaster.library.getListByAuthor('instances', function(returnedList){
+    $rootScope.instanceList = returnedList;
+  });
   // [TODO] Use different objects for the different create types
   console.log('instanceList loaded:', instanceList)
   $scope.viewDetail = function(argName) {

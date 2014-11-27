@@ -46,6 +46,7 @@ angular.module('pyro.service', [])
 		var account = null;
 		var pyro = new Pyro({url:argPyroUrl});
 		return {
+			library: pyro,
 			signup: function(argSignupData) {
 				var deferred = $q.defer();
 				pyro.userSignup(argSignupData, function(userAccount) {
