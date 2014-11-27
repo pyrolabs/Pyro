@@ -8,6 +8,7 @@ angular.module('pyroApp.controllers')
   $scope.loading = true;
   $scope.cardClasses = ['bg-primary lt', 'bg-info lt', 'bg-success lter', 'bg-warning lter', 'bg-light dk'];
   $rootScope.instanceList = instanceList;
+  // [TODO] Use different objects for the different create types
   console.log('instanceList loaded:', instanceList)
   $scope.viewDetail = function(argName) {
     console.log('viewDetail called with: ', argName);
@@ -28,6 +29,24 @@ angular.module('pyroApp.controllers')
     }
   	else {
       $scope.err = {message:'Please enter a url for your new instance'};
+    }
+  }
+  $scope.simpleSetup = function(){
+    console.log('[InstanceListCtrl] simpleSetup called:');
+    pyroMaster.newPyroInstance($scope.newAppData.name).then(function(returnedInfo){
+      console.log('[InstanceListCtrl] newPyroInstance successful with:', returnedInfo );
+      $state.go('dash', {appId:$scope.newAppData.name});
+    }, function(err){
+      console.error('[InstanceListCtrl] error creating new instance:', err);
+      $scope.err = err;
+    });
+  }
+  $scope.startDelete = function(argName){
+    console.log('[InstanceListCtrl] startDelete called');
+    var r = confirm("Are you sure you want to delete this app?");
+    if(r == true) {
+      console.log('confirm was true, deleteing:', argName);
+      pyroMaster.deleteObject('instances', argName);
     }
   }
 })

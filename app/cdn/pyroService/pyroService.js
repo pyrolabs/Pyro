@@ -2,10 +2,41 @@ angular.module('pyro.service', [])
 .factory('pyro', ['$rootScope', 'FBURL','pyroMaker',  function($rootScope, FBURL, pyroMaker) {
 	return pyroMaker(FBURL);
 }])
-.factory('pyroMaster', ['pyroMaker',  function(pyroMaker) {
+.factory('pyroMaster', ['pyroMaker', '$http', '$q', function(pyroMaker, $http, $q) {
 	var pyro = pyroMaker('http://pyro.firebaseio.com');
-	pyro.newPyroInstance = function(){
+	var pyroServerUrl = "https://pyro-server.herokuapp.com/"
+	var auth = pyro.getAuth();
+	pyro.newPyroInstance = function(argInstanceName){
 		//request server for new instance. Create
+		console.log('newPyroInstance called with:', argInstanceName);
+		var deferred = $q.defer();
+		var postObj = {name: argInstanceName, author:auth.uid};
+		// $resource(pyroServerUrl, postObj,{
+		// 	customAction:{method:'POST', headers:{'Content-Type':'text/plain'}}
+		// })
+		$http.post(pyroServerUrl + 'create', postObj).success(function(data, status, headers){
+			console.log('postSuccessful:', data);
+			deferred.resolve(data);
+		}).error(function(data, status, headers){
+			var errorObj = {data:data, status:status, headers:headers}
+			console.error('error creating new instance:', errorObj);
+			deferred.reject(errorObj);
+		});
+		return deferred.promise;
+	}
+	pyro.deleteInstance = function(){
+		console.log('deleteInstance called with:', argInstanceName);
+		var deferred = $q.defer();
+		var postObj = {name: argInstanceName};
+		$http.post(pyroServerUrl + 'delete', postObj).success(function(data, status, headers){
+			console.log('deleteSuccessful:', data);
+			deferred.resolve(data);
+		}).error(function(data, status, headers){
+			var errorObj = {data:data, status:status, headers:headers}
+			console.error('error creating new instance:', errorObj);
+			deferred.reject(errorObj);
+		});
+		return deferred.promise;
 	}
 	return pyro;
 }])
@@ -86,9 +117,16 @@ angular.module('pyro.service', [])
 			},
 			createObject:function(argListName, argObject) {
 				var deferredCreate = $q.defer();
-				pyro.createObject(argListName, argObject, function(newObject){
-					deferredCreate.resolve(newObject);
-				});
+				// [TODO] Do this correctly with the library
+				if(argListName == 'instances'){
+					pyro.createInstance(argObject, function(newObject){
+						deferredCreate.resolve(newObject);
+					});
+				} else {
+					pyro.createObject(argListName, argObject, function(newObject){
+						deferredCreate.resolve(newObject);
+					});
+				}
 				return deferredCreate.promise;
 			},
 			loadObject:function(argListName, argObjectId){
@@ -97,6 +135,10 @@ angular.module('pyro.service', [])
 					deferredLoad.resolve(loadedObject);
 				});
 				return deferredLoad.promise;
+			},
+			deleteObject:function(argListName, argObjectId){
+				pyro.deleteObject(argListName, argObjectId);
+				console.log(argObjectId + ' was removed from the ' + argListName + ' list');
 			},
 			getObjectCount:function(argListName) {
 				var deferred = $q.defer();

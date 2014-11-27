@@ -10,7 +10,7 @@ angular.module('pyroApp.controllers')
       $state.go('home');
     }, function(err){
       $scope.err = err;
-      console.error('[LoginCtrl] Error Logging In:');
+      console.error('[LoginCtrl] Error Logging In:', err);
     });
   };
 })

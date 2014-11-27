@@ -6,6 +6,9 @@ angular.module('pyroApp', ['ui.router', 'pyroApp.controllers', 'pyroApp.services
     console.log('route change from:', fromState, ' to: ', toState);
   });
 })
+.config(['$sceDelegateProvider', function($sceDelegateProvider){
+  $sceDelegateProvider.resourceUrlWhitelist(['self', 'https://pyro-server.herokuapp.com/**']);
+}])
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('login', {
