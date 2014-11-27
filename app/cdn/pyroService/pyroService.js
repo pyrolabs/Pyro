@@ -3,7 +3,11 @@ angular.module('pyro.service', [])
 	return pyroMaker(FBURL);
 }])
 .factory('pyroMaster', ['pyroMaker',  function(pyroMaker) {
-	return pyroMaker('http://pyro.firebaseio.com');
+	var pyro = pyroMaker('http://pyro.firebaseio.com');
+	pyro.newPyroInstance = function(){
+		//request server for new instance. Create
+	}
+	return pyro;
 }])
 .factory('pyroMaker', ['$q', function($q){
 	return function (argPyroUrl){

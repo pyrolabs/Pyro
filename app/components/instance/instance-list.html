@@ -8,7 +8,7 @@
               <span class="font-thin">Applications</span> 
             </div>
             <div class="row m-b">
-              <div class="col-sm-6 col-md-4" ng-repeat="instance in instanceList | filter:search.term">
+              <div class="col-sm-6 col-md-4" ng-repeat="instance in instanceList">
                 <section class="panel b-a" >
                   <div class="panel-heading no-border" ng-class="cardClasses[$index]">
                     <!-- Might be good for notifications
@@ -53,7 +53,11 @@
                       <a href="" ng-click="createInstance()"  class="btn btn-s-md btn-info">Start Managing</a>
                       <div class="form-group " style="margin-top:40px;">
                         <label class="pull-left">Firebase Url</label>
-                        <input type="text" ng-model="newAppData.url" placeholder="https://yourApp.firebaseio.com" class="form-control" style="border-bottom:dotted; border-width:2px; border-color:#cbd5dd;">
+                        <div class="row">
+                        https://
+                        <input type="text" ng-model="newAppData.name" placeholder="yourApp" class="form-control" style="width:100px; display:inline;">
+                        firebaseio.com
+                        </div>
                       </div>
                     </div>
                   </div>
