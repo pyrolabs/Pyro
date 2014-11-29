@@ -11,6 +11,17 @@ angular.module('pyroApp', ['ui.router', 'pyroApp.controllers', 'pyroApp.services
 }])
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
+
+    .state('landing', {
+      url: '/',
+      views:{
+        'main':{
+          templateUrl: 'components/landing/landing-index.html',
+          controller: 'LandingCtrl'
+        }
+      }
+    })
+
     .state('login', {
       url: '/login',
       views:{
@@ -119,6 +130,6 @@ angular.module('pyroApp', ['ui.router', 'pyroApp.controllers', 'pyroApp.services
       })
     
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/login');
+  $urlRouterProvider.otherwise('/');
 });
 

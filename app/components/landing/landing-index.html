@@ -1,0 +1,43 @@
+<style>
+  #landing {
+      position:absolute;
+      top:60px; right:0;
+      bottom:0; left:0;
+      text-align: center;
+      vertical-align: middle;
+  }
+</style>
+
+<section id="landing">
+
+  <h1 style="font-size:20em;font-weight:100;">pyro</h1>
+  <h2>realtime apps with ease</h2>
+  <a href="javascript:void(0)" class="btn btn-warning btn-fab btn-raised" style="positon"><i class="fa fa-fire"></i></a>
+
+  <div style="margin: 8em auto;">
+    <h4>sign up for the beta:</h4>
+    <div style="width:400px;margin: 1.5em auto;position:relative;">
+      <input type="text" class="form-control" placeholder="you@example.com" style="position:absolute;top:0;text-align:center;">
+      <a href="javascript:void(0)" class="btn btn-warning btn-raised" style="margin-top: 3em;">submit<div class="ripple-wrapper"></div></a>
+    </div>
+  </div>
+</section>
+
+
+
+<script>
+$(function() {
+    function abso() {
+        $('#landing').css({
+            position: 'absolute',
+            width: $(window).width(),
+            height: $(window).height()
+        });
+    }
+    $(window).resize(function() {
+        abso();         
+    });
+    abso();
+});
+</script>
+
