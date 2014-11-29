@@ -13,4 +13,6 @@ angular.module('pyroApp.controllers')
   $scope.pyroInstance.getObjectCount('sessions').then(function(sessionCount){
   	$scope.sessionCount = sessionCount;
   });
+
+  
 })

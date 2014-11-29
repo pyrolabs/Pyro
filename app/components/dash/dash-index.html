@@ -1,39 +1,44 @@
-<section ng-init="init()">
+<section id="content" class="dash" ng-init="init()">
       <section class="hbox stretch">
         <!-- .aside -->
-        <aside class="bg-black aside-md hidden-print hidden-xs" id="nav">          
+        <aside class="bg-white aside-md hidden-print hidden-xs" id="nav">          
           <section class="vbox">
             <section class="w-f scrollable">
               <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railOpacity="0.2">           
-
-
                 <!-- nav -->                 
                 <nav class="nav-primary hidden-xs">
-                  <div class="text-muted text-sm hidden-nav-xs padder m-t-sm m-b-sm">{{pyroInstance.name || 'App'}} Dashboard</div>
+                <div class="btn-group" style="margin-left:10px;">
+                  <a class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cube" style="margin-right:10px;"></i>{{pyroInstance.name || 'App'}}<span class="caret"></span></a>
+                  <ul class="dropdown-menu dropdown-select"style="width:100%;text-align:center;">
+                      <li><a href="#"><input type="radio" name="b">1</a></li>
+                      <li><a href="#"><input type="radio" name="b">2</a></li>
+                      <li><a href="#"><input type="radio" name="b">3</a></li>
+                  </ul>
+                </div>
                   <ul class="nav nav-main" data-ride="collapse">
                     <li  class="active">
-                      <a href="" class="auto">
+                      <a ui-sref="/dash" class="auto">
                         <i class="fa fa-fire icon">
                         </i>
                         <span class="font-bold">Insights</span>
                       </a>
                     </li>
-                    <li  class="">
-                      <a href="" class="auto">
+                    <li  class="/trends">
+                      <a ui-sref="" class="auto">
                         <i class="i i-graph icon">
                         </i>
                         <span class="font-bold">Trends</span>
                       </a>
                     </li>
                     <li  class="">
-                      <a href="" class="auto">
+                      <a ui-sref="" class="auto">
                         <i class="i i-users2 icon">
                         </i>
                         <span class="font-bold">Users</span>
                       </a>
                     </li>
                     <li  class="">
-                      <a href="" class="auto">
+                      <a ui-sref="" class="auto">
                         <i class="i i-data2 icon">
                         </i>
                         <span class="font-bold">Admin</span>
@@ -58,39 +63,34 @@
           </section>
         </aside>
         <!-- /.aside -->
-        <section id="content">
+        <section id="dash">
           <section class="hbox stretch">
             <section>
               <section class="vbox">
                 <section class="scrollable padder">    
-                
-                        <header class="font-bold padder-v">
-                          <div class="center">
-                            <div class="btn-group">
-                              <button data-toggle="dropdown" class="btn btn-sm btn-rounded btn-default dropdown-toggle">
-                                <span class="dropdown-label">Daily</span> 
-                                <span class="caret"></span>
-                              </button>
-                              <ul class="dropdown-menu dropdown-select">
-                                  <li><a href="#"><input type="radio" name="b">Daily</a></li>
-                                  <li><a href="#"><input type="radio" name="b">Weekly</a></li>
-                                  <li><a href="#"><input type="radio" name="b">Monthly</a></li>
-                              </ul>
-                            </div>
-                          </div>
-                        </header>
+
+                  <header class="font-bold">
+                    <div class="hbox stretch">
+                      <div class="btn-group">
+                        <button data-toggle="dropdown" class="btn btn-sm btn-rounded btn-warning dropdown-toggle">
+                          <span class="dropdown-label">Daily</span> 
+                          <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-select">
+                            <li><a href=""><input type="radio" name="b">Daily</a></li>
+                            <li><a href=""><input type="radio" name="b">Weekly</a></li>
+                            <li><a href=""><input type="radio" name="b">Monthly</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </header>
 
                   <section class="row m-b-md">
-                    <div class="col-md-4" style="text-align:center;padding-top:2em;">
-                      <i class="i i-circle i-s-base hover-rotate" style="font-size:5em;position:relative;color:#fff;">
-                      <div class="text-dark" style="position:absolute;top:1.8em;font-size:0.2em;left:0;right:0;width:100%;text-align:center;">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-o"></i>
-                      </div>
-                      </i>
-                      <h2 class="text-dark">Attention</h2>
-                      <div class="panel b-a" style="text-align:left;padding-left:1em;">
+                    <div class="col-md-4" style="text-align:center;">
+                        <div class="text-center">
+                          <h2 class="text-dark">Attention</h2>
+                        </div>
+                      <div class="panel b-a padder-v padder-v" style="text-align:left;padding-left:1em;">
                         <a href="#" class="block padder-v hover">
                           <span class="i-s i-s-2x pull-left m-r-sm">
                             <i class="i i-circle i-s-base" style="color:rgb(242, 244, 248);"></i>
@@ -113,16 +113,11 @@
                         </a>
                       </div>
                     </div>
-                    <div class="col-md-4" style="text-align:center;padding-top:2em;">
-                      <i class="i i-circle i-s-base hover-rotate" style="font-size:5em;position:relative;color:#fff;">
-                      <div class="text-dark" style="position:absolute;top:1.8em;font-size:0.2em;left:0;right:0;width:100%;text-align:center;">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-o"></i>
-                        <i class="fa fa-star-o"></i>
+                    <div class="col-md-4" style="text-align:center;">
+                      <div class="text-center">
+                        <h2 class="text-dark">Stickiness</h2>
                       </div>
-                      </i>
-                      <h2 class="text-dark">Stickiness</h2>
-                      <div class="panel b-a" style="text-align:left;padding-left:1em;">
+                      <div class="panel b-a padder-v" style="text-align:left;padding-left:1em;">
                         <a href="#" class="block padder-v hover">
                           <span class="i-s i-s-2x pull-left m-r-sm">
                             <i class="i i-circle i-s-base" style="color:rgb(242, 244, 248);"></i>
@@ -145,16 +140,13 @@
                         </a>
                       </div>
                     </div>
-                    <div class="col-md-4" style="text-align:center;padding-top:2em;">
-                      <i class="i i-circle i-s-base hover-rotate" style="font-size:5em;position:relative;color:#fff;">
-                      <div class="text-dark" style="position:absolute;top:1.8em;font-size:0.2em;left:0;right:0;width:100%;text-align:center;">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
+                    <div class="col-md-4" style="text-align:center;">
+
+                      <div class="text-center">
+                        <h2 class="text-dark">Churn</h2>
                       </div>
-                      </i>
-                      <h2 class="text-dark">Churn</h2>
-                      <div class="panel b-a" style="text-align:left;padding-left:1em;">
+                      <div class="panel b-a padder-v" style="text-align:left;padding-left:1em;">
+
                         <a href="#" class="block padder-v hover">
                           <span class="i-s i-s-2x pull-left m-r-sm">
                             <i class="i i-circle i-s-base" style="color:rgb(242, 244, 248);"></i>

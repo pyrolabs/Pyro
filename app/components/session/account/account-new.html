@@ -1,9 +1,21 @@
-  <section id="content" class="m-t-lg wrapper-md animated fadeInDown">
+<div id="background-header">
+</div>
+<div id="background-container">
+</div>
+
+  <section id="content" class="panel b-a animated fadeIn">
+    <div class="panel-heading">
+      <!-- Might be good for notifications
+      <span class="pull-right badge dk m-t-sm">17</span> -->
+      <p class="h4 text-lt text-center m-t-sm m-b-sm block font-bold">Create Pyro Account</p>
+    </div>
+    <div class="panel-body text-center" style="padding-top:30px;">
+
+
     <div class="container aside-xl">
-      <a class="navbar-brand block" href="index.html">Pyro</a>
       <section class="m-b-lg">
         <header class="wrapper text-center">
-          <strong ng-hide="err.message">Please fill out the form below</strong>
+          <strong ng-hide="err.message">please fill out the form below:</strong>
           <strong ng-show="err.message" style="color:red;">{{err.message || 'Error'}}</strong>
         </header>
         <form>
@@ -30,12 +42,18 @@
         </form>
       </section>
     </div>
+
+
+    </div>
+    <div class="clearfix panel-footer ng-hide" ng-show="existingMode == true">
+      <a href="" ng-click="existingMode = false" class="pull-right"><i class="i i-trashcan text-muted"></i></a>
+    </div>
   </section>
-  <!-- footer -->
+
   <footer id="footer">
-    <div class="text-center padder clearfix">
+    <div class="text-center padder">
       <p>
-        <small><br>&copy; 2014 Pyro Labs LLC</small>
+        <small>Built by <a href="http://pyrolabs.io">PyroLabs</a><br>&copy; 2014</small>
       </p>
     </div>
   </footer>

@@ -1,9 +1,18 @@
-  <section id="content" class="m-t-lg wrapper-md animated fadeInUp">    
+<div id="background-container">
+</div>
+
+  <section id="content" class="panel b-a animated fadeIn">
+    <div class="panel-heading">
+      <!-- Might be good for notifications
+      <span class="pull-right badge dk m-t-sm">17</span> -->
+      <p class="h4 text-lt text-center m-t-sm m-b-sm block font-bold">Pyro</p>
+    </div>
+    <div class="panel-body text-center" style="padding-top:30px;">
+
     <div class="container aside-xl">
-      <a class="navbar-brand block" href="index.html">Pyro</a>
       <section class="m-b-lg">
         <header class="wrapper text-center">
-          <strong ng-hide="err.message">Please login below</strong>
+          <strong ng-hide="err.message">please login below:</strong>
           <strong ng-show="err.message" style="color:red;">{{err.message || 'Error'}}</strong>
         </header>
         <form>
@@ -15,16 +24,23 @@
                <input type="password" placeholder="Password" class="form-control no-border" ng-model="loginData.password">
             </div>
           </div>
-          <button type="submit" class="btn btn-lg btn-primary btn-block" ng-click="login()">Sign in</button>
+          <button type="submit" class="btn btn-lg btn-warning btn-block" ng-click="login()">Sign in</button>
           <div class="text-center m-t m-b"><a href=""><small>Forgot password?</small></a></div>
           <div class="line line-dashed"></div>
           <p class="text-muted text-center"><small>Do not have an account?</small></p>
-          <a href="" ui-sref="signup" class="btn btn-lg btn-default btn-block">Create an account</a>
+          <a href="" ui-sref="signup" class="btn btn-lg btn-default btn-secondary btn-block">Create an account</a>
         </form>
       </section>
     </div>
+
+
+    </div>
+    <div class="clearfix panel-footer ng-hide" ng-show="existingMode == true">
+      <a href="" ng-click="existingMode = false" class="pull-right"><i class="i i-trashcan text-muted"></i></a>
+    </div>
+    
   </section>
-  <!-- footer -->
+
   <footer id="footer">
     <div class="text-center padder">
       <p>

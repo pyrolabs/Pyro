@@ -1,5 +1,74 @@
 /* Empty. Add your own CSS if you like */
 
+body {
+}
+#content {
+  position:absolute;
+  top:0px; right:0;
+  bottom:0; left:0;
+}
+
+#background-header {
+  position:absolute;
+  height: 140px;
+  top:0; right:0;
+  bottom:auto; left:0;
+}
+#background-container {
+  position:absolute;
+  top:0; right:0;
+  bottom:0; left:0;
+}
+#footer{ 
+  position: absolute;
+  bottom:0;
+  left:0;
+  right:0;
+}
+
+#content.panel {
+  margin: 118px 72px;
+  height: 440px;
+}
+
+#content.panel .panel-heading {
+  font-size: 1.5em;
+}
+
+#landing {
+  margin: 0;
+  padding: 
+}
+/*
+.panel-heading .panel-warning {
+  background-color: 
+}*/
+
+.navbar-fixed-top {
+  text-align: center;
+  display: block;
+}
+
+.navbar-brand {
+  padding-top: 15px;
+}
+
+.vbox {
+  margin-top: 60px !important;
+}
+
+#nav .vbox {
+  margin-top: 60px !important;
+}
+
+#nav .btn-group {
+  border: none !important;
+  box-shadow: none !important;
+}
+#dash .vbox {
+  margin-top: 60px !important;
+}
+
 .list.card {
   max-width: 20em !important;
   margin-right: 1em !important;
@@ -7,4 +76,30 @@
 
 .item.item-input {
 border:none;padding-right:1em;
+}
+
+
+.btn-default.btn-secondary {
+  background-color: #FAFAFA !important;
+}
+.btn-warning.btn-secondary {
+  background-color: #FF9675 !important;
+}
+
+
+.navbar-dark {
+  background-color: #616161 !important;
+}
+.vertical-align {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+
+*,
+*:after,
+*::before {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
