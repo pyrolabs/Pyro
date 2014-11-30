@@ -83,7 +83,16 @@
                         </ul>
                       </div>
                     </div>
-                    <h2>App Url:{{pyroInstance.appUrl}}</h2>
+                      <h3 style="display:inline; margin-right:50px;">App Url:  
+                        <a ng-href="http://{{pyroInstance.appUrl}}" target="_blank">
+                        {{pyroInstance.appUrl}}
+                        </a>
+                      </h3>
+                      <h3 style="display:inline;">Data Url:  
+                        <a ng-href="http://{{pyroInstance.dbUrl}}" target="_blank">
+                          {{pyroInstance.dbUrl}}
+                        </a>
+                      </h3>
                   </header>
 
                   <section class="row m-b-md">
