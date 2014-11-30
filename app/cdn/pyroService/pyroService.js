@@ -1,29 +1,48 @@
 angular.module('pyro.service', [])
+// [TODO] Make this extensions of angularFire factories
 .factory('pyro', ['$rootScope', 'FBURL','pyroMaker',  function($rootScope, FBURL, pyroMaker) {
 	return pyroMaker(FBURL);
 }])
 .factory('pyroMaster', ['pyroMaker', '$http', '$q', function(pyroMaker, $http, $q) {
 	var pyro = pyroMaker('http://pyro.firebaseio.com');
+	var pyroBase = new Firebase('http://pyro.firebaseio.com');
 	var pyroServerUrl = "https://pyro-server.herokuapp.com/"
+	// var pyroServerUrl = "localhost:4000/"
 	var auth = pyro.getAuth();
-	pyro.newPyroInstance = function(argInstanceName){
+	pyro.generatePyro = function(argInstanceName){
 		//request server for new instance. Create
-		console.log('newPyroInstance called with:', argInstanceName);
+		console.log('generatePyro called with:', argInstanceName);
 		var deferred = $q.defer();
 		if(argInstanceName) {
 			//Instance name exists
-			var postObj = {name: argInstanceName, author:auth.uid};
+			var newInstanceRef = pyroBase.child('instances').child(argInstanceName);
 			if(auth) {
 				//Auth exists
-				var endpointLocation = pyroServerUrl + 'api/generate';
-				$http.post(endpointLocation, postObj).success(function(data, status, headers){
-					console.log('postSuccessful:', data);
-					deferred.resolve(data);
-				}).error(function(data, status, headers){
-					var errorObj = {data:data, status:status, headers:headers}
-					console.error('error creating new instance:', errorObj);
-					deferred.reject(errorObj);
-				});
+				var dbName = "pyro-"+ argInstanceName;
+				var dbUrl = "https://"+dbName+".firebaseio.com"
+				var instanceObj = {name: argInstanceName, author:auth.uid, dbName:dbName, createdAt:Firebase.ServerValue.TIMESTAMP, dbUrl:dbUrl};
+				newInstanceRef.set(instanceObj, function(err){
+					if(!err){
+						var endpointLocation = pyroServerUrl + 'api/generate';
+						var postObj = {name: argInstanceName, author:auth.uid};
+						$http.post(endpointLocation, postObj).success(function(data, status, headers){
+							console.log('postSuccessful:', data);
+							if(data.hasOwnProperty('url')){
+								newInstanceRef.update({appUrl:data.url});
+							}
+							// resolve with newInstanceRef data
+							deferred.resolve(newInstanceRef);
+						}).error(function(data, status, headers){
+							var errorObj = {data:data, status:status, headers:headers}
+							console.error('error creating new instance:', errorObj);
+							deferred.reject(errorObj);
+						});
+					} else {
+						console.error('Error setting new pyro:', err);
+						deferred.reject(err);
+					}
+				}); //---newInstanceRef.set()
+				
 			} else {
 				var errObj = {message:'You must be logged in to create an instance'};
 				deferred.reject(errObj);
@@ -32,7 +51,6 @@ angular.module('pyro.service', [])
 			var errObj = {message:'Please enter a valid app name'};
 			deferred.reject(errObj);
 		}
-
 		return deferred.promise;
 	}
 	pyro.deleteInstance = function(){
@@ -108,6 +126,16 @@ angular.module('pyro.service', [])
 				pyro.logout(function(){
 					deferred.resolve();
 				});
+				return deferred.promise;
+			},
+			promiseAuth: function(){
+				var deferred = $q.defer();
+				var auth = pyro.getAuth();
+				if(auth){
+					deferred.resolve(auth);
+				} else {
+					deferred.reject();
+				}
 				return deferred.promise;
 			},
 			getAuth: function(){

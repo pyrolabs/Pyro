@@ -38,7 +38,7 @@ angular.module('pyroApp.controllers')
   $scope.simpleSetup = function(){
     console.log('[InstanceListCtrl] simpleSetup called:');
     if($scope.newAppData && $scope.newAppData.hasOwnProperty('name')){
-      pyroMaster.newPyroInstance($scope.newAppData.name).then(function(returnedInfo){
+      pyroMaster.generatePyro($scope.newAppData.name).then(function(returnedInfo){
         console.log('[InstanceListCtrl] newPyroInstance successful with:', returnedInfo );
         $state.go('dash', {appId:$scope.newAppData.name});
       }, function(err){

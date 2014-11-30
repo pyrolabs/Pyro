@@ -16,7 +16,7 @@ angular.module('pyroApp', ['ui.router', 'pyroApp.controllers', 'pyroApp.services
 
 })
 .config(['$sceDelegateProvider', function($sceDelegateProvider){
-  $sceDelegateProvider.resourceUrlWhitelist(['self', 'https://pyro-server.herokuapp.com/**']);
+  $sceDelegateProvider.resourceUrlWhitelist(['self', 'https://pyro-server.herokuapp.com/**', 'http://localhost:4000']);
 }])
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
@@ -59,6 +59,9 @@ angular.module('pyroApp', ['ui.router', 'pyroApp.controllers', 'pyroApp.services
     .state('nav', {
       controller:'NavbarCtrl',
       resolve:{
+        auth: function(pyroMaster){
+          return pyroMaster.promiseAuth();
+        },
         user:function(pyroMaster){
           return pyroMaster.getUser();
         }
