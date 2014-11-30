@@ -19,7 +19,7 @@
                     <div ng-hide="existingMode == true || simpleMode == true" style="margin-bottom:40px;">
                       <a href="" ng-click="simpleMode = true" class="btn btn-s-md btn-default btn-secondary">Simple Setup</a>
                     </div>
-                    <div ng-show="simpleMode == true" ng-hide="existingMode != true" style="padding-left:10%; padding-right:10%;">
+                    <div ng-show="simpleMode == true" class="ng-hide" style="padding-left:10%; padding-right:10%;">
                       <a href="" ng-click="simpleSetup()"  class="btn btn-s-md" ng-class="{'btn-default disabled': !newAppData.name, 'btn-info':newAppData.name}">Create New App</a>
                       <h4 style="color:red;">{{err.message}}</h4>
                       <div class="form-group " style="margin-top:40px;">
@@ -32,7 +32,7 @@
                     <div  ng-hide="existingMode == true || simpleMode == true" style="margin-top:20px;">
                       <a href="" ng-click="existingMode = true"  class="btn btn-s-md btn-warning">Manage Existing Database</a>
                     </div>
-                    <div ng-show="existingMode == true" ng-hide="existingMode != true">
+                    <div ng-show="existingMode == true" ng-hide="existingMode != true || simpleMode == true">
                       <a href="" ng-click="createInstance()"  class="btn btn-s-md" ng-class="{'btn-default disabled': !newAppData.name, 'btn-info':newAppData.name}">Start Managing</a>
                       <h4 style="color:red;">{{err.message}}</h4>
                       <div class="form-group " style="margin-top:40px;">
