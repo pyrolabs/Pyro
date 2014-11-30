@@ -1,6 +1,6 @@
 angular.module('pyroApp.controllers')
 
-.controller('InstanceListCtrl', function($scope, $state, $rootScope, pyroMaster, instanceList) {
+.controller('InstanceListCtrl', function($scope, $state, $rootScope, pyroMaster, instanceList, PyroArray) {
   console.log('InstanceListCtrl');
   // Form data for the login modal
   $scope.newAppData = {};
@@ -10,8 +10,14 @@ angular.module('pyroApp.controllers')
   // $rootScope.instanceList = instanceList;
   // Update instance list with any updates that happen after page load
   pyroMaster.library.getListByAuthor('instances', function(returnedList){
+    console.log('[InstanceListCtrl]instance list loaded:', returnedList);
     $rootScope.instanceList = returnedList;
   });
+
+
+
+
+  console.log('pyroArray:', PyroArray('instances'));
   // [TODO] Use different objects for the different create types
   console.log('instanceList loaded:', instanceList)
   $scope.viewDetail = function(argName) {

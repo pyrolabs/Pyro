@@ -1,5 +1,31 @@
-angular.module('pyro.service', [])
+angular.module('pyro.service', ['firebase'])
 // [TODO] Make this extensions of angularFire factories
+// PyroArray Adds pyro to angular fire lists
+.factory('PyroFactory',function($FirebaseArray){
+	return function(snap){
+		return $FirebaseArray.$extendFactory({
+			// Overide $createObject behavior to return pyro object
+			$$added:function(snap){
+				if(snap.val().hasOwnProperty('dbUrl')){
+					var loadedObj = snap.val();
+					loadedObj.url = snap.val().dbUrl;
+					return new Pyro(loadedObj);
+				} else {
+					return snap.val();
+				}
+			}
+		});
+	}
+})
+.factory('PyroArray', function($firebase, PyroFactory){
+	return function(list){
+		var ref = new Firebase("https://pyro.firebaseio.com");
+		return $firebase(ref.child(list), {arrayFactory:PyroFactory()}).$asArray();
+	}
+})
+
+
+
 .factory('pyro', ['$rootScope', 'FBURL','pyroMaker',  function($rootScope, FBURL, pyroMaker) {
 	return pyroMaker(FBURL);
 }])

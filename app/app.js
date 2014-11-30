@@ -1,4 +1,4 @@
-angular.module('pyroApp', ['ui.router', 'pyroApp.controllers', 'pyroApp.services'])
+angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroApp.services' ])
 .constant('FBURL', 'https://pruvit.firebaseio.com/')
 .run(function($rootScope, FBURL, $window, $location) {
   console.log('Angular is running');
