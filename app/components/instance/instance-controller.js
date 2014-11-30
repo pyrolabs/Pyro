@@ -22,9 +22,9 @@ angular.module('pyroApp.controllers')
   $scope.createInstance = function() {
   	console.log('createInstance called', $scope.newAppData);
     if($scope.newAppData.hasOwnProperty('name')){
-      $scope.newAppData.url = "https://"+$scope.newAppData + "firebaseio.com"
-      pyroMaster.createObject('instances', $scope.newAppData, function(returnedInstance){
-        console.log('instance created successfully:', returnedInstance);
+      $scope.newAppData.url = "https://"+$scope.newAppData.name + ".firebaseio.com"
+      pyroMaster.createInstance($scope.newAppData).then(function(returnedInstance){
+        console.log('[InstanceListCtrl]instance created successfully:', returnedInstance);
         $state.go('dash', {appId:returnedInstance.key()});
       }, function(err){
         console.error('error creating instance:', err);

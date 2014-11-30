@@ -130,15 +130,22 @@ angular.module('pyro.service', [])
 			createObject:function(argListName, argObject) {
 				var deferredCreate = $q.defer();
 				// [TODO] Do this correctly with the library
-				if(argListName == 'instances'){
-					pyro.createInstance(argObject, function(newObject){
-						deferredCreate.resolve(newObject);
-					});
-				} else {
 					pyro.createObject(argListName, argObject, function(newObject){
 						deferredCreate.resolve(newObject);
 					});
-				}
+				return deferredCreate.promise;
+			},
+			createInstance:function(argObject) {
+				var deferredCreate = $q.defer();
+				// [TODO] Do this correctly with the library
+					pyro.createInstance(argObject, function(newObjectRef){
+						console.error('[pyroService] instance creation successful:', newObjectRef);
+						deferredCreate.resolve(newObjectRef);
+					}, function(err){
+						console.error('[pyroService] error creating instance');
+
+						deferredCreate.reject(argObject);
+					});
 				return deferredCreate.promise;
 			},
 			loadObject:function(argListName, argObjectId){
