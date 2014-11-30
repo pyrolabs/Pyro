@@ -21,7 +21,14 @@ angular.module('pyroApp', ['ui.router', 'pyroApp.controllers', 'pyroApp.services
         }
       }
     })
-
+    .state('betaThanks', {
+      url: '/betaThanks',
+      views:{
+        'main':{
+          templateUrl: 'components/landing/landing-thanks.html'
+        }
+      }
+    })
     .state('login', {
       url: '/login',
       views:{

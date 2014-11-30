@@ -1,0 +1,29 @@
+
+<section id="content" class="m-t-md animated fadeIn">    
+
+
+  <section id="landing" class="text-center">
+
+    <h1 style="font-size:10em; font-weight:100;">pyro</h1>
+    <h3 style="font-weight:100;">Thank you, we will email when its time</h2>
+    <a href="javascript:void(0)" class="btn btn-warning btn-secondary btn-fab btn-raised" style="positon"><i class="fa fa-fire"></i></a><br>
+    <a href="" class="btn btn-warning btn-raised" style="margin-top: 3em;">Our Blog<div class="ripple-wrapper"></div></a>
+  </section>
+
+  <script>
+  $(function() {
+      function abso() {
+          $('#landing').css({
+              position: 'absolute',
+              width: $(window).width(),
+              height: $(window).height()
+          });
+      }
+      $(window).resize(function() {
+          abso();         
+      });
+      abso();
+  });
+  </script>
+
+</section>
