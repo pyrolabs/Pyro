@@ -20,8 +20,9 @@ angular.module('pyroApp.controllers', ['pyroApp.services'])
 		$state.go('login');
 	};
 })
-.controller('NavbarCtrl', function($scope, $state, $rootScope, $stateParams) {
+.controller('NavbarCtrl', function($scope, $state, $rootScope, $stateParams, user) {
   console.log('NavbarCtrl');
+  $rootScope.account = user;
 })
 .filter('search', function(){
 	// All filters must return a function. The first parameter

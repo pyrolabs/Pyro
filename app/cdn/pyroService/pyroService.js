@@ -10,18 +10,29 @@ angular.module('pyro.service', [])
 		//request server for new instance. Create
 		console.log('newPyroInstance called with:', argInstanceName);
 		var deferred = $q.defer();
-		var postObj = {name: argInstanceName, author:auth.uid};
-		// $resource(pyroServerUrl, postObj,{
-		// 	customAction:{method:'POST', headers:{'Content-Type':'text/plain'}}
-		// })
-		$http.post(pyroServerUrl + 'create', postObj).success(function(data, status, headers){
-			console.log('postSuccessful:', data);
-			deferred.resolve(data);
-		}).error(function(data, status, headers){
-			var errorObj = {data:data, status:status, headers:headers}
-			console.error('error creating new instance:', errorObj);
-			deferred.reject(errorObj);
-		});
+		if(argInstanceName) {
+			//Instance name exists
+			var postObj = {name: argInstanceName, author:auth.uid};
+			if(auth) {
+				//Auth exists
+				var endpointLocation = pyroServerUrl + 'api/generate';
+				$http.post(endpointLocation, postObj).success(function(data, status, headers){
+					console.log('postSuccessful:', data);
+					deferred.resolve(data);
+				}).error(function(data, status, headers){
+					var errorObj = {data:data, status:status, headers:headers}
+					console.error('error creating new instance:', errorObj);
+					deferred.reject(errorObj);
+				});
+			} else {
+				var errObj = {message:'You must be logged in to create an instance'};
+				deferred.reject(errObj);
+			}
+		} else {
+			var errObj = {message:'Please enter a valid app name'};
+			deferred.reject(errObj);
+		}
+
 		return deferred.promise;
 	}
 	pyro.deleteInstance = function(){

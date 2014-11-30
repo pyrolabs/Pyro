@@ -8,6 +8,7 @@ angular.module('pyroApp.controllers')
   $scope.loading = true;
   $scope.cardClasses = ['bg-primary lt', 'bg-info lt', 'bg-success lter', 'bg-warning lter', 'bg-light dk'];
   // $rootScope.instanceList = instanceList;
+  // Update instance list with any updates that happen after page load
   pyroMaster.library.getListByAuthor('instances', function(returnedList){
     $rootScope.instanceList = returnedList;
   });
@@ -36,13 +37,16 @@ angular.module('pyroApp.controllers')
   }
   $scope.simpleSetup = function(){
     console.log('[InstanceListCtrl] simpleSetup called:');
-    pyroMaster.newPyroInstance($scope.newAppData.name).then(function(returnedInfo){
-      console.log('[InstanceListCtrl] newPyroInstance successful with:', returnedInfo );
-      $state.go('dash', {appId:$scope.newAppData.name});
-    }, function(err){
-      console.error('[InstanceListCtrl] error creating new instance:', err);
-      $scope.err = err;
-    });
+    if($scope.newAppData && $scope.newAppData.hasOwnProperty('name')){
+      pyroMaster.newPyroInstance($scope.newAppData.name).then(function(returnedInfo){
+        console.log('[InstanceListCtrl] newPyroInstance successful with:', returnedInfo );
+        $state.go('dash', {appId:$scope.newAppData.name});
+      }, function(err){
+        console.error('[InstanceListCtrl] error creating new instance:', err);
+        $scope.err = err;
+      });
+    }
+
   }
   $scope.startDelete = function(argName){
     console.log('[InstanceListCtrl] startDelete called');
