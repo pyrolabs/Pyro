@@ -1,36 +1,21 @@
-
 <section id="content" class="m-t-md animated fadeIn">    
-
-
   <section id="landing" class="text-center">
-
-    <h1 style="font-size:10em; font-weight:100;">pyro</h1>
-    <h3 style="font-weight:100;">realtime apps with ease</h2>
+    <h1 class="h1-md">pyro</h1>
+    <h3>realtime apps with ease</h2>
     <a href="javascript:void(0)" class="btn btn-warning btn-secondary btn-fab btn-raised" style="positon"><i class="fa fa-fire"></i></a>
-
     <div style="margin: 7em auto 0 auto;">
-      <h4 style="font-weight:100;">sign up for the beta:</h4>
+      <h4>sign up for the private alpha:</h4>
       <div style="width:400px;margin: 1em auto;position:relative;">
         <input type="text" class="form-control" placeholder="you@example.com" style="position:absolute;top:0;text-align:center;" ng-model="signupData.email">
         <a href="" class="btn btn-warning btn-raised" style="margin-top: 3em;" ng-click="betaSignup()">submit<div class="ripple-wrapper"></div></a>
       </div>
     </div>
   </section>
-
-  <script>
-  $(function() {
-      function abso() {
-          $('#landing').css({
-              position: 'absolute',
-              width: $(window).width(),
-              height: $(window).height()
-          });
-      }
-      $(window).resize(function() {
-          abso();         
-      });
-      abso();
-  });
-  </script>
-
 </section>
+
+<footer id="footer">
+  <div class="text-center padder">
+    <p><small>Built by<br/>&copy; 2014 <a href="https://www.linkedin.com/in/prescottprue">Prescott Prue</a> &amp; <a href="https://www.linkedin.com/in/sinanbolel">Sinan Bolel</a></small></p>
+  </div>
+  <script src="lib/resize/resize.js"></script>
+</footer>

@@ -1,14 +1,12 @@
-<div id="background-container">
-</div>
+<div id="background-container"></div>
 
-  <section id="content" class="panel b-a animated fadeIn">
-    <div class="panel-heading">
-      <!-- Might be good for notifications
-      <span class="pull-right badge dk m-t-sm">17</span> -->
-      <p class="h4 text-lt text-center m-t-sm m-b-sm block font-bold">Pyro</p>
-    </div>
-    <div class="panel-body text-center" style="padding-top:30px;">
-
+<section id="content" class="panel b-a animated fadeIn">
+  <div class="panel-heading">
+    <!-- Might be good for notifications
+    <span class="pull-right badge dk m-t-sm">17</span> -->
+    <p class="h4 text-lt text-center m-t-sm m-b-sm block font-bold">Pyro</p>
+  </div>
+  <div class="panel-body text-center" style="padding-top:30px;">
     <div class="container aside-xl">
       <section class="m-b-lg">
         <header class="wrapper text-center">
@@ -32,19 +30,16 @@
         </form>
       </section>
     </div>
+  </div>
+  <div class="clearfix panel-footer ng-hide" ng-show="existingMode == true">
+    <a href="" ng-click="existingMode = false" class="pull-right"><i class="i i-trashcan text-muted"></i></a>
+  </div>
+  
+</section>
 
-
-    </div>
-    <div class="clearfix panel-footer ng-hide" ng-show="existingMode == true">
-      <a href="" ng-click="existingMode = false" class="pull-right"><i class="i i-trashcan text-muted"></i></a>
-    </div>
-    
-  </section>
-
-  <footer id="footer">
-    <div class="text-center padder">
-      <p>
-        <small>Built by <a href="http://pyrolabs.io">PyroLabs</a><br>&copy; 2014</small>
-      </p>
-    </div>
-  </footer>
+<footer id="footer">
+  <div class="text-center padder">
+    <p><small>Built by<br/>&copy; 2014 <a href="https://www.linkedin.com/in/prescottprue">Prescott Prue</a> &amp; <a href="https://www.linkedin.com/in/sinanbolel">Sinan Bolel</a></small></p>
+  </div>
+  <script src="lib/resize/resize.js"></script>
+</footer>

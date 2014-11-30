@@ -1,10 +1,19 @@
 angular.module('pyroApp', ['ui.router', 'pyroApp.controllers', 'pyroApp.services'])
 .constant('FBURL', 'https://pruvit.firebaseio.com/')
-.run(function($rootScope, FBURL) {
+.run(function($rootScope, FBURL, $window, $location) {
   console.log('Angular is running');
   $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){ 
     console.log('route change from:', fromState, ' to: ', toState);
   });
+
+     $rootScope
+        .$on('$stateChangeSuccess',
+          function(event){
+            if (!$window.ga)
+              return;
+            $window.ga('send', 'pageview', { page: $location.path() });
+        });
+
 })
 .config(['$sceDelegateProvider', function($sceDelegateProvider){
   $sceDelegateProvider.resourceUrlWhitelist(['self', 'https://pyro-server.herokuapp.com/**']);

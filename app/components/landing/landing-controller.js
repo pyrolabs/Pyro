@@ -1,6 +1,6 @@
 angular.module('pyroApp.controllers')
 
-.controller('LandingCtrl', function($scope, $state, $rootScope, $stateParams, pyroMaster) {
+.controller('LandingCtrl', function($scope, $state, $rootScope, $stateParams, pyroMaster, $window) {
   console.log('LandingCtrl');
   $scope.betaSignup = function(){
   	console.log('betaSignup called');
@@ -11,6 +11,11 @@ angular.module('pyroApp.controllers')
   		pyroMaster.createObject('betaSignups', $scope.signupData).then(function(returnedObj){
   			console.log('betaSignup object created successfully:', returnedObj);
   			//redirect to thank you page
+        
+        // Send Google Analytics Event for beta mailing setup
+        // [TODO] This should be a service and error checked.
+        $window.ga('send','event', 'beta', 'signup', $scope.signupData.email);
+
   			$state.go('betaThanks');
   		});
   	} else {

@@ -2,6 +2,15 @@
 
 body {
 }
+
+h1, h2, h3, h4 {
+  font-weight:100;
+}
+
+.h1-md {
+  font-size:10em;
+}
+
 #content {
   position:absolute;
   top:0px; right:0;
@@ -55,6 +64,10 @@ body {
 
 .vbox {
   margin-top: 60px !important;
+}
+
+.vbox.no-margin {
+  margin-top: 0 !important;
 }
 
 #nav .vbox {
