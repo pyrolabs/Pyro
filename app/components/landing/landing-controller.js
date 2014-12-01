@@ -8,7 +8,7 @@ angular.module('pyroApp.controllers')
   	if($scope.signupData.email){
   		console.log('signing up with email:');
   		// [TODO] Add error handling
-  		pyroMaster.createObject('betaSignups', $scope.signupData).then(function(returnedObj){
+  		pyroMaster.$createObject('betaSignups', $scope.signupData).then(function(returnedObj){
   			console.log('betaSignup object created successfully:', returnedObj);
   			//redirect to thank you page
         
