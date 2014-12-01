@@ -34,7 +34,8 @@ angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroA
       url: '/betaThanks',
       views:{
         'main':{
-          templateUrl: 'components/landing/landing-thanks.html'
+          templateUrl: 'components/landing/landing-thanks.html',
+          controller: 'LandingCtrl'
         }
       }
     })

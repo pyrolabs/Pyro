@@ -23,7 +23,7 @@ angular.module('pyroApp.controllers')
   $scope.signupAttempt = function(){
     // Record Signup Attempt while signup is closed
     $scope.showSignupAttemptedMessage = true;
-    pyroMaster.$createObject('signupAttempts', $scope.signupData.email).then(function(objectSnap){
+    pyroMaster.$createObject('betaAccountCreateAttempts', $scope.signupData.email).then(function(objectSnap){
       console.log('Signup attempted:', objectSnap);
     });
   };

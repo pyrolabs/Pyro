@@ -10,6 +10,9 @@ angular.module('pyroApp.controllers', ['pyroApp.services'])
   		$scope.inDash = false;
   	}
   });
+
+
+
   // Form data for the login screen
 	$scope.newAppData = {};
 	$scope.err = {};
@@ -22,7 +25,23 @@ angular.module('pyroApp.controllers', ['pyroApp.services'])
 			$state.go('login');
 		});
 	};
+
+
+  $scope.betaUserData = {};
+  $scope.betaUserData.createdAt = '';
+  $scope.betaUserData.email = '';
+  $scope.pyroSymbolClicked = function() {
+    $scope.betaUserData.createdAt = Date.now();
+    if($scope.betaUserData.email){
+    } else {
+      $scope.betaUserData.email = 'undefined';
+    }
+    pyroMaster.$createObject('betaPyroSymbolClicks', $scope.betaUserData).then(function(objectSnap){
+      console.log('Pyro symbol clicked:', objectSnap);
+    });
+  }
 })
+
 .filter('search', function(){
 	// All filters must return a function. The first parameter
 	// is the data that is to be filtered, and the second is an
