@@ -14,7 +14,7 @@ angular.module('pyroApp.controllers', ['pyroApp.services'])
 	$scope.newAppData = {};
 	$scope.err = {};
 	$scope.loading = true;
-  $scope.instanceList = PyroArray('instances');
+  $rootScope.instanceList;
 
 	$scope.logout = function() {
 		pyroMaster.$logout().then(function(){

@@ -14,6 +14,7 @@ angular.module('pyroApp.controllers')
   //   $rootScope.instanceList = returnedList;
   // });
 
+  $rootScope.instanceList = PyroArray('instances');
   console.log('$rootScope.instanceList set:', $scope.instanceList);
 
   // [TODO] Use different objects for the different create types

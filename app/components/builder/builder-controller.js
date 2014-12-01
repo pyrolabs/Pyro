@@ -1,8 +1,9 @@
 angular.module('pyroApp.controllers')
 
-.controller('BuilderCtrl', function($scope, $state, $rootScope, $stateParams) {
+.controller('BuilderCtrl', function($scope, $state, $rootScope, $stateParams, PyroArray) {
   console.log('BuilderCtrl');
  
+  $rootScope.instanceList = PyroArray('instances');
   $scope.otherDash = function(ind){
     $state.go('dash',{appId:ind})
   }
