@@ -4,6 +4,7 @@ angular.module('pyroApp.controllers')
   console.log('TesterCtrl');
  
   $rootScope.instanceList = PyroArray('instances');
+ 
   $scope.emuRender = {
     url:'',
     width:'100%',
@@ -19,12 +20,12 @@ angular.module('pyroApp.controllers')
     $state.go('dash',{appId: $stateParams.appId})
   }  
   $scope.goToBuilder = function() {
-    $scope.getS3Bucket($scope.pyroInstance.appUrl)
     $state.go('builder',{appId: $stateParams.appId})
   }
   $scope.goToTester = function() {
     $state.go('tester',{appId: $stateParams.appId})
   }
+
 
   $scope.setEmulator = function(emu) {
     $scope.emuRender.type = emu;
@@ -60,7 +61,7 @@ angular.module('pyroApp.controllers')
     $scope.isLoading = false;
     console.log('scope set:', $scope.instanceList[0]);
     $scope.pyroInstance = pyroList[$stateParams.appId]
-    $scope.emuRender.url = $sce.trustAsResourceUrl('http://'+$scope.pyroInstance.appUrl);
+    $scope.emuRender.url = $sce.trustAsResourceUrl('//'+$scope.pyroInstance.appUrl);
     $scope.pyroInstance.getUserCount(function(userCount){
       $scope.userCount = userCount;
       if(!$scope.$$phase) {
