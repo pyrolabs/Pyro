@@ -57,7 +57,6 @@ angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroA
       }
     })
     .state('nav', {
-      controller:'NavbarCtrl',
       resolve:{
         auth: function(pyroMaster){
           return pyroMaster.$auth();

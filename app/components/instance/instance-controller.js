@@ -1,8 +1,10 @@
 angular.module('pyroApp.controllers')
 
-.controller('InstanceListCtrl', function($scope, $state, $rootScope, pyroMaster, PyroArray) {
+.controller('InstanceListCtrl', function($scope, $state, $rootScope, pyroMaster, PyroArray, user, auth) {
   console.log('InstanceListCtrl');
   // Form data for the login modal
+  $rootScope.auth = auth;
+  $rootScope.account = user;
   $scope.newAppData = {};
   $scope.err = {};
   $scope.loading = true;

@@ -3,6 +3,9 @@ angular.module('pyroApp.controllers')
   console.log('LoginCtrl')
   // Form data for the login modal
   $scope.loginData = {};
+  if(pyroMaster.getAuth() != null){
+    $state.go('home');
+  }
   $scope.login = function() {
     console.log('[LoginCtrl] Login called:');
     pyroMaster.$login($scope.loginData).then(function(userData){

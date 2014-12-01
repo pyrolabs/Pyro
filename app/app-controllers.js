@@ -23,12 +23,6 @@ angular.module('pyroApp.controllers', ['pyroApp.services'])
 		});
 	};
 })
-.controller('NavbarCtrl', function($scope, $state, $rootScope, $stateParams, user, auth) {
-  console.log('NavbarCtrl');
-  console.log('user:', user);
-  console.log('auth:', auth);
-  $rootScope.account = user;
-})
 .filter('search', function(){
 	// All filters must return a function. The first parameter
 	// is the data that is to be filtered, and the second is an
