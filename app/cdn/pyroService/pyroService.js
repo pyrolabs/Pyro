@@ -108,7 +108,7 @@ angular.module('pyro.service', ['firebase'])
 			pyro.$auth =  function(){
 				var deferred = $q.defer();
 				var auth = pyro.getAuth();
-				if(auth){
+				if(auth != null){
 					deferred.resolve(auth);
 				} else {
 					deferred.reject();

@@ -4,21 +4,25 @@ angular.module('pyroApp.controllers')
   console.log('SignupCtrl');
 	$scope.signupData = {};
   $scope.err = {};
-  $scope.createAccount = function() {
-  	console.log('createAccount called');
-    
-    // [TODO] This should be a service and error checked.
-    $window.ga('send','event', 'account-controller', 'CreateAccount', $scope.signupData.email);
-
-    pyroMaster.$signup($scope.signupData).then(function(userAccount){
-      console.log('Signup successful:', userAccount);
-      $state.go('home');
-    }, function(err){
-      console.warn('Signup error:', err.message);
-      $scope.err = err;
-      if(err.code == 'EMAIL_TAKEN') {
-        $scope.signupData.email = null;
-      }
+  // $scope.createAccount = function() {
+  // 	console.log('createAccount called');
+  //   // [TODO] This should be a service and error checked.
+  //   $window.ga('send','event', 'account-controller', 'CreateAccount', $scope.signupData.email);
+  //   pyroMaster.$signup($scope.signupData).then(function(userAccount){
+  //     console.log('Signup successful:', userAccount);
+  //     $state.go('home');
+  //   }, function(err){
+  //     console.warn('Signup error:', err.message);
+  //     $scope.err = err;
+  //     if(err.code == 'EMAIL_TAKEN') {
+  //       $scope.signupData.email = null;
+  //     }
+  //   });
+  // };
+  $scope.signupAttempt = function(){
+    // Record Signup Attempt while signup is closed
+    pyroMaster.$createObject('signupAttempts', $scope.signupData.email).then(function(objectSnap){
+      console.log('Signup attempted:', objectSnap);
     });
   };
 })
