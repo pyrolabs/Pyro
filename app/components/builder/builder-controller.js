@@ -1,15 +1,8 @@
 angular.module('pyroApp.controllers')
 
-.controller('DashCtrl', function($scope, $state, $rootScope, $stateParams, user, pyroMaster) {
-  console.log('DashCtrl');
-  // $rootScope.account = user;
-  console.log('params:', $stateParams);
-  $scope.isLoading = true;
-  
-  $scope.otherDash = function(ind){
-    $state.go('dash',{appId:ind})
-  }
-
+.controller('BuilderCtrl', function($scope, $state, $rootScope, $stateParams) {
+  console.log('BuilderCtrl');
+ 
   $scope.goToDash = function() {
     $state.go('dash',{appId: $stateParams.appId})
   }  
@@ -17,7 +10,7 @@ angular.module('pyroApp.controllers')
     $state.go('builder',{appId: $stateParams.appId})
   }
 
-  $scope.instanceList.$loaded().then(function(pyroList){
+   $scope.instanceList.$loaded().then(function(pyroList){
       // [TODO] get pyro object by selecting from exisiting list
     $scope.isLoading = false;
     console.log('scope set:', $scope.instanceList[0]);
@@ -38,4 +31,6 @@ angular.module('pyroApp.controllers')
       }
     });
   });
-});
+
+  
+})

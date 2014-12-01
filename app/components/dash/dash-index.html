@@ -22,33 +22,19 @@
                 </div>
                   <ul class="nav nav-main" data-ride="collapse">
                     <li  class="active">
-                      <a ui-sref="/dash" class="auto">
+                      <a ng-click="goToDash();" class="auto">
                         <i class="fa fa-fire icon">
                         </i>
                         <span class="font-bold">Insights</span>
                       </a>
                     </li>
-                    <li  class="/trends">
-                      <a ui-sref="/dash" class="auto">
+                    <li ng-click="goToBuilder();">
+                      <a  class="auto">
                         <i class="i i-graph icon">
                         </i>
-                        <span class="font-bold">Trends</span>
+                        <span class="font-bold">Builder</span>
                       </a>
                     </li>
-                    <li  class="">
-                      <a ui-sref="/dash" class="auto">
-                        <i class="i i-users2 icon">
-                        </i>
-                        <span class="font-bold">Users</span>
-                      </a>
-                    </li>
-                    <li  class="">
-                      <a ui-sref="/dash" class="auto">
-                        <i class="i i-data2 icon">
-                        </i>
-                        <span class="font-bold">Admin</span>
-                      </a>
-                    </li>   
                   </ul>
                   <div class="line dk hidden-nav-xs"></div>
                 </nav>

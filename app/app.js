@@ -1,4 +1,4 @@
-angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroApp.services' ])
+angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroApp.services','ui.ace' ])
 .constant('FBURL', 'https://pruvit.firebaseio.com/')
 .run(function($rootScope, FBURL, $window, $location) {
   console.log('Angular is running');
@@ -130,6 +130,12 @@ angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroA
         url: '/:appId/dash',
         templateUrl:"components/dash/dash-index.html",
         controller: 'DashCtrl'
+      })
+      .state('builder', {
+        parent:'nav',
+        url: '/:appId/builder',
+        templateUrl:"components/builder/builder-index.html",
+        controller: 'BuilderCtrl'
       })
       .state('admin', {
         parent:'instance',
