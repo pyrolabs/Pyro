@@ -16,27 +16,27 @@
                     </ul>
                   </div>
                   <ul class="nav nav-main" data-ride="collapse">
-                    <li ng-click="goToDash()" class="item menu-item active">
+                    <li ng-click="goToDash()" class="item menu-item">
                       <a class="auto">
-                        <i class="icon ion-icon ion-ios7-analytics-outline text-light">
+                        <i class="icon ion-icon main-icon ion-ios7-analytics-outline">
                         </i>
                         <span class="font-bold">Insights</span>
                       </a>
                     </li>
-                    <li ng-click="goToBuilder();" class="item menu-item">
+                    <li ng-click="goToBuilder();" class="item menu-item active">
                       <a>
-                        <i class="icon ion-icon ion-android-developer text-light">
+                        <i class="icon ion-icon main-icon ion-android-developer text-warning">
                         </i>
                         <span class="font-bold">Builder</span>
-                        <div class="pull-right" style="margin-top:-0.25em;">
-                          <i class="icon ion-icon m-r-xs ion-ios7-cloud-download-outline text-light"></i>
-                          <i class="icon ion-icon m-l-xs ion-ios7-cloud-upload-outline text-warning"></i>
-                        </div>
                       </a>
+                      <ul class="nav" style="display: block;">
+                        <li><a class="item menu-item second-item nonactive"><i class="icon ion-icon m-l-xs ion-ios7-cloud-upload"></i> Upload</a></li>
+                        <li><a class="item menu-item second-item nonactive" ng-click="setEmulator('iphone6')"><i class="icon ion-icon m-r-xs ion-ios7-cloud-download-outline text-light"></i> Download</a></li>
+                      </ul>
                     </li>
                     <li ng-click="goToTester();" class="item menu-item">
                       <a>
-                        <i class="icon ion-icon ion-iphone text-light">
+                        <i class="icon ion-icon main-icon ion-iphone">
                         </i>
                         <span class="font-bold">Tester</span>
                       </a>

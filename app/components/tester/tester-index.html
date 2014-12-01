@@ -16,16 +16,16 @@
                     </ul>
                   </div>
                   <ul class="nav nav-main" data-ride="collapse">
-                    <li ng-click="goToDash()" class="item menu-item active">
+                    <li ng-click="goToDash()" class="item menu-item">
                       <a class="auto">
-                        <i class="icon ion-icon ion-ios7-analytics-outline text-light">
+                        <i class="icon ion-icon main-icon ion-ios7-analytics-outline">
                         </i>
                         <span class="font-bold">Insights</span>
                       </a>
                     </li>
                     <li ng-click="goToBuilder();" class="item menu-item">
                       <a>
-                        <i class="icon ion-icon ion-android-developer text-light">
+                        <i class="icon ion-icon main-icon ion-android-developer">
                         </i>
                         <span class="font-bold">Builder</span>
                         <div class="pull-right" style="margin-top:-0.25em;">
@@ -34,12 +34,17 @@
                         </div>
                       </a>
                     </li>
-                    <li ng-click="goToTester();" class="item menu-item">
-                      <a>
-                        <i class="icon ion-icon ion-iphone text-light">
+                    <li ng-click="goToTester();" class="item menu-item active">
+                      <a class="auto">
+                        <i class="icon ion-icon main-icon ion-iphone">
                         </i>
                         <span class="font-bold">Tester</span>
                       </a>
+                      <ul class="nav" style="display: block;">
+                        <li ng-class="{'active': '{{emuRender.type}}' == 'web'}"><a class="item menu-item second-item" ng-click="setEmulator('web')">Website</a></li>
+                        <li ng-class="{'active': '{{emuRender.type}}' == 'iphone6'}"><a class="item menu-item second-item" ng-click="setEmulator('iphone6')">iPhone 6</a></li>
+                        <li ng-class="{'active': '{{emuRender.type}}' == 'iphone5'}"><a class="item menu-item second-item" ng-click="setEmulator('iphone5')">iPhone 5</a></li>
+                      </ul>
                     </li>
                   </ul>
                   <div class="line dk hidden-nav-xs"></div>
@@ -50,8 +55,8 @@
           </div>
         </aside>
         <!-- /.aside -->
-        <div id="builder">
-          <iframe  ng-src="{{currentBucketUrl}}" width="100%" height="100%">
+        <div id="tester" class="hbox" style="height:100%;text-align:center;padding-top:30px;">
+          <iframe id="tester-container" class="vertical-align" style="margin-top:23%;" ng-src="{{emuRender.url}}" width="{{emuRender.width}}" height="{{emuRender.height}}">
               Something wrong...
           </iframe>
         </div>

@@ -74,6 +74,10 @@ h1, h2, h3, h4 {
 .menu-item {
   margin: 0.75em 0 0.75em 1em;
 }
+.menu-item.second-item {
+  margin: 0.75em 0 0.75em 0;
+  padding-left: 4.5em !important;
+}
 .navbar-fixed-top {
   text-align: center;
   display: block;
@@ -101,6 +105,34 @@ h1, h2, h3, h4 {
 border:none;padding-right:1em;
 }
 
+.item.menu-item,
+.item.menu-item i.main-icon {
+  transition: color 0.3s ease;
+  transition: background-color 0.3s ease;
+}
+.item.menu-item {
+  cursor: pointer;
+}
+.item.menu-item:hover {
+  background-color: auto!important;
+}
+.item.menu-item:hover i.main-icon,
+.item.menu-item.active i.main-icon,
+.item.menu-item.active li.active .second-item:not(i):not(.nonactive) {
+  color: #E64A19 !important;
+}
+.item.menu-item.active .second-item {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.item.menu-item.active .second-item:hover {
+  color: #E64A19 !important;
+}
 
 .btn-default.btn-secondary {
   background-color: #FAFAFA !important;
