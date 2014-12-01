@@ -7,10 +7,13 @@ angular.module('pyroApp.controllers')
   $scope.pyroInstance = instance;
   // [TODO] get pyro object by selecting from exisiting list
   console.log('scope set:', $scope.pyroInstance);
-  $scope.userCount = $scope.pyroInstance.getObjectCount('users', function(count){
-  	$scope.userCount = count;
+  $scope.pyroInstance.getUserCount(function(userCount){
+    $scope.userCount = userCount;
+    $scope.$apply();
   });
   $scope.pyroInstance.getObjectCount('sessions',function(sessionCount){
-  	$scope.sessionCount = sessionCount;
+  	console.log('sessionCount updated:', sessionCount);
+    $scope.sessionCount = sessionCount;
+    $scope.$apply();
   });
 })

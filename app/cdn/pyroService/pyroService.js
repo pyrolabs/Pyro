@@ -1,7 +1,7 @@
 angular.module('pyro.service', ['firebase'])
 // [TODO] Make this extensions of angularFire factories
 // PyroArray Adds pyro to angular fire lists
-.factory('PyroFactory',function($FirebaseArray){
+.factory('PyroArrayFactory',function($FirebaseArray, pyro){
 	return function(snap){
 		return $FirebaseArray.$extendFactory({
 			// Overide $createObject behavior to return pyro object
@@ -10,7 +10,29 @@ angular.module('pyro.service', ['firebase'])
 				if(snap.val().hasOwnProperty('dbUrl')){
 					var loadedObj = snap.val();
 					loadedObj.url = snap.val().dbUrl;
-					return new Pyro(loadedObj);
+
+					return pyro(loadedObj);
+				} else {
+					return snap.val();
+				}
+			},
+			$$updated:function(snap){
+				// var instance =this.$getRecord(snap.key())
+				// return snap.getUserCount()
+			}
+		});
+	}
+})
+.factory('PyroObjectFactory',function($FirebaseObject, pyro){
+	return function(snap){
+		return $FirebaseObject.$extendFactory({
+			// Overide $createObject behavior to return pyro object
+			$$added:function(snap){
+				// [TODO] Add check for apps that are managed
+				if(snap.val().hasOwnProperty('dbUrl')){
+					var loadedObj = snap.val();
+					loadedObj.url = snap.val().dbUrl;
+					return pyro(loadedObj);
 				} else {
 					return snap.val();
 				}
@@ -18,17 +40,25 @@ angular.module('pyro.service', ['firebase'])
 		});
 	}
 })
-.factory('PyroArray', function($firebase, PyroFactory, pyroMaster){
+.factory('PyroArray', function($firebase, PyroArrayFactory, pyroMaster){
 	return function(list){
 		// query for objects created by user
 		var auth = pyroMaster.getAuth();
 		console.log('pyroMaster:', pyroMaster);
 		var query = pyroMaster.mainRef.child(list).orderByChild('author').equalTo(auth.uid);
-		return $firebase(query, {arrayFactory:PyroFactory()}).$asArray();
+		return $firebase(query, {arrayFactory:PyroArrayFactory()}).$asArray();
 	}
 })
-
-.factory('pyro', ['$q', function($q){
+.factory('PyroObject', function($firebase, PyroObjectFactory, pyroMaster){
+	return function(list){
+		// query for objects created by user
+		var auth = pyroMaster.getAuth();
+		console.log('pyroMaster:', pyroMaster);
+		var query = pyroMaster.mainRef.child(list).orderByChild('author').equalTo(auth.uid);
+		return $firebase(query, {arrayFactory:PyroObjectFactory()}).$asObject();
+	}
+})
+.factory('pyro', ['$q', function($q ){
 	return function (argPyroObj){
 		var auth = null;
 		var account = null;
@@ -89,6 +119,13 @@ angular.module('pyro.service', ['firebase'])
 				var deferred = $q.defer();
 				pyro.getUser(function(userAccount){
 					deferred.resolve(userAccount);
+				});
+				return deferred.promise;
+			};
+			pyro.$getUserCount =  function(){
+				var deferred = $q.defer();
+				pyro.getUserCount(function(userCount){
+					deferred.resolve(userCount);
 				});
 				return deferred.promise;
 			};
