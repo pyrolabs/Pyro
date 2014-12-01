@@ -16,6 +16,9 @@ angular.module('pyroApp.controllers')
   $scope.goToBuilder = function() {
     $state.go('builder',{appId: $stateParams.appId})
   }
+  $scope.goToTester = function() {
+    $state.go('tester',{appId: $stateParams.appId})
+  }
 
   $scope.instanceList.$loaded().then(function(pyroList){
       // [TODO] get pyro object by selecting from exisiting list

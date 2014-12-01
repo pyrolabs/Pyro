@@ -1,7 +1,7 @@
 angular.module('pyroApp.controllers')
 
-.controller('BuilderCtrl', function($scope, $state, $rootScope, $stateParams) {
-  console.log('BuilderCtrl');
+.controller('TesterCtrl', function($scope, $state, $rootScope, $stateParams, $sce) {
+  console.log('TesterCtrl');
  
   $scope.otherDash = function(ind){
     $state.go('dash',{appId:ind})
@@ -45,11 +45,13 @@ angular.module('pyroApp.controllers')
 
   $scope.getS3BucketContents = function(bucketName) {}
 
+
    $scope.instanceList.$loaded().then(function(pyroList){
       // [TODO] get pyro object by selecting from exisiting list
     $scope.isLoading = false;
     console.log('scope set:', $scope.instanceList[0]);
     $scope.pyroInstance = pyroList[$stateParams.appId]
+    $scope.currentBucketUrl = $sce.trustAsResourceUrl('http://'+$scope.pyroInstance.appUrl);
     $scope.pyroInstance.getUserCount(function(userCount){
       $scope.userCount = userCount;
       if(!$scope.$$phase) {

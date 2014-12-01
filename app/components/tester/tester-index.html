@@ -29,8 +29,8 @@
                         </i>
                         <span class="font-bold">Builder</span>
                         <div class="pull-right" style="margin-top:-0.25em;">
-                          <i class="icon ion-icon m-r-xs ion-ios7-cloud-download-outline text-light"></i>
-                          <i class="icon ion-icon m-l-xs ion-ios7-cloud-upload-outline text-warning"></i>
+                          <i class="icon ion-icon m-r-xs ion-ios7-cloud-download-outline text-muted"></i>
+                          <i class="icon ion-icon m-l-xs ion-ios7-cloud-upload-outline text-muted"></i>
                         </div>
                       </a>
                     </li>
@@ -51,9 +51,9 @@
         </aside>
         <!-- /.aside -->
         <div id="builder">
-            <div ui-ace="{useWrapMode: true, mode: 'javascript'}" id="build-editor"></div>
-          </div>
-          <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen,open" data-target="#nav,html"></a>
-      </div>
+          <iframe  ng-src="{{currentBucketUrl}}" width="100%" height="100%">
+              Something wrong...
+          </iframe>
+        </div>
     </div>
   <script src="lib/resize/resize.js"></script>

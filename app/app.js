@@ -137,6 +137,13 @@ angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroA
         templateUrl:"components/builder/builder-index.html",
         controller: 'BuilderCtrl'
       })
+      .state('tester', {
+        parent:'nav',
+        url: '/:appId/tester',
+        templateUrl:"components/tester/tester-index.html",
+        controller: 'TesterCtrl'
+      })
+
       .state('admin', {
         parent:'instance',
         url: '/admin',
