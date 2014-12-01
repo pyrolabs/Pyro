@@ -1,4 +1,4 @@
-<section id="content" class="dash" ng-init="init()">
+<section id="content" class="dash">
       <section class="hbox stretch">
         <!-- .aside -->
         <aside class="bg-white aside-md hidden-print hidden-xs" id="nav">          
@@ -8,9 +8,16 @@
                 <!-- nav -->                 
                 <nav class="nav-primary hidden-xs">
                 <div class="btn-group" style="margin-left:10px;">
-                  <a class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cube" style="margin-right:10px;"></i>{{pyroInstance.name || 'App'}}<span class="caret"></span></a>
+                  <a class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-cube" style="margin-right:10px;"></i>
+                      {{pyroInstance.name || 'App'}}<span class="caret"></span>
+                  </a>
                   <ul class="dropdown-menu dropdown-select"style="width:100%;text-align:center;">
-                      <li ng-repeat="instance in instanceList"><a href=""><input type="radio" name="b">{{instance.name}}</a></li>
+                      <li ng-repeat="instance in instanceList">
+                        <a ng-click="otherDash($index)">
+                          <input type="radio" name="b">{{instance.name}}
+                        </a>
+                      </li>
                   </ul>
                 </div>
                   <ul class="nav nav-main" data-ride="collapse">

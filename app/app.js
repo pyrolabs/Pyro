@@ -129,12 +129,7 @@ angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroA
         parent:'nav',
         url: '/:appId/dash',
         templateUrl:"components/dash/dash-index.html",
-        controller: 'DashCtrl',
-        resolve:{
-          instance:function($rootScope, $stateParams, pyro){
-            return pyro($rootScope.instanceList[$stateParams.appId]);
-          }
-        },
+        controller: 'DashCtrl'
       })
       .state('admin', {
         parent:'instance',

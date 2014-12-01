@@ -1,5 +1,5 @@
 angular.module('pyroApp.controllers', ['pyroApp.services'])
-.controller('RootCtrl', function($scope, $state, $rootScope, $stateParams, pyroMaster) {
+.controller('RootCtrl', function($scope, $state, $rootScope, $stateParams, pyroMaster, PyroArray) {
   console.log('RootCtrl');
   $scope.inDash = false;
   // Watch for dash state
@@ -14,6 +14,8 @@ angular.module('pyroApp.controllers', ['pyroApp.services'])
 	$scope.newAppData = {};
 	$scope.err = {};
 	$scope.loading = true;
+  $scope.instanceList = PyroArray('instances');
+
 	$scope.logout = function() {
 		pyroMaster.$logout().then(function(){
 			$scope.err.message = 'Logout Successful';
