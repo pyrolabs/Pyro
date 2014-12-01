@@ -2,6 +2,7 @@
 angular.module('pyroApp.controllers')
 .controller('SignupCtrl', function($rootScope, $scope, $state, pyroMaster, $window) {
   console.log('SignupCtrl');
+  $showSignupAttemptedMessage = false;
 	$scope.signupData = {};
   $scope.err = {};
   // $scope.createAccount = function() {
@@ -21,6 +22,7 @@ angular.module('pyroApp.controllers')
   // };
   $scope.signupAttempt = function(){
     // Record Signup Attempt while signup is closed
+    $scope.showSignupAttemptedMessage = true;
     pyroMaster.$createObject('signupAttempts', $scope.signupData.email).then(function(objectSnap){
       console.log('Signup attempted:', objectSnap);
     });
