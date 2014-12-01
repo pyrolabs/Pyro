@@ -3,8 +3,8 @@
     <section class="hbox stretch">
       <section id="content">
         <section class="vbox no-margin">
-          <section class="scrollable wrapper-lg m-t-xl">
-            <div class="m-b-md m-t-md h2">
+          <section class="scrollable wrapper-lg">
+            <div class="m-b-md h2">
               <span class="font-thin">Applications</span> 
             </div>
             <div class="row m-b">
@@ -53,7 +53,7 @@
               <div class="col-sm-6 col-md-4" ng-repeat="instance in instanceList">
                 <section class="panel b-a">
                   <div class="panel-heading no-border" ng-class="cardClasses[$index]">
-                    <a href="javascript:void(0)" ng-click="viewDetail($index)" class="btn btn-warning btn-fab btn-raised pull-right"><i class="fa fa-fire" style="font-size:0.75em;margin-top:-0.5em;"></i></a>
+                    <a href="" ng-click="viewDetail($index)" class="btn btn-warning btn-fab btn-raised pull-right"><i class="fa fa-fire" style="font-size:0.75em;margin-top:-0.5em;"></i></a>
 
                     <a ng-click="viewDetail($index)" class="h4 text-lt m-t-sm m-b-sm block font-bold"><p class="text-dark">{{instance.name}}</p></a>
                   </div>

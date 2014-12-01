@@ -1,33 +1,37 @@
-<section id="content" class="builder" ng-init="init()">
-      <section class="hbox stretch">
+<div id="content" class="builder" ng-init="init()">
+      <div class="hbox vbox stretch">
         <!-- .aside -->
         <aside class="bg-white aside-md hidden-print hidden-xs" id="nav">          
-          <section class="vbox">
-            <section class="w-f scrollable">
+          <div class="vbox">
+            <div class="w-f scrollable">
               <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railOpacity="0.2">           
                 <!-- nav -->                 
                 <nav class="nav-primary hidden-xs">
-                <div class="btn-group" style="margin-left:10px;">
-                  <a class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cube" style="margin-right:10px;"></i> {{pyroInstance.name || 'App'}}<span class="caret"></span></a>
-                  <ul class="dropdown-menu dropdown-select"style="width:100%;text-align:center;">
-                      <li><a href=""><input type="radio" name="b">1</a></li>
-                      <li><a href=""><input type="radio" name="b">2</a></li>
-                      <li><a href=""><input type="radio" name="b">3</a></li>
-                  </ul>
-                </div>
+                  <div class="btn-group" style="background:none;left:-0.75em;">
+                    <a class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cube ion-icon-lg" style="margin-right:5px;"></i> {{pyroInstance.name || 'App'}} <div class="caret"></div></a>
+                    <ul class="dropdown-menu dropdown-select"style="width:100%;text-align:center;">
+                        <li><a href=""><input type="radio" name="b">1</a></li>
+                        <li><a href=""><input type="radio" name="b">2</a></li>
+                        <li><a href=""><input type="radio" name="b">3</a></li>
+                    </ul>
+                  </div>
                   <ul class="nav nav-main" data-ride="collapse">
-                    <li ng-click="goToDash()" class="active">
+                    <li ng-click="goToDash()" class="item menu-item active">
                       <a class="auto">
-                        <i class="fa fa-fire icon">
+                        <i class="icon ion-icon ion-ios7-analytics-outline text-light">
                         </i>
                         <span class="font-bold">Insights</span>
                       </a>
                     </li>
-                    <li  ng-click="goToBuilder();">
+                    <li ng-click="goToBuilder();" class="item menu-item">
                       <a>
-                        <i class="i i-graph icon">
+                        <i class="icon ion-icon ion-android-developer text-light">
                         </i>
                         <span class="font-bold">Builder</span>
+                        <div class="pull-right" style="margin-top:-0.25em;">
+                          <i class="icon ion-icon m-r-xs ion-ios7-cloud-download-outline text-light"></i>
+                          <i class="icon ion-icon m-l-xs ion-ios7-cloud-upload-outline text-warning"></i>
+                        </div>
                       </a>
                     </li>
                   </ul>
@@ -35,33 +39,14 @@
                 </nav>
                 <!-- / nav -->
               </div>
-            </section>
-            
-            <footer class="footer hidden-xs no-padder text-center-nav-xs">
-              <a href="modal.lockme.html" data-toggle="ajaxModal" class="btn btn-icon icon-muted btn-inactive pull-right m-l-xs m-r-xs hidden-nav-xs">
-                <i class="i i-logout"></i>
-              </a>
-              <a href="#nav" data-toggle="class:nav-xs" class="btn btn-icon icon-muted btn-inactive m-l-xs m-r-xs">
-                <i class="i i-circleleft text"></i>
-                <i class="i i-circleright text-active"></i>
-              </a>
-            </footer>
-          </section>
+            </div>
+          </div>
         </aside>
         <!-- /.aside -->
-        <section id="builder">
-          <section class="hbox stretch">
-            <section>
-              <section class="vbox">
-                <section class="scrollable padder">
-
-                  <div ui-ace style="height:500px;"></div>
-
-                </section>
-              </section>
-            </section>
-          </section>
+        <div id="builder">
+            <div ui-ace="{useWrapMode: true, mode: 'javascript'}" id="build-editor"></div>
+          </div>
           <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen,open" data-target="#nav,html"></a>
-        </section>
-      </section>
-    </section>
+      </div>
+    </div>
+  <script src="lib/resize/resize.js"></script>

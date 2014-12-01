@@ -2,37 +2,36 @@
       <section class="hbox stretch">
         <!-- .aside -->
         <aside class="bg-white aside-md hidden-print hidden-xs" id="nav">          
-          <section class="vbox">
-            <section class="w-f scrollable">
+          <div class="vbox">
+            <div class="w-f scrollable">
               <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railOpacity="0.2">           
                 <!-- nav -->                 
                 <nav class="nav-primary hidden-xs">
-                <div class="btn-group" style="margin-left:10px;">
-                  <a class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    <i class="fa fa-cube" style="margin-right:10px;"></i>
-                      {{pyroInstance.name || 'App'}}<span class="caret"></span>
-                  </a>
-                  <ul class="dropdown-menu dropdown-select"style="width:100%;text-align:center;">
-                      <li ng-repeat="instance in instanceList">
-                        <a ng-click="otherDash($index)">
-                          <input type="radio" name="b">{{instance.name}}
-                        </a>
-                      </li>
-                  </ul>
-                </div>
+                  <div class="btn-group" style="background:none;left:-0.75em;">
+                    <a class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cube ion-icon-lg" style="margin-right:5px;"></i> {{pyroInstance.name || 'App'}} <div class="caret"></div></a>
+                    <ul class="dropdown-menu dropdown-select"style="width:100%;text-align:center;">
+                        <li><a href=""><input type="radio" name="b">1</a></li>
+                        <li><a href=""><input type="radio" name="b">2</a></li>
+                        <li><a href=""><input type="radio" name="b">3</a></li>
+                    </ul>
+                  </div>
                   <ul class="nav nav-main" data-ride="collapse">
-                    <li  class="active">
-                      <a ng-click="goToDash();" class="auto">
-                        <i class="fa fa-fire icon">
+                    <li ng-click="goToDash()" class="item menu-item active">
+                      <a class="auto">
+                        <i class="icon ion-icon ion-ios7-analytics-outline text-light">
                         </i>
                         <span class="font-bold">Insights</span>
                       </a>
                     </li>
-                    <li ng-click="goToBuilder();">
-                      <a  class="auto">
-                        <i class="i i-graph icon">
+                    <li ng-click="goToBuilder();" class="item menu-item">
+                      <a>
+                        <i class="icon ion-icon ion-android-developer text-light">
                         </i>
                         <span class="font-bold">Builder</span>
+                        <div class="pull-right" style="margin-top:-0.25em;">
+                          <i class="icon ion-icon m-r-xs ion-ios7-cloud-download-outline text-muted"></i>
+                          <i class="icon ion-icon m-l-xs ion-ios7-cloud-upload-outline text-muted"></i>
+                        </div>
                       </a>
                     </li>
                   </ul>
@@ -40,18 +39,8 @@
                 </nav>
                 <!-- / nav -->
               </div>
-            </section>
-            
-            <footer class="footer hidden-xs no-padder text-center-nav-xs">
-              <a href="modal.lockme.html" data-toggle="ajaxModal" class="btn btn-icon icon-muted btn-inactive pull-right m-l-xs m-r-xs hidden-nav-xs">
-                <i class="i i-logout"></i>
-              </a>
-              <a href="#nav" data-toggle="class:nav-xs" class="btn btn-icon icon-muted btn-inactive m-l-xs m-r-xs">
-                <i class="i i-circleleft text"></i>
-                <i class="i i-circleright text-active"></i>
-              </a>
-            </footer>
-          </section>
+            </div>
+          </div>
         </aside>
         <!-- /.aside -->
         <section id="dash">

@@ -15,6 +15,7 @@ h1, h2, h3, h4 {
   position:absolute;
   top:0px; right:0;
   bottom:0; left:0;
+  padding-top: 81px !important;
 }
 
 #background-header {
@@ -41,7 +42,7 @@ h1, h2, h3, h4 {
 }
 
 #content.panel .panel-heading {
-  font-size: 1.5em;
+  font-size: 1.375em;
 }
 
 #landing {
@@ -53,6 +54,26 @@ h1, h2, h3, h4 {
   background-color: 
 }*/
 
+#builder {
+  height: 100%;
+}
+
+#build-editor {
+  width: auto;
+  height: 100%;
+}
+
+.ion-icon{ 
+  font-size: 1.5em;
+}
+
+.ion-icon-lg{ 
+  font-size: 1.5em;
+}
+
+.menu-item {
+  margin: 0.75em 0 0.75em 1em;
+}
 .navbar-fixed-top {
   text-align: center;
   display: block;
@@ -62,24 +83,13 @@ h1, h2, h3, h4 {
   padding-top: 15px;
 }
 
-.vbox {
-  margin-top: 60px !important;
-}
-
-.vbox.no-margin {
-  margin-top: 0 !important;
-}
-
-#nav .vbox {
-  margin-top: 60px !important;
+.nav .nav-main {
+  margin-left: 10px;
 }
 
 #nav .btn-group {
   border: none !important;
   box-shadow: none !important;
-}
-#dash .vbox {
-  margin-top: 60px !important;
 }
 
 .list.card {
