@@ -29,6 +29,17 @@ module.exports = function(grunt) {
           options: {
             livereload:true
           }
+        },
+        bower:{
+          files:['bower.json'],
+          tasks:['wiredep']
+        }
+      },
+      wiredep: {
+        task: {
+          // Point to the files that should be updated when
+          // you run `grunt wiredep`
+          src: ['app/index.html']
         }
       }
     });
@@ -41,6 +52,9 @@ module.exports = function(grunt) {
 
     //Watch files for reload
     grunt.loadNpmTasks('grunt-contrib-watch');
+    
+    grunt.loadNpmTasks('grunt-wiredep');
+
 
     // Default task(s).
     grunt.registerTask('default', ['connect','watch']);
