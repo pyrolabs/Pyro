@@ -15,9 +15,10 @@ angular.module('pyroApp.controllers', ['pyroApp.services'])
 	$scope.err = {};
 	$scope.loading = true;
 	$scope.logout = function() {
-		pyroMaster.logout();
-		$scope.err.message = 'Logout Successful';
-		$state.go('login');
+		pyroMaster.$logout().then(function(){
+			$scope.err.message = 'Logout Successful';
+			$state.go('login');
+		});
 	};
 })
 .controller('NavbarCtrl', function($scope, $state, $rootScope, $stateParams, user, auth) {

@@ -10,7 +10,7 @@ angular.module('pyroApp.controllers')
     // [TODO] This should be a service and error checked.
     $window.ga('send','event', 'account-controller', 'CreateAccount', $scope.signupData.email);
 
-    pyroMaster.signup($scope.signupData).then(function(userAccount){
+    pyroMaster.$signup($scope.signupData).then(function(userAccount){
       console.log('Signup successful:', userAccount);
       $state.go('home');
     }, function(err){

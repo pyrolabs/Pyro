@@ -1,27 +1,16 @@
 angular.module('pyroApp.controllers')
 
-.controller('DashCtrl', function($scope, $state, $rootScope, $stateParams, instance, pyroMaker, user, pyroMaster) {
+.controller('DashCtrl', function($scope, $state, $rootScope, $stateParams, instance, user, pyroMaster) {
   console.log('DashCtrl');
   console.log('Instance loaded:', instance);
   $rootScope.account = user;
   $scope.pyroInstance = instance;
-  $scope.pyroInstance.name = instance.name;
-
-  if(instance.hasOwnProperty('dbUrl')){
-    pyroMaster.library.loadObject('instances', instance.name, function(loadedInstance){
-      console.log('pyroInstance loaded');
-      $scope.pyroInstance = loadedInstance;
-    })
-    
-  }
-  var instancePyro = pyroMaker(instance.dbUrl);
+  // [TODO] get pyro object by selecting from exisiting list
   console.log('scope set:', $scope.pyroInstance);
-  $scope.userCount = instancePyro.getObjectCount('users').then(function(count){
+  $scope.userCount = $scope.pyroInstance.getObjectCount('users', function(count){
   	$scope.userCount = count;
   });
-  instancePyro.getObjectCount('sessions').then(function(sessionCount){
+  $scope.pyroInstance.getObjectCount('sessions',function(sessionCount){
   	$scope.sessionCount = sessionCount;
   });
-
-  
 })

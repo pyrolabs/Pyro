@@ -60,10 +60,10 @@ angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroA
       controller:'NavbarCtrl',
       resolve:{
         auth: function(pyroMaster){
-          return pyroMaster.promiseAuth();
+          return pyroMaster.$auth();
         },
         user:function(pyroMaster){
-          return pyroMaster.getUser();
+          return pyroMaster.$getUser();
         }
       },
       views: {
@@ -97,11 +97,6 @@ angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroA
         parent:'nav',
         url: "/pyro",
         templateUrl:"components/instance/instance-list.html",
-        resolve:{
-          instanceList:function(pyroMaster){
-            return pyroMaster.getListByAuthor('instances');
-          }
-        },
         controller: 'InstanceListCtrl'
       })
       
@@ -136,8 +131,8 @@ angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroA
         templateUrl:"components/dash/dash-index.html",
         controller: 'DashCtrl',
         resolve:{
-          instance:function(pyroMaster, $stateParams){
-            return pyroMaster.loadObject('instances', $stateParams.appId);
+          instance:function($rootScope, $stateParams, pyro){
+            return pyro($rootScope.instanceList[$stateParams.appId]);
           }
         },
       })

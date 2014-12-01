@@ -6,6 +6,7 @@ angular.module('pyro.service', ['firebase'])
 		return $FirebaseArray.$extendFactory({
 			// Overide $createObject behavior to return pyro object
 			$$added:function(snap){
+				// [TODO] Add check for apps that are managed
 				if(snap.val().hasOwnProperty('dbUrl')){
 					var loadedObj = snap.val();
 					loadedObj.url = snap.val().dbUrl;
@@ -17,25 +18,136 @@ angular.module('pyro.service', ['firebase'])
 		});
 	}
 })
-.factory('PyroArray', function($firebase, PyroFactory){
+.factory('PyroArray', function($firebase, PyroFactory, pyroMaster){
 	return function(list){
-		var ref = new Firebase("https://pyro.firebaseio.com");
-		return $firebase(ref.child(list), {arrayFactory:PyroFactory()}).$asArray();
+		// query for objects created by user
+		var auth = pyroMaster.getAuth();
+		console.log('pyroMaster:', pyroMaster);
+		var query = pyroMaster.mainRef.child(list).orderByChild('author').equalTo(auth.uid);
+		return $firebase(query, {arrayFactory:PyroFactory()}).$asArray();
 	}
 })
 
+.factory('pyro', ['$q', function($q){
+	return function (argPyroObj){
+		var auth = null;
+		var account = null;
+		var pyro = new Pyro(argPyroObj);
+			pyro.$signup =  function(argSignupData) {
+				var deferred = $q.defer();
+				pyro.userSignup(argSignupData, function(userAccount) {
+		      console.log('signup + login successful:', userAccount);
+		      deferred.resolve(userAccount);
+		    }, function(err) {
+		      console.warn('pyroSignup returned:', err);
+		      deferred.reject(err)
+		    });
+		    return deferred.promise;
+			};
+			pyro.$login =  function(argLoginData) {
+				var deferredLogin = $q.defer();
+				pyro.login(argLoginData, function(returnedAccount){
+					deferredLogin.resolve(returnedAccount);
+				}, function(err){
+					deferredLogin.reject(err);
+				});
+				return deferredLogin.promise;
+			};
+			pyro.$getUser = function() {
+				var deferred = $q.defer();
+				if(account != null) {
+					deferred.resolve(account);
+				}
+				else {
+					pyro.getUser(function(returnedAccount){
+						account = returnedAcount;
+						deferred.resolve(returnedAccount);
+					});
+				}
+				return deferred.promise;
+			};
+			pyro.$logout =  function() {
+				var deferred = $q.defer();
+				auth = null;
+				account = null;
+				pyro.logout(function(){
+					deferred.resolve();
+				});
+				return deferred.promise;
+			};
+			pyro.$auth =  function(){
+				var deferred = $q.defer();
+				var auth = pyro.getAuth();
+				if(auth){
+					deferred.resolve(auth);
+				} else {
+					deferred.reject();
+				}
+				return deferred.promise;
+			};
+			pyro.$getUser =  function(){
+				var deferred = $q.defer();
+				pyro.getUser(function(userAccount){
+					deferred.resolve(userAccount);
+				});
+				return deferred.promise;
+			};
+			pyro.$getListByAuthor =  function(argListName) {
+				var deferredLoad = $q.defer();
+				pyro.getListByAuthor(argListName, function(returnedList){
+					deferredLoad.resolve(returnedList);
+				});
+				return deferredLoad.promise;
+			};
+			pyro.$createObject = function(argListName, argObject) {
+				var deferredCreate = $q.defer();
+				// [TODO] Do this correctly with the library
+					pyro.createObject(argListName, argObject, function(newObject){
+						deferredCreate.resolve(newObject);
+					});
+				return deferredCreate.promise;
+			};
+			pyro.$createInstance = function(argObject) {
+				var deferredCreate = $q.defer();
+				// [TODO] Do this correctly with the library
+					pyro.createInstance(argObject, function(newObjectRef){
+						console.error('[pyroService] instance creation successful:', newObjectRef);
+						deferredCreate.resolve(newObjectRef);
+					}, function(err){
+						console.error('[pyroService] error creating instance');
 
-
-.factory('pyro', ['$rootScope', 'FBURL','pyroMaker',  function($rootScope, FBURL, pyroMaker) {
-	return pyroMaker(FBURL);
+						deferredCreate.reject(argObject);
+					});
+				return deferredCreate.promise;
+			};
+			pyro.$loadObject = function(argListName, argObjectId){
+				var deferredLoad = $q.defer();
+				pyro.loadObject(argListName, argObjectId, function(loadedObject){
+					deferredLoad.resolve(loadedObject);
+				});
+				return deferredLoad.promise;
+			};
+			pyro.$deleteObject = function(argListName, argObjectId){
+				pyro.deleteObject(argListName, argObjectId);
+				console.log(argObjectId + ' was removed from the ' + argListName + ' list');
+			};
+			pyro.$getObjectCount = function(argListName) {
+				var deferred = $q.defer();
+				pyro.getObjectCount(argListName,function(count){
+					deferred.resolve(count);
+				});
+				return deferred.promise;
+			};
+			return pyro;
+	}
 }])
-.factory('pyroMaster', ['pyroMaker', '$http', '$q', function(pyroMaker, $http, $q) {
-	var pyro = pyroMaker('http://pyro.firebaseio.com');
+.factory('pyroMaster', ['pyro', '$http', '$q', function(pyro, $http, $q) {
+	var pyro = pyro({url:'http://pyro.firebaseio.com'});
 	var pyroBase = new Firebase('http://pyro.firebaseio.com');
-	var pyroServerUrl = "https://pyro-server.herokuapp.com/"
+	var pyroServerUrl = "https://pyro-server.herokuapp.com/";
 	// var pyroServerUrl = "localhost:4000/"
 	var auth = pyro.getAuth();
-	pyro.generatePyro = function(argInstanceName){
+	pyro.$generatePyro = function(argInstanceName){
 		//request server for new instance. Create
 		console.log('generatePyro called with:', argInstanceName);
 		var deferred = $q.defer();
@@ -79,7 +191,7 @@ angular.module('pyro.service', ['firebase'])
 		}
 		return deferred.promise;
 	}
-	pyro.deleteInstance = function(){
+	pyro.$deleteInstance = function(){
 		console.log('deleteInstance called with:', argInstanceName);
 		var deferred = $q.defer();
 		var postObj = {name: argInstanceName};
@@ -94,132 +206,4 @@ angular.module('pyro.service', ['firebase'])
 		return deferred.promise;
 	}
 	return pyro;
-}])
-.factory('pyroMaker', ['$q', function($q){
-	return function (argPyroUrl){
-		var auth = null;
-		var account = null;
-		var pyro = new Pyro({url:argPyroUrl});
-		return {
-			library: pyro,
-			signup: function(argSignupData) {
-				var deferred = $q.defer();
-				pyro.userSignup(argSignupData, function(userAccount) {
-		      console.log('signup + login successful:', userAccount);
-		      deferred.resolve(userAccount)
-		    }, function(err) {
-		      console.warn('pyroSignup returned:', err);
-		      deferred.reject(err)
-		    });
-		    return deferred.promise;
-			},
-			login: function(argLoginData) {
-				var deferredLogin = $q.defer();
-				pyro.login(argLoginData, function(returnedAccount){
-					deferredLogin.resolve(returnedAccount);
-				}, function(err){
-					deferredLogin.reject(err);
-				});
-				return deferredLogin.promise;
-			},
-			getUser:function() {
-				var deferred = $q.defer();
-				if(account != null) {
-					deferred.resolve(account);
-				}
-				else {
-					pyro.getUser(function(returnedAccount){
-						account = returnedAcount;
-						deferred.resolve(returnedAccount);
-					});
-				}
-				return deferred.promise;
-			},
-			passwordLogin: function(argLoginData) {
-				console.log('passwordLogin:', arguments);
-				var deferredLogin = $q.defer();
-				pyro.login(argLoginData, function(returnedAccount){
-					deferredLogin.resolve(returnedAccount);
-				}, function(err){
-					deferredLogin.reject(err);
-				});
-				return deferredLogin.promise;
-			},
-			logout: function() {
-				var deferred = $q.defer();
-				auth = null;
-				account = null;
-				pyro.logout(function(){
-					deferred.resolve();
-				});
-				return deferred.promise;
-			},
-			promiseAuth: function(){
-				var deferred = $q.defer();
-				var auth = pyro.getAuth();
-				if(auth){
-					deferred.resolve(auth);
-				} else {
-					deferred.reject();
-				}
-				return deferred.promise;
-			},
-			getAuth: function(){
-				return pyro.getAuth();
-			},
-			getUser: function(){
-				var deferred = $q.defer();
-				pyro.getUser(function(userAccount){
-					deferred.resolve(userAccount);
-				});
-				return deferred.promise;
-			},
-			getListByAuthor: function(argListName) {
-				var deferredLoad = $q.defer();
-				pyro.getListByAuthor(argListName, function(returnedList){
-					deferredLoad.resolve(returnedList);
-				});
-				return deferredLoad.promise;
-			},
-			createObject:function(argListName, argObject) {
-				var deferredCreate = $q.defer();
-				// [TODO] Do this correctly with the library
-					pyro.createObject(argListName, argObject, function(newObject){
-						deferredCreate.resolve(newObject);
-					});
-				return deferredCreate.promise;
-			},
-			createInstance:function(argObject) {
-				var deferredCreate = $q.defer();
-				// [TODO] Do this correctly with the library
-					pyro.createInstance(argObject, function(newObjectRef){
-						console.error('[pyroService] instance creation successful:', newObjectRef);
-						deferredCreate.resolve(newObjectRef);
-					}, function(err){
-						console.error('[pyroService] error creating instance');
-
-						deferredCreate.reject(argObject);
-					});
-				return deferredCreate.promise;
-			},
-			loadObject:function(argListName, argObjectId){
-				var deferredLoad = $q.defer();
-				pyro.loadObject(argListName, argObjectId, function(loadedObject){
-					deferredLoad.resolve(loadedObject);
-				});
-				return deferredLoad.promise;
-			},
-			deleteObject:function(argListName, argObjectId){
-				pyro.deleteObject(argListName, argObjectId);
-				console.log(argObjectId + ' was removed from the ' + argListName + ' list');
-			},
-			getObjectCount:function(argListName) {
-				var deferred = $q.defer();
-				pyro.getObjectCount(argListName,function(count){
-					deferred.resolve(count);
-				});
-				return deferred.promise;
-			}
-		}
-	}
 }])

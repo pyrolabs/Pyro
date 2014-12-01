@@ -13,7 +13,7 @@
                   <div class="panel-heading bg-success lter" >
                     <!-- Might be good for notifications
                     <span class="pull-right badge dk m-t-sm">17</span> -->
-                    <a href="" ng-click="viewDetail($index)" class="h4 text-lt text-center m-t-sm m-b-sm block font-bold"><p class="text-dark">New Pyro App</p></a>
+                    <a href="" class="h4 text-lt text-center m-t-sm m-b-sm block font-bold"><p class="text-dark">New Pyro App</p></a>
                   </div>
                   <div class="panel-body text-center" style="padding-top:30px;">
                     <div ng-hide="existingMode == true || simpleMode == true" style="margin-bottom:40px;">
@@ -53,9 +53,9 @@
               <div class="col-sm-6 col-md-4" ng-repeat="instance in instanceList">
                 <section class="panel b-a">
                   <div class="panel-heading no-border" ng-class="cardClasses[$index]">
-                    <a href="javascript:void(0)" ng-click="viewDetail(instance.name)" class="btn btn-warning btn-fab btn-raised pull-right"><i class="fa fa-fire" style="font-size:0.75em;margin-top:-0.5em;"></i></a>
+                    <a href="javascript:void(0)" ng-click="viewDetail($index)" class="btn btn-warning btn-fab btn-raised pull-right"><i class="fa fa-fire" style="font-size:0.75em;margin-top:-0.5em;"></i></a>
 
-                    <a ng-click="viewDetail(instance.name)" class="h4 text-lt m-t-sm m-b-sm block font-bold"><p class="text-dark">{{instance.name}}</p></a>
+                    <a ng-click="viewDetail($index)" class="h4 text-lt m-t-sm m-b-sm block font-bold"><p class="text-dark">{{instance.name}}</p></a>
                   </div>
                   <div class="panel-body">
                     <!-- <span class="pull-right text-muted">{{instance.createdAt || "At Some Point"}}</span> -->

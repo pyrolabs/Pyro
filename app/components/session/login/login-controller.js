@@ -5,7 +5,7 @@ angular.module('pyroApp.controllers')
   $scope.loginData = {};
   $scope.login = function() {
     console.log('[LoginCtrl] Login called:');
-    pyroMaster.login($scope.loginData).then(function(userData){
+    pyroMaster.$login($scope.loginData).then(function(userData){
       console.log('login successful:', userData);
       $state.go('home');
     }, function(err){
