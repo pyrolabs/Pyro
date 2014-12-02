@@ -2,6 +2,17 @@ angular.module('pyroApp.controllers')
 
 .controller('LandingCtrl', function($scope, $state, $rootScope, $stateParams, pyroMaster, $window) {
   console.log('LandingCtrl');
+
+  $scope.pyroSymbolClicked = function() {
+    $scope.betaUserData.createdAt = Date.now();
+    if($scope.betaUserData.email){
+    } else {
+      $scope.betaUserData.email = 'undefined';
+    }
+    pyroMaster.$createObject('betaPyroSymbolClicks', $scope.betaUserData).then(function(objectSnap){
+      console.log('Pyro symbol clicked:', objectSnap);
+    });
+  }
     
   $scope.betaSignup = function(){
   	console.log('betaSignup called');
