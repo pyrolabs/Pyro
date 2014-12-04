@@ -58,6 +58,7 @@ angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroA
       }
     })
     .state('nav', {
+      abstract:true,
       resolve:{
         auth: function(pyroMaster){
           return pyroMaster.$auth();
@@ -75,24 +76,6 @@ angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroA
         }
       }
     })
-    // // Load Sidemenu template
-    // .state('sideNav', {
-    //   parent:'nav',
-    //   templateUrl: "templates/side-menu.html",
-    //   abstract:true
-    // })
-    //   .state('sidemenu', {
-    //     parent:'sideNav',
-    //     abstract:true,
-    //     views: {
-    //       'sidemenu':{
-    //         templateUrl:'templates/sidebar.html'
-    //       },
-    //       'center':{
-    //         template:'<ui-view></ui-view>'
-    //       }
-    //     }
-    //   })
       .state('home', {
         parent:'nav',
         url: "/pyro",
@@ -112,9 +95,7 @@ angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroA
       .state('instance', {
         parent:'nav',
         abstract:true,
-        // controller:'InstanceDetailCtrl',
         url:'/pyro/:appId',
-
         views: {
           'sidemenu':{
             templateUrl:'templates/sidebar.html'

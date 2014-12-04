@@ -16,7 +16,7 @@
             <span class="thumb-sm avatar pull-left">
               <img ng-src="{{account.image || './images/blank_user.png'}}">
             </span>
-            {{account.username || account.uid || "No Username"}} <b class="caret"></b>
+            {{account.username || auth.password.email || auth.uid || "No Username"}} <b class="caret"></b>
           </a>
           <ul class="dropdown-menu animated fadeInRight">            
             <li>
