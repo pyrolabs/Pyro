@@ -3,8 +3,8 @@
 Pyro is a platform that allows simple setup of standard app features on top of Firebase.
 
 Pyro consits of two parts:
-* Pyro.js - Extended version of firebase.js library that will be implemented on your clients or admin pannels. This handles storing user account and session data in an organized manor, which makes querying and analytics much easier.
-* Pyro Platform - Pyro module control and admin account management. Accessible by copying this repo onto hosting or by logging into the [Pyro Pannel](http://pryolabs.io)
+* [Pyro.js](https://github.com/pyrolabs/PyroLibrary) - Extended version of firebase.js library that will be implemented on your clients or admin pannels. This handles storing user account and session data in an organized manor, which makes querying and analytics much easier.
+* Pyro Platform - Pyro module control and admin account management. Accessible by copying this repo onto hosting or by logging into the [Pyro Platform](http://pryolabs.io)
 
 ##Pyro Project Planning
 
@@ -18,10 +18,6 @@ Pyro consits of two parts:
 * Pyro Integrations - Custom plugin interface
 
 ###Dependencies
-Pyro Library:
-[Firebase Web Platform](https://www.firebase.com/docs/web/)
-
-Pyro Platform:
-[Angularjs](http://angularjs.org)
-
-[Ionic Framework](http://ionicframework.com)
+* [Ionic Framework](http://ionicframework.com)
+* [Angularjs](http://angularjs.org)
+* [ui-router](http://angular-ui.github.io/ui-router/site/#/api/ui.router) -- [Docs](https://github.com/angular-ui/ui-router/wiki)
