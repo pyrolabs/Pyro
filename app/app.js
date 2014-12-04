@@ -16,7 +16,7 @@ angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroA
 
 })
 .config(['$sceDelegateProvider', function($sceDelegateProvider){
-  $sceDelegateProvider.resourceUrlWhitelist(['self', 'https://pyro-server.herokuapp.com/**', 'http://localhost:4000']);
+  $sceDelegateProvider.resourceUrlWhitelist(['self', 'https://pyro-server.herokuapp.com/**', 'http://localhost:4000' ]);
 }])
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider

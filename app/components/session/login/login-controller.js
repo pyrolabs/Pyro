@@ -10,7 +10,12 @@ angular.module('pyroApp.controllers')
     console.log('[LoginCtrl] Login called:');
     pyroMaster.$login($scope.loginData).then(function(userData){
       console.log('login successful:', userData);
-      $state.go('home');
+      pyroMaster.$getFbAccount($scope.loginData, userData).then(function(fbAccount){
+        console.log('Fb account returned:', fbAccount);
+        $state.go('home');
+      }, function(){
+        console.error('error getting fb Account');
+      })
     }, function(err){
       $scope.err = err;
       console.error('[LoginCtrl] Error Logging In:', err);

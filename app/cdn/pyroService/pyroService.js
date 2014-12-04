@@ -232,7 +232,7 @@ angular.module('pyro.service', ['firebase'])
 		console.log('deleteInstance called with:', argInstanceName);
 		var deferred = $q.defer();
 		var postObj = {name: argInstanceName};
-		$http.post(pyroServerUrl + 'delete', postObj).success(function(data, status, headers){
+		$http.post(pyroServerUrl + 'api/delete', postObj).success(function(data, status, headers){
 			console.log('deleteSuccessful:', data);
 			deferred.resolve(data);
 		}).error(function(data, status, headers){
@@ -240,6 +240,56 @@ angular.module('pyro.service', ['firebase'])
 			console.error('error creating new instance:', errorObj);
 			deferred.reject(errorObj);
 		});
+		return deferred.promise;
+	}
+	pyro.$createFbAccount = function(argSignupData){
+		console.log('createFbAccount called:', argSignupData);
+		var deferred = $q.defer();
+		// [TODO] look into if password should just be uid to be able to get the account later
+		if(argSignupData.hasOwnProperty('email') && argSignupData.hasOwnProperty('password')) {
+			$http.post(pyroServerUrl + 'api/fb/account/new', argSignupData).success(function(account){
+				console.log('account creation successful:', account);
+				var fbAccountData = {token: data.account.adminToken, email:argSignupData.email, createdAt: Firebase.ServerValue.TIMESTAMP};
+				var auth = self.pyroRef.getAuth();
+				self.pyroRef.child('fbData').child(auth.uid).setWithPriority(fbAccountData, argSignupData.email, function(fbInfoSnap){
+					deferred.resolve(account);
+				});
+			}).error(function(data, status, headers){
+				console.error('error creating new fb account:',data, status, headers);
+				deferred.reject(data);
+			});
+		} else {
+			console.error('email and password nessesary for creating a firebase account');
+			deferred.reject();
+		}
+		return deferred.promise;
+	}
+	pyro.$getFbAccount = function(argSignupData){
+		console.log('getFbAccount called:', argSignupData);
+		var self = this;
+		var deferred = $q.defer();
+		// [TODO] look into if password should just be uid to be able to get the account later
+		if(argSignupData.hasOwnProperty('email') && argSignupData.hasOwnProperty('password')) {
+			$http.post(pyroServerUrl + 'api/fb/account/get', argSignupData).success(function(data, status, headers){
+				if(status != 200){
+					console.error('account load not successful:', status);
+					deferred.reject(data);
+				} else {
+					console.log('account load successful:', data, status);
+					var fbAccountData = {token: data.account.adminToken, email:argSignupData.email, createdAt: Firebase.ServerValue.TIMESTAMP};
+					var auth = self.pyroRef.getAuth();
+					self.pyroRef.child('fbData').child(auth.uid).setWithPriority(fbAccountData, argSignupData.email, function(fbInfoSnap){
+						deferred.resolve(fbInfoSnap);
+					});
+				}
+			}).error(function(data, status, headers){
+				console.error('error getting fb account:',data, status, headers);
+				deferred.reject(data);
+			});
+		} else {
+			console.error('email and password nessesary for getting a firebase account');
+			deferred.reject();
+		}
 		return deferred.promise;
 	}
 	return pyro;
