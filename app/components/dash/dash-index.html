@@ -1,69 +1,74 @@
 <section id="content" class="dash">
-      <section class="hbox vbox stretch">
-        <!-- .aside -->
-        <aside class="bg-white aside-md hidden-print hidden-xs" id="nav">          
-          <div class="vbox">
-            <div class="w-f scrollable">
-              <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railOpacity="0.2">           
-                <!-- nav -->                 
-                <nav class="nav-primary hidden-xs">
-                  <div class="btn-group" style="background:none;left:-0.75em;">
-                    <a class="btn btn-default dropdown-toggle" ng-cloak data-toggle="dropdown"><i class="fa fa-cube ion-icon-lg" style="margin-right:5px;"></i> {{pyroInstance.name || 'App'}} <div class="caret"></div></a>
-                    <ul class="dropdown-menu dropdown-select"style="width:100%;text-align:center;">
-                        <li><a href=""><input type="radio" name="b">1</a></li>
-                        <li><a href=""><input type="radio" name="b">2</a></li>
-                        <li><a href=""><input type="radio" name="b">3</a></li>
-                    </ul>
-                  </div>
-                  <ul class="nav nav-main" data-ride="collapse">
-                    <li ng-click="goToExplorer();" class="item menu-item">
-                      <a>
-                        <i class="icon ion-icon main-icon ion-android-developer">
-                        </i>
-                        <span class="font-bold">Data</span>
-                      </a>
-                    </li>
-                    <li ng-click="goToDash()" class="item menu-item active">
-                      <a class="auto">
-                        <i class="icon ion-icon main-icon ion-ios7-analytics-outline">
-                        </i>
-                        <span class="font-bold">Insights</span>
-                      </a>
-                    </li>
-                    <li ng-click="goToBuilder();" class="item menu-item">
-                      <a>
-                        <i class="icon ion-icon main-icon ion-code">
-                        </i>
-                        <span class="font-bold">Builder</span>
-                        <div class="pull-right" style="margin-top:-0.25em;">
-                          <i class="icon ion-icon m-r-xs ion-ios7-cloud-download-outline text-muted"></i>
-                          <i class="icon ion-icon m-l-xs ion-ios7-cloud-upload-outline text-muted"></i>
-                        </div>
-                      </a>
-                    </li>
-                    <li ng-click="goToTester();" class="item menu-item">
-                      <a>
-                        <i class="icon ion-icon main-icon ion-iphone">
-                        </i>
-                        <span class="font-bold">Tester</span>
-                      </a>
-                    </li>
-                  </ul>
-                  <div class="line dk hidden-nav-xs"></div>
-                </nav>
-                <!-- / nav -->
+  <section class="hbox vbox stretch">
+    <!-- .aside -->
+    <aside class="bg-white aside-md hidden-print hidden-xs" id="nav">          
+      <div class="vbox">
+        <div class="w-f scrollable">
+          <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railOpacity="0.2">           
+            <!-- nav -->                 
+            <nav class="nav-primary hidden-xs">
+              <div class="btn-group" style="background:none;left:-0.75em;">
+                <a class="btn btn-default dropdown-toggle" ng-cloak data-toggle="dropdown"><i class="fa fa-cube ion-icon-lg" style="margin-right:5px;"></i> {{pyroInstance.name || 'App'}} <div class="caret"></div></a>
+                <ul class="dropdown-menu dropdown-select"style="width:100%;text-align:center;">
+                  <li><a href=""><input type="radio" name="b">1</a></li>
+                  <li><a href=""><input type="radio" name="b">2</a></li>
+                  <li><a href=""><input type="radio" name="b">3</a></li>
+                </ul>
               </div>
-            </div>
-          </div>
-        </aside>
-        <!-- /.aside -->
-        <section id="dash">
-          <section class="hbox stretch">
-            <section>
-              <section class="vbox">
-                <section class="scrollable padder">    
+              <ul class="nav nav-main">
+                
+                <li ng-click="goToData();" class="item menu-item">
+                  <a>
+                    <i class="icon ion-icon main-icon ion-android-developer">
+                    </i>
+                    <span class="font-bold">Data</span>
+                  </a>
+                </li>
+                
+                <li ng-click="goToBuilder();" class="item menu-item">
+                  <a>
+                    <i class="icon ion-icon main-icon ion-code">
+                    </i>
+                    <span class="font-bold">Editor</span>
+                    <div class="pull-right" style="margin-top:-0.25em;">
+                      <i class="icon ion-icon m-r-xs ion-ios7-cloud-download-outline text-muted"></i>
+                      <i class="icon ion-icon m-l-xs ion-ios7-cloud-upload-outline text-muted"></i>
+                    </div>
+                  </a>
+                </li>
+                
+                <li ng-click="goToTester();" class="item menu-item">
+                  <a>
+                    <i class="icon ion-icon main-icon ion-iphone">
+                    </i>
+                    <span class="font-bold">Tester</span>
+                  </a>
+                </li>
 
-                  <header class="font-bold wrapper-lg">
+                <li ng-click="goToDash()" class="item menu-item active">
+                  <a class="auto">
+                    <i class="icon ion-icon main-icon ion-ios7-analytics-outline">
+                    </i>
+                    <span class="font-bold">Insights</span>
+                  </a>
+                </li>
+
+              </ul>
+              <div class="line dk hidden-nav-xs"></div>
+            </nav>
+            <!-- / nav -->
+          </div>
+        </div>
+      </div>
+    </aside>
+    <!-- /.aside -->
+    <section id="dash">
+      <section class="hbox stretch">
+        <section>
+          <section class="vbox">
+            <section class="scrollable padder">    
+
+              <header class="font-bold wrapper-lg">
 <!--                     <div class="hbox stretch">
                       <div class="btn-group">
                         <button data-toggle="dropdown" class="btn btn-sm btn-rounded btn-warning dropdown-toggle">
@@ -77,23 +82,23 @@
                         </ul>
                       </div>
                     </div> -->
-                      <h3 class="m-r-lg" style="display:inline;">App Url:  
-                        <a ng-href="http://{{pyroInstance.appUrl}}" target="_blank">
+                    <h3 class="m-r-lg" style="display:inline;">App Url:  
+                      <a ng-href="http://{{pyroInstance.appUrl}}" target="_blank">
                         {{pyroInstance.appUrl}}
-                        </a>
-                      </h3>
-                      <h3 class="m-l-lg" style="display:inline;">Data Url:  
-                        <a ng-href="http://{{pyroInstance.dbUrl}}" target="_blank">
-                          {{pyroInstance.dbUrl}}
-                        </a>
-                      </h3>
+                      </a>
+                    </h3>
+                    <h3 class="m-l-lg" style="display:inline;">Data Url:  
+                      <a ng-href="http://{{pyroInstance.dbUrl}}" target="_blank">
+                        {{pyroInstance.dbUrl}}
+                      </a>
+                    </h3>
                   </header>
 
                   <section class="row m-b-md">
                     <div class="col-md-4" style="text-align:center;">
-                        <div class="text-center">
-                          <h2 class="text-dark">Attention</h2>
-                        </div>
+                      <div class="text-center">
+                        <h2 class="text-dark">Attention</h2>
+                      </div>
                       <div class="panel b-a padder-v padder-v" style="text-align:left;padding-left:1em;">
                         <a href="#" class="block padder-v hover">
                           <span class="i-s i-s-2x pull-left m-r-sm">
@@ -174,34 +179,34 @@
                       </div>
                     </div>
                   </section>
-                    <div class="col-sm-3 hide">
-                      <section class="panel b-a">
-                        <header class="panel-heading b-b b-light">
-                          <ul class="nav nav-pills pull-right">
-                            <li>
-                              <a href="ajax.pie.html" class="text-muted" data-bjax data-target="#b-c">
-                                <i class="i i-cycle"></i>
-                              </a>
-                            </li>
-                            <li>
-                              <a href="#" class="panel-toggle text-muted">
-                                <i class="i i-plus text-active"></i>
-                                <i class="i i-minus text"></i>
-                              </a>
-                            </li>
-                          </ul>
-                          Connection
-                        </header>
-                        <div class="panel-body text-center bg-light lter" id="b-c">
-                          <div class="easypiechart inline m-b m-t" data-percent="60" data-line-width="4" data-bar-Color="#23aa8c" data-track-Color="#c5d1da" data-color="#2a3844" data-scale-Color="false" data-size="120" data-line-cap='butt' data-animate="2000">
-                            <div>
-                              <span class="h2 m-l-sm step"></span>%
-                              <div class="text text-xs">completed</div>
-                            </div>
+                  <div class="col-sm-3 hide">
+                    <section class="panel b-a">
+                      <header class="panel-heading b-b b-light">
+                        <ul class="nav nav-pills pull-right">
+                          <li>
+                            <a href="ajax.pie.html" class="text-muted" data-bjax data-target="#b-c">
+                              <i class="i i-cycle"></i>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#" class="panel-toggle text-muted">
+                              <i class="i i-plus text-active"></i>
+                              <i class="i i-minus text"></i>
+                            </a>
+                          </li>
+                        </ul>
+                        Connection
+                      </header>
+                      <div class="panel-body text-center bg-light lter" id="b-c">
+                        <div class="easypiechart inline m-b m-t" data-percent="60" data-line-width="4" data-bar-Color="#23aa8c" data-track-Color="#c5d1da" data-color="#2a3844" data-scale-Color="false" data-size="120" data-line-cap='butt' data-animate="2000">
+                          <div>
+                            <span class="h2 m-l-sm step"></span>%
+                            <div class="text text-xs">completed</div>
                           </div>
                         </div>
-                      </section>                      
-                    </div>
+                      </div>
+                    </section>                      
+                  </div>
                   <div class="row bg-light dk m-b">
                     <div class="col-md-6 dker">
                       <section>
@@ -213,9 +218,9 @@
                                 <span class="caret"></span>
                               </button>
                               <ul class="dropdown-menu dropdown-select">
-                                  <li><a href="#"><input type="radio" name="b">Month</a></li>
-                                  <li><a href="#"><input type="radio" name="b">Week</a></li>
-                                  <li><a href="#"><input type="radio" name="b">Day</a></li>
+                                <li><a href="#"><input type="radio" name="b">Month</a></li>
+                                <li><a href="#"><input type="radio" name="b">Week</a></li>
+                                <li><a href="#"><input type="radio" name="b">Day</a></li>
                               </ul>
                             </div>
                             <a href="#" class="btn btn-default btn-icon btn-rounded btn-sm">Go</a>
@@ -254,13 +259,13 @@
                               <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu dropdown-select">
-                                <li><a href="#"><input type="radio" name="a">Today</a></li>
-                                <li><a href="#"><input type="radio" name="a">Yesterday</a></li>
-                                <li><a href="#"><input type="radio" name="a">Last 24 Hours</a></li>
-                                <li><a href="#"><input type="radio" name="a">Last 7 Days</a></li>
-                                <li><a href="#"><input type="radio" name="a">Last 30 days</a></li>
-                                <li><a href="#"><input type="radio" name="a">Last Month</a></li>
-                                <li><a href="#"><input type="radio" name="a">All Time</a></li>
+                              <li><a href="#"><input type="radio" name="a">Today</a></li>
+                              <li><a href="#"><input type="radio" name="a">Yesterday</a></li>
+                              <li><a href="#"><input type="radio" name="a">Last 24 Hours</a></li>
+                              <li><a href="#"><input type="radio" name="a">Last 7 Days</a></li>
+                              <li><a href="#"><input type="radio" name="a">Last 30 days</a></li>
+                              <li><a href="#"><input type="radio" name="a">Last Month</a></li>
+                              <li><a href="#"><input type="radio" name="a">All Time</a></li>
                             </ul>
                           </div>
                           Analysis
@@ -279,4 +284,4 @@
         </section>
       </section>
     </section>
-  <script src="lib/resize/resize.js"></script>
+    <script src="lib/resize/resize.js"></script>

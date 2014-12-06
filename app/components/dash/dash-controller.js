@@ -10,7 +10,6 @@ angular.module('pyroApp.controllers')
   $scope.otherDash = function(ind){
     $state.go('dash',{appId:ind})
   }
-
   $scope.goToDash = function() {
     $state.go('dash',{appId: $stateParams.appId})
   }  
@@ -20,12 +19,12 @@ angular.module('pyroApp.controllers')
   $scope.goToTester = function() {
     $state.go('tester',{appId: $stateParams.appId})
   }
-  $scope.goToExplorer = function() {
-    $state.go('explorer',{appId: $stateParams.appId})
+  $scope.goToData = function() {
+    $state.go('data',{appId: $stateParams.appId})
   }
 
   $scope.instanceList.$loaded().then(function(pyroList){
-      // [TODO] get pyro object by selecting from exisiting list
+    // [TODO] get pyro object by selecting from exisiting list
     $scope.isLoading = false;
     console.log('scope set:', $scope.instanceList[0]);
     $scope.pyroInstance = pyroList[$stateParams.appId]

@@ -74,6 +74,10 @@ h1, h2, h3, h4 {
 .menu-item {
   margin: 0.75em 0 0.75em 1em;
 }
+.menu-item .active,
+.menu-item .active a {
+  cursor: default !important;
+}
 .menu-item.second-item {
   margin: 0.75em 0 0.75em 0;
   padding-left: 4.5em !important;
@@ -109,6 +113,13 @@ border:none;padding-right:1em;
 .item.menu-item i.main-icon {
   transition: color 0.3s ease;
   transition: background-color 0.3s ease;
+}
+
+.item.menu-item > a {
+  width: 100%;
+}
+.item.menu-item > a > i {
+  text-align: center;
 }
 .item.menu-item {
   cursor: pointer;

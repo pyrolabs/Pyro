@@ -1,96 +1,95 @@
 <div id="content" class="builder">
-      <div class="hbox vbox stretch">
-        <!-- .aside -->
-        <aside class="bg-white aside-md hidden-print hidden-xs" id="nav">          
-          <div class="vbox">
-            <div class="w-f scrollable">
-              <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railOpacity="0.2">           
-                <!-- nav -->                 
-                <nav class="nav-primary hidden-xs">
-                  <div class="btn-group" style="background:none;left:-0.75em;">
-                    <a class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cube ion-icon-lg" style="margin-right:5px;"></i> {{pyroInstance.name || 'App'}} <div class="caret"></div></a>
-                    <ul class="dropdown-menu dropdown-select"style="width:100%;text-align:center;">
-                        <li><a href=""><input type="radio" name="b">1</a></li>
-                        <li><a href=""><input type="radio" name="b">2</a></li>
-                        <li><a href=""><input type="radio" name="b">3</a></li>
-                    </ul>
-                  </div>
-                  <ul class="nav nav-main" data-ride="collapse">
-                    <li ng-click="goToExplorer();" class="item menu-item">
-                      <a>
-                        <i class="icon ion-icon main-icon ion-android-developer">
-                        </i>
-                        <span class="font-bold">Data</span>
-                      </a>
-                    </li>
-                    <li ng-click="goToDash()" class="item menu-item">
-                      <a class="auto">
-                        <i class="icon ion-icon main-icon ion-ios7-analytics-outline">
-                        </i>
-                        <span class="font-bold">Insights</span>
-                      </a>
-                    </li>
-                    <li ng-click="goToBuilder();" class="item menu-item active">
-                      <a>
-                        <i class="icon ion-icon main-icon ion-code-working text-warning">
-                        </i>
-                        <span class="font-bold">Builder</span>
-                      </a>
-
-                        <!-- upload/download buttons -->
-                        <!--
-                        <a class="item menu-item second-item nonactive"><i class="icon ion-icon m-l-xs ion-ios7-cloud-upload"></i> Upload</a>
-                        <a class="item menu-item second-item nonactive" ng-click="setEmulator('iphone6')"><i class="icon ion-icon m-r-xs ion-ios7-cloud-download-outline text-light"></i> Download</a> 
-                        -->
-                        <div style="height:200px; display:block;">
-                        <treecontrol class="tree-classic" tree-model="files" options="opts" on-selection="loadEditorFile(node)">
-                          {{node.name}}
-                       </treecontrol>
-                       </div>
-                      <!-- filelist -->
-<!--                       <ul class="nav multi-level" style="display: block;">
-                        <li ng-repeat="(key, val) in files">
-                          <a ng-click="val.type === 'file' ? loadEditorFile(key) : null">
-                            {{key}}
-                          </a>
-                          <ul ng-show="val.type == 'folder'">
-                            <li ng-repeat="(subkey, subval) in val">
-                              <a>{{subkey}}</a>
-                            </li>
-                          </ul>
-                        </li>
-                      </ul> -->
-                      <!-- /filelist -->
-
-                    </li>
-                    <li ng-click="goToTester();" class="item menu-item">
-                      <a>
-                        <i class="icon ion-icon main-icon ion-iphone">
-                        </i>
-                        <span class="font-bold">Tester</span>
-                      </a>
-                    </li>
-                  </ul>
-                  <div class="line dk hidden-nav-xs"></div>
-                </nav>
-                <!-- / nav -->
+  <div class="hbox vbox stretch">
+    <!-- .aside -->
+    <aside class="bg-white aside-md hidden-print hidden-xs" id="nav">
+      <div class="vbox">
+        <div class="w-f scrollable">
+          <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railOpacity="0.2">
+            <!-- nav -->
+            <nav class="nav-primary hidden-xs">
+              <div class="btn-group" style="background:none;left:-0.75em;">
+                <a class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cube ion-icon-lg" style="margin-right:5px;"></i> {{pyroInstance.name || 'App'}} <div class="caret"></div></a>
+                <ul class="dropdown-menu dropdown-select"style="width:100%;text-align:center;">
+                  <li><a href=""><input type="radio" name="b">1</a></li>
+                  <li><a href=""><input type="radio" name="b">2</a></li>
+                  <li><a href=""><input type="radio" name="b">3</a></li>
+                </ul>
               </div>
-            </div>
-          </div>
-        </aside>
-        <!-- /.aside -->
-
-        <!-- editor -->
-        <div id="builder">
-                        <treecontrol class="tree-classic" tree-model="files" options="opts" on-selection="downloadFile(node.path)">
-                          {{node.name}}
-                       </treecontrol>
-          <div id="build-editor" ui-ace="{useWrapMode: true, theme:'monokai'}"></div>
+              <ul class="nav nav-main">
+                <li ng-click="goToData();" class="item menu-item">
+                  <a>
+                    <i class="icon ion-icon main-icon ion-android-developer">
+                    </i>
+                    <span class="font-bold">Data</span>
+                  </a>
+                </li>
+                <li class="item menu-item active">
+                  <a>
+                    <i class="icon ion-icon main-icon ion-code-working text-warning">
+                    </i>
+                    <span class="font-bold">Editor</span>
+                    <span class="pull-right">
+                      <span class="ion-icon m-l-xs ion-ios7-cloud-download-outline"></span>
+                      <span class="ion-icon m-l-xs ion-ios7-cloud-upload"></span>
+                    </span>
+                  </a>
+                  <!-- upload/download buttons -->
+                  <!--
+                  <a class="item menu-item second-item nonactive"><i class="icon ion-icon m-l-xs ion-ios7-cloud-upload"></i> Upload</a>
+                  <a class="item menu-item second-item nonactive" ng-click="setEmulator('iphone6')"><i class="icon ion-icon m-r-xs ion-ios7-cloud-download-outline text-light"></i> Download</a>
+                -->
+                <!-- filelist -->
+                <ul class="nav multi-level" style="display: block;">
+                  <li ng-repeat="(key, val) in files">
+                    <a ng-click="val.type === 'file' ? loadEditorFile(key) : null">
+                      {{key}}
+                    </a>
+                    <ul ng-show="val.type == 'folder'">
+                      <li ng-repeat="(subkey, subval) in val">
+                        <a>{{subkey}}</a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+                <!-- /filelist -->
+              </li>
+              <div style="height:200px; display:block;">
+                <treecontrol class="tree-classic" tree-model="files" options="opts" on-selection="loadEditorFile(node)">
+                  {{node.name}}
+                </treecontrol>
+              </div>
+              <li ng-click="goToTester();" class="item menu-item">
+                <a>
+                  <i class="icon ion-icon main-icon ion-iphone">
+                  </i>
+                  <span class="font-bold">Tester</span>
+                </a>
+              </li>
+              <li ng-click="goToDash()" class="item menu-item">
+                <a class="auto">
+                  <i class="icon ion-icon main-icon ion-ios7-analytics-outline">
+                  </i>
+                  <span class="font-bold">Insights</span>
+                </a>
+              </li>
+            </ul>
+            <div class="line dk hidden-nav-xs"></div>
+          </nav>
+          <!-- / nav -->
         </div>
-        <!-- /editor -->
-
-        <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen,open" data-target="#nav,html"></a>
-
       </div>
     </div>
-  <script src="lib/resize/resize.js"></script>
+  </aside>
+  <!-- /.aside -->
+  <!-- editor -->
+  <div id="builder">
+    <treecontrol class="tree-classic" tree-model="files" options="opts" on-selection="downloadFile(node.path)">
+      {{node.name}}
+    </treecontrol>
+    <div id="build-editor" ui-ace="{useWrapMode: true, theme:'monokai'}"></div>
+  </div>
+  <!-- /editor -->
+  <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen,open" data-target="#nav,html"></a>
+  </div>
+</div>
+<script src="lib/resize/resize.js"></script>
