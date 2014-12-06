@@ -84,10 +84,8 @@ angular.module('pyroApp.controllers')
   function getFileMode(argFile){
     var fileMode = 'ace/mode/';
     // [TODO] add regex for file type 
-    if(argFile.hasOwnProperty('editorMode')){
-      fileMode = fileMode + argFile.editorMode;
-    } else {
-      fileMode = fileMode + 'javascript';
+    if(argFile.hasOwnProperty('filetype')){
+      fileMode = fileMode + argFile.filetype;
     }
     return fileMode;
   }
