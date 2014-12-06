@@ -62,15 +62,15 @@
       </div>
     </aside>
     <!-- /.aside -->
+
     <!-- editor -->
+
     <div id="builder">
-      <div class="visible-xs" ng-click="collapseFolders();">
-        {{ files.$currentfile.name || 'Select a file'}}
-      </div>
+      <button class="btn btn-fab btn-fab-mini btn-raised btn-material-red visible-xs" ng-click="collapseFolders();" style="position:fixed;right:3%;top:2.125em;z-index:2000;"><i class="ion-document text-white"></i></button>
       <treecontrol class="tree-classic ng-hide" ng-show="files.$collapsed" tree-model="files" options="opts" on-selection="openFile(node)">
         {{node.name}}
       </treecontrol>
-      <div ui-ace="{useWrapMode: true, theme:'monokai', onLoad:aceLoaded, onChange:aceChanged}" id="build-editor"></div>
+      <div ui-ace="{useWrapMode: true, theme:'monokai', onLoad:aceLoaded, onChange:aceChanged}" id="build-editor" ></div>
     </div>
     <!-- /editor -->
   </div>

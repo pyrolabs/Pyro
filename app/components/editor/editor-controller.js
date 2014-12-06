@@ -63,6 +63,7 @@ angular.module('pyroApp.controllers')
   }
   $scope.openFile = function(fileObject){
     console.log('path:', fileObject.path);
+    $scope.currentPath = fileObject.path.split("fs/")[1];
     $scope.files.$currentFile = fileObject;
     if(!fileObject.hasOwnProperty('content')){
       var filePath = fileObject.path.replace('fs/pyro-'+$scope.pyroInstance.name+'/', '');
@@ -80,6 +81,7 @@ angular.module('pyroApp.controllers')
       $scope.editorObj.getSession().setValue(fileObject.content);
       $scope.editorObj.getSession().setMode(getFileMode(fileObject));
     }
+    $scope.files.$collapsed = false;
   };
   function getFileMode(argFile){
     var fileMode = 'ace/mode/';

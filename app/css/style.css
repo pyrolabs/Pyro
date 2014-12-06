@@ -14,9 +14,8 @@ h1, h2, h3, h4 {
 
 #content {
   position:absolute;
-  top:0; right:0;
+  top:69px !important; right:0;
   bottom:0; left:0;
-  padding-top: 69px !important;
 }
 
 #background-header {
