@@ -65,6 +65,7 @@ angular.module('pyro.service', ['firebase'])
 		var pyro = new Pyro(argPyroObj);
 			pyro.$signup =  function(argSignupData) {
 				var deferred = $q.defer();
+				console.log('[PyroService] $signup called', argSignupData);
 				pyro.userSignup(argSignupData, function(userAccount) {
 		      console.log('signup + login successful:', userAccount);
 		      deferred.resolve(userAccount);
@@ -85,6 +86,7 @@ angular.module('pyro.service', ['firebase'])
 			};
 			pyro.$getUser = function() {
 				var deferred = $q.defer();
+				console.warn('[PyroService] $getUser called');
 				if(account != null) {
 					deferred.resolve(account);
 				}
@@ -113,13 +115,6 @@ angular.module('pyro.service', ['firebase'])
 				} else {
 					deferred.reject();
 				}
-				return deferred.promise;
-			};
-			pyro.$getUser =  function(){
-				var deferred = $q.defer();
-				pyro.getUser(function(userAccount){
-					deferred.resolve(userAccount);
-				});
 				return deferred.promise;
 			};
 			pyro.$getUserCount =  function(){
@@ -243,7 +238,7 @@ angular.module('pyro.service', ['firebase'])
 		return deferred.promise;
 	}
 	pyro.$createFbAccount = function(argSignupData){
-		console.log('createFbAccount called:', argSignupData);
+		console.log('[PyroMaster]createFbAccount called:', argSignupData);
 		var deferred = $q.defer();
 		// [TODO] look into if password should just be uid to be able to get the account later
 		if(argSignupData.hasOwnProperty('email') && argSignupData.hasOwnProperty('password')) {
@@ -265,7 +260,7 @@ angular.module('pyro.service', ['firebase'])
 		return deferred.promise;
 	}
 	pyro.$getFbAccount = function(argSignupData){
-		console.log('getFbAccount called:', argSignupData);
+		console.log('[PyroMaster] getFbAccount called:', argSignupData);
 		var self = this;
 		var deferred = $q.defer();
 		// [TODO] look into if password should just be uid to be able to get the account later

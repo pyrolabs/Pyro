@@ -16,13 +16,16 @@ angular.module('pyroApp.controllers')
   //   $rootScope.instanceList = returnedList;
   // });
 
-  $rootScope.instanceList = PyroArray('instances');
-  console.log('$rootScope.instanceList set:', $scope.instanceList);
+  PyroArray('instances').$loaded().then(function(loadedList){
+    $rootScope.instanceList = loadedList;
+    console.log('$rootScope.instanceList set:', $scope.instanceList);
+
+  });
 
   // [TODO] Use different objects for the different create types
   $scope.viewDetail = function(argInd) {
     console.log('viewDetail called with: ', argInd);
-    console.log('loading:', $scope.instanceList[argInd]);
+    console.log('loading:', PyroArray('instances').$keyAt(argInd));
     $state.go('data', {
       appId: argInd
     });

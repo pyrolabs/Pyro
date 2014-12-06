@@ -13,9 +13,10 @@ angular.module('pyroApp.controllers')
       pyroMaster.$getFbAccount($scope.loginData, userData).then(function(fbAccount){
         console.log('Fb account returned:', fbAccount);
         $state.go('home');
-      }, function(){
-        console.error('error getting fb Account');
-      })
+      }, function(err){
+        console.error('error getting fb Account:', err);
+        $scope.err = {error:err, message:'No Firebase Account exists for this information'};
+      });
     }, function(err){
       $scope.err = err;
       console.error('[LoginCtrl] Error Logging In:', err);

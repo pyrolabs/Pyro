@@ -9,52 +9,13 @@ angular.module('pyroApp.controllers')
     $scope.isLoading = false;
     console.log('scope set:', $scope.instanceList[0]);
     $scope.pyroInstance = pyroList[$stateParams.appId];
+    console.log('mainRef:', $scope.pyroInstance.mainRef.toString());
+    $scope.pyroInstance.mainRef.on('value', function(pyroSnap){
+      $scope.jsonData = pyroSnap.val();
+      console.log('pyro data:', $scope.jsonData);
+    });
   });
 
-  $scope.jsonData = {
-    "pyro-test-05": {
-      "messages": {
-        "-JaYb_M70aiWE4f19-wf": {
-          "content": "asdfasdf",
-          "createdAt": 1415789303377
-        },
-        "-JaYbcFMwVGLEPQ7v7-4": {
-          "content": "asdfasdf",
-          "createdAt": 1415789315233
-        },
-        "-JaYbcVqrjBYUW12VeLr": {
-          "content": "asdfasdf",
-          "createdAt": 1415789316288
-        },
-        "-JaYbcn7oBQkInWWNAc5": {
-          "content": "asdfasdf",
-          "createdAt": 1415789317458
-        },
-        "-JaYcTgZ2m2ucHOWeSck": {
-          "content": "asdfasdf",
-          "createdAt": 1415789538086
-        },
-        "-JaYh61RiTF07tgLE1rw": {
-          "author": "prescottprue@gmail.com",
-          "content": "New message",
-          "createdAt": 1415790751882
-        },
-        "-JaYhW-2Bp4TVpcegTmJ": {
-          "author": "prescottprue@gmail.com",
-          "content": "asdfasdfasdfasdfasdf",
-          "createdAt": 1415790859578
-        }
-      },
-      "userArray": "[{1:'user1'}]",
-      "users": {
-        "-JaYSUGyYFCRrktERCja": {
-          ".priority": "prescottprue@gmail.com",
-          "createdAt": 1415786656883,
-          "email": "prescottprue@gmail.com",
-          "role": 10
-        }
-      }
-    }
-  }
+  
 
 })
