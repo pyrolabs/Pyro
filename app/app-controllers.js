@@ -1,4 +1,4 @@
-angular.module('pyroApp.controllers', ['pyroApp.services'])
+angular.module('pyroApp.controllers', ['pyroApp.services', 'treeControl'])
 .controller('RootCtrl', function($scope, $state, $rootScope, $stateParams, pyroMaster, PyroArray) {
   console.log('RootCtrl');
   $scope.inDash = false;

@@ -35,9 +35,13 @@
                         <a class="item menu-item second-item nonactive"><i class="icon ion-icon m-l-xs ion-ios7-cloud-upload"></i> Upload</a>
                         <a class="item menu-item second-item nonactive" ng-click="setEmulator('iphone6')"><i class="icon ion-icon m-r-xs ion-ios7-cloud-download-outline text-light"></i> Download</a> 
                         -->
-
+                        <div style="height:200px; display:block;">
+                        <treecontrol class="tree-classic" tree-model="files" options="opts" on-selection="loadEditorFile(node)">
+                          {{node.name}}
+                       </treecontrol>
+                       </div>
                       <!-- filelist -->
-                      <ul class="nav multi-level" style="display: block;">
+<!--                       <ul class="nav multi-level" style="display: block;">
                         <li ng-repeat="(key, val) in files">
                           <a ng-click="val.type === 'file' ? loadEditorFile(key) : null">
                             {{key}}
@@ -48,7 +52,7 @@
                             </li>
                           </ul>
                         </li>
-                      </ul>
+                      </ul> -->
                       <!-- /filelist -->
 
                     </li>
@@ -71,6 +75,9 @@
 
         <!-- editor -->
         <div id="builder">
+                        <treecontrol class="tree-classic" tree-model="files" options="opts" on-selection="downloadFile(node.path)">
+                          {{node.name}}
+                       </treecontrol>
           <div id="build-editor" ui-ace="{useWrapMode: true, theme:'monokai'}"></div>
         </div>
         <!-- /editor -->
