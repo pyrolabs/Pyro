@@ -13,23 +13,6 @@ angular.module('pyroApp.controllers')
     type:'web'
   } 
 
-  $scope.otherDash = function(ind){
-    $state.go('dash',{appId:ind})
-  }
-  $scope.goToDash = function() {
-    $state.go('dash',{appId: $stateParams.appId})
-  }  
-  $scope.goToBuilder = function() {
-    $state.go('editor',{appId: $stateParams.appId})
-  }
-  $scope.goToTester = function() {
-    $state.go('tester',{appId: $stateParams.appId})
-  }
-  $scope.goToData = function() {
-    $state.go('data',{appId: $stateParams.appId})
-  }
-
-
   $scope.setEmulator = function(emu) {
     $scope.emuRender.type = emu;
     if (emu==='iphone6') {

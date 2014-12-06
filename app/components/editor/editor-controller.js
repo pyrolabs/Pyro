@@ -4,19 +4,6 @@ angular.module('pyroApp.controllers')
   console.log('EditorCtrl');
  
   $rootScope.instanceList = PyroArray('instances');
-  $scope.otherDash = function(ind){
-    $state.go('dash',{appId:ind})
-  }
-  $scope.goToDash = function() {
-    $state.go('dash',{appId: $stateParams.appId})
-  }  
-  $scope.goToBuilder = function() {
-    $state.go('editor',{appId: $stateParams.appId})
-  }
-  $scope.goToTester = function() {
-    $state.go('tester',{appId: $stateParams.appId})
-  }
-
 
    $scope.instanceList.$loaded().then(function(pyroList){
       // [TODO] get pyro object by selecting from exisiting list

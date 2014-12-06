@@ -40,6 +40,23 @@ angular.module('pyroApp.controllers', ['pyroApp.services', 'treeControl'])
       console.log('Pyro symbol clicked:', objectSnap);
     });
   }
+
+  $scope.otherDash = function(ind){
+    $state.go('dash',{appId:ind})
+  }
+  $scope.goToDash = function() {
+    $state.go('dash',{appId: $stateParams.appId})
+  }  
+  $scope.goToEditor = function() {
+    $state.go('editor',{appId: $stateParams.appId})
+  }
+  $scope.goToTester = function() {
+    $state.go('tester',{appId: $stateParams.appId})
+  }
+  $scope.goToData = function() {
+    $state.go('data',{appId: $stateParams.appId})
+  }
+  
 })
 
 .filter('search', function(){
