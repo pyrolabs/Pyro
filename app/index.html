@@ -1,47 +1,62 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title>Pyro</title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <title>Pyro</title>
+    <!-- Ionic CSS -->
+  <link href="//code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet">
+  <!-- <link href="//cdnjs.cloudflare.com/ajax/libs/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet"> -->
+  <!-- Bootstrap CSS -->
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Material Design CSS -->
+  <link rel="stylesheet" href="bower_components/bootstrap-material-design/dist/css/material-wfont.min.css" type="text/css" />
+  <link rel="stylesheet" href="bower_components/bootstrap-material-design/dist/css/ripples.min.css" type="text/css" />
 
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
+  <!-- Json Tree CSS -->
+  <link rel="stylesheet" href="lib/json-tree/json-tree.css">
+  <!-- Tree Control -->
+  <link rel="stylesheet" type="text/css" href="lib/angular-tree-control/css/tree-control.css">
+  <link rel="stylesheet" type="text/css" href="lib/angular-tree-control/css/tree-control-attribute.css">
 
-    <!-- Ionic Css -->
+  <!-- Scale Admin Theme CSS -->
+  <link rel="stylesheet" href="lib/scale-admin/css/animate.css" type="text/css" />
+  <link rel="stylesheet" href="lib/scale-admin/css/font-awesome.min.css" type="text/css" />
+  <link rel="stylesheet" href="lib/scale-admin/css/icon.css" type="text/css" />
+  <link rel="stylesheet" href="lib/scale-admin/css/font.css" type="text/css" />
+  <link rel="stylesheet" href="lib/scale-admin/css/app.css" type="text/css" />
 
-    <!-- Scale Admin Theme CSS -->
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="lib/scale-admin/css/animate.css" type="text/css" />
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="lib/scale-admin/css/font-awesome.min.css" type="text/css" />
-    <link href="//code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="lib/scale-admin/css/icon.css" type="text/css" />
-    <link rel="stylesheet" href="lib/scale-admin/css/font.css" type="text/css" />
-    <link rel="stylesheet" href="lib/scale-admin/css/app.css" type="text/css" />  
-    <link rel="stylesheet" href="lib/material-design/css/material.min.css" type="text/css" />
-    <link rel="stylesheet" href="lib/material-design/css/ripples.min.css" type="text/css" />
-    <!-- Custom CSS -->
-    <link href="css/style.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link href="css/style.css" rel="stylesheet">
 
-    <!-- Libs -->
-    <script src="lib/underscore/underscore.js"></script>
-    <!-- ionic/angularjs js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular.js"></script>
-    <!-- Firebase -->
-    <script src="https://cdn.firebase.com/js/client/2.0.4/firebase.js"></script>
-    <script src="https://cdn.firebase.com/libs/angularfire/0.9.0/angularfire.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.11/angular-ui-router.js"></script>
-    
-    <script src="https://s3.amazonaws.com/pyro-cdn/library/pyro.js"></script>
+  <!-- Libs -->
+  <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 
-    <script src="cdn/pyroService/pyroService.js"></script>
-    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-    
-    <!-- Google Analytics -->
-    <script src="lib/google-analytics/google-analytics.js"></script>
+  <script src="lib/underscore/underscore.js"></script>
+  <!-- ionic/angularjs js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular.js"></script>
+  <!-- Firebase -->
+  <script src="https://cdn.firebase.com/js/client/2.0.4/firebase.js"></script>
+  <script src="https://cdn.firebase.com/libs/angularfire/0.9.0/angularfire.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.11/angular-ui-router.js"></script>
 
-    <!-- Angular App -->
+  <script src="https://s3.amazonaws.com/pyro-cdn/library/pyro.js"></script>
+  <script src="cdn/pyroService/pyroService.js"></script>
+  <!-- Google Analytics -->
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.0.29.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js"></script>
+
+  <script src="bower_components/bootstrap-material-design/dist/js/material.min.js"></script>
+  <script src="bower_components/bootstrap-material-design/dist/js/ripples.min.js"></script>
+  <script src="lib/json-tree/json-tree.js"></script>
+  <script src="lib/angular-tree-control/js/angular-tree-control.js"></script>
+  <script src="lib/ui-ace/ui-ace.js"></script>
+  <script src="lib/google-analytics/google-analytics.js"></script>
+
+  <!-- Angular App -->
     <script src="app.js"></script>
     <script src="app-controllers.js"></script>
     <script src="app-services.js"></script>
@@ -52,45 +67,19 @@
     <script src="components/admin/admin-controller.js"></script>
     <script src="components/editor/editor-controller.js"></script>
     <script src="components/editor/editor-service.js"></script>
-
+    <script src="components/data/data-controller.js"></script>
     <script src="components/tester/tester-controller.js"></script>
     <script src="components/landing/landing-controller.js"></script>
+</head>
+<body ng-app="pyroApp" ng-controller="RootCtrl" ng-cloak>
+  <!-- navbar -->
+  <div ui-view="navbar"></div>
+  <!-- main container -->
+  <div ui-view="main"></div>
+  <!-- App -->
+
+  <!-- // <script src="lib/scale-admin/js/app.plugin.js"></script> -->
 
 
-  </head>
-  <body ng-app="pyroApp" ng-controller="RootCtrl" ng-cloak>
-     <!-- navbar -->
-    <div ui-view="navbar"></div>
-    <!-- main container -->
-    <div ui-view="main"></div>
-
-        <!-- Scale Admin Theme Javascript-->
-    <!-- // <script src="lib/scale-admin/js/jquery.min.js"></script> -->
-    <!-- Bootstrap -->
-    <!-- // <script src="lib/scale-admin/js/bootstrap.js"></script> -->
-    <!-- App -->
-    <script src="lib/scale-admin/js/app.js"></script>  
-    <script src="lib/scale-admin/js/slimscroll/jquery.slimscroll.min.js"></script>
-    <script src="lib/scale-admin/js/charts/easypiechart/jquery.easy-pie-chart.js"></script>
-    <script src="lib/scale-admin/js/charts/sparkline/jquery.sparkline.min.js"></script>
-    <script src="lib/scale-admin/js/charts/flot/jquery.flot.min.js"></script>
-    <script src="lib/scale-admin/js/charts/flot/jquery.flot.tooltip.min.js"></script>
-    <script src="lib/scale-admin/js/charts/flot/jquery.flot.spline.js"></script>
-    <script src="lib/scale-admin/js/charts/flot/jquery.flot.pie.min.js"></script>
-    <script src="lib/scale-admin/js/charts/flot/jquery.flot.resize.js"></script>
-    <script src="lib/scale-admin/js/charts/flot/jquery.flot.grow.js"></script>
-    <script src="lib/scale-admin/js/charts/flot/demo.js"></script>
-    <!-- bower:js -->
-    <!-- endbower -->
-    <script src="lib/scale-admin/js/calendar/bootstrap_calendar.js"></script>
-    <script src="lib/scale-admin/js/calendar/demo.js"></script>
-
-    <script src="lib/scale-admin/js/sortable/jquery.sortable.js"></script>
-    <!-- // <script src="lib/scale-admin/js/app.plugin.js"></script> -->
-    <script src="lib/material-design/js/material.js"></script>
-    <script src="lib/material-design/js/ripples.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js"></script>
-    <script src="lib/ui-ace/ui-ace.js"></script>
-    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.0.29.min.js"></script>
-  </body>
+</body>
 </html>

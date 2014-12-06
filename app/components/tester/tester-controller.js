@@ -25,6 +25,9 @@ angular.module('pyroApp.controllers')
   $scope.goToTester = function() {
     $state.go('tester',{appId: $stateParams.appId})
   }
+  $scope.goToData = function() {
+    $state.go('data',{appId: $stateParams.appId})
+  }
 
 
   $scope.setEmulator = function(emu) {

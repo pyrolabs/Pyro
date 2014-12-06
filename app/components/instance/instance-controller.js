@@ -23,41 +23,48 @@ angular.module('pyroApp.controllers')
   $scope.viewDetail = function(argInd) {
     console.log('viewDetail called with: ', argInd);
     console.log('loading:', $scope.instanceList[argInd]);
-    $state.go('dash', {appId:argInd});
+    $state.go('data', {
+      appId: argInd
+    });
   }
   $scope.createInstance = function() {
-  	console.log('createInstance called', $scope.newAppData);
-    if($scope.newAppData.hasOwnProperty('name')){
-      $scope.newAppData.url = "https://"+$scope.newAppData.name + ".firebaseio.com"
-      pyroMaster.$createInstance($scope.newAppData).then(function(returnedInstance){
+    console.log('createInstance called', $scope.newAppData);
+    if ($scope.newAppData.hasOwnProperty('name')) {
+      $scope.newAppData.url = "https://" + $scope.newAppData.name + ".firebaseio.com"
+      pyroMaster.$createInstance($scope.newAppData).then(function(returnedInstance) {
         console.log('[InstanceListCtrl]instance created successfully:', returnedInstance);
-        $state.go('dash', {appId:returnedInstance.key()});
-      }, function(err){
+        $state.go('data', {
+          appId: returnedInstance.key()
+        });
+      }, function(err) {
         console.error('error creating instance:', err);
         $scope.err = err;
       });
-    }
-  	else {
-      $scope.err = {message:'Please enter a url for your new instance'};
+    } else {
+      $scope.err = {
+        message: 'Please enter a url for your new instance'
+      };
     }
   }
-  $scope.simpleSetup = function(){
+  $scope.simpleSetup = function() {
     console.log('[InstanceListCtrl] simpleSetup called:');
-    if($scope.newAppData && $scope.newAppData.hasOwnProperty('name')){
-      pyroMaster.$generatePyro($scope.newAppData.name).then(function(returnedInfo){
-        console.log('[InstanceListCtrl] newPyroInstance successful with:', returnedInfo );
-        $state.go('dash', {appId:$scope.newAppData.name});
-      }, function(err){
+    if ($scope.newAppData && $scope.newAppData.hasOwnProperty('name')) {
+      pyroMaster.$generatePyro($scope.newAppData.name).then(function(returnedInfo) {
+        console.log('[InstanceListCtrl] newPyroInstance successful with:', returnedInfo);
+        $state.go('data', {
+          appId: $scope.newAppData.name
+        });
+      }, function(err) {
         console.error('[InstanceListCtrl] error creating new instance:', err);
         $scope.err = err;
       });
     }
 
   }
-  $scope.startDelete = function(argName){
+  $scope.startDelete = function(argName) {
     console.log('[InstanceListCtrl] startDelete called');
     var r = confirm("Are you sure you want to delete this app?");
-    if(r == true) {
+    if (r == true) {
       console.log('confirm was true, deleteing:', argName);
       pyroMaster.$deleteObject('instances', argName);
     }

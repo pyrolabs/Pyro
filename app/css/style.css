@@ -1,6 +1,7 @@
 /* Empty. Add your own CSS if you like */
 
 body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important; 
 }
 
 h1, h2, h3, h4 {
@@ -13,9 +14,9 @@ h1, h2, h3, h4 {
 
 #content {
   position:absolute;
-  top:0px; right:0;
+  top:0; right:0;
   bottom:0; left:0;
-  padding-top: 81px !important;
+  padding-top: 69px !important;
 }
 
 #background-header {
@@ -24,6 +25,7 @@ h1, h2, h3, h4 {
   top:0; right:0;
   bottom:auto; left:0;
 }
+
 #background-container {
   position:absolute;
   top:0; right:0;
@@ -43,6 +45,7 @@ h1, h2, h3, h4 {
 
 #content.panel .panel-heading {
   font-size: 1.375em;
+  background-color: #E0E0E0 !important;
 }
 
 #landing {
@@ -63,6 +66,14 @@ h1, h2, h3, h4 {
   height: 100%;
 }
 
+ul.ng-scope {
+  display: block !important;
+}
+.tree-label span {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+}
+
+
 .ion-icon{ 
   font-size: 1.5em;
 }
@@ -73,6 +84,10 @@ h1, h2, h3, h4 {
 
 .menu-item {
   margin: 0.75em 0 0.75em 1em;
+}
+.menu-item .active,
+.menu-item .active a {
+  cursor: default !important;
 }
 .menu-item.second-item {
   margin: 0.75em 0 0.75em 0;
@@ -110,6 +125,13 @@ border:none;padding-right:1em;
   transition: color 0.3s ease;
   transition: background-color 0.3s ease;
 }
+
+.item.menu-item > a {
+  width: 100%;
+}
+.item.menu-item > a > i {
+  text-align: center;
+}
 .item.menu-item {
   cursor: pointer;
 }
@@ -134,6 +156,9 @@ border:none;padding-right:1em;
   color: #E64A19 !important;
 }
 
+.btn-fab:hover {
+  color: white !important;
+}
 .btn-default.btn-secondary {
   background-color: #FAFAFA !important;
 }
@@ -141,6 +166,13 @@ border:none;padding-right:1em;
   background-color: #FF9675 !important;
 }
 
+.btn-warning.btn-seethru {
+  background-color: rgba(255, 87, 34, 1) !important;
+}
+
+.text-warning {
+  color: rgb(255, 87, 34) !important;
+}
 
 .navbar-dark {
   background-color: #616161 !important;

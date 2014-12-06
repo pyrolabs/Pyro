@@ -1,4 +1,4 @@
-angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroApp.services','ui.ace' ])
+angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroApp.services','ui.ace', 'treeControl','json-tree'])
 .constant('FBURL', 'https://pruvit.firebaseio.com/')
 .run(function($rootScope, FBURL, $window, $location) {
   console.log('Angular is running');
@@ -16,7 +16,7 @@ angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroA
 
 })
 .config(['$sceDelegateProvider', function($sceDelegateProvider){
-  $sceDelegateProvider.resourceUrlWhitelist(['self', 'https://pyro-server.herokuapp.com/**', 'http://localhost:4000' ]);
+  $sceDelegateProvider.resourceUrlWhitelist(['self', 'https://pyro-server.herokuapp.com/**', 'http://localhost:9000', "https://pyro-test-01.s3.amazonaws.com/**" ]);
 }])
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
@@ -124,7 +124,12 @@ angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroA
         templateUrl:"components/tester/tester-index.html",
         controller: 'TesterCtrl'
       })
-
+      .state('data', {
+        parent:'nav',
+        url: '/:appId/data',
+        templateUrl:"components/data/data-index.html",
+        controller: 'DataCtrl'
+      })
       .state('admin', {
         parent:'instance',
         url: '/admin',

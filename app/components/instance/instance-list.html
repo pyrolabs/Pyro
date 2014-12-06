@@ -10,7 +10,7 @@
             <div class="row m-b">
               <div class="col-sm-6 col-md-4">
                 <section class="panel b-a" style=" height:268px;" >
-                  <div class="panel-heading bg-success lter" >
+                  <div class="panel-heading lter" >
                     <!-- Might be good for notifications
                     <span class="pull-right badge dk m-t-sm">17</span> -->
                     <a href="" class="h4 text-lt text-center m-t-sm m-b-sm block font-bold"><p class="text-dark">New Pyro App</p></a>
@@ -52,7 +52,7 @@
               </div>
               <div class="col-sm-6 col-md-4" ng-repeat="instance in instanceList">
                 <section class="panel b-a">
-                  <div class="panel-heading no-border" ng-class="cardClasses[$index]">
+                  <div class="panel-heading no-border">
                     <a href="" ng-click="viewDetail($index)" class="btn btn-warning btn-fab btn-raised pull-right"><i class="fa fa-fire" style="font-size:0.75em;margin-top:-0.5em;"></i></a>
 
                     <a ng-click="viewDetail($index)" class="h4 text-lt m-t-sm m-b-sm block font-bold"><p class="text-dark">{{instance.name}}</p></a>
