@@ -1,5 +1,5 @@
 <div id="content" class="builder">
-  <div class="hbox vbox stretch">
+  <div class="hbox stretch" style="height:100%;">
     <!-- .aside -->
     <aside class="bg-white aside-md hidden-print hidden-xs" id="nav">
       <div class="vbox">
@@ -67,12 +67,11 @@
     </aside>
     <!-- /.aside -->
     <!-- editor -->
-    <div id="builder">
-
-      <div id="build-editor" ui-ace="{useWrapMode: true, theme:'monokai'}"></div>
-    </div>
+        <div id="builder">
+            <div ui-ace="{useWrapMode: true, theme:'monokai', onLoad:aceLoaded, onChange:aceChanged}" id="build-editor"></div>
+          </div>
     <!-- /editor -->
-    <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen,open" data-target="#nav,html"></a>
   </div>
+
 </div>
 <script src="lib/resize/resize.js"></script>

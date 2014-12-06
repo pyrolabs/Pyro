@@ -13,10 +13,10 @@ h1, h2, h3, h4 {
 }
 
 #content {
-  position:fixed;
+  position:absolute;
   top:0; right:0;
   bottom:0; left:0;
-  padding-top: 5.4em !important;
+  padding-top: 69px !important;
 }
 
 #background-header {
