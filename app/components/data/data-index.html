@@ -1,11 +1,11 @@
-<div id="content" class="explorer">
+<div id="content" class="explorer scrollable">
   <style>
     span.reset,
     span.comma {
       display: none;
     }
   </style>
-  <div class="hbox vbox stretch">
+  <div class="hbox vbox stretch scrollabe">
     <!-- .aside -->
     <aside class="bg-white aside-md hidden-print hidden-xs" id="nav">          
       <div class="vbox">
@@ -13,7 +13,7 @@
           <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railOpacity="0.2">           
             <!-- nav -->                 
             <nav class="nav-primary hidden-xs">
-              <div class="btn-group" style="background:none;left:-0.75em;">
+              <div class="btn-group" style="background:none;">
                 <a class="btn btn-default dropdown-toggle" ng-cloak data-toggle="dropdown"><i class="fa fa-cube ion-icon-lg" style="margin-right:5px;"></i> {{pyroInstance.name || 'App'}} <div class="caret"></div></a>
                 <ul class="dropdown-menu dropdown-select"style="width:100%;text-align:center;">
                   <li><a href=""><input type="radio" name="b">1</a></li>
@@ -25,7 +25,7 @@
                 
                 <li ng-click="goToData();" class="item menu-item">
                   <a>
-                    <i class="icon ion-icon main-icon ion-android-developer text-warning">
+                    <i class="icon ion-icon main-icon ion-merge text-warning">
                     </i>
                     <span class="font-bold">Data</span>
                   </a>
@@ -36,6 +36,10 @@
                     <i class="icon ion-icon main-icon ion-code">
                     </i>
                     <span class="font-bold">Editor</span>
+                    <div class="pull-right" style="margin-top:-0.25em;">
+                      <i class="icon ion-icon m-r-xs ion-ios-cloud-download-outline text-muted"></i>
+                      <i class="icon ion-icon m-l-xs ion-ios-cloud-upload-outline text-muted"></i>
+                    </div>
                   </a>
                 </li>
                 
@@ -49,7 +53,7 @@
 
                 <li ng-click="goToDash()" class="item menu-item">
                   <a class="auto">
-                    <i class="icon ion-icon main-icon ion-ios7-analytics-outline">
+                    <i class="icon ion-icon main-icon ion-ios-analytics-outline">
                     </i>
                     <span class="font-bold">Insights</span>
                   </a>
@@ -64,9 +68,13 @@
       </div>
     </aside>
     <!-- /.aside -->
-
+    <div class="m-lg padder-v padder panel animated fadeIn" ng-show="pyroInstance.appUrl">
+      <a ng-href="http://{{pyroInstance.appUrl}}" target="_blank" class="m-l-md" style="display:inline;">
+       <h4 style="display:inline;">{{pyroInstance.appUrl}} <i class="mdi-action-open-in-new m-l-xs" style="font-size:0.5em"></i></h4>
+      </a>
+    </div>
     <!-- editor -->
-    <div id="explorer" class="m-lg panel" style="padding:2em;background-color:">  
+    <div id="explorer" class="m-lg panel v-box stretch scrollable" style="padding:2em;background-color:">  
       <json-tree json='jsonData' collapsed-level='2'></json-tree>
     </script>
   </div>
