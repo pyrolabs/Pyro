@@ -1,4 +1,10 @@
-<div id="content" class="builder">
+<div id="content" class="explorer">
+<style>
+span.reset,
+span.comma {
+  display: none;
+}
+</style>
       <div class="hbox vbox stretch">
         <!-- .aside -->
         <aside class="bg-white aside-md hidden-print hidden-xs" id="nav">          
@@ -16,9 +22,9 @@
                     </ul>
                   </div>
                   <ul class="nav nav-main" data-ride="collapse">
-                    <li ng-click="goToExplorer();" class="item menu-item">
+                    <li ng-click="goToExplorer();" class="item menu-item active">
                       <a>
-                        <i class="icon ion-icon main-icon ion-android-developer">
+                        <i class="icon ion-icon main-icon ion-android-developer text-warning">
                         </i>
                         <span class="font-bold">Data</span>
                       </a>
@@ -35,23 +41,14 @@
                         <i class="icon ion-icon main-icon ion-code">
                         </i>
                         <span class="font-bold">Builder</span>
-                        <div class="pull-right" style="margin-top:-0.25em;">
-                          <i class="icon ion-icon m-r-xs ion-ios7-cloud-download-outline text-muted"></i>
-                          <i class="icon ion-icon m-l-xs ion-ios7-cloud-upload-outline text-muted"></i>
-                        </div>
                       </a>
                     </li>
-                    <li ng-click="goToTester();" class="item menu-item active">
-                      <a class="auto">
+                    <li ng-click="goToTester();" class="item menu-item">
+                      <a>
                         <i class="icon ion-icon main-icon ion-iphone">
                         </i>
                         <span class="font-bold">Tester</span>
                       </a>
-                      <ul class="nav" style="display: block;">
-                        <li ng-class="{'active': '{{emuRender.type}}' == 'web'}"><a class="item menu-item second-item" ng-click="setEmulator('web')">Website</a></li>
-                        <li ng-class="{'active': '{{emuRender.type}}' == 'iphone6'}"><a class="item menu-item second-item" ng-click="setEmulator('iphone6')">iPhone 6</a></li>
-                        <li ng-class="{'active': '{{emuRender.type}}' == 'iphone5'}"><a class="item menu-item second-item" ng-click="setEmulator('iphone5')">iPhone 5</a></li>
-                      </ul>
                     </li>
                   </ul>
                   <div class="line dk hidden-nav-xs"></div>
@@ -62,10 +59,14 @@
           </div>
         </aside>
         <!-- /.aside -->
-        <div id="tester" class="hbox" style="height:100%;text-align:center;">
-          <iframe id="tester-container" class="" ng-src="{{emuRender.url}}" width="{{emuRender.width}}" height="{{emuRender.height}}">
-              Something went wrong...
-          </iframe>
+
+        <!-- editor -->
+        <div id="explorer" class="m-lg panel" style="padding:2em;background-color:">  
+          <json-tree json='jsonData' collapsed-level='2'></json-tree>
+          </script>
         </div>
+        <!-- /editor -->
+
+      </div>
     </div>
   <script src="lib/resize/resize.js"></script>

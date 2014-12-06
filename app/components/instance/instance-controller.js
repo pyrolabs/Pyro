@@ -23,7 +23,7 @@ angular.module('pyroApp.controllers')
   $scope.viewDetail = function(argInd) {
     console.log('viewDetail called with: ', argInd);
     console.log('loading:', $scope.instanceList[argInd]);
-    $state.go('dash', {appId:argInd});
+    $state.go('explorer', {appId:argInd});
   }
   $scope.createInstance = function() {
   	console.log('createInstance called', $scope.newAppData);
@@ -31,7 +31,7 @@ angular.module('pyroApp.controllers')
       $scope.newAppData.url = "https://"+$scope.newAppData.name + ".firebaseio.com"
       pyroMaster.$createInstance($scope.newAppData).then(function(returnedInstance){
         console.log('[InstanceListCtrl]instance created successfully:', returnedInstance);
-        $state.go('dash', {appId:returnedInstance.key()});
+        $state.go('explorer', {appId:returnedInstance.key()});
       }, function(err){
         console.error('error creating instance:', err);
         $scope.err = err;
@@ -46,7 +46,7 @@ angular.module('pyroApp.controllers')
     if($scope.newAppData && $scope.newAppData.hasOwnProperty('name')){
       pyroMaster.$generatePyro($scope.newAppData.name).then(function(returnedInfo){
         console.log('[InstanceListCtrl] newPyroInstance successful with:', returnedInfo );
-        $state.go('dash', {appId:$scope.newAppData.name});
+        $state.go('explorer', {appId:$scope.newAppData.name});
       }, function(err){
         console.error('[InstanceListCtrl] error creating new instance:', err);
         $scope.err = err;

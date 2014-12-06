@@ -8,7 +8,7 @@
                 <!-- nav -->                 
                 <nav class="nav-primary hidden-xs">
                   <div class="btn-group" style="background:none;left:-0.75em;">
-                    <a class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cube ion-icon-lg" style="margin-right:5px;"></i> {{pyroInstance.name || 'App'}} <div class="caret"></div></a>
+                    <a class="btn btn-default dropdown-toggle" ng-cloak data-toggle="dropdown"><i class="fa fa-cube ion-icon-lg" style="margin-right:5px;"></i> {{pyroInstance.name || 'App'}} <div class="caret"></div></a>
                     <ul class="dropdown-menu dropdown-select"style="width:100%;text-align:center;">
                         <li><a href=""><input type="radio" name="b">1</a></li>
                         <li><a href=""><input type="radio" name="b">2</a></li>
@@ -16,6 +16,13 @@
                     </ul>
                   </div>
                   <ul class="nav nav-main" data-ride="collapse">
+                    <li ng-click="goToExplorer();" class="item menu-item">
+                      <a>
+                        <i class="icon ion-icon main-icon ion-android-developer">
+                        </i>
+                        <span class="font-bold">Data</span>
+                      </a>
+                    </li>
                     <li ng-click="goToDash()" class="item menu-item active">
                       <a class="auto">
                         <i class="icon ion-icon main-icon ion-ios7-analytics-outline">
@@ -25,7 +32,7 @@
                     </li>
                     <li ng-click="goToBuilder();" class="item menu-item">
                       <a>
-                        <i class="icon ion-icon main-icon ion-android-developer">
+                        <i class="icon ion-icon main-icon ion-code">
                         </i>
                         <span class="font-bold">Builder</span>
                         <div class="pull-right" style="margin-top:-0.25em;">

@@ -6,6 +6,9 @@
 * COLORS
 *
 */
+#vulcan {
+  display: none !important;
+}
 .vulcan-help-link {
   position: fixed;
   bottom: 20px;
@@ -50,15 +53,14 @@
 *
 */
 .vulcan-l-pinned {
-  position: fixed;
-  z-index: 99999999; }
-
+  position: absolute;
+}
 .vulcan-pinned-all {
-  top: 0px;
-  bottom: 0px;
-  right: 0px;
-  left: 0px;
-  width: auto; }
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
 
 .vulcan-l-pinned-top {
   top: 0px; }
