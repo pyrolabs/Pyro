@@ -1,6 +1,10 @@
-<div id="builder">
-  <treecontrol class="tree-classic" tree-model="files" options="opts" on-selection="downloadFile(node)">
-    {{node.name}}
-  </treecontrol>
-  <div id="build-editor" ui-ace="{useWrapMode: true, theme:'monokai', onLoad:aceLoaded, onChange:aceChanged, showGutter:false}"></div>
-</div>
+      <section>
+      <section class="vbox">
+					<treecontrol class="tree-classic" tree-model="files" options="opts" on-selection="downloadFile(node)">
+						{{node.name}}
+					</treecontrol>
+					<div style="height:100%" class="builder">
+						<div ui-ace="{useWrapMode: true, theme:'monokai', onLoad:aceLoaded, onChange:aceChanged, showGutter:false}" style="height:100%;"></div>
+					</div>
+					</section>
+</section>
