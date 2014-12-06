@@ -62,9 +62,9 @@
                     ensureDefault($scope.options.injectClasses, "ul", "");
                     ensureDefault($scope.options.injectClasses, "li", "");
                     ensureDefault($scope.options.injectClasses, "liSelected", "");
-                    ensureDefault($scope.options.injectClasses, "iExpanded", "");
-                    ensureDefault($scope.options.injectClasses, "iCollapsed", "");
-                    ensureDefault($scope.options.injectClasses, "iLeaf", "");
+                    ensureDefault($scope.options.injectClasses, "iExpanded", "fa fa-folder-open");
+                    ensureDefault($scope.options.injectClasses, "iCollapsed", "fa fa-folder");
+                    ensureDefault($scope.options.injectClasses, "iLeaf", "fa fa-file-code-o");
                     ensureDefault($scope.options.injectClasses, "label", "");
                     ensureDefault($scope.options.injectClasses, "labelSelected", "");
                     ensureDefault($scope.options, "equality", defaultEquality);

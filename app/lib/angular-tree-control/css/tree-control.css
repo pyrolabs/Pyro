@@ -23,8 +23,8 @@ treecontrol ul {
 
 treecontrol li {
     position: relative;
-    padding: 0 0 0 20px;
-    line-height: 20px;
+    padding: 0 0 0 2em;
+    line-height: 1.5em;
 }
 
 treecontrol li.tree-expanded i.tree-leaf-head, treecontrol li.tree-collapsed i.tree-leaf-head {display:none;}
@@ -44,17 +44,17 @@ treecontrol li .tree-label {
 
 treecontrol.tree-classic li.tree-expanded i {
     padding: 1px 10px;
-    background: url("../images/folder.png") no-repeat;
+    /*background: url("../images/folder.png") no-repeat;*/
 }
 
 treecontrol.tree-classic li.tree-collapsed i {
     padding: 1px 10px;
-    background: url("../images/folder-closed.png") no-repeat;
+    /*background: url("../images/folder-closed.png") no-repeat;*/
 }
 
 treecontrol.tree-classic li.tree-leaf i {
     padding: 1px 10px;
-    background: url("../images/file.png") no-repeat;
+    /*background: url("../images/file.png") no-repeat;*/
 }
 
 treecontrol.tree-classic li .tree-selected {
