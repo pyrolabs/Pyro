@@ -10,7 +10,7 @@
               <div class="btn-group" style="background:none;">
                 <a class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cube ion-icon-lg" style="margin-right:5px;"></i> {{pyroInstance.name || 'App'}} <div class="caret"></div></a>
                 <ul class="dropdown-menu dropdown-select"style="width:100%;text-align:center;">
-                  <li ng-repeat="instance in instanceList"><a href=""><input type="radio" name="b">{{instance.name}}</a></li>
+                  <li ng-repeat="instance in instanceList"><a href=""><input type="radio" name="b">{{instance.name}}</a></li> x
                 </ul>
               </div>
               <ul class="nav nav-main">
@@ -32,7 +32,6 @@
                     </div>
                   </a>
                 </li>
-
                 <li class="item menu-item vbox stretch">
                   <!-- /filelist -->
                   <treecontrol class="tree-classic" tree-model="files" options="opts" on-selection="openFile(node)">
@@ -40,7 +39,6 @@
                   </treecontrol>
                   <!-- /filelist -->
                 </li>
-
                 <li ng-click="goToTester();" class="item menu-item">
                   <a>
                     <i class="icon ion-icon main-icon ion-iphone">
@@ -64,19 +62,17 @@
       </div>
     </aside>
     <!-- /.aside -->
-    <!-- editor -->
-        <div id="builder">
-          <div class="visible-xs" ng-click="collapseFolders();">
-            {{ files.$currentfile.name || 'Select a file'}}
-          </div>
-          <treecontrol class="tree-classic ng-hide" ng-show="files.$collapsed" tree-model="files" options="opts" on-selection="openFile(node.path)">
-            {{node.name}}
-          </treecontrol>
-          <div ui-ace="{useWrapMode: true, theme:'monokai', onLoad:aceLoaded, onChange:aceChanged}" id="build-editor">
-          </div>
-        </div>
-    <!-- /editor -->
+    <!-- editor -->
+    <div id="builder">
+      <div class="visible-xs" ng-click="collapseFolders();">
+        {{ files.$currentfile.name || 'Select a file'}}
+      </div>
+      <treecontrol class="tree-classic ng-hide" ng-show="files.$collapsed" tree-model="files" options="opts" on-selection="openFile(node)">
+        {{node.name}}
+      </treecontrol>
+      <div ui-ace="{useWrapMode: true, theme:'monokai', onLoad:aceLoaded, onChange:aceChanged}" id="build-editor"></div>
+    </div>
+    <!-- /editor -->
   </div>
-
 </div>
 <script src="lib/resize/resize.js"></script>
