@@ -63,6 +63,14 @@ h1, h2, h3, h4 {
   height: 100%;
 }
 
+ul.ng-scope {
+  display: block !important;
+}
+.tree-label span {
+  font-family: monospace !important;
+}
+
+
 .ion-icon{ 
   font-size: 1.5em;
 }

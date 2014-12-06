@@ -1,103 +1,93 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title>Pyro</title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <title>Pyro</title>
+  <!-- Bootstrap CSS -->
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  <!-- Ionic CSS -->
+  <link href="//code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet">
+  <!-- Json Tree CSS -->
+  <link rel="stylesheet" href="lib/json-tree/json-tree.css">
+  <!-- Tree Control -->
+  <link rel="stylesheet" type="text/css" href="lib/angular-tree-control/css/tree-control.css">
+  <link rel="stylesheet" type="text/css" href="lib/angular-tree-control/css/tree-control-attribute.css">
+  <!-- Scale Admin Theme CSS -->
+  <link rel="stylesheet" href="lib/scale-admin/css/animate.css" type="text/css" />
+  <link rel="stylesheet" href="lib/scale-admin/css/font-awesome.min.css" type="text/css" />
+  <link rel="stylesheet" href="lib/scale-admin/css/icon.css" type="text/css" />
+  <link rel="stylesheet" href="lib/scale-admin/css/font.css" type="text/css" />
+  <link rel="stylesheet" href="lib/scale-admin/css/app.css" type="text/css" />
+  <link rel="stylesheet" href="lib/material-design/css/material.min.css" type="text/css" />
+  <link rel="stylesheet" href="lib/material-design/css/ripples.min.css" type="text/css" />
+  <!-- Custom CSS -->
+  <link href="css/style.css" rel="stylesheet">
+  <!-- Libs -->
+  <script src="lib/underscore/underscore.js"></script>
+  <script src="lib/aws/aws-sdk.js"></script>
+  <!-- ionic/angularjs js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular.js"></script>
+  <!-- Firebase -->
+  <script src="https://cdn.firebase.com/js/client/2.0.4/firebase.js"></script>
+  <script src="https://cdn.firebase.com/libs/angularfire/0.9.0/angularfire.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.11/angular-ui-router.js"></script>
 
+  <script src="https://s3.amazonaws.com/pyro-cdn/library/pyro.js"></script>
+  <script src="cdn/pyroService/pyroService.js"></script>
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="lib/angular-tree-control/js/angular-tree-control.js"></script>
 
-
-    <link href="//code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="lib/json-tree/json-tree.css">
-    <!-- Ionic Css -->
-    <!-- Scale Admin Theme CSS -->
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="lib/scale-admin/css/animate.css" type="text/css" />
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="lib/scale-admin/css/font-awesome.min.css" type="text/css" />
-    <link rel="stylesheet" href="lib/scale-admin/css/icon.css" type="text/css" />
-    <link rel="stylesheet" href="lib/scale-admin/css/font.css" type="text/css" />
-    <link rel="stylesheet" href="lib/scale-admin/css/app.css" type="text/css" />  
-    <link rel="stylesheet" href="lib/material-design/css/material.min.css" type="text/css" />
-    <link rel="stylesheet" href="lib/material-design/css/ripples.min.css" type="text/css" />
-    <!-- Custom CSS -->
-    <link href="css/style.css" rel="stylesheet">
-
-    <!-- Libs -->
-    <script src="lib/underscore/underscore.js"></script>
-    <script src="lib/aws/aws-sdk.js"></script>
-
-    <!-- ionic/angularjs js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular.js"></script>
-    <!-- Firebase -->
-    <script src="https://cdn.firebase.com/js/client/2.0.4/firebase.js"></script>
-    <script src="https://cdn.firebase.com/libs/angularfire/0.9.0/angularfire.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.11/angular-ui-router.js"></script>
-    
-    <script src="https://s3.amazonaws.com/pyro-cdn/library/pyro.js"></script>
-
-    <script src="cdn/pyroService/pyroService.js"></script>
-    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="bower_components/angular-tree-control/angular-tree-control.js"></script>
-    <!-- link for CSS when using the tree as a Dom element -->
-    <link rel="stylesheet" type="text/css" href="bower_components/angular-tree-control/css/tree-control.css">
-    <!-- link for CSS when using the tree as an attribute -->
-    <link rel="stylesheet" type="text/css" href="bower_components/angular-tree-control/css/tree-control-attribute.css">
-
-    <!-- Google Analytics -->
-    <script src="lib/google-analytics/google-analytics.js"></script>
-
-    <!-- Angular App -->
-    <script src="app.js"></script>
-    <script src="app-controllers.js"></script>
-    <script src="app-services.js"></script>
-    <script src="components/instance/instance-controller.js"></script>
-    <script src="components/session/login/login-controller.js"></script>
-    <script src="components/session/account/account-controller.js"></script>
-    <script src="components/dash/dash-controller.js"></script>
-    <script src="components/admin/admin-controller.js"></script>
-    <script src="components/builder/builder-controller.js"></script>
-    <script src="components/tester/tester-controller.js"></script>
-    <script src="components/data/data-controller.js"></script>
-    <script src="components/landing/landing-controller.js"></script>
-
-
-  </head>
-  <body ng-app="pyroApp" ng-controller="RootCtrl" ng-cloak>
-     <!-- navbar -->
-    <div ui-view="navbar"></div>
-    <!-- main container -->
-    <div ui-view="main"></div>
-
-        <!-- Scale Admin Theme Javascript-->
-    <!-- // <script src="lib/scale-admin/js/jquery.min.js"></script> -->
-    <!-- Bootstrap -->
-    <!-- // <script src="lib/scale-admin/js/bootstrap.js"></script> -->
-    <!-- App -->
-    <script src="lib/scale-admin/js/app.js"></script>  
-    <script src="lib/scale-admin/js/slimscroll/jquery.slimscroll.min.js"></script>
-    <script src="lib/scale-admin/js/charts/easypiechart/jquery.easy-pie-chart.js"></script>
-    <script src="lib/scale-admin/js/charts/sparkline/jquery.sparkline.min.js"></script>
-    <script src="lib/scale-admin/js/charts/flot/jquery.flot.min.js"></script>
-    <script src="lib/scale-admin/js/charts/flot/jquery.flot.tooltip.min.js"></script>
-    <script src="lib/scale-admin/js/charts/flot/jquery.flot.spline.js"></script>
-    <script src="lib/scale-admin/js/charts/flot/jquery.flot.pie.min.js"></script>
-    <script src="lib/scale-admin/js/charts/flot/jquery.flot.resize.js"></script>
-    <script src="lib/scale-admin/js/charts/flot/jquery.flot.grow.js"></script>
-    <script src="lib/scale-admin/js/charts/flot/demo.js"></script>
-    <!-- bower:js -->
-    <!-- endbower -->
-    <script src="lib/scale-admin/js/calendar/bootstrap_calendar.js"></script>
-    <script src="lib/scale-admin/js/calendar/demo.js"></script>
-
-    <script src="lib/scale-admin/js/sortable/jquery.sortable.js"></script>
-    <!-- // <script src="lib/scale-admin/js/app.plugin.js"></script> -->
-    <script src="lib/material-design/js/material.js"></script>
-    <script src="lib/material-design/js/ripples.js"></script>
-    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.0.29.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js"></script>
-    <script src="lib/ui-ace/ui-ace.js"></script>
-    <script src="lib/json-tree/json-tree.js"></script>
-  </body>
+  <!-- Google Analytics -->
+  <script src="lib/google-analytics/google-analytics.js"></script>
+  <!-- Angular App -->
+  <script src="app.js"></script>
+  <script src="app-controllers.js"></script>
+  <script src="app-services.js"></script>
+  <script src="components/instance/instance-controller.js"></script>
+  <script src="components/session/login/login-controller.js"></script>
+  <script src="components/session/account/account-controller.js"></script>
+  <script src="components/dash/dash-controller.js"></script>
+  <script src="components/admin/admin-controller.js"></script>
+  <script src="components/builder/builder-controller.js"></script>
+  <script src="components/tester/tester-controller.js"></script>
+  <script src="components/data/data-controller.js"></script>
+  <script src="components/landing/landing-controller.js"></script>
+</head>
+<body ng-app="pyroApp" ng-controller="RootCtrl" ng-cloak>
+  <!-- navbar -->
+  <div ui-view="navbar"></div>
+  <!-- main container -->
+  <div ui-view="main"></div>
+  <!-- Scale Admin Theme Javascript-->
+  <!-- <script src="lib/scale-admin/js/jquery.min.js"></script> -->
+  <!-- Bootstrap -->
+  <!-- <script src="lib/scale-admin/js/bootstrap.js"></script> -->
+  <!-- App -->
+  <script src="lib/scale-admin/js/app.js"></script>
+  <script src="lib/scale-admin/js/slimscroll/jquery.slimscroll.min.js"></script>
+  <script src="lib/scale-admin/js/charts/easypiechart/jquery.easy-pie-chart.js"></script>
+  <script src="lib/scale-admin/js/charts/sparkline/jquery.sparkline.min.js"></script>
+  <script src="lib/scale-admin/js/charts/flot/jquery.flot.min.js"></script>
+  <script src="lib/scale-admin/js/charts/flot/jquery.flot.tooltip.min.js"></script>
+  <script src="lib/scale-admin/js/charts/flot/jquery.flot.spline.js"></script>
+  <script src="lib/scale-admin/js/charts/flot/jquery.flot.pie.min.js"></script>
+  <script src="lib/scale-admin/js/charts/flot/jquery.flot.resize.js"></script>
+  <script src="lib/scale-admin/js/charts/flot/jquery.flot.grow.js"></script>
+  <script src="lib/scale-admin/js/charts/flot/demo.js"></script>
+  <!-- bower:js -->
+  <!-- endbower -->
+  <script src="lib/scale-admin/js/calendar/bootstrap_calendar.js"></script>
+  <script src="lib/scale-admin/js/calendar/demo.js"></script>
+  <script src="lib/scale-admin/js/sortable/jquery.sortable.js"></script>
+  <!-- // <script src="lib/scale-admin/js/app.plugin.js"></script> -->
+  <script src="lib/material-design/js/material.js"></script>
+  <script src="lib/material-design/js/ripples.js"></script>
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.0.29.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js"></script>
+  <script src="lib/ui-ace/ui-ace.js"></script>
+  <script src="lib/json-tree/json-tree.js"></script>
+</body>
 </html>

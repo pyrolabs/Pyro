@@ -33,63 +33,46 @@
                       <span class="ion-icon m-l-xs ion-ios7-cloud-upload"></span>
                     </span>
                   </a>
-                  <!-- upload/download buttons -->
-                  <!--
-                  <a class="item menu-item second-item nonactive"><i class="icon ion-icon m-l-xs ion-ios7-cloud-upload"></i> Upload</a>
-                  <a class="item menu-item second-item nonactive" ng-click="setEmulator('iphone6')"><i class="icon ion-icon m-r-xs ion-ios7-cloud-download-outline text-light"></i> Download</a>
-                -->
-                <!-- filelist -->
-                <ul class="nav multi-level" style="display: block;">
-                  <li ng-repeat="(key, val) in files">
-                    <a ng-click="val.type === 'file' ? loadEditorFile(key) : null">
-                      {{key}}
-                    </a>
-                    <ul ng-show="val.type == 'folder'">
-                      <li ng-repeat="(subkey, subval) in val">
-                        <a>{{subkey}}</a>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-                <!-- /filelist -->
-              </li>
-              <div style="height:200px; display:block;">
-                <treecontrol class="tree-classic" tree-model="files" options="opts" on-selection="loadEditorFile(node)">
-                  {{node.name}}
-                </treecontrol>
-              </div>
-              <li ng-click="goToTester();" class="item menu-item">
-                <a>
-                  <i class="icon ion-icon main-icon ion-iphone">
-                  </i>
-                  <span class="font-bold">Tester</span>
-                </a>
-              </li>
-              <li ng-click="goToDash()" class="item menu-item">
-                <a class="auto">
-                  <i class="icon ion-icon main-icon ion-ios7-analytics-outline">
-                  </i>
-                  <span class="font-bold">Insights</span>
-                </a>
-              </li>
-            </ul>
-            <div class="line dk hidden-nav-xs"></div>
-          </nav>
-          <!-- / nav -->
+                </li>
+
+                <li class="item menu-item vbox stretch">
+                  <!-- /filelist -->
+                  <treecontrol class="tree-classic" tree-model="files" options="opts" on-selection="downloadFile(node.path)">
+                    {{node.name}}
+                  </treecontrol>
+                  <!-- /filelist -->
+                </li>
+
+                <li ng-click="goToTester();" class="item menu-item">
+                  <a>
+                    <i class="icon ion-icon main-icon ion-iphone">
+                    </i>
+                    <span class="font-bold">Tester</span>
+                  </a>
+                </li>
+                <li ng-click="goToDash()" class="item menu-item">
+                  <a class="auto">
+                    <i class="icon ion-icon main-icon ion-ios7-analytics-outline">
+                    </i>
+                    <span class="font-bold">Insights</span>
+                  </a>
+                </li>
+              </ul>
+              <div class="line dk hidden-nav-xs"></div>
+            </nav>
+            <!-- / nav -->
+          </div>
         </div>
       </div>
+    </aside>
+    <!-- /.aside -->
+    <!-- editor -->
+    <div id="builder">
+
+      <div id="build-editor" ui-ace="{useWrapMode: true, theme:'monokai'}"></div>
     </div>
-  </aside>
-  <!-- /.aside -->
-  <!-- editor -->
-  <div id="builder">
-    <treecontrol class="tree-classic" tree-model="files" options="opts" on-selection="downloadFile(node.path)">
-      {{node.name}}
-    </treecontrol>
-    <div id="build-editor" ui-ace="{useWrapMode: true, theme:'monokai'}"></div>
-  </div>
-  <!-- /editor -->
-  <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen,open" data-target="#nav,html"></a>
+    <!-- /editor -->
+    <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen,open" data-target="#nav,html"></a>
   </div>
 </div>
 <script src="lib/resize/resize.js"></script>
