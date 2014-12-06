@@ -1,36 +1,47 @@
-    <header class="bg-white header header-lg navbar navbar-fixed-top-xs box-shadow navbar-dark">
-      <div class="navbar-header dk m-l-md m-t-md">
-        <a style="font-size:3em;display:inline;color:#EEEEEE;">
-          <i class="icon ion-navicon"></i>
-        </a>
-        <a href="" ui-sref="home" class="navbar-brand">
-          <div class="hidden-nav-xs" style="font-size:2em;font-weight:100;">Pyro</div>
-        </a>
-        <a class="btn btn-link visible-xs" data-toggle="dropdown">
-          <i class="fa fa-cog"></i>
-        </a>
-      </div>
-      <ul class="nav navbar-nav navbar-right hidden-xs nav-user user m-t-md m-r-sm">
-        <li class="dropdown">
-          <a href="" class="dropdown-toggle" data-toggle="dropdown">
-            <span class="thumb-sm avatar pull-left">
-              <img ng-src="{{account.image || './images/blank_user.png'}}">
-            </span>
-            {{account.username || auth.password.email || auth.uid || "No Username"}} <b class="caret"></b>
-          </a>
-          <ul class="dropdown-menu animated fadeInRight">            
-            <li>
-              <span class="arrow top"></span>
-              <a href="">Settings</a>
-            </li>
-            <li>
-              <a href="" ui-sref="account">Profile</a>
-            </li>
-            <li class="divider"></li>
-            <li>
-              <a href="" ng-click="logout()" >Logout</a>
-            </li>
-          </ul>
+<header class="bg-white header header-lg navbar navbar-fixed-top-xs box-shadow navbar-dark">
+  <div class="navbar-header dk m-l-md m-t-md">
+    <a style="font-size:3em;display:inline;color:#EEEEEE;">
+      <i class="icon ion-navicon"></i>
+    </a>
+    <a href="" ui-sref="home" class="navbar-brand">
+      <div class="hidden-nav-xs" style="font-size:2em;font-weight:100;">Pyro</div>
+    </a>
+    <a class="btn btn-link visible-xs" data-toggle="dropdown">
+      <i class="fa fa-cog"></i>
+    </a>
+  </div>
+  <ul class="nav navbar-nav navbar-right hidden-xs nav-user user m-t-md m-r-sm">
+    <li class="dropdown">
+      <a href="" class="dropdown-toggle" data-toggle="dropdown">
+        <span class="thumb-sm avatar pull-left">
+        <img ng-src="{{account.image || './images/blank_user.png'}}">
+        </span>
+        {{account.username || auth.password.email || auth.uid || "No Username"}} <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu animated fadeInRight">
+        <li>
+          <span class="arrow top"></span>
+          <a href="">Settings</a>
         </li>
-      </ul>      
-    </header>
+        <li>
+          <a href="" ui-sref="account">Profile</a>
+        </li>
+        <li class="divider"></li>
+        <li>
+          <a href="" ng-click="logout()" >Logout</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</header>
+<div id="content">
+  <div class="">
+    <ui-view></ui-view>
+  </div>
+  <footer id="footer">
+  <div class="text-center padder">
+    <p><small>Built by<br/>&copy; 2014 <a href="https://www.linkedin.com/in/prescottprue">Prescott Prue</a> &amp; <a href="https://www.linkedin.com/in/sinanbolel">Sinan Bolel</a></small></p>
+  </div>
+  <script src="lib/resize/resize.js"></script>
+</footer>
+</div>

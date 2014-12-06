@@ -39,7 +39,7 @@
     <script src="cdn/pyroService/pyroService.js"></script>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="bower_components/angular-tree-control/angular-tree-control.js"></script>
+    <script type="text/javascript" src="bower_components/angular-tree-control/angular-tree-control.js"></script>
     <!-- link for CSS when using the tree as a Dom element -->
     <link rel="stylesheet" type="text/css" href="bower_components/angular-tree-control/css/tree-control.css">
     <!-- link for CSS when using the tree as an attribute -->
@@ -47,7 +47,10 @@
 
     <!-- Google Analytics -->
     <script src="lib/google-analytics/google-analytics.js"></script>
-
+    <!-- Client S3 Info -->
+    <script>AWS.config.update({accessKeyId:"AKIAITSZDS4HYX4YFOYA", secretAccessKey:"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"});
+      AWS.config.region = 'us-east-1';
+    </script>
     <!-- Angular App -->
     <script src="app.js"></script>
     <script src="app-controllers.js"></script>
@@ -57,7 +60,8 @@
     <script src="components/session/account/account-controller.js"></script>
     <script src="components/dash/dash-controller.js"></script>
     <script src="components/admin/admin-controller.js"></script>
-    <script src="components/builder/builder-controller.js"></script>
+    <script src="components/editor/editor-controller.js"></script>
+    <script src="components/editor/editor-service.js"></script>
     <script src="components/tester/tester-controller.js"></script>
     <script src="components/landing/landing-controller.js"></script>
 

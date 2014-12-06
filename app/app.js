@@ -96,31 +96,26 @@ angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroA
         parent:'nav',
         abstract:true,
         url:'/pyro/:appId',
-        views: {
-          'sidemenu':{
-            templateUrl:'templates/sidebar.html'
-          },
-          'center':{
-            template:'<ui-view></ui-view>'
-          }
-        }
+        controller:'InstanceCtrl',
+        templateUrl:'templates/side-menu.html'
+
       })
     // Tabs
       .state('dash', {
-        parent:'nav',
-        url: '/:appId/dash',
+        parent:'instance',
+        url: '/dash',
         templateUrl:"components/dash/dash-index.html",
         controller: 'DashCtrl'
       })
-      .state('builder', {
-        parent:'nav',
-        url: '/:appId/builder',
-        templateUrl:"components/builder/builder-index.html",
-        controller: 'BuilderCtrl'
+      .state('editor', {
+        parent:'instance',
+        url: '/editor',
+        templateUrl:"components/editor/editor-index.html",
+        controller: 'EditorCtrl'
       })
       .state('tester', {
-        parent:'nav',
-        url: '/:appId/tester',
+        parent:'instance',
+        url: '/tester',
         templateUrl:"components/tester/tester-index.html",
         controller: 'TesterCtrl'
       })

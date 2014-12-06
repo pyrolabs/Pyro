@@ -1,9 +1,72 @@
- <!-- sidebar -->
-    <div ui-view="sidemenu" id="sidebar-nav">
-    </div>
-    <!-- end sidebar -->
-
-
-  <!-- main container -->
-    <div ui-view="center" class="content">
-    </div>
+<section class="hbox stretch">
+<!-- .aside -->
+<aside class="bg-white aside-md hidden-print hidden-xs" id="nav">
+	<div class="vbox">
+		<div class="w-f scrollable">
+			<div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railOpacity="0.2">
+				<!-- nav -->
+				<nav class="nav-primary hidden-xs">
+					<div class="btn-group" style="background:none;left:-0.75em;">
+						<a class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cube ion-icon-lg" style="margin-right:5px;"></i> {{pyroInstance.name || 'App'}} <div class="caret"></div></a>
+						<ul class="dropdown-menu dropdown-select"style="width:100%;text-align:center;">
+							<li ng-repeat="instance in instanceList"><a href="" ui-sref="dash({appId:$index})"><input type="radio" name="b">{{instance.name}}</a></li>
+						</ul>
+					</div>
+					<ul class="nav nav-main" data-ride="collapse">
+						<li ui-sref="dash" class="item menu-item">
+							<a class="auto">
+								<i class="icon ion-icon main-icon ion-ios7-analytics-outline">
+								</i>
+								<span class="font-bold">Insights</span>
+							</a>
+						</li>
+						<li ui-sref="editor" class="item menu-item active">
+							<a>
+								<i class="icon ion-icon main-icon ion-android-developer text-warning">
+								</i>
+								<span class="font-bold">Editor</span>
+							</a>
+							<!-- upload/download buttons -->
+							
+<!-- 							<a class="item menu-item second-item nonactive"><i class="icon ion-icon m-l-xs ion-ios7-cloud-upload"></i> Upload</a>
+							<a class="item menu-item second-item nonactive" ng-click="setEmulator('iphone6')"><i class="icon ion-icon m-r-xs ion-ios7-cloud-download-outline text-light"></i> Download</a> -->
+							
+							<!-- File list that does not show up -->
+							<!--                         <div class="nav multi-level" style="display:block;">
+								<treecontrol class="tree-classic" tree-model="files" options="opts" on-selection="downloadFile(node)" style="display:block;">
+									{{node.name}}
+								</treecontrol>
+							</div> -->
+							<!-- filelist -->
+							<!--                       <ul class="nav multi-level" style="display: block;">
+								<li ng-repeat="(key, val) in files">
+									<a ng-click="val.type === 'file' ? loadEditorFile(key) : null">
+										{{key}}
+									</a>
+									<ul ng-show="val.type == 'folder'">
+										<li ng-repeat="(subkey, subval) in val">
+											<a>{{subkey}}</a>
+										</li>
+									</ul>
+								</li>
+							</ul> -->
+							<!-- /filelist -->
+						</li>
+						<li ui-sref="tester" class="item menu-item">
+							<a>
+								<i class="icon ion-icon main-icon ion-iphone">
+								</i>
+								<span class="font-bold">Tester</span>
+							</a>
+						</li>
+					</ul>
+					<div class="line dk hidden-nav-xs"></div>
+				</nav>
+				<!-- / nav -->
+			</div>
+		</div>
+	</div>
+</aside>
+<!-- /.aside -->
+		<div ui-view class="hbox stretch"></div>
+</section>

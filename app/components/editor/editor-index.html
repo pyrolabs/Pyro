@@ -1,0 +1,6 @@
+<div id="builder">
+  <treecontrol class="tree-classic" tree-model="files" options="opts" on-selection="downloadFile(node)">
+    {{node.name}}
+  </treecontrol>
+  <div id="build-editor" ui-ace="{useWrapMode: true, theme:'monokai', onLoad:aceLoaded, onChange:aceChanged, showGutter:false}"></div>
+</div>
