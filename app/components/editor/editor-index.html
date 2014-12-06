@@ -10,9 +10,7 @@
                   <div class="btn-group" style="background:none;left:-0.75em;">
                     <a class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cube ion-icon-lg" style="margin-right:5px;"></i> {{pyroInstance.name || 'App'}} <div class="caret"></div></a>
                     <ul class="dropdown-menu dropdown-select"style="width:100%;text-align:center;">
-                        <li><a href=""><input type="radio" name="b">1</a></li>
-                        <li><a href=""><input type="radio" name="b">2</a></li>
-                        <li><a href=""><input type="radio" name="b">3</a></li>
+                        <li ng-repeat="instance in instanceList"><a href=""><input type="radio" name="b">{{instance.name}}</a></li>
                     </ul>
                   </div>
                   <ul class="nav nav-main" data-ride="collapse">
