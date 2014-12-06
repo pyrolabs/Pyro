@@ -112,11 +112,11 @@ angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroA
         templateUrl:"components/dash/dash-index.html",
         controller: 'DashCtrl'
       })
-      .state('builder', {
+      .state('editor', {
         parent:'nav',
-        url: '/:appId/builder',
-        templateUrl:"components/builder/builder-index.html",
-        controller: 'BuilderCtrl'
+        url: '/:appId/editor',
+        templateUrl:"components/editor/editor-index.html",
+        controller: 'EditorCtrl'
       })
       .state('tester', {
         parent:'nav',

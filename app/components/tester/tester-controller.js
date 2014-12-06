@@ -20,7 +20,7 @@ angular.module('pyroApp.controllers')
     $state.go('dash',{appId: $stateParams.appId})
   }  
   $scope.goToBuilder = function() {
-    $state.go('builder',{appId: $stateParams.appId})
+    $state.go('editor',{appId: $stateParams.appId})
   }
   $scope.goToTester = function() {
     $state.go('tester',{appId: $stateParams.appId})

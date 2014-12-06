@@ -51,7 +51,7 @@
         </aside>
         <!-- /.aside -->
         <div id="builder">
-            <div ui-ace="{useWrapMode: true, mode: 'javascript'}" id="build-editor"></div>
+            <div ui-ace="{useWrapMode: true, theme:'monokai', onLoad:aceLoaded, onChange:aceChanged, showGutter:false}" id="build-editor"></div>
           </div>
           <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen,open" data-target="#nav,html"></a>
       </div>

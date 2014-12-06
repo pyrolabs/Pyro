@@ -4,7 +4,8 @@
   /* Services */
   angular.module('pyroApp.services',
     [
-    'pyro.service'
+    'pyro.service',
+    'editor.service'
     ])
 
 })();
