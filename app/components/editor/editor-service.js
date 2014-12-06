@@ -5,7 +5,7 @@ angular.module('editor.service', [])
 			//provide correct version of file
 		},
 		downloadFileFromS3: function(argAppName, argFilePath){
-			console.log('[editorService]downloadFileFromS3 called to download:' + argFilePath + ' from ' + argBucketName);
+			console.log('[editorService]downloadFileFromS3 called to download:' + argFilePath + ' from ' + argAppName);
 			var deferredDownload = $q.defer();
       var s3 = new AWS.S3();
 			var uploadParams = {Bucket:'pyro-'+argAppName, Key:argFilePath};

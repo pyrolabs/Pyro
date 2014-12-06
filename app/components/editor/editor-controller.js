@@ -1,6 +1,6 @@
 angular.module('pyroApp.controllers')
 
-.controller('EditorCtrl', function($scope, $state, $rootScope, $stateParams, PyroArray, editorService) {
+.controller('EditorCtrl', function($scope, $state, $rootScope, $stateParams, PyroArray, editorService, pyroMaster) {
   console.log('EditorCtrl');
  
   $rootScope.instanceList = PyroArray('instances');
@@ -22,22 +22,16 @@ angular.module('pyroApp.controllers')
       // [TODO] get pyro object by selecting from exisiting list
     $scope.isLoading = false;
     console.log('scope set:', $scope.instanceList[0]);
-    $scope.pyroInstance = pyroList[$stateParams.appId]
-    $scope.pyroInstance.getUserCount(function(userCount){
-      $scope.userCount = userCount;
-      if(!$scope.$$phase) {
-        //$digest or $apply
-        $scope.$apply();
-      }
-    });
-    $scope.pyroInstance.getObjectCount('sessions',function(sessionCount){
-      console.log('sessionCount updated:', sessionCount);
-      $scope.sessionCount = sessionCount;
-       if(!$scope.$$phase) {
-        //$digest or $apply
-        $scope.$apply();
-      }
-    });
+    $scope.pyroInstance = pyroList[$stateParams.appId];
+    pyroMaster.$loadObject('appFiles', $scope.pyroInstance.name).then(function(returnedObject){
+      $scope.files = returnedObject;
+      console.log('$scope.files set:', $scope.files);
+      if(!$scope.$$phase) {
+        //$digest or $apply
+        $scope.$apply();
+      }
+     });
+
   });
 
  $scope.opts = {
@@ -77,13 +71,15 @@ angular.module('pyroApp.controllers')
       $scope.files.$currentFile = {newContent:$scope.editorObj.getValue()};
     }
   }
+   $scope.collapseFolders = function() {
+    $scope.files.$collapsed = !($scope.files.$collapsed);
+  }
   $scope.openFile = function(fileObject){
     console.log('path:', fileObject.path);
     $scope.files.$currentFile = fileObject;
     if(!fileObject.hasOwnProperty('content')){
-      var bucketName = 'pyro-'+$scope.pyroInstance.name;
       var filePath = fileObject.path.replace('fs/pyro-'+$scope.pyroInstance.name+'/', '');
-      editorService.downloadFileFromS3(bucketName, filePath).then(function(fileString){
+      editorService.downloadFileFromS3($scope.pyroInstance.name, filePath).then(function(fileString){
         // Set file to editor
         $scope.editorObj.getSession().setValue(fileString);
         // Set file mode
@@ -101,7 +97,7 @@ angular.module('pyroApp.controllers')
   function getFileMode(argFile){
     var fileMode = 'ace/mode/';
     // [TODO] add regex for file type 
-    if(fileObject.hasOwnProperty('editorMode')){
+    if(argFile.hasOwnProperty('editorMode')){
       fileMode = fileMode + argFile.editorMode;
     } else {
       fileMode = fileMode + 'javascript';
