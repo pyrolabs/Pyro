@@ -14,8 +14,8 @@
             <!-- nav -->
             <nav class="nav-primary hidden-xs">
               <div class="btn-group" style="background:none;">
-                <a class="btn btn-default dropdown-toggle" ng-cloak data-toggle="dropdown"><i class="fa fa-cube ion-icon-lg" style="margin-right:5px;"></i> {{pyroInstance.name || 'App'}} <div class="caret"></div></a>
-                <ul class="dropdown-menu dropdown-select"style="width:100%;text-align:center;">
+                <a class="btn btn-default dropdown-toggle" ng-cloak data-toggle="dropdown"><i class="fa fa-cube ion-icon-lg" style="margin-right:5px;"></i> {{pyroInstance.name || 'App'}} <div class="caret" ng-hide="!instanceList" ></div></a>
+                <ul class="dropdown-menu dropdown-select" ng-hide="!instanceList" style="width:100%;text-align:center;">
                   <li ng-repeat="(key, val) in instanceList"><a ui-sref="{{currentState}}({ appId: '{{val.name}}'})"><input type="radio" name="b">{{val.name}}</a></li>
                 </ul>
               </div>
@@ -64,15 +64,16 @@
       </div>
     </aside>
     <!-- /.aside -->
-    <div class="m-lg padder-v padder panel animated fadeIn" ng-show="pyroInstance.appUrl">
+    <div class="m-lg padder-v padder panel" ng-show="pyroInstance.appUrl">
       <a ng-href="http://{{pyroInstance.appUrl}}" target="_blank" class="m-l-md" style="display:inline;">
         <h4 style="display:inline;">{{pyroInstance.appUrl}} <i class="mdi-action-open-in-new m-l-xs" style="font-size:0.5em"></i></h4>
       </a>
     </div>
     <!-- editor -->
     <div id="explorer" class="m-lg panel v-box stretch scrollable" style="padding:2em;background-color:">
-      <json-tree json='jsonData' collapsed-level='2'></json-tree>
+      <json-tree json="jsonData" collapsed-level='2'></json-tree>
     </div>
+
     <!-- /editor -->
   </div>
   <div id="footer" class="row text-right m-r-xs" style="margin-top:-2em;">

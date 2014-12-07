@@ -98,6 +98,18 @@ angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroA
         url:'/:appId',
         abstract:true,
         resolve:{
+          instanceData:function(PyroArray, $q, $stateParams){
+            var deferred = $q.defer();
+            var instanceList = PyroArray('instances');
+            instanceList.$loaded().then(function(pyroList) {
+              var pyroData = instanceList.$getRecord($stateParams.appId);
+              var appFb = new Firebase(pyroData.dbUrl);
+              appFb.once('value', function(pyroSnap){
+                deferred.resolve(pyroSnap.val());
+              });
+            });
+            return deferred.promise;
+          },
           instance:function(pyroMaster, $stateParams, $q, pyro){
             var deferred = $q.defer()
             pyroMaster.$loadObject('instances', $stateParams.appId).then(function(returnedInstance){
@@ -138,21 +150,6 @@ angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroA
       })
       .state('data', {
         parent:'instance',
-        // resolve:{
-        //   instanceData:function(PyroArray, $q, $stateParams){
-        //     var deferred = $q.defer();
-        //     var instanceList = PyroArray('instances');
-        //     instanceList.$loaded().then(function(pyroList) {
-        //       var pyroData = instanceList.$getRecord($stateParams.appId);
-        //       var appFb = new Firebase(pyroData.dbUrl);
-        //       appFb.once('value', function(pyroSnap){
-        //         deferred.resolve(pyroSnap.val());
-        //       });
-        //     });
-        //     return deferred.promise;
-
-        //   }
-        // },
         url: '/data',
         templateUrl:"components/data/data-index.html",
         controller: 'DataCtrl'
