@@ -196,7 +196,7 @@ angular.module('pyro.service', ['firebase'])
 					var instanceData = data;
 					delete instanceData.status;
 					console.log('Setting new app data to Firebase:', instanceData);
-					newInstanceRef.set(instanceData, function(err){
+					newInstanceRef.set(instanceObj, function(err){
 						if(!err) {
 							// resolve with newInstanceRef data
 							console.log('new app generated successfully');

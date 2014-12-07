@@ -10,13 +10,19 @@ angular.module('pyroApp.controllers')
     $scope.isLoading = false;
     console.log('scope set:', $scope.instanceList[0]);
     $scope.pyroInstance = _.findWhere(pyroList, {name:$stateParams.appId})
+    console.log('pyroInstance', $scope.pyroInstance);
     pyroMaster.$loadObject('appFiles', $scope.pyroInstance.name).then(function(returnedObject){
-      $scope.files = returnedObject;
-      console.log('$scope.files set:', $scope.files);
-      if(!$scope.$$phase) {
-        //$digest or $apply
-        $scope.$apply();
-      }
+      if(returnedObject){
+        $scope.files = returnedObject;
+        console.log('$scope.files set:', $scope.files);
+        if(!$scope.$$phase) {
+          //$digest or $apply
+          $scope.$apply();
+        }
+      } else {
+        console.error('Error loading file stucture from firebase.');
+        $scope.err = {message:'Error loading file structure'};
+      }
      });
 
   });
