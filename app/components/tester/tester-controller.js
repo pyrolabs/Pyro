@@ -41,5 +41,5 @@ angular.module('pyroApp.controllers')
     }
   }
     $scope.pyroInstance = instance;
-    $scope.emuRender.url = $sce.trustAsResourceUrl($scope.pyroInstance.appUrl);
+    $scope.emuRender.url = $sce.trustAsResourceUrl('//'+$scope.pyroInstance.appUrl);
 })
