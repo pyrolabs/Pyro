@@ -190,7 +190,7 @@ angular.module('pyro.service', ['firebase'])
 				var dbUrl = "https://"+dbName+".firebaseio.com"
 				var instanceObj = {name: argInstanceName, author:auth.uid, dbName:dbName, createdAt:Firebase.ServerValue.TIMESTAMP, dbUrl:dbUrl};
 				var endpointLocation = pyroServerUrl + 'api/generate';
-				var postObj = {name: argInstanceName, author:auth.uid};
+				var postObj = {name: argInstanceName, uid:auth.uid};
 				$http.post(endpointLocation, postObj).success(function(data, status, headers){
 					console.log('[$generatePyro] Call to :' + endpointLocation + ' returned:', data, status);
 					var instanceData = data;
@@ -221,6 +221,33 @@ angular.module('pyro.service', ['firebase'])
 		}
 		return deferred.promise;
 	}
+	pyro.$createApp = function(argAppName){
+		console.log('$createApp called');
+		var deferred = Q.defer();
+		var endpointLocation = pyroServerUrl + 'api/app/new';
+		var postObj = {name: argAppName, uid:auth.uid};
+		var instanceRef = pyroBase.child('instances').child(argAppName);
+		$http.post(endpointLocation, postObj).success(function(data, status, headers){
+			console.log('[$manageInstance] Call to :' + endpointLocation + ' returned:', data, status);
+			var instanceData = {name:argAppName, dbUrl:data.instance, author:auth.uid, type: 'manage'};
+			console.log('Setting new app data to Firebase:', instanceData);
+			instanceRef.set(instanceData, function(err){
+				if(!err) {
+					// resolve with instanceRef data
+					console.log('new app generated successfully');
+					deferred.resolve(instanceData);
+				} else {
+					console.error('Error setting new pyro:', err);
+					deferred.reject(err);
+				}
+			}); //---instanceRef.set()
+		}).error(function(data, status, headers){
+			var errorObj = {data:data, status:status, headers:headers}
+			console.error('error getting instance:', errorObj);
+			deferred.reject(errorObj);
+		});
+		return deferred.promise;
+	};
 	pyro.$manageInstance = function(argInstanceData) {
 		var deferredCreate = $q.defer();
 		// [TODO] Do this correctly with the library
@@ -231,7 +258,7 @@ angular.module('pyro.service', ['firebase'])
 			if(!instanceSnap.val()){
 				$http.post(endpointLocation, postObj).success(function(data, status, headers){
 					console.log('[$manageInstance] Call to :' + endpointLocation + ' returned:', data, status);
-					var instanceData = {dbUrl:data.instance, author:auth.uid, type: 'manage'};
+					var instanceData = {name:argInstanceData.name, dbUrl:data.instance, author:auth.uid, type: 'manage'};
 					console.log('Setting new app data to Firebase:', instanceData);
 					newInstanceRef.set(instanceData, function(err){
 						if(!err) {
