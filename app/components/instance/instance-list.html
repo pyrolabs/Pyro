@@ -18,6 +18,7 @@
                   <div ng-hide="existingMode == true || simpleMode == true" style="margin-bottom:40px;">
                     <a href="" ng-click="simpleMode = true" class="btn btn-s-md btn-warning">Simple Setup</a>
                   </div>
+                    <a href="" ng-show="existingMode == true || simpleMode == true" ng-click="existingMode = false; simpleMode = false" class="btn btn-warning btn-fab btn-raised" style="position:absolute;top:0.5em;right:1em;"><i class="ion-close-round" style="font-size:1em;margin-top:-.75em;"></i></a>
                   <div ng-show="simpleMode == true" class="ng-hide" style="padding-left:10%; padding-right:10%;">
                     <a href="" ng-click="simpleSetup()"  class="btn btn-s-md" ng-class="{'btn-default disabled': !newAppData.name, 'btn-info':newAppData.name}">Create New App</a>
                     <h4 style="color:red;">{{err.message}}</h4>
