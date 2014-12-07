@@ -26,15 +26,15 @@
       </ul>
       <ul class="visible-xs row m-n">
         <div class="col-xs-2">
-          <a style="color:white" href="" ui-sref="home"><h1>Pyro</h1></a>
         </div>
         <div class="col-xs-8">
+          <a style="color:white" href="" ui-sref="home"><h1>Pyro</h1></a>
         </div>
         <div class="col-xs-2">
           <li class="dropdown">
-          <a href="" class="dropdown-toggle" style="width:5em;bottom:0.75em;padding:0;background:none;" data-toggle="dropdown">
+          <div class="dropdown-toggle" style="width:5em;bottom:0.75em;padding:0;background:none;cursor:pointer;" data-toggle="dropdown">
             <i class="text-white ion-android-more-vertical" style="font-size:4em;"></i>
-          </a>
+          </div>
           <ul class="dropdown-menu animated fadeInRight" style="top:1em;left:-10em;right:0em;">            
             <li class="ng-hide">
               <span class="arrow top"></span>
@@ -54,40 +54,3 @@
     </div>
   </div>
 </div>
-
-<!--     <header class="bg-white header header-lg navbar navbar-fixed-top-xs box-shadow navbar-dark">
-      <div class="navbar-header dk m-l-md m-t-md">
-        <a style="font-size:3em;display:inline;color:#EEEEEE;">
-          <i class="icon ion-navicon"></i>
-        </a>
-        <a href="" ui-sref="home" class="navbar-brand">
-          <div class="hidden-nav-xs" style="font-size:2em;font-weight:100;">Pyro</div>
-        </a>
-        <a class="btn btn-link visible-xs" data-toggle="dropdown">
-          <i class="fa fa-cog"></i>
-        </a>
-      </div>
-      <ul class="nav navbar-nav navbar-right hidden-xs nav-user user m-t-md m-r-sm">
-        <li class="dropdown">
-          <a href="" class="dropdown-toggle" data-toggle="dropdown">
-            <span class="thumb-sm avatar pull-left">
-              <img ng-src="{{account.image || './images/blank_user.png'}}">
-            </span>
-            {{account.username || auth.password.email || auth.uid || "No Username"}} <b class="caret"></b>
-          </a>
-          <ul class="dropdown-menu animated fadeInRight">            
-            <li>
-              <span class="arrow top"></span>
-              <a href="">Settings</a>
-            </li>
-            <li>
-              <a href="" ui-sref="account">Profile</a>
-            </li>
-            <li class="divider"></li>
-            <li>
-              <a href="" ng-click="logout()" >Logout</a>
-            </li>
-          </ul>
-        </li>
-      </ul>      
-    </header> -->
