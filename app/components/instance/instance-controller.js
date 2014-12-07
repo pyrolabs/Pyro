@@ -30,20 +30,20 @@ angular.module('pyroApp.controllers')
       appId: argInd
     });
   }
-  $scope.createInstance = function() {
-    console.log('createInstance called', $scope.newAppData);
+  $scope.manageInstance = function() {
+    console.log('manageInstance called', $scope.newAppData);
     if ($scope.newAppData.hasOwnProperty('name')) {
-      $scope.newAppData.url = "https://" + $scope.newAppData.name + ".firebaseio.com"
-      pyroMaster.$createInstance($scope.newAppData).then(function(returnedInstance) {
+      pyroMaster.$manageInstance($scope.newAppData).then(function(returnedInstance) {
         console.log('[InstanceListCtrl]instance created successfully:', returnedInstance);
         $state.go('data', {
-          appId: returnedInstance.key()
+          appId: returnedInstance.name
         });
       }, function(err) {
         console.error('error creating instance:', err);
         $scope.err = err;
       });
     } else {
+      $scope.newAppData = {};
       $scope.err = {
         message: 'Please enter a url for your new instance'
       };

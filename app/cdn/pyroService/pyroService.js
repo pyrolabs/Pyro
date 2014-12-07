@@ -149,19 +149,7 @@ angular.module('pyro.service', ['firebase'])
 					});
 				return deferredCreate.promise;
 			};
-			pyro.$createInstance = function(argObject) {
-				var deferredCreate = $q.defer();
-				// [TODO] Do this correctly with the library
-					pyro.createInstance(argObject, function(newObjectRef){
-						console.error('[pyroService] instance creation successful:', newObjectRef);
-						deferredCreate.resolve(newObjectRef);
-					}, function(err){
-						console.error('[pyroService] error creating instance');
 
-						deferredCreate.reject(argObject);
-					});
-				return deferredCreate.promise;
-			};
 			pyro.$loadObject = function(argListName, argObjectId){
 				var deferredLoad = $q.defer();
 				pyro.loadObject(argListName, argObjectId, function(loadedObject){
@@ -201,28 +189,28 @@ angular.module('pyro.service', ['firebase'])
 				var dbName = "pyro-"+ argInstanceName;
 				var dbUrl = "https://"+dbName+".firebaseio.com"
 				var instanceObj = {name: argInstanceName, author:auth.uid, dbName:dbName, createdAt:Firebase.ServerValue.TIMESTAMP, dbUrl:dbUrl};
-				newInstanceRef.set(instanceObj, function(err){
-					if(!err){
-						var endpointLocation = pyroServerUrl + 'api/generate';
-						var postObj = {name: argInstanceName, author:auth.uid};
-						$http.post(endpointLocation, postObj).success(function(data, status, headers){
-							console.log('postSuccessful:', data);
-							if(data.hasOwnProperty('url')){
-								newInstanceRef.update({appUrl:data.url});
-							}
+				var endpointLocation = pyroServerUrl + 'api/generate';
+				var postObj = {name: argInstanceName, author:auth.uid};
+				$http.post(endpointLocation, postObj).success(function(data, status, headers){
+					console.log('[$generatePyro] Call to :' + endpointLocation + ' returned:', data, status);
+					var instanceData = data;
+					delete instanceData.status;
+					console.log('Setting new app data to Firebase:', instanceData);
+					newInstanceRef.set(instanceData, function(err){
+						if(!err) {
 							// resolve with newInstanceRef data
+							console.log('new app generated successfully');
 							deferred.resolve(newInstanceRef);
-						}).error(function(data, status, headers){
-							var errorObj = {data:data, status:status, headers:headers}
-							console.error('error creating new instance:', errorObj);
-							deferred.reject(errorObj);
-						});
-					} else {
-						console.error('Error setting new pyro:', err);
-						deferred.reject(err);
-					}
-				}); //---newInstanceRef.set()
-				
+						} else {
+							console.error('Error setting new pyro:', err);
+							deferred.reject(err);
+						}
+					}); //---newInstanceRef.set()
+				}).error(function(data, status, headers){
+					var errorObj = {data:data, status:status, headers:headers}
+					console.error('error creating new instance:', errorObj);
+					deferred.reject(errorObj);
+				});
 			} else {
 				var errObj = {message:'You must be logged in to create an instance'};
 				deferred.reject(errObj);
@@ -233,6 +221,49 @@ angular.module('pyro.service', ['firebase'])
 		}
 		return deferred.promise;
 	}
+	pyro.$manageInstance = function(argInstanceData) {
+		var deferredCreate = $q.defer();
+		// [TODO] Do this correctly with the library
+		var endpointLocation = pyroServerUrl + 'api/fb/instance/get';
+		var postObj = {name: argInstanceData.name, uid:auth.uid};
+		var newInstanceRef = pyroBase.child('instances').child(argInstanceData.name);
+		newInstanceRef.once('value', function(instanceSnap){
+			if(!instanceSnap.val()){
+				$http.post(endpointLocation, postObj).success(function(data, status, headers){
+					console.log('[$manageInstance] Call to :' + endpointLocation + ' returned:', data, status);
+					var instanceData = {dbUrl:data.instance, author:auth.uid, type: 'manage'};
+					console.log('Setting new app data to Firebase:', instanceData);
+					newInstanceRef.set(instanceData, function(err){
+						if(!err) {
+							// resolve with newInstanceRef data
+							console.log('new app generated successfully');
+							deferredCreate.resolve(instanceData);
+						} else {
+							console.error('Error setting new pyro:', err);
+							deferredCreate.reject(err);
+						}
+					}); //---newInstanceRef.set()
+				}).error(function(data, status, headers){
+					var errorObj = {data:data, status:status, headers:headers}
+					console.error('error getting instance:', errorObj);
+					deferredCreate.reject(errorObj);
+				});
+			} else {
+				console.error('There is already a pyro app with that name');
+				deferredCreate.reject({message:'There is already a pyro app with that name'});
+			}
+		});
+
+					// pyro.createInstance(argObject, function(newObjectRef){
+					// 	console.error('[pyroService] instance creation successful:', newObjectRef);
+					// 	deferredCreate.resolve(newObjectRef);
+					// }, function(err){
+					// 	console.error('[pyroService] error creating instance');
+
+					// 	deferredCreate.reject(argObject);
+					// });
+				return deferredCreate.promise;
+			};
 	pyro.$deleteInstance = function(){
 		console.log('deleteInstance called with:', argInstanceName);
 		var deferred = $q.defer();

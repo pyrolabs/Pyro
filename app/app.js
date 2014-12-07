@@ -16,7 +16,7 @@ angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroA
 
 })
 .config(['$sceDelegateProvider', function($sceDelegateProvider){
-  $sceDelegateProvider.resourceUrlWhitelist(['self', 'https://pyro-server.herokuapp.com/**', 'http://localhost:9000', "https://pyro-test-01.s3.amazonaws.com/**" ]);
+  $sceDelegateProvider.resourceUrlWhitelist(['self', 'https://pyro-server.herokuapp.com/**', 'https://pyro-server/api/fb/**', "https://pyro-test-01.s3.amazonaws.com/**" ]);
 }])
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider

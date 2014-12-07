@@ -33,14 +33,14 @@
                       <a href="" ng-click="existingMode = true"  class="btn btn-s-md btn-warning">Manage Existing Database</a>
                     </div>
                     <div ng-show="existingMode == true" ng-hide="existingMode != true || simpleMode == true">
-                      <a href="" ng-click="createInstance()"  class="btn btn-s-md" ng-class="{'btn-default disabled': !newAppData.name, 'btn-info':newAppData.name}">Start Managing</a>
+                      <a href="" ng-click="manageInstance()"  class="btn btn-s-md" ng-class="{'btn-default disabled': !newAppData.name, 'btn-info':newAppData.name}">Start Managing</a>
                       <h4 style="color:red;">{{err.message}}</h4>
                       <div class="form-group " style="margin-top:40px;">
                         <label class="pull-left">Firebase Url</label>
                         <div class="row">
                         https://
                         <input type="text" ng-model="newAppData.name" placeholder="yourApp" class="form-control" style="width:100px; display:inline;">
-                        firebaseio.com
+                         .firebaseio.com
                         </div>
                       </div>
                     </div>
@@ -53,7 +53,7 @@
               <div class="col-sm-6 col-md-4" ng-repeat="instance in instanceList">
                 <section class="panel b-a">
                   <div class="panel-heading no-border">
-                    <a href="" ng-click="viewDetail($index)" class="btn btn-warning btn-fab btn-raised pull-right"><i class="fa fa-fire" style="font-size:0.75em;margin-top:-0.5em;"></i></a>
+                    <a href="" ng-click="viewDetail(instance.name)" class="btn btn-warning btn-fab btn-raised pull-right"><i class="fa fa-fire" style="font-size:0.75em;margin-top:-0.5em;"></i></a>
 
                     <a ng-click="viewDetail($index)" class="h4 text-lt m-t-sm m-b-sm block font-bold"><p class="text-dark">{{instance.name}}</p></a>
                   </div>

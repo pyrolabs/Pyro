@@ -11,7 +11,7 @@ angular.module('pyroApp.controllers')
     // [TODO] get pyro object by selecting from exisiting list
     $scope.isLoading = false;
     console.log('scope set:', $scope.instanceList[0]);
-    $scope.pyroInstance = pyroList[$stateParams.appId]
+    $scope.pyroInstance = _.findWhere(pyroList, {name:$stateParams.appId});
     $scope.pyroInstance.getUserCount(function(userCount){
       $scope.userCount = userCount;
       if(!$scope.$$phase) {

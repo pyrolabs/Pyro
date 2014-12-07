@@ -3,13 +3,13 @@ angular.module('pyroApp.controllers')
 .controller('EditorCtrl', function($scope, $state, $rootScope, $stateParams, PyroArray, editorService, pyroMaster) {
   console.log('EditorCtrl');
  
-  $rootScope.instanceList = PyroArray('instances');
+  $scope.instanceList = PyroArray('instances');
 
    $scope.instanceList.$loaded().then(function(pyroList){
       // [TODO] get pyro object by selecting from exisiting list
     $scope.isLoading = false;
     console.log('scope set:', $scope.instanceList[0]);
-    $scope.pyroInstance = pyroList[$stateParams.appId];
+    $scope.pyroInstance = _.findWhere(pyroList, {name:$stateParams.appId})
     pyroMaster.$loadObject('appFiles', $scope.pyroInstance.name).then(function(returnedObject){
       $scope.files = returnedObject;
       console.log('$scope.files set:', $scope.files);
