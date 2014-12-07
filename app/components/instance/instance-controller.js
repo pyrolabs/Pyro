@@ -5,6 +5,7 @@ angular.module('pyroApp.controllers')
   // Form data for the login modal
   $rootScope.auth = auth;
   $rootScope.account = user;
+  $scope.viewingInstance = true;
   $scope.newAppData = {};
   $scope.err = {};
   $scope.loading = true;

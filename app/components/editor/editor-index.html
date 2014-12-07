@@ -10,7 +10,7 @@
               <div class="btn-group" style="background:none;">
                 <a class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cube ion-icon-lg" style="margin-right:5px;"></i> {{pyroInstance.name || 'App'}} <div class="caret"></div></a>
                 <ul class="dropdown-menu dropdown-select"style="width:100%;text-align:center;">
-                  <li ng-repeat="(key, val) in instanceList"><a ui-sref="{{currentState}}({ appId: '{{val.name}}'})"><input type="radio" name="b">{{val.name}}</a></li>
+                  <li ng-repeat="(key, val) in instanceList"><a ui-sref="{{currentState.name}}({ appId: '{{val.name}}'})"><input type="radio" name="b">{{val.name}}</a></li>
                 </ul>
               </div>
               <ul class="nav nav-main">
@@ -67,7 +67,7 @@
 
     <div id="builder">
       <div class="visible-xs m-t-sm"></div>
-      <button class="btn btn-fab btn-fab-mini btn-raised btn-material-red visible-xs" ng-click="collapseFolders();" style="position:fixed;left:1em;top:1.5em;z-index:2000;"><i class="ion-document text-white"></i></button>
+      <button class="btn btn-fab btn-fab-mini btn-raised btn-material-red visible-xs" ng-click="collapseFolders();" style="position:fixed;right:0.5em;top:4.5em;z-index:2000;"><i class="ion-document text-white"></i></button>
       <treecontrol class="tree-classic visible-xs m-t-md m-b-sm animated fadeInDown ng-hide" ng-show="files.$collapsed" tree-model="files" options="opts" on-selection="openFile(node)">
         {{node.name}}
       </treecontrol>

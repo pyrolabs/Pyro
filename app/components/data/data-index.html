@@ -16,7 +16,7 @@
               <div class="btn-group" style="background:none;">
                 <a class="btn btn-default dropdown-toggle" ng-cloak data-toggle="dropdown"><i class="fa fa-cube ion-icon-lg" style="margin-right:5px;"></i> {{pyroInstance.name || 'App'}} <div class="caret" ng-hide="!instanceList" ></div></a>
                 <ul class="dropdown-menu dropdown-select" ng-hide="!instanceList" style="width:100%;text-align:center;">
-                  <li ng-repeat="(key, val) in instanceList"><a ui-sref="{{currentState}}({ appId: '{{val.name}}'})"><input type="radio" name="b">{{val.name}}</a></li>
+                  <li ng-repeat="(key, val) in instanceList"><a ui-sref="{{currentState.name}}({ appId: '{{val.name}}'})"><input type="radio" name="b">{{val.name}}</a></li>
                 </ul>
               </div>
               <ul class="nav nav-main" data-ride="collapse">

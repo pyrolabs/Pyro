@@ -4,7 +4,7 @@ angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroA
   console.log('Angular is running');
   $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){ 
     console.log('route change from:', fromState, ' to: ', toState);
-    $rootScope.currentState = toState.name;
+    $rootScope.currentState = toState;
   });
 
      $rootScope
@@ -97,6 +97,7 @@ angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroA
         parent:'nav',
         url:'/:appId',
         abstract:true,
+        controller: 'InstanceListCtrl',
         resolve:{
           instanceData:function(PyroArray, $q, $stateParams){
             var deferred = $q.defer();

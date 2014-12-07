@@ -12,7 +12,7 @@
                   <i class="fa fa-cube ion-icon-lg" style="margin-right:5px;"></i> {{pyroInstance.name || 'App'}} <div class="caret"></div>
                 </a>
                 <ul class="dropdown-menu dropdown-select">
-                  <li ng-repeat="(key, val) in instanceList"><a ui-sref="{{currentState}}({ appId: '{{val.name}}'})"><input type="radio" name="b">{{val.name}}</a></li>
+                  <li ng-repeat="(key, val) in instanceList"><a ui-sref="{{currentState.name}}({ appId: '{{val.name}}'})"><input type="radio" name="b">{{val.name}}</a></li>
                 </ul>
                 <a class="btn btn-default btn-flat pull-right" ng-href="http://{{pyroInstance.appUrl}}" target="_blank"><i class="ion-android-open"></i></a>
               </div>
