@@ -1,47 +1,45 @@
-
-  <section id="instance-list">
-    <section class="hbox stretch">
-      <section id="content">
-        <section class="vbox no-margin">
-          <section class="scrollable wrapper-lg">
-            <div class="m-b-md h2">
-              <span class="font-thin">Applications</span> 
-            </div>
-            <div class="row m-b">
-              <div class="col-sm-6 col-md-4">
-                <section class="panel b-a" style=" height:268px;" >
-                  <div class="panel-heading lter" >
-                    <!-- Might be good for notifications
-                    <span class="pull-right badge dk m-t-sm">17</span> -->
-                    <a href="" class="h4 text-lt text-center m-t-sm m-b-sm block font-bold"><p class="text-dark">New Pyro App</p></a>
+<section id="instance-list">
+  <section class="hbox stretch">
+    <section id="content">
+      <section class="vbox no-margin">
+        <section class="scrollable wrapper-lg">
+          <div class="m-b-md h2">
+            <span class="font-thin">Applications</span>
+          </div>
+          <div class="row m-b">
+            <div class="col-sm-6 col-md-4">
+              <section class="panel b-a" style=" height:268px;" >
+                <div class="panel-heading lter" >
+                  <!-- Might be good for notifications
+                  <span class="pull-right badge dk m-t-sm">17</span> -->
+                  <a href="" class="h4 text-lt text-center m-t-sm m-b-sm block font-bold"><p class="text-dark">New Pyro App</p></a>
+                </div>
+                <div class="panel-body text-center" style="padding-top:30px;">
+                  <div ng-hide="existingMode == true || simpleMode == true" style="margin-bottom:40px;">
+                    <a href="" ng-click="simpleMode = true" class="btn btn-s-md btn-warning">Simple Setup</a>
                   </div>
-                  <div class="panel-body text-center" style="padding-top:30px;">
-                    <div ng-hide="existingMode == true || simpleMode == true" style="margin-bottom:40px;">
-                      <a href="" ng-click="simpleMode = true" class="btn btn-s-md btn-warning">Simple Setup</a>
-                    </div>
-                    <div ng-show="simpleMode == true" class="ng-hide" style="padding-left:10%; padding-right:10%;">
-                      <a href="" ng-click="simpleSetup()"  class="btn btn-s-md" ng-class="{'btn-default disabled': !newAppData.name, 'btn-info':newAppData.name}">Create New App</a>
-                      <h4 style="color:red;">{{err.message}}</h4>
-                      <div class="form-group " style="margin-top:40px;">
-                        <label class="pull-left">New App Name</label>
-                        <div class="row">
+                  <div ng-show="simpleMode == true" class="ng-hide" style="padding-left:10%; padding-right:10%;">
+                    <a href="" ng-click="simpleSetup()"  class="btn btn-s-md" ng-class="{'btn-default disabled': !newAppData.name, 'btn-info':newAppData.name}">Create New App</a>
+                    <h4 style="color:red;">{{err.message}}</h4>
+                    <div class="form-group " style="margin-top:40px;">
+                      <label class="pull-left">New App Name</label>
+                      <div class="row">
                         <input type="text" ng-model="newAppData.name" placeholder="exampleApp" class="form-control" style="">
-                        </div>
                       </div>
                     </div>
-                    <div  ng-hide="existingMode == true || simpleMode == true" style="margin-top:20px;">
-                      <a href="" ng-click="existingMode = true"  class="btn btn-s-md btn-default btn-secondary">Manage Existing Database</a>
-                    </div>
-                    <div ng-show="existingMode == true" ng-hide="existingMode != true || simpleMode == true">
-                      <a href="" ng-click="manageInstance()"  class="btn btn-s-md" ng-class="{'btn-default disabled': !newAppData.name, 'btn-info':newAppData.name}">Start Managing</a>
-                      <h4 style="color:red;">{{err.message}}</h4>
-                      <div class="form-group " style="margin-top:40px;">
-                        <label class="pull-left">Firebase Url</label>
-                        <div class="row">
+                  </div>
+                  <div  ng-hide="existingMode == true || simpleMode == true" style="margin-top:20px;">
+                    <a href="" ng-click="existingMode = true"  class="btn btn-s-md btn-default btn-secondary">Manage Existing Database</a>
+                  </div>
+                  <div ng-show="existingMode == true" ng-hide="existingMode != true || simpleMode == true">
+                    <a href="" ng-click="manageInstance()"  class="btn btn-s-md" ng-class="{'btn-default disabled': !newAppData.name, 'btn-info':newAppData.name}">Start Managing</a>
+                    <h4 style="color:red;">{{err.message}}</h4>
+                    <div class="form-group " style="margin-top:40px;">
+                      <label class="pull-left">Firebase Url</label>
+                      <div class="row">
                         https://
                         <input type="text" ng-model="newAppData.name" placeholder="yourApp" class="form-control" style="width:100px; display:inline;">
-                         .firebaseio.com
-                        </div>
+                        .firebaseio.com
                       </div>
                     </div>
                   </div>
@@ -71,28 +69,22 @@
                       </div>
                     </div>
                   </div>
-                  <div class="clearfix panel-footer">
-                    <a href="" class="pull-right" ng-click="startDelete(instance.name)"><i class="i i-trashcan text-muted"></i></a>
-                  </div>
-                </section>
-              </div>
+                <div class="clearfix panel-footer">
+                  <a href="" class="pull-right" ng-click="startDelete(instance.name)"><i class="i i-trashcan text-muted"></i></a>
+                </div>
+              </section>
+                </div>
             </div>
-<!--             <div>
-              <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-default btn-rounded"><i class="i i-arrow-left4"></i></button>
-                <button type="button" class="btn btn-sm btn-default btn-rounded"><i class="i i-arrow-right4"></i></button>
-              </div>
-            </div> -->
-          </section>
+          </div>
         </section>
-        <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen,open" data-target="#nav,html"></a>
       </section>
+      <div id="footer" class="row text-center">
+        <div class="col-xs-2 text-muted"></div>
+        <div class="col-xs-8">
+          <small>&copy; 2014 <a href="https://www.linkedin.com/in/prescottprue">Prescott Prue</a> &amp; <a href="https://www.linkedin.com/in/sinanbolel">Sinan Bolel</a></small>
+        </div>
+        <div class="col-xs-2 text-muted"></div>
+      </div>
     </section>
   </section>
-  
-<footer id="footer">
-  <div class="text-center padder">
-    <p><small>Built by<br/>&copy; 2014 <a href="https://www.linkedin.com/in/prescottprue">Prescott Prue</a> &amp; <a href="https://www.linkedin.com/in/sinanbolel">Sinan Bolel</a></small></p>
-  </div>
-  <script src="lib/resize/resize.js"></script>
-</footer>
+</section>
