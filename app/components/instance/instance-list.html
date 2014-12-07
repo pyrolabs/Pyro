@@ -1,6 +1,6 @@
 <section id="instance-list">
-  <section class="hbox stretch">
-    <section id="content">
+  <section id="content" style="top:">
+    <section class="hbox stretch">
       <section class="vbox no-margin">
         <section class="scrollable wrapper-lg">
           <div class="m-b-md h2">
@@ -46,45 +46,40 @@
                   <div class="clearfix panel-footer" ng-show="existingMode == true">
                     <a href="" ng-click="existingMode = false" class="pull-right"><i class="i i-trashcan text-muted"></i></a>
                   </div>
-                </section>
-              </div>
-              <div class="col-sm-6 col-md-4" ng-repeat="instance in instanceList">
-                <section class="panel b-a">
-                  <div class="panel-heading no-border">
-                    <a href="" ng-click="viewDetail(instance.name)" class="btn btn-warning btn-fab btn-raised pull-right"><i class="fa fa-fire" style="font-size:0.75em;margin-top:-0.5em;"></i></a>
+                </div>
+              </section>
+            </div>
+            <div class="col-sm-6 col-md-4" ng-repeat="instance in instanceList">
+              <section class="panel b-a">
+                <div class="panel-heading no-border">
+                  <a href="" ng-click="viewDetail(instance.name)" class="btn btn-warning btn-fab btn-raised pull-right"><i class="fa fa-fire" style="font-size:0.75em;margin-top:-0.5em;"></i></a>
 
-                    <a ng-click="viewDetail(instance.name)" class="h4 text-lt m-t-sm m-b-sm block font-bold"><p class="text-dark">{{instance.name}}</p></a>
-                  </div>
-                  <div class="panel-body">
-                    <!-- <span class="pull-right text-muted">{{instance.createdAt || "At Some Point"}}</span> -->
-                    <h3 class="font-thin">{{instance.url || "unknown url"}}</h3>
-                    <div class="row text-center m-t">
-                      <div class="col-xs-6">
-                        <p>Total Users</p>
-                        <h3 class="font-thin">12</h3>
-                      </div>
-                      <div class="col-xs-6">
-                        <p>Online</p>
-                        <h3 class="font-thin">2</h3>
-                      </div>
+                  <a ng-click="viewDetail(instance.name)" class="h4 text-lt m-t-sm m-b-sm block font-bold"><p class="text-dark">{{instance.name}}</p></a>
+                </div>
+                <div class="panel-body">
+                  <!-- <span class="pull-right text-muted">{{instance.createdAt || "At Some Point"}}</span> -->
+                  <h3 class="font-thin">{{instance.url || "unknown url"}}</h3>
+                  <div class="row text-center m-t">
+                    <div class="col-xs-6">
+                      <p>Total Users</p>
+                      <h3 class="font-thin">12</h3>
+                    </div>
+                    <div class="col-xs-6">
+                      <p>Online</p>
+                      <h3 class="font-thin">2</h3>
                     </div>
                   </div>
+                </div>
                 <div class="clearfix panel-footer">
                   <a href="" class="pull-right" ng-click="startDelete(instance.name)"><i class="i i-trashcan text-muted"></i></a>
                 </div>
               </section>
-                </div>
             </div>
           </div>
         </section>
       </section>
-      <div id="footer" class="row text-center">
-        <div class="col-xs-2 text-muted"></div>
-        <div class="col-xs-8">
-          <small>&copy; 2014 <a href="https://www.linkedin.com/in/prescottprue">Prescott Prue</a> &amp; <a href="https://www.linkedin.com/in/sinanbolel">Sinan Bolel</a></small>
-        </div>
-        <div class="col-xs-2 text-muted"></div>
-      </div>
+
     </section>
+
   </section>
 </section>
