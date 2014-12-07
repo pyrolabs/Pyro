@@ -61,12 +61,12 @@
                   <h3 class="font-thin">{{instance.url || "unknown url"}}</h3>
                   <div class="row text-center m-t">
                     <div class="col-xs-6">
-                      <p>Total Users</p>
-                      <h3 class="font-thin">12</h3>
+                      <h3 class="font-thin">{{instance.userCount || "0"}}</h3>
+                      <p>Total {{instance.userCount !== 1 ? "Users" : "User"}}</p>
                     </div>
                     <div class="col-xs-6">
-                      <p>Online</p>
-                      <h3 class="font-thin">2</h3>
+                      <h3 class="font-thin">{{instance.sessionCount || "0"}}</h3>
+                      <p>Total {{instance.sessionCount !== 1 ? "Sessions" : "Session"}}</p>
                     </div>
                   </div>
                 </div>
