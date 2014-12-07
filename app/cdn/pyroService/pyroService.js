@@ -58,6 +58,15 @@ angular.module('pyro.service', ['firebase'])
 		return $firebase(query, {arrayFactory:PyroObjectFactory()}).$asObject();
 	}
 })
+.factory('fileRam', function($firebase, PyroObjectFactory, pyroMaster){
+	return function(bucketName){
+		// query for objects created by user
+		var auth = pyroMaster.getAuth();
+		console.log('pyroMaster:', pyroMaster);
+		var ramRef = pyroMaster.mainRef.child('userRam').child(auth.uid).child(bucketName);
+		return $firebase(ramRef, {arrayFactory:PyroObjectFactory()}).$asObject();
+	}
+})
 .factory('pyro', ['$q', function($q ){
 	return function (argPyroObj){
 		var auth = null;
