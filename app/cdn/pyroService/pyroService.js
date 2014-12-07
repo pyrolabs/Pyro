@@ -76,11 +76,16 @@ angular.module('pyro.service', ['firebase'])
 		    return deferred.promise;
 			};
 			pyro.$login =  function(argLoginData) {
+				console.warn('[PyroService] $getUser called');
 				var deferredLogin = $q.defer();
 				pyro.login(argLoginData, function(returnedAccount){
-					deferredLogin.resolve(returnedAccount);
-				}, function(err){
-					deferredLogin.reject(err);
+					if(returnedAccount){
+							account = returnedAccount;
+							deferredLogin.resolve(account);
+						} else {
+							console.log('got null for returnedAccount:', returnedAccount);
+							deferredLogin.reject();
+						}
 				});
 				return deferredLogin.promise;
 			};
@@ -92,8 +97,13 @@ angular.module('pyro.service', ['firebase'])
 				}
 				else {
 					pyro.getUser(function(returnedAccount){
-						account = returnedAcount;
-						deferred.resolve(returnedAccount);
+						if(returnedAccount){
+							account = returnedAccount;
+							deferred.resolve(account);
+						} else {
+							console.log('got null for returnedAccount:', returnedAccount);
+							deferred.reject();
+						}
 					});
 				}
 				return deferred.promise;
@@ -242,15 +252,35 @@ angular.module('pyro.service', ['firebase'])
 		var deferred = $q.defer();
 		// [TODO] look into if password should just be uid to be able to get the account later
 		if(argSignupData.hasOwnProperty('email') && argSignupData.hasOwnProperty('password')) {
-			$http.post(pyroServerUrl + 'api/fb/account/new', argSignupData).success(function(account){
-				console.log('account creation successful:', account);
-				var fbAccountData = {token: data.account.adminToken, email:argSignupData.email, createdAt: Firebase.ServerValue.TIMESTAMP};
-				var auth = self.pyroRef.getAuth();
-				self.pyroRef.child('fbData').child(auth.uid).setWithPriority(fbAccountData, argSignupData.email, function(fbInfoSnap){
-					deferred.resolve(account);
-				});
+			var endpointUrl = pyroServerUrl + 'api/fb/account/new';
+			console.log('[pyroService PyroMaster.$createFbAccount] Calling to server endpoint:', endpointUrl);
+			$http.post(endpointUrl, argSignupData).success(function(data, status, headers){
+				console.warn('[pyroService PyroMaster.$createFbAccount]'+ endpointUrl + ' call returned data:', data, ' status:', status, ' headers:' ,headers);
+				if(status && status == 200){
+					console.log('account creation successful:', data);
+					if(data.hasOwnProperty('account')){
+						var fbAccountData = {token: data.account.adminToken, email:argSignupData.email, createdAt: Firebase.ServerValue.TIMESTAMP};
+						var auth = self.pyroRef.getAuth();
+						self.pyroRef.child('fbData').child(auth.uid).setWithPriority(fbAccountData, argSignupData.email, function(fbInfoSnap){
+							deferred.resolve(data.account);
+						});
+					} else {
+						console.error('[pyroService PyroMaster.$createFbAccount] response does not contain account variable');
+						deferred.reject({message:'Server Error. Please Contact Us'});
+					}
+				} else if(status && status == 401) {
+					console.warn('status of $httppost is good:', status);
+					deferred.reject({status:status, message:body.message})
+				} else if(data.hasOwnProperty('status')) {
+					console.warn('has own property status, but not status on $httpPost?', data.status);
+					deferred.reject({error:data.error, message:body.message});
+				} else {
+					console.error('account load not successful:', status);
+					deferred.reject(data);
+				}
+
 			}).error(function(data, status, headers){
-				console.error('error creating new fb account:',data, status, headers);
+				console.error('error creating new fb account:',data);
 				deferred.reject(data);
 			});
 		} else {
@@ -266,16 +296,29 @@ angular.module('pyro.service', ['firebase'])
 		// [TODO] look into if password should just be uid to be able to get the account later
 		if(argSignupData.hasOwnProperty('email') && argSignupData.hasOwnProperty('password')) {
 			$http.post(pyroServerUrl + 'api/fb/account/get', argSignupData).success(function(data, status, headers){
-				if(status != 200){
-					console.error('account load not successful:', status);
-					deferred.reject(data);
-				} else {
+				console.log('[pyroService pyroMaster.$getFbAccount] api/fb/acount/get returned:', data, status);
+				if(status && status == 200){
 					console.log('account load successful:', data, status);
 					var fbAccountData = {token: data.account.adminToken, email:argSignupData.email, createdAt: Firebase.ServerValue.TIMESTAMP};
 					var auth = self.pyroRef.getAuth();
-					self.pyroRef.child('fbData').child(auth.uid).setWithPriority(fbAccountData, argSignupData.email, function(fbInfoSnap){
-						deferred.resolve(fbInfoSnap);
+					self.pyroRef.child('fbData').child(auth.uid).setWithPriority(fbAccountData, argSignupData.email, function(err){
+						if(!err){
+							deferred.resolve(fbAccountData);
+
+						} else {
+							console.error('[pyro service PyroMaster] error setting fbData:', err);
+							deferred.reject(err);
+						}
 					});
+				} else if(status && status == 401) {
+					console.warn('status of $httppost is good:', status, body);
+					deferred.reject({status:status, message:body.message})
+				} else if(data.hasOwnProperty('status')) {
+					console.warn('has own property status, but not status on $httpPost?', data.status);
+					deferred.reject({status:data.status, message:body.message});
+				} else {
+					console.error('account load not successful:', status);
+					deferred.reject(data);
 				}
 			}).error(function(data, status, headers){
 				console.error('error getting fb account:',data, status, headers);

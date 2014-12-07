@@ -8,25 +8,46 @@ angular.module('pyroApp.controllers')
   $scope.createAccount = function() {
   	console.log('[SignupCtrl] createAccount called');
     // [TODO] This should be a service and error checked.
-    $window.ga('send','event', 'account-controller', 'CreateAccount', $scope.signupData.email);
-    pyroMaster.$signup($scope.signupData).then(function(userAccount){
-      pyroMaster.$getFbAccount($scope.signupData).then(function(account){
-        console.warn('Firebase account exists and logged in successfully:', account);
-        $state.go('home');
-      }, function(err){
-        console.warn('User does not already exist in firebase. Attempting to create account.', err);
-        //User doesn't already exist in firebase or has a different password
-        pyroMaster.$createFbAccount($scope.signupData).then(function(userAccount){
-          console.warn('Signup successful:', userAccount);
-          $state.go('home');
-        }, function(err2){
-          //email already belongs to a firebase account
-          // [TODO] Redirect to a page to log into firebase account
-          console.error('Firebase account error:', err2);
-          $scope.err.message = 'Looks like a firebase account exists under that email. Login to manage your firebase instances with Pyro.'
-        });
-      })
+    if($scope.signupData.hasOwnProperty('email') && $scope.signupData.hasOwnProperty('password')) {
+      $window.ga('send','event', 'account-controller', 'CreateAccount', $scope.signupData.email);
+      if($scope.signupData.password.length >= 8) {
+        console.log('password long enough running getFirebaseAccount');
+        getFirebaseAccount(function(newAccount){
+          console.log('running pyroSignup');
+          pyroSignup(function(pyroAccount){
+            $state.go('home');
+          });
+        })
+      } else {
+        $scope.err = {message:'Password must be at least 8 characters'};
+      }
+      
+    } else {
+      $scope.err = {message:'Invalid login information'};
+    }
+  };
+  function getFirebaseAccount(cb){
+    pyroMaster.$getFbAccount($scope.signupData).then(function(account){
+      console.warn('Firebase account exists and logged in successfully:', account);
+      cb(account);
+    }, function(err){
+      if(err.status == 401) {
+        //Firebase information is incorrect
+        console.warn('Firebase login information does not match. Attempting to create a new Firebase account');
+        createFirebaseAccount(function(account){
+          cb(account);
 
+        });
+      } else {
+        console.error('Error gettingFBAccount:', err);
+        $scope.err = err;
+      }
+    });
+  }
+  function pyroSignup(cb){
+    pyroMaster.$signup($scope.signupData).then(function(userAccount){
+      console.log('[SignupCtrl] pyro signup successful:', userAccount);
+      cb(userAccount);
     }, function(err){
       console.warn('Signup error:', err.message);
       $scope.err = err;
@@ -34,7 +55,18 @@ angular.module('pyroApp.controllers')
         $scope.signupData.email = null;
       }
     });
-  };
+  }
+  function createFirebaseAccount(cb){
+    pyroMaster.$createFbAccount($scope.signupData).then(function(userAccount){
+      console.warn('Signup successful:', userAccount);
+      cb(userAccount)
+    }, function(err2){
+      //email already belongs to a firebase account
+      // [TODO] Redirect to a page to log into firebase account
+      console.error('Firebase account error:', err2);
+      $scope.err.message = 'Looks like a firebase account exists under that email. Login to manage your firebase instances with Pyro.'
+    });
+  }
   $scope.signupAttempt = function(){
     // Record Signup Attempt while signup is closed
     $scope.showSignupAttemptedMessage = true;
