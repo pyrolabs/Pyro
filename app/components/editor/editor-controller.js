@@ -4,6 +4,21 @@ angular.module('pyroApp.controllers')
   console.log('EditorCtrl');
  
     $scope.pyroInstance = instance;
+    function seperateS3Url(argUrl){
+      console.log('seperateS3Url called with', argUrl);
+      var re = /(.+)(?=\.s3)/g;
+      var bucketArray = argUrl.match(re);
+      var bucketString = bucketArray[0]
+      console.warn("bucket: ", bucketString);
+      return bucketString;
+    }
+    // editorService.getFolderStructure().then(function(returnedStructure){
+    //   console.log('folder structure returned:', returnedStructure);
+    //   $scope.files = returnedStructure;
+    // }, function(){
+    //   console.error('[EditorCtrl] error getting folder structure');
+    // });
+
     pyroMaster.$loadObject('appFiles', $scope.pyroInstance.name).then(function(returnedObject){
       if(returnedObject){
         $scope.files = returnedObject;
@@ -47,11 +62,27 @@ angular.module('pyroApp.controllers')
     console.log('[EditorCtrl] Ace editor changed:', _editor);
     saveFileNewContent();
   }
-
+$scope.saveFile = function(){
+  var bucketName = "";
+  if($scope.pyroInstance.hasOwnProperty('bucketName')){
+    bucketName = $scope.pyroInstance.bucketName;
+  } else {
+    bucketName = "pyro-"+ $scope.pyroInstance.name;
+  }
+  editorService.saveFile(bucketName, $scope.$files.$currentFile.path, $scope.editorObj.getValue()).then(function(saveRes){
+    console.log('saveRes:', saveRes);
+  }, function(err){
+    console.error('error saving file:',err);
+  });
+}
   function saveFileNewContent() {
+    // [TODO] Handle non generated app bucket names
+
+
     if($scope.files.$currentFile) {
       console.log("File ",$scope.files.$currentFile, " changed, saving content.");
       $scope.files.$currentFile.newContent = $scope.editorObj.getValue();
+
     } else {
       $scope.files.$currentFile = {newContent:$scope.editorObj.getValue()};
     }

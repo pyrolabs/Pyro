@@ -188,7 +188,7 @@ angular.module('pyro.service', ['firebase'])
 				//Auth exists
 				var dbName = "pyro-"+ argInstanceName;
 				var dbUrl = "https://"+dbName+".firebaseio.com"
-				var instanceObj = {name: argInstanceName, author:auth.uid, dbName:dbName, createdAt:Firebase.ServerValue.TIMESTAMP, dbUrl:dbUrl};
+				var instanceObj = {name: argInstanceName, bucketName:dbName, author:auth.uid, dbName:dbName, createdAt:Firebase.ServerValue.TIMESTAMP, dbUrl:dbUrl, url:dbUrl};
 				var endpointLocation = pyroServerUrl + 'api/generate';
 				var postObj = {name: argInstanceName, uid:auth.uid};
 				$http.post(endpointLocation, postObj).success(function(data, status, headers){
@@ -229,7 +229,7 @@ angular.module('pyro.service', ['firebase'])
 		var instanceRef = pyroBase.child('instances').child(argAppName);
 		$http.post(endpointLocation, postObj).success(function(data, status, headers){
 			console.log('[$manageInstance] Call to :' + endpointLocation + ' returned:', data, status);
-			var instanceData = {name:argAppName, dbUrl:data.instance, author:auth.uid, type: 'manage'};
+			var instanceData = {name:argAppName, dbUrl:data.instance, author:auth.uid, type: 'manage', bucketName:"pyro-"+argAppName, createdAt:Firebase.ServerValue.TIMESTAMP};
 			console.log('Setting new app data to Firebase:', instanceData);
 			instanceRef.set(instanceData, function(err){
 				if(!err) {
