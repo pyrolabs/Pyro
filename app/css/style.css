@@ -4,6 +4,18 @@ body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important; 
 }
 
+.tetrad-blue {
+  background-color: #1E71A2;
+}
+.tetrad-green {
+  background-color: #18B364;
+}
+.tetrad-yellow {
+  background-color: #FF9C22;
+}
+.tetrad-orange {
+  background-color: #FF5722;
+}
 h1, h2, h3, h4 {
   font-weight:100;
 }

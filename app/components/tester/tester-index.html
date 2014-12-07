@@ -66,10 +66,27 @@
       </div>
     </aside>
     <!-- /.aside -->
+    <div class="row navbar nav-header second-header tetrad-yellow m-n" style="z-index:-1;">
+      <div class="text-center">
+        <h1 class="text-white" style="font-weight:200;">Tester</h1>
+      </div>
+    </div>
     <div id="tester" class="hbox" style="height:100%;text-align:center;">
       <iframe id="tester-container" class="" ng-src="{{emuRender.url}}" width="{{emuRender.width}}" height="{{emuRender.height}}" style="background:none;">
         Something went wrong...
       </iframe>
     </div>
   </div>
-  <script src="lib/resize/resize.js"></script>
+<script>
+  $(function() {
+    function abso() {
+      $('#tester').css({
+        height: $(window).height()-$('.header-panel').height() - $('.second-header').height()
+      });
+    }
+    $(window).resize(function() {
+      abso();         
+    });
+    abso();
+  });
+</script>
