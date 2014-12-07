@@ -19,12 +19,14 @@ angular.module('editor.service', ['pyro.service'])
   //     return deferred.promise;
 		// },
     saveContentsToS3:function(argAppName, argFilePath){
-      var endpointLocation = "https://pyro-server.herokuapp.com/api/app/upload";
+      var endpointLocation = "//localhost:4000/api/app/upload";
       var auth = pyroMaster.getAuth();
       if(!auth) {
         console.error('Not logged in');
         deferred.reject({message:'Not logged in'});
       }
+      argFilePath = argFilePath.replace('fs', '');
+
       var postObj = {name:argAppName, filePath:argFilePath, uid:auth.uid};
       var deferred = $q.defer();
       $http.post(endpointLocation, postObj).success(function(data, status, headers){
