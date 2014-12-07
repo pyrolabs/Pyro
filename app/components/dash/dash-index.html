@@ -66,83 +66,83 @@
           <section class="vbox">
             <section class="scrollable padder">
               <section class="row m-b-md">
-                <div class="col-md-4" style="text-align:center;">
+                <div class="col-md-6" style="text-align:center;">
                   <div class="text-center">
-                    <h2 class="text-dark">Attention</h2>
+                    <h2 class="text-dark">Counts</h2>
                   </div>
                   <div class="panel b-a padder-v padder-v" style="text-align:left;padding-left:1em;">
-                    <a href="#" class="block padder-v hover">
+                    <a href="" class="block padder-v hover">
                       <span class="i-s i-s-2x pull-left m-r-sm">
                         <i class="i i-circle i-s-base" style="color:rgb(242, 244, 248);"></i>
                         <i class="i i-x text-danger" style="font-size:0.5em;">-1.3%</i>
                       </span>
                       <span class="clear">
-                        <span class="h3 block m-t-xs text-dark">{{sessionCount}}%</span>
-                        <small class="text-muted text-u-c">of accounts created</small>
+                        <span class="h3 block m-t-xs text-dark">{{userCount}}%</span>
+                        <small class="text-muted text-u-c">total user accounts</small>
                       </span>
                     </a>
-                    <a href="#" class="block padder-v hover">
+                    <a href="" class="block padder-v hover">
                       <span class="i-s i-s-2x pull-left m-r-sm">
                         <i class="i i-circle i-s-base" style="color:rgb(242, 244, 248);"></i>
                         <i class="i i-x text-success" style="font-size:0.5em;">+8.0%</i>
                       </span>
                       <span class="clear">
                         <span class="h3 block m-t-xs text-dark">{{sessionCount}}%</span>
-                        <small class="text-muted text-u-c">of installations created</small>
+                        <small class="text-muted text-u-c">total unique sessions</small>
                       </span>
                     </a>
                   </div>
                 </div>
-                <div class="col-md-4" style="text-align:center;">
+                <div class="col-md-6" style="text-align:center;">
                   <div class="text-center">
-                    <h2 class="text-dark">Stickiness</h2>
+                    <h2 class="text-dark">Engagement</h2>
                   </div>
                   <div class="panel b-a padder-v" style="text-align:left;padding-left:1em;">
-                    <a href="#" class="block padder-v hover">
+                    <a href="" class="block padder-v hover">
                       <span class="i-s i-s-2x pull-left m-r-sm">
                         <i class="i i-circle i-s-base" style="color:rgb(242, 244, 248);"></i>
                         <i class="i i-x text-danger" style="font-size:0.5em;">-0.6%</i>
                       </span>
                       <span class="clear">
-                        <span class="h3 block m-t-xs text-dark">{{sessionCount}}%</span>
-                        <small class="text-muted text-u-c">of users active</small>
+                        <span class="h3 block m-t-xs text-dark">{{userCount}}</span>
+                        <small class="text-muted text-u-c">daily active users</small>
                       </span>
                     </a>
-                    <a href="#" class="block padder-v hover">
+                    <a href="" class="block padder-v hover">
                       <span class="i-s i-s-2x pull-left m-r-sm">
                         <i class="i i-circle i-s-base" style="color:rgb(242, 244, 248);"></i>
                         <i class="i i-x text-danger" style="font-size:0.5em;">-1.7%</i>
                       </span>
                       <span class="clear">
-                        <span class="h3 block m-t-xs text-dark">{{sessionCount}}%</span>
-                        <small class="text-muted text-u-c">length / separation of sessions</small>
+                        <span class="h3 block m-t-xs text-dark">{{sessionCount}}</span>
+                        <small class="text-muted text-u-c">daily sessions created</small>
                       </span>
                     </a>
                   </div>
                 </div>
-                <div class="col-md-4" style="text-align:center;">
+                <div class="col-md-4 ng-hide" style="text-align:center;">
                   <div class="text-center">
-                    <h2 class="text-dark">Churn</h2>
+                    <h2 class="text-dark">Exits</h2>
                   </div>
                   <div class="panel b-a padder-v" style="text-align:left;padding-left:1em;">
-                    <a href="#" class="block padder-v hover">
+                    <a href="" class="block padder-v hover">
                       <span class="i-s i-s-2x pull-left m-r-sm">
                         <i class="i i-circle i-s-base" style="color:rgb(242, 244, 248);"></i>
                         <i class="i i-x text-success" style="font-size:0.5em;">-0.3%</i>
                       </span>
                       <span class="clear">
-                        <span class="h3 block m-t-xs text-dark">{{sessionCount}}%</span>
-                        <small class="text-muted text-u-c">of users lost or inactive</small>
+                        <span class="h3 block m-t-xs text-dark">{{usersCount}}%</span>
+                        <small class="text-muted text-u-c">of all users exited or became inactive today</small>
                       </span>
                     </a>
-                    <a href="#" class="block padder-v hover">
+                    <a href="" class="block padder-v hover">
                       <span class="i-s i-s-2x pull-left m-r-sm">
                         <i class="i i-circle i-s-base" style="color:rgb(242, 244, 248);"></i>
                         <i class="i i-x text-success" style="font-size:0.5em;">-1.4%</i>
                       </span>
                       <span class="clear">
                         <span class="h3 block m-t-xs text-dark">{{sessionCount}}%</span>
-                        <small class="text-muted text-u-c">of users less active</small>
+                        <small class="text-muted text-u-c">of users spent less time on your app</small>
                       </span>
                     </a>
                   </div>
@@ -158,7 +158,7 @@
                         </a>
                       </li>
                       <li>
-                        <a href="#" class="panel-toggle text-muted">
+                        <a href="" class="panel-toggle text-muted">
                           <i class="i i-plus text-active"></i>
                           <i class="i i-minus text"></i>
                         </a>
@@ -187,12 +187,12 @@
                             <span class="caret"></span>
                           </button>
                           <ul class="dropdown-menu dropdown-select">
-                            <li><a href="#"><input type="radio" name="b">Month</a></li>
-                            <li><a href="#"><input type="radio" name="b">Week</a></li>
-                            <li><a href="#"><input type="radio" name="b">Day</a></li>
+                            <li><a href=""><input type="radio" name="b">Month</a></li>
+                            <li><a href=""><input type="radio" name="b">Week</a></li>
+                            <li><a href=""><input type="radio" name="b">Day</a></li>
                           </ul>
                         </div>
-                        <a href="#" class="btn btn-default btn-icon btn-rounded btn-sm">Go</a>
+                        <a href="" class="btn btn-default btn-icon btn-rounded btn-sm">Go</a>
                       </div>
                       Statistics
                     </header>
@@ -228,13 +228,13 @@
                           <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu dropdown-select">
-                          <li><a href="#"><input type="radio" name="a">Today</a></li>
-                          <li><a href="#"><input type="radio" name="a">Yesterday</a></li>
-                          <li><a href="#"><input type="radio" name="a">Last 24 Hours</a></li>
-                          <li><a href="#"><input type="radio" name="a">Last 7 Days</a></li>
-                          <li><a href="#"><input type="radio" name="a">Last 30 days</a></li>
-                          <li><a href="#"><input type="radio" name="a">Last Month</a></li>
-                          <li><a href="#"><input type="radio" name="a">All Time</a></li>
+                          <li><a href=""><input type="radio" name="a">Today</a></li>
+                          <li><a href=""><input type="radio" name="a">Yesterday</a></li>
+                          <li><a href=""><input type="radio" name="a">Last 24 Hours</a></li>
+                          <li><a href=""><input type="radio" name="a">Last 7 Days</a></li>
+                          <li><a href=""><input type="radio" name="a">Last 30 days</a></li>
+                          <li><a href=""><input type="radio" name="a">Last Month</a></li>
+                          <li><a href=""><input type="radio" name="a">All Time</a></li>
                         </ul>
                       </div>
                       Analysis
@@ -249,7 +249,7 @@
           </section>
         </section>
       </section>
-      <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen,open" data-target="#nav,html"></a>
+      <a href="" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen,open" data-target="#nav,html"></a>
     </section>
   </section>
 </section>
