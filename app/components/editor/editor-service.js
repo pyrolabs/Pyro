@@ -5,7 +5,7 @@ angular.module('editor.service', [])
 		saveFile:function(argBucketName, argFilePath, argFileContents){
 			console.log('[editorService] saveFile called', arguments);
       var deferred = $q.defer();
-      var saveParams = {Bucket:argBucketName, Key:argFilePath,  Body: new Buffer(argFileContents)};
+      var saveParams = {Bucket:argBucketName, Key:argFilePath,  Body: argFileContents};
       s3.putObject(saveParams, function(err, data){
         if(!err){
           console.log('file saved successfully');

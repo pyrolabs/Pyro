@@ -63,13 +63,14 @@ angular.module('pyroApp.controllers')
     saveFileNewContent();
   }
 $scope.saveFile = function(){
+  console.log('saveFile called');
   var bucketName = "";
   if($scope.pyroInstance.hasOwnProperty('bucketName')){
     bucketName = $scope.pyroInstance.bucketName;
   } else {
     bucketName = "pyro-"+ $scope.pyroInstance.name;
   }
-  editorService.saveFile(bucketName, $scope.$files.$currentFile.path, $scope.editorObj.getValue()).then(function(saveRes){
+  editorService.saveFile(bucketName, $scope.files.$currentFile.path, $scope.editorObj.getValue()).then(function(saveRes){
     console.log('saveRes:', saveRes);
   }, function(err){
     console.error('error saving file:',err);
@@ -95,7 +96,7 @@ $scope.saveFile = function(){
     $scope.currentPath = fileObject.path.split("fs/")[1];
     $scope.files.$currentFile = fileObject;
     if(!fileObject.hasOwnProperty('content')){
-      var filePath = fileObject.path.replace('fs/pyro-'+$scope.pyroInstance.name+'/', '');
+      var filePath = fileObject.path.replace('pyro-'+$scope.pyroInstance.name+'/', '');
       editorService.downloadFileFromS3($scope.pyroInstance.name, filePath).then(function(fileString){
         // Set file to editor
         $scope.editorObj.getSession().setValue(fileString);
