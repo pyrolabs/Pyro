@@ -46,7 +46,12 @@ angular.module('pyroApp.controllers')
       // [TODO] get pyro object by selecting from exisiting list
     $scope.isLoading = false;
     console.log('scope set:', $scope.instanceList[0]);
-    $scope.pyroInstance = pyroList[$stateParams.appId]
+    console.log('pyroList:', pyroList,$stateParams.appId);
+
+    var instance = _.findWhere(pyroList, {name: $stateParams.appId});
+    console.log("Set instance: ",instance);
+
+    $scope.pyroInstance = instance;
     $scope.emuRender.url = $sce.trustAsResourceUrl('//'+$scope.pyroInstance.appUrl);
     $scope.pyroInstance.getUserCount(function(userCount){
       $scope.userCount = userCount;
