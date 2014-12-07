@@ -92,11 +92,16 @@ $scope.saveFile = function(){
   if($scope.pyroInstance.hasOwnProperty('bucketName')){
     bucketName = $scope.pyroInstance.bucketName;
   } else {
-    bucketName = "pyro-"+ $scope.pyroInstance.name;
+    bucketName = $scope.pyroInstance.name;
   }
-  editorService.saveContentsToS3($scope.pyroInstance.name, $scope.appRam.$currentFile.path).then(function(saveRes){
+// <<<<<<< Updated upstream
+  editorService.saveContentsToS3(bucketName, $scope.appRam.$currentFile.path).then(function(saveRes){
         console.warn('saveRes:', saveRes);
   //   // Notify user of succesful save
+// =======
+//   editorService.saveFile(bucketName, $scope.files.$currentFile.path, $scope.editorObj.getValue(), 'simplelogin:34').then(function(saveRes){
+//     console.log('saveRes:', saveRes);
+// >>>>>>> Stashed changes
   }, function(err){
     console.error('error saving file:',err);
     $scope.err = err;
@@ -115,10 +120,11 @@ $scope.saveFile = function(){
   }
   $scope.openFile = function(fileObject){
     if(fileObject){
-      console.log('path:', fileObject.path);
+      console.log('\nOPEN FILE:', fileObject);
     fileObject.key = fileObject.name.replace('.', '%20');
     $scope.appRam.$currentFile = fileObject;
     var filePath = fileObject.path.replace('pyro-'+$scope.pyroInstance.name+'/', '');
+    filePath = filePath.replace('fs/', '');
     var storageKey = fileObject.name.replace('.', '%20');
     console.log('appRam set with open file:', $scope.appRam);
     if(!fileObject.hasOwnProperty('content') && !$scope.appRam.hasOwnProperty(storageKey)){
