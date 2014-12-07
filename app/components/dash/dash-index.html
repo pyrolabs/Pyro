@@ -66,34 +66,34 @@
           <section class="vbox">
             <section class="scrollable padder">
               <section class="row m-b-md">
-                <div class="col-md-6" style="text-align:center;">
+                <div class="col-md-6 m-t-lg" style="text-align:center;">
                   <div class="text-center">
-                    <h2 class="text-dark">Counts</h2>
+                    <h2 class="text-dark">Summary</h2>
                   </div>
-                  <div class="panel b-a padder-v padder-v" style="text-align:left;padding-left:1em;">
+                  <div class="panel b-a padder-v padder-v m-t-lg" style="text-align:left;padding-left:1em;">
                     <a href="" class="block padder-v hover">
-                      <span class="i-s i-s-2x pull-left m-r-sm">
+                      <span class="i-s i-s-2x pull-left m-r-sm ng-hide">
                         <i class="i i-circle i-s-base" style="color:rgb(242, 244, 248);"></i>
                         <i class="i i-x text-danger" style="font-size:0.5em;">-1.3%</i>
                       </span>
-                      <span class="clear">
-                        <span class="h3 block m-t-xs text-dark">{{userCount}}%</span>
-                        <small class="text-muted text-u-c">total user accounts</small>
+                      <span class="clear text-center">
+                        <span class="h3 block m-t-xs text-dark">{{userCount}}</span>
+                        <small class="text-muted text-u-c">total<br/>user accounts</small>
                       </span>
                     </a>
                     <a href="" class="block padder-v hover">
-                      <span class="i-s i-s-2x pull-left m-r-sm">
+                      <span class="i-s i-s-2x pull-left m-r-sm ng-hide">
                         <i class="i i-circle i-s-base" style="color:rgb(242, 244, 248);"></i>
                         <i class="i i-x text-success" style="font-size:0.5em;">+8.0%</i>
                       </span>
-                      <span class="clear">
-                        <span class="h3 block m-t-xs text-dark">{{sessionCount}}%</span>
-                        <small class="text-muted text-u-c">total unique sessions</small>
+                      <span class="clear text-center">
+                        <span class="h3 block m-t-xs text-dark">{{sessionCount}}</span>
+                        <small class="text-muted text-u-c">total<br/>unique sessions</small>
                       </span>
                     </a>
                   </div>
                 </div>
-                <div class="col-md-6" style="text-align:center;">
+                <div class="col-md-6 ng-hide" style="text-align:center;">
                   <div class="text-center">
                     <h2 class="text-dark">Engagement</h2>
                   </div>
@@ -148,7 +148,7 @@
                   </div>
                 </div>
               </section>
-              <div class="col-sm-3 hide">
+              <div class="col-sm-3 ng-hide">
                 <section class="panel b-a">
                   <header class="panel-heading b-b b-light">
                     <ul class="nav nav-pills pull-right">
@@ -176,7 +176,7 @@
                   </div>
                 </section>
               </div>
-              <div class="row bg-light dk m-b">
+              <div class="row bg-light dk m-b ng-hide">
                 <div class="col-md-6 dker">
                   <section>
                     <header class="font-bold padder-v">

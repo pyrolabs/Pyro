@@ -17,7 +17,7 @@
                   </div>
                   <div class="panel-body text-center" style="padding-top:30px;">
                     <div ng-hide="existingMode == true || simpleMode == true" style="margin-bottom:40px;">
-                      <a href="" ng-click="simpleMode = true" class="btn btn-s-md btn-default btn-secondary">Simple Setup</a>
+                      <a href="" ng-click="simpleMode = true" class="btn btn-s-md btn-warning">Simple Setup</a>
                     </div>
                     <div ng-show="simpleMode == true" class="ng-hide" style="padding-left:10%; padding-right:10%;">
                       <a href="" ng-click="simpleSetup()"  class="btn btn-s-md" ng-class="{'btn-default disabled': !newAppData.name, 'btn-info':newAppData.name}">Create New App</a>
@@ -30,7 +30,7 @@
                       </div>
                     </div>
                     <div  ng-hide="existingMode == true || simpleMode == true" style="margin-top:20px;">
-                      <a href="" ng-click="existingMode = true"  class="btn btn-s-md btn-warning">Manage Existing Database</a>
+                      <a href="" ng-click="existingMode = true"  class="btn btn-s-md btn-default btn-secondary">Manage Existing Database</a>
                     </div>
                     <div ng-show="existingMode == true" ng-hide="existingMode != true || simpleMode == true">
                       <a href="" ng-click="manageInstance()"  class="btn btn-s-md" ng-class="{'btn-default disabled': !newAppData.name, 'btn-info':newAppData.name}">Start Managing</a>
