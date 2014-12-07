@@ -23,11 +23,11 @@ angular.module('pyroApp.controllers')
   });
 
   // [TODO] Use different objects for the different create types
-  $scope.viewDetail = function(argInd) {
-    console.log('viewDetail called with: ', argInd);
-    console.log('loading:', PyroArray('instances').$keyAt(argInd));
-    $state.go('data', {
-      appId: argInd
+  $scope.viewDetail = function(argName) {
+    console.log('viewDetail called with: ', argName);
+    console.log('loading:', $rootScope.instanceList.$getRecord(argName));
+    $state.go('dash', {
+      appId: argName
     });
   }
   $scope.manageInstance = function() {

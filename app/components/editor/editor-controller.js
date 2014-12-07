@@ -1,17 +1,10 @@
 angular.module('pyroApp.controllers')
 
-.controller('EditorCtrl', function($scope, $state, $rootScope, $stateParams, PyroArray, editorService, pyroMaster) {
+.controller('EditorCtrl', function($scope, $state, $rootScope, $stateParams, instance, editorService, pyroMaster) {
   console.log('EditorCtrl');
  
-  $scope.instanceList = PyroArray('instances');
-
-   $scope.instanceList.$loaded().then(function(pyroList){
-      // [TODO] get pyro object by selecting from exisiting list
-    $scope.isLoading = false;
-    console.log('scope set:', $scope.instanceList[0]);
-    $scope.pyroInstance = _.findWhere(pyroList, {name:$stateParams.appId})
-    console.log('pyroInstance', $scope.pyroInstance);
-    pyroMaster.$loadObject('appFiles', $scope.pyroInstance.name).then(function(returnedObject){
+    $scope.pyroInstance = instance;
+    pyroMaster.$loadObject('appFiles', $scope.pyroInstance.name).then(function(returnedObject){
       if(returnedObject){
         $scope.files = returnedObject;
         console.log('$scope.files set:', $scope.files);
@@ -25,7 +18,6 @@ angular.module('pyroApp.controllers')
       }
      });
 
-  });
 
  $scope.opts = {
      dirSelectable: false

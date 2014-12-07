@@ -1,17 +1,11 @@
 angular.module('pyroApp.controllers')
 
-.controller('DashCtrl', function($scope, $state, $rootScope, $stateParams, user, pyroMaster, PyroArray) {
+.controller('DashCtrl', function($scope, $state, $rootScope, $stateParams, instance) {
   console.log('DashCtrl');
   // $rootScope.account = user;
-  $scope.instanceList = PyroArray('instances');
-  console.log('params:', $stateParams);
-  $scope.isLoading = true;
-  
-  $scope.instanceList.$loaded().then(function(pyroList){
-    // [TODO] get pyro object by selecting from exisiting list
-    $scope.isLoading = false;
-    console.log('scope set:', $scope.instanceList[0]);
-    $scope.pyroInstance = _.findWhere(pyroList, {name:$stateParams.appId});
+  // $scope.instanceList = PyroArray('instances');
+    $scope.pyroInstance = instance;
+    console.log('instance:', instance);
     $scope.pyroInstance.getUserCount(function(userCount){
       $scope.userCount = userCount;
       if(!$scope.$$phase) {
@@ -27,5 +21,5 @@ angular.module('pyroApp.controllers')
         $scope.$apply();
       }
     });
-  });
+
 });

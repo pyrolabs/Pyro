@@ -1,9 +1,8 @@
 angular.module('pyroApp.controllers')
 
-.controller('TesterCtrl', function($scope, $state, $rootScope, $stateParams, $sce, $document, PyroArray) {
+.controller('TesterCtrl', function($scope, $state, $rootScope, $stateParams, $sce, $document, instance) {
   console.log('TesterCtrl');
  
-  $rootScope.instanceList = PyroArray('instances');
  
   $scope.emuRender = {
     url:'',
@@ -41,34 +40,6 @@ angular.module('pyroApp.controllers')
       $scope.emuRender.height = y+t;
     }
   }
-
-   $scope.instanceList.$loaded().then(function(pyroList){
-      // [TODO] get pyro object by selecting from exisiting list
-    $scope.isLoading = false;
-    console.log('scope set:', $scope.instanceList[0]);
-    console.log('pyroList:', pyroList,$stateParams.appId);
-
-    var instance = _.findWhere(pyroList, {name: $stateParams.appId});
-    console.log("Set instance: ",instance);
-
     $scope.pyroInstance = instance;
-    $scope.emuRender.url = $sce.trustAsResourceUrl('//'+$scope.pyroInstance.appUrl);
-    $scope.pyroInstance.getUserCount(function(userCount){
-      $scope.userCount = userCount;
-      if(!$scope.$$phase) {
-        //$digest or $apply
-        $scope.$apply();
-      }
-    });
-    $scope.pyroInstance.getObjectCount('sessions',function(sessionCount){
-      console.log('sessionCount updated:', sessionCount);
-      $scope.sessionCount = sessionCount;
-       if(!$scope.$$phase) {
-        //$digest or $apply
-        $scope.$apply();
-      }
-    });
-  });
-
-  
+    $scope.emuRender.url = $sce.trustAsResourceUrl($scope.pyroInstance.appUrl);
 })

@@ -79,7 +79,7 @@ angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroA
     })
       .state('home', {
         parent:'nav',
-        url: "/pyro",
+        url: "/home",
         templateUrl:"components/instance/instance-list.html",
         controller: 'InstanceListCtrl'
       })
@@ -95,39 +95,65 @@ angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroA
       // [TODO] load instance data here only
       .state('instance', {
         parent:'nav',
+        url:'/:appId',
         abstract:true,
-        url:'/pyro/:appId',
-        views: {
-          'sidemenu':{
-            templateUrl:'templates/sidebar.html'
-          },
-          'center':{
-            template:'<ui-view></ui-view>'
+        resolve:{
+          instance:function(pyroMaster, $stateParams, $q, pyro){
+            var deferred = $q.defer()
+            pyroMaster.$loadObject('instances', $stateParams.appId).then(function(returnedInstance){
+              var pyroObj = pyro(returnedInstance);
+              deferred.resolve(pyroObj);
+            })
+            return deferred.promise;
           }
-        }
+        },
+        template:'<ui-view></ui-view>'
+        // views: {
+        //   'sidemenu':{
+        //     templateUrl:'templates/sidebar.html'
+        //   },
+        //   'center':{
+        //     template:'<ui-view></ui-view>'
+        //   }
+        // }
       })
     // Tabs
       .state('dash', {
-        parent:'nav',
-        url: '/:appId/dash',
+        parent:'instance',
+        url: '/dash',
         templateUrl:"components/dash/dash-index.html",
         controller: 'DashCtrl'
       })
       .state('editor', {
-        parent:'nav',
-        url: '/:appId/editor',
+        parent:'instance',
+        url: '/editor',
         templateUrl:"components/editor/editor-index.html",
         controller: 'EditorCtrl'
       })
       .state('tester', {
-        parent:'nav',
-        url: '/:appId/tester',
+        parent:'instance',
+        url: '/tester',
         templateUrl:"components/tester/tester-index.html",
         controller: 'TesterCtrl'
       })
       .state('data', {
-        parent:'nav',
-        url: '/:appId/data',
+        parent:'instance',
+        // resolve:{
+        //   instanceData:function(PyroArray, $q, $stateParams){
+        //     var deferred = $q.defer();
+        //     var instanceList = PyroArray('instances');
+        //     instanceList.$loaded().then(function(pyroList) {
+        //       var pyroData = instanceList.$getRecord($stateParams.appId);
+        //       var appFb = new Firebase(pyroData.dbUrl);
+        //       appFb.once('value', function(pyroSnap){
+        //         deferred.resolve(pyroSnap.val());
+        //       });
+        //     });
+        //     return deferred.promise;
+
+        //   }
+        // },
+        url: '/data',
         templateUrl:"components/data/data-index.html",
         controller: 'DataCtrl'
       })

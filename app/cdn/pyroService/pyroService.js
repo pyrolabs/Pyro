@@ -5,17 +5,17 @@ angular.module('pyro.service', ['firebase'])
 	return function(snap){
 		return $FirebaseArray.$extendFactory({
 			// Overide $createObject behavior to return pyro object
-			$$added:function(snap){
-				// [TODO] Add check for apps that are managed
-				if(snap.val().hasOwnProperty('dbUrl')){
-					var loadedObj = snap.val();
-					loadedObj.url = snap.val().dbUrl;
+			// $$added:function(snap){
+			// 	// [TODO] Add check for apps that are managed
+			// 	if(snap.val().hasOwnProperty('dbUrl')){
+			// 		var loadedObj = snap.val();
+			// 		loadedObj.url = snap.val().dbUrl;
 
-					return pyro(loadedObj);
-				} else {
-					return snap.val();
-				}
-			},
+			// 		return loadedObj;
+			// 	} else {
+			// 		return snap.val();
+			// 	}
+			// },
 			$$updated:function(snap){
 				// var instance =this.$getRecord(snap.key())
 				// return snap.getUserCount()
