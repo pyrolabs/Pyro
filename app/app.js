@@ -4,6 +4,7 @@ angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroA
   console.log('Angular is running');
   $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){ 
     console.log('route change from:', fromState, ' to: ', toState);
+    $rootScope.currentState = toState.name;
   });
 
      $rootScope
