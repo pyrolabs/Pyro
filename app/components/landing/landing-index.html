@@ -1,21 +1,131 @@
-<section id="content" class="m-t-md animated fadeIn">    
-  <section id="landing" class="text-center">
-    <h1 class="h1-md">pyro</h1>
-    <h3>realtime apps with ease</h2>
-    <div ng-click="pyroSymbolClicked()" class="btn btn-warning btn-secondary btn-fab btn-raised" style="positon"><i class="fa fa-fire"></i></div>
-    <div style="margin: 7em auto 0 auto;">
-      <h4>sign up for the private alpha:</h4>
-      <div style="width:400px;margin: 1em auto;position:relative;">
-        <input type="text" class="form-control" placeholder="you@example.com" style="position:absolute;top:0;text-align:center;" ng-model="signupData.email">
-        <a href="" class="btn btn-warning btn-raised" style="margin-top: 3em;" ng-click="betaSignup()">submit<div class="ripple-wrapper"></div></a>
-      </div>
-    </div>
-  </section>
-</section>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+.pages {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 4;
+    padding: 0;
+    overflow: auto;
+  }
+  .pages h1 {
+    color: #9E9E9E;
+    font-weight: 100;
+    font-size: 12em !important;
+  }
+  .pages h3 {
+  }
+  .pages > div {
+    padding: 0 5px;
+    padding-top: 64px;
+  }
 
-<footer id="footer">
-  <div class="text-center padder">
-    <p><small>Built by<br/>&copy; 2014 <a href="https://www.linkedin.com/in/prescottprue">Prescott Prue</a> &amp; <a href="https://www.linkedin.com/in/sinanbolel">Sinan Bolel</a></small></p>
+  .pages .header {
+    color: rgb(82, 101, 162);
+    font-size: 24px;
+    font-weight: normal;
+    margin-top: 5px;
+    margin-bottom: 60px;
+    letter-spacing: 1.20000004768372px;
+  }
+
+  .page {
+    transform: translateY(1080px);
+    transition: transform 0 linear;
+    display: none;
+    opacity: 0;
+    font-size: 16px;
+  }
+
+  .page.active {
+    transform: translateY(0px);
+    transition: all 0.6s ease-out;
+    display: block;
+    opacity: 1;
+  }
+
+  #pyr {
+    /*color: black;*/
+  }
+
+  /* FIXME: why do I need these overrides? */
+  .navbar input::-webkit-input-placeholder {
+    color: rgba(255,255,255,.84) !important
+  }
+  .navbar input::-moz-placeholder {
+    color: rgba(255,255,255,.84) !important
+  }
+  .navbar input:-ms-input-placeholder {
+    color: rgba(255,255,255,.84) !important
+  }
+
+  .btn-main {
+    z-index: 5;
+  }
+</style>
+
+
+<div class="container-fluid main animated fadeIn" style="height: 100%;">
+  <div class="row">
+
+    <nav class="col-xs-1 menu ng-hide" style="height: 100%;">
+      <ul>
+        <li class="withripple" data-target="#overview">Overview</li>
+        <li class="withripple" data-target="#how">How It Works</li>
+        <li class="withripple" data-target="#team">Our Team</li>
+        <li class="withripple" data-target="#contact">Contact</li>
+      </ul>
+    </nav>
+
+    <div class="pages col-xs-12" style="height: 100%;">
+
+      <div id="overview"  class="col-xs-10 col-xs-offset-1" style="padding-top:0;">    
+        <div class="text-center">
+          <div id="pyro-label" class="vertical-align">
+            <h1 class="h1-md">pyro</h1>
+            <h3>realtime apps with ease</h3>
+            <button id="pyrobutton" ui-sref="landing-account" class="btn btn-fab btn-raised btn-main btn-material-deeporange"><i class="fa fa-fire"></i></button>
+          </div>
+          <div id="signup" style="position:absolute;bottom:0;left:0;right:0;">
+            <h4>sign up for the private alpha:</h4>
+            <div style="margin: 1em auto;position:relative;">
+              <input type="text" class="form-control" placeholder="you@example.com" style="position:absolute;top:0;text-align:center;" ng-model="signupData.email">
+              <a href="" class="btn btn-material-deeporange btn-raised" style="margin-top: 3em;" ng-click="betaSignup()">submit<div class="ripple-wrapper"></div></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
-  <script src="lib/resize/resize.js"></script>
-</footer>
+
+  <div id="footer" class="row">
+    <div class="col-xs-12 text-center" style="height: 100%;">
+    <small>&copy; 2014 <a href="https://www.linkedin.com/in/prescottprue">Prescott Prue</a> &amp; <a href="https://www.linkedin.com/in/sinanbolel">Sinan Bolel</a></small>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  $(function() {
+    function abso() {
+      $('#overview').css({
+        height: $(window).height()-$('#footer').height()
+      });
+      $('#signup').css({
+        bottom: $('#footer').height()
+      });
+
+      $('#pyro-label').css({
+        'top': $('#overview').height()/2 - $('#pyro-label').height()/2
+      });
+    }
+    $(window).resize(function() {
+      abso();         
+    });
+    abso();
+  });
+</script>
