@@ -72,7 +72,7 @@
         <h1 class="text-white" style="font-weight:200;">Data Viewer</h1>
       </div>
     </div>
-    <div class="m-lg padder-v padder panel" ng-show="pyroInstance.appUrl">
+    <div class="m-lg padder-v padder panel text-center" ng-show="pyroInstance.appUrl">
       <a ng-href="http://{{pyroInstance.appUrl}}" target="_blank" class="m-l-md" style="display:inline;">
         <h4 style="display:inline;">{{pyroInstance.appUrl}} <i class="mdi-action-open-in-new m-l-xs" style="font-size:0.5em"></i></h4>
       </a>
@@ -80,8 +80,8 @@
     <!-- data viewer -->
 
     <div id="explorer" class="m-lg panel v-box stretch scrollable" style="padding:2em;background-color:">
-
-      <json-tree json="jsonData" collapsed-level='2'></json-tree>
+      <json-tree json="jsonData" ng-show="jsonData" collapsed-level='2'></json-tree>
+      <h2 class="text-center" ng-hide="jsonData">No data yet!</h2>
     </div>
 
     <!-- /data viewer -->
