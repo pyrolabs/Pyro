@@ -1,9 +1,4 @@
-<div id="background-header">
-</div>
-<div id="background-container">
-</div>
-
-<section id="content" class="panel b-a animated fadeIn" style="padding-top:0!important;">
+<section id="content" class="panel b-a animated fadeIn" style="top:0!important;">
 
     <div class="panel-heading">
       <!-- Might be good for notifications
@@ -32,11 +27,11 @@
             </div>
             <div class="checkbox m-b">
               <label>
-                <input type="checkbox"> Agree the <a href="">terms and policy</a>
+                <!-- <input type="checkbox"> Agree the <a href="">terms and policy</a> -->
               </label>
             </div>
             <p ng-show="showSignupAttemptedMessage == true" class="text-warning animated fadeInDown">Coming soon :)</p>
-            <button type="submit" class="btn btn-lg btn-primary btn-block" ng-click="createAccount()">Sign up</button>
+            <button type="submit" class="btn btn-lg btn-primary btn-block btn-material-indigo" ng-click="createAccount()">Sign up</button>
             <div class="line line-dashed"></div>
             <p class="text-muted text-center"><small>Already have an account?</small></p>
             <a href="" ui-sref="login" class="btn btn-lg btn-default btn-secondary btn-block">Sign in</a>
@@ -50,10 +45,3 @@
     </div>
 
 </section>
-
-<footer id="footer">
-  <div class="text-center padder">
-    <p><small>Built by<br/>&copy; 2014 <a href="https://www.linkedin.com/in/prescottprue">Prescott Prue</a> &amp; <a href="https://www.linkedin.com/in/sinanbolel">Sinan Bolel</a></small></p>
-  </div>
-  <script src="lib/resize/resize.js"></script>
-</footer>
