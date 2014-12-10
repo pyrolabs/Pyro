@@ -181,12 +181,12 @@ angular.module('pyro.service', ['firebase'])
 	}
 }])
 .factory('pyroMaster', ['pyro', '$http', '$q', function(pyro, $http, $q) {
-	var pyro = pyro({url:'http://pyro.firebaseio.com'});
+	var pyroMaster = pyro({url:'http://pyro.firebaseio.com'});
 	var pyroBase = new Firebase('http://pyro.firebaseio.com');
 	var pyroServerUrl = "https://pyro-server.herokuapp.com/";
-	// var pyroServerUrl = "localhost:4000/"
-	var auth = pyro.getAuth();
-	pyro.$generatePyro = function(argInstanceName){
+	// var pyroServerUrl = "http://localhost:4000/"
+	var auth = pyroMaster.getAuth();
+	pyroMaster.$generatePyro = function(argInstanceName){
 		//request server for new instance. Create
 		console.log('generatePyro called with:', argInstanceName);
 		var deferred = $q.defer();
@@ -231,7 +231,7 @@ angular.module('pyro.service', ['firebase'])
 		}
 		return deferred.promise;
 	}
-	pyro.$createApp = function(argAppName){
+	pyroMaster.$createApp = function(argAppName){
 		console.log('$createApp called');
 		var deferred = Q.defer();
 		var endpointLocation = pyroServerUrl + 'api/app/new';
@@ -258,7 +258,7 @@ angular.module('pyro.service', ['firebase'])
 		});
 		return deferred.promise;
 	};
-	pyro.$manageInstance = function(argInstanceData) {
+	pyroMaster.$manageInstance = function(argInstanceData) {
 		var deferredCreate = $q.defer();
 		// [TODO] Do this correctly with the library
 		var endpointLocation = pyroServerUrl + 'api/fb/instance/get';
@@ -301,7 +301,7 @@ angular.module('pyro.service', ['firebase'])
 					// });
 				return deferredCreate.promise;
 			};
-	pyro.$deleteInstance = function(){
+	pyroMaster.$deleteInstance = function(){
 		console.log('deleteInstance called with:', argInstanceName);
 		var deferred = $q.defer();
 		var postObj = {name: argInstanceName};
@@ -309,94 +309,182 @@ angular.module('pyro.service', ['firebase'])
 			console.log('deleteSuccessful:', data);
 			deferred.resolve(data);
 		}).error(function(data, status, headers){
-			var errorObj = {data:data, status:status, headers:headers}
+			var errorObj = {data:data, status:status, headers:headers};
 			console.error('error creating new instance:', errorObj);
 			deferred.reject(errorObj);
 		});
 		return deferred.promise;
 	}
-	pyro.$createFbAccount = function(argSignupData){
+	pyroMaster.$pyroLogin = function(argLoginData){
+		console.log('[pyroMaster] $lockedSignup called');
+		var deferred = $q.defer();
+		// Check for existance of email, password, and code
+		if(argLoginData) {
+			pyroMaster.$getFbAccount(argLoginData).then(function(fbAccount){
+        console.log('[pyroMaster.$pyroLogin] Fb account returned:', fbAccount);
+        pyroMaster.$login(argLoginData).then(function(userData){
+      		console.log('[pyroMaster.$pyroLogin] login successful:', userData);
+      		pyroMaster.$saveFbAccountData(fbAccount).then(function(){
+      			console.log('[pyroMaster.$pyroLogin] fbData saved successfully');
+      			console.log('[pyroMaster.$pyroLogin] pyroLogin completed successfully. Returning:', userData);
+      			deferred.resolve(userData);
+      		}, function(err){
+      			console.error('[pyroMaster.$pyroLogin] Error saving fbAccountData:', err);
+        		deferred.reject({error:err, message:'Error saving Firebase data'});
+      		})
+      	}, function(err){
+      		console.error('[pyroMaster.$pyroLogin] Error logging into Pyro:', err);
+        	deferred.reject({error:err, message:'Error logging into Pyro'});
+      	});
+      }, function(err){
+        console.error('error getting fb Account:', err);
+        deferred.reject({error:err, message:'No Firebase Account exists for this information'});
+      });
+		} else {
+      deferred.reject({error:"INVAILD_PARAMS", message:'Invalid Login Params'});
+		}
+		return deferred.promise;
+	};
+	pyroMaster.$lockedSignup = function(argSignupData){
+		console.log('[pyroMaster] $lockedSignup called');
+		var deferred = $q.defer();
+		// Check for existance of email, password, and code
+		if(argSignupData) {
+			// [TODO] Check that code matches a code in the list
+			// Check for matching firebase account and attempt to create a new one if info doesn't already exist
+		  pyroMaster.$getFbAccount(argSignupData).then(function(fbAccount){
+	      console.warn('[pyroMaster.$lockedSignup] Firebase account exists and logged in successfully:', fbAccount);
+					// Signup to Pyro
+      	  pyroMaster.$signup(argSignupData).then(function(userAccount){
+			      console.log('[pyroMaster.$lockedSignup] pyro signup successful:', userAccount);
+			      // Save fb data to firebase
+			      pyroMaster.$saveFbAccountData(fbAccount).then(function(){
+			      	deferred.resolve(userAccount);
+			      }, function(err){
+							console.error('[PyroMaster.$lockedSignup]fbData set error:', err);
+			      	deferred.reject(err);
+			      });
+			    }, function(err){
+			      console.warn('[pyroMaster.$lockedSignup] Signup error:', err.message);
+			      deferred.reject(err);
+			    });
+	    	}, function(err){
+	      console.error('[pyroMaster.$lockedSignup] Get Firebase account error:', err);
+	      deferred.reject(err);
+	    });
+		} else {
+			deferred.reject({message:'Invalid signup params', error:"INVAILD_PARAMS"})
+		}
+		// Check for exising Pyro account
+		return deferred.promise;
+	};
+	pyroMaster.$saveFbAccountData = function(argFbAccountData) {
+		console.log('[PyroMaster]$saveFbAccountData called:', argFbAccountData);
+		var deferred = $q.defer();
+		var auth = self.pyroRef.getAuth();
+		console.log('[PyroMaster]$saveFbAccountData auth:', auth);
+		self.pyroRef.child('fbData').child(auth.uid).setWithPriority(argFbAccountData, argFbAccountData.email, function(err){
+			if(!err) {
+				console.log('[PyroMaster.$saveFbAccountData]fbData set successful', argFbAccountData);
+				deferred.resolve(argFbAccountData);
+			} else {
+				console.error('[PyroMaster.$saveFbAccountData]fbData set error:', err);
+				deferred.reject(err);
+			}
+		});
+		return deferred.promise;
+	}
+	pyroMaster.$createFbAccount = function(argSignupData){
 		console.log('[PyroMaster]createFbAccount called:', argSignupData);
 		var deferred = $q.defer();
 		// [TODO] look into if password should just be uid to be able to get the account later
 		if(argSignupData.hasOwnProperty('email') && argSignupData.hasOwnProperty('password')) {
-			var endpointUrl = pyroServerUrl + 'api/fb/account/new';
-			console.log('[pyroService PyroMaster.$createFbAccount] Calling to server endpoint:', endpointUrl);
-			$http.post(endpointUrl, argSignupData).success(function(data, status, headers){
-				console.warn('[pyroService PyroMaster.$createFbAccount]'+ endpointUrl + ' call returned data:', data, ' status:', status, ' headers:' ,headers);
-				if(status && status == 200){
-					console.log('account creation successful:', data);
-					if(data.hasOwnProperty('account')){
-						var fbAccountData = {token: data.account.adminToken, email:argSignupData.email, createdAt: Firebase.ServerValue.TIMESTAMP};
-						var auth = self.pyroRef.getAuth();
-						self.pyroRef.child('fbData').child(auth.uid).setWithPriority(fbAccountData, argSignupData.email, function(fbInfoSnap){
-							deferred.resolve(data.account);
-						});
-					} else {
-						console.error('[pyroService PyroMaster.$createFbAccount] response does not contain account variable');
-						deferred.reject({message:'Server Error. Please Contact Us'});
-					}
-				} else if(status && status == 401) {
-					console.warn('status of $httppost is good:', status);
-					deferred.reject({status:status, message:body.message})
-				} else if(data.hasOwnProperty('status')) {
-					console.warn('has own property status, but not status on $httpPost?', data.status);
-					deferred.reject({error:data.error, message:body.message});
-				} else {
-					console.error('account load not successful:', status);
-					deferred.reject(data);
-				}
+			// Make sure password is long enough
+			if(argSignupData.password.length >= 8){
+				var endpointUrl = pyroServerUrl + 'api/fb/account/new';
+				console.log('[pyroService PyroMaster.$createFbAccount] Calling to server endpoint:', endpointUrl);
+				$http.post(endpointUrl, argSignupData).success(function(data, status, headers){
+					console.warn('[pyroService PyroMaster.$createFbAccount]'+ endpointUrl + ' call returned data:', data, ' status:', status, ' headers:' ,headers);
+					if(status && status == 200){
+						console.log('account creation successful:', data);
+						if(data.hasOwnProperty('account')){
+							var fbAccountData = {token: data.account.adminToken, email:argSignupData.email, createdAt: Firebase.ServerValue.TIMESTAMP};
+							deferred.resolve(fbAccountData);
+						} else {
+							console.error('[pyroService PyroMaster.$createFbAccount] response does not contain account variable');
+							deferred.reject({message:'Server Error. Please Contact Us'});
+						}
+					} else if(status && status == 401) {
+						console.warn('status of $httppost is good:', status);
 
-			}).error(function(data, status, headers){
-				console.error('error creating new fb account:',data);
-				deferred.reject(data);
-			});
+						deferred.reject({status:status, message:body.message})
+					} else if(data.hasOwnProperty('status')) {
+						console.warn('has own property status, but not status on $httpPost?', data.status);
+						deferred.reject({error:data.error, message:body.message});
+					} else {
+						console.error('account load not successful:', status);
+						deferred.reject(data);
+					}
+				}).error(function(data, status, headers){
+					console.error('error creating new fb account:',data);
+					deferred.reject(data);
+				});
+			} else {
+				console.error('Email must be at least 8 characters');
+				deferred.reject();
+			}
 		} else {
 			console.error('email and password nessesary for creating a firebase account');
 			deferred.reject();
 		}
 		return deferred.promise;
 	}
-	pyro.$getFbAccount = function(argSignupData){
+	pyroMaster.$getFbAccount = function(argSignupData){
 		console.log('[PyroMaster] getFbAccount called:', argSignupData);
 		var self = this;
 		var deferred = $q.defer();
 		// [TODO] look into if password should just be uid to be able to get the account later
 		if(argSignupData.hasOwnProperty('email') && argSignupData.hasOwnProperty('password')) {
-			$http.post(pyroServerUrl + 'api/fb/account/get', argSignupData).success(function(data, status, headers){
-				console.log('[pyroService pyroMaster.$getFbAccount] api/fb/acount/get returned:', data, status);
-				if(status && status == 200){
-					console.log('account load successful:', data, status);
-					var fbAccountData = {token: data.account.adminToken, email:argSignupData.email, createdAt: Firebase.ServerValue.TIMESTAMP};
-					var auth = self.pyroRef.getAuth();
-					self.pyroRef.child('fbData').child(auth.uid).setWithPriority(fbAccountData, argSignupData.email, function(err){
-						if(!err){
-							deferred.resolve(fbAccountData);
-
-						} else {
-							console.error('[pyro service PyroMaster] error setting fbData:', err);
-							deferred.reject(err);
-						}
-					});
-				} else if(status && status == 401) {
-					console.warn('status of $httppost is good:', status, body);
-					deferred.reject({status:status, message:body.message})
-				} else if(data.hasOwnProperty('status')) {
-					console.warn('has own property status, but not status on $httpPost?', data.status);
-					deferred.reject({status:data.status, message:body.message});
-				} else {
-					console.error('account load not successful:', status);
+			// Make sure password is long enough
+			if(argSignupData.password.length >= 8){
+				$http.post(pyroServerUrl + 'api/fb/account/get', argSignupData).success(function(data, status, headers){
+					console.log('[pyroService pyroMaster.$getFbAccount] api/fb/acount/get returned:', data, status);
+					if(status && status == 200){
+						console.log('account load successful:', data, status);
+						var fbAccountData = {token: data.account.adminToken, email:argSignupData.email, createdAt: Firebase.ServerValue.TIMESTAMP};
+						deferred.resolve(fbAccountData);
+					} else if(status && status == 401) {
+						console.warn('[pyroService pyroMaster.$getFbAccount] status of $httppost is good:', status, body);
+		        //Firebase information is incorrect
+		        console.warn('[pyroService pyroMaster.$getFbAccount] Firebase login information does not match. Attempting to create a new Firebase account');
+		        pyroMaster.$createFbAccount(argSignupData).then(function(accountData){
+		        	console.warn('[pyroService pyroMaster.$getFbAccount] New Account created succesfully and returned accountData:', accountData);
+		        	deferred.resolve(accountData);
+		        }, function(err){
+		        	console.error('Error gettingFBAccount:', err);
+							deferred.reject({status:status, message:body.message})
+		        });
+					} else if(data.hasOwnProperty('status')) {
+						console.warn('has own property status, but not status on $httpPost?', data.status);
+						deferred.reject({status:data.status, message:body.message});
+					} else {
+						console.error('account load not successful:', status);
+						deferred.reject(data);
+					}
+				}).error(function(data, status, headers){
+					console.error('error getting fb account:',data, status, headers);
 					deferred.reject(data);
-				}
-			}).error(function(data, status, headers){
-				console.error('error getting fb account:',data, status, headers);
-				deferred.reject(data);
-			});
+				});
+			} else {
+				console.error('Email must be at least 8 characters');
+				deferred.reject();
+			}
+			
 		} else {
 			console.error('email and password nessesary for getting a firebase account');
 			deferred.reject();
 		}
 		return deferred.promise;
 	}
-	return pyro;
+	return pyroMaster;
 }])
