@@ -183,8 +183,8 @@ angular.module('pyro.service', ['firebase'])
 .factory('pyroMaster', ['pyro', '$http', '$q', function(pyro, $http, $q) {
 	var pyroMaster = pyro({url:'http://pyro.firebaseio.com'});
 	var pyroBase = new Firebase('http://pyro.firebaseio.com');
-	var pyroServerUrl = "https://pyro-server.herokuapp.com/";
-	// var pyroServerUrl = "http://localhost:4000/"
+	// var pyroServerUrl = "https://pyro-server.herokuapp.com/";
+	var pyroServerUrl = "http://localhost:4000/";
 	var auth = pyroMaster.getAuth();
 	pyroMaster.$generatePyro = function(argInstanceName){
 		//request server for new instance. Create
@@ -407,8 +407,8 @@ angular.module('pyro.service', ['firebase'])
 					console.warn('[pyroService PyroMaster.$createFbAccount]'+ endpointUrl + ' call returned data:', data, ' status:', status, ' headers:' ,headers);
 					if(status && status == 200){
 						console.log('account creation successful:', data);
-						if(data.hasOwnProperty('account')){
-							var fbAccountData = {token: data.account.adminToken, email:argSignupData.email, createdAt: Firebase.ServerValue.TIMESTAMP};
+						if(data.hasOwnProperty('account') && data.account.hasOwnProperty('token')){
+							var fbAccountData = {token: data.account.token, email:argSignupData.email, createdAt: Firebase.ServerValue.TIMESTAMP};
 							deferred.resolve(fbAccountData);
 						} else {
 							console.error('[pyroService PyroMaster.$createFbAccount] response does not contain account variable');
@@ -451,12 +451,17 @@ angular.module('pyro.service', ['firebase'])
 					console.log('[pyroService pyroMaster.$getFbAccount] api/fb/acount/get returned:', data, status);
 					if(status && status == 200){
 						console.log('account load successful:', data, status);
-						var fbAccountData = {token: data.account.adminToken, email:argSignupData.email, createdAt: Firebase.ServerValue.TIMESTAMP};
-						deferred.resolve(fbAccountData);
-					} else if(status && status == 401) {
-						console.warn('[pyroService pyroMaster.$getFbAccount] status of $httppost is good:', status, body);
+						if(data.hasOwnProperty('adminToken')){
+							var fbAccountData = {token: data.adminToken, email:argSignupData.email, createdAt: Firebase.ServerValue.TIMESTAMP};
+							deferred.resolve(fbAccountData);
+						} else {
+							deferred.reject({status:500, message:'Invalid return from server'});
+						}
+						
+					} else if(status && status == 204) {
+						console.warn('[pyroService pyroMaster.$getFbAccount] status of $httppost is good:', status, data);
 		        //Firebase information is incorrect
-		        console.warn('[pyroService pyroMaster.$getFbAccount] Firebase login information does not match. Attempting to create a new Firebase account');
+		        console.warn('[pyroService pyroMaster.$getFbAccount] Firebase login information does not match an existing account. Attempting to create a new Firebase account');
 		        pyroMaster.$createFbAccount(argSignupData).then(function(accountData){
 		        	console.warn('[pyroService pyroMaster.$getFbAccount] New Account created succesfully and returned accountData:', accountData);
 		        	deferred.resolve(accountData);
