@@ -183,8 +183,8 @@ angular.module('pyro.service', ['firebase'])
 .factory('pyroMaster', ['pyro', '$http', '$q', function(pyro, $http, $q) {
 	var pyroMaster = pyro({url:'http://pyro.firebaseio.com'});
 	var pyroBase = new Firebase('http://pyro.firebaseio.com');
-	// var pyroServerUrl = "https://pyro-server.herokuapp.com/";
-	var pyroServerUrl = "http://localhost:4000/";
+	var pyroServerUrl = "https://pyro-server.herokuapp.com/";
+	// var pyroServerUrl = "http://localhost:4000/";
 	var auth = pyroMaster.getAuth();
 	pyroMaster.$generatePyro = function(argInstanceName){
 		//request server for new instance. Create
