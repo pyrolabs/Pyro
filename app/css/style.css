@@ -1,9 +1,12 @@
 /* Empty. Add your own CSS if you like */
 
 body {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important; 
+  font-family: 'Lato', sans-serif !important; 
 }
 
+.clickable {
+  cursor: pointer;
+}
 .tetrad-blue {
   background-color: #1E71A2;
 }
