@@ -22,7 +22,11 @@
                <input type="password" placeholder="Password" class="form-control no-border" ng-model="loginData.password">
             </div>
           </div>
-          <button type="submit" class="btn btn-lg btn-warning btn-block" ng-click="login()">Sign in</button>
+
+          <button type="submit" class="btn btn-lg  btn-warning btn-block" ng-click="login()" ng-class="{'btn-default disabled': loading.login}">
+            <span ng-hide="loading.login">Sign in</span>
+            <i class="icon ion-load-d fa-spin" ng-show="loading.login"></i>
+          </button>
           <div class="text-center m-t m-b"><a href=""><small>Forgot password?</small></a></div>
           <div class="line line-dashed"></div>
           <p class="text-muted text-center"><small>Do not have an account?</small></p>

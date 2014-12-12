@@ -12,12 +12,10 @@ angular.module('pyroApp.controllers', ['pyroApp.services', 'treeControl'])
   	}
   });
 
-
-
   // Form data for the login screen
 	$scope.newAppData = {};
 	$scope.err = {};
-	$scope.loading = true;
+	$scope.loading = {};
   $rootScope.instanceList;
 
 	$scope.logout = function() {

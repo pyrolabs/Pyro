@@ -6,10 +6,13 @@ angular.module('pyroApp.controllers')
   if(pyroMaster.getAuth() != null){
     $state.go('home');
   }
+
   $scope.login = function() {
     console.log('[LoginCtrl] Login called:');
+    $scope.loading.login = true;
     pyroMaster.$pyroLogin($scope.loginData).then(function(userData){
       console.log('login successful:', userData);
+      $scope.loading.login = false;
       $state.go('home');
     }, function(err){
       $scope.err = err;
