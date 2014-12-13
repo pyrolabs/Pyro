@@ -8,7 +8,6 @@ angular.module('pyroApp.controllers')
   $scope.viewingInstance = true;
   $scope.newAppData = {};
   $scope.err = {};
-  $scope.loading = true;
   $scope.cardClasses = ['bg-primary lt', 'bg-info lt', 'bg-success lter', 'bg-warning lter', 'bg-light dk'];
   // $rootScope.instanceList = instanceList;
   // Update instance list with any updates that happen after page load
@@ -94,14 +93,17 @@ angular.module('pyroApp.controllers')
   }
   $scope.simpleSetup = function() {
     console.log('[InstanceListCtrl] simpleSetup called:');
+    $scope.loading.simpleSetup = true;
     if ($scope.newAppData && $scope.newAppData.hasOwnProperty('name')) {
       pyroMaster.$generatePyro($scope.newAppData.name).then(function(returnedInfo) {
         console.log('[InstanceListCtrl] newPyroInstance successful with:', returnedInfo);
+        $scope.loading.simpleSetup = false;
         $state.go('data', {
           appId: $scope.newAppData.name
         });
       }, function(err) {
         console.error('[InstanceListCtrl] error creating new instance:', err);
+        $scope.loading.simpleSetup = false;
         $scope.err = err;
       });
     }

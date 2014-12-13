@@ -209,17 +209,17 @@ angular.module('pyro.service', ['firebase'])
 					newInstanceRef.set(instanceObj, function(err){
 						if(!err) {
 							// resolve with newInstanceRef data
-							console.log('new app generated successfully');
+							console.log('[pyroService.$generatePyro] new app generated successfully');
 							deferred.resolve(newInstanceRef);
 						} else {
-							console.error('Error setting new pyro:', err);
+							console.error('[pyroService.$generatePyro] Error setting new pyro:', err);
 							deferred.reject(err);
 						}
 					}); //---newInstanceRef.set()
 				}).error(function(data, status, headers){
 					var errorObj = {data:data, status:status, headers:headers}
-					console.error('error creating new instance:', errorObj);
-					deferred.reject(errorObj);
+					console.error('[pyroService.$generatePyro] error creating new instance:', errorObj);
+					deferred.reject(data);
 				});
 			} else {
 				var errObj = {message:'You must be logged in to create an instance'};
