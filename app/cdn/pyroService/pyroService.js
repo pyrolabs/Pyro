@@ -180,11 +180,10 @@ angular.module('pyro.service', ['firebase'])
 			return pyro;
 	}
 }])
-.factory('pyroMaster', ['pyro', '$http', '$q', function(pyro, $http, $q) {
+.factory('pyroMaster', ['pyro', '$http', '$q', 'SERVERURL', function(pyro, $http, $q, SERVERURL) {
 	var pyroMaster = pyro({url:'http://pyro.firebaseio.com'});
 	var pyroBase = new Firebase('http://pyro.firebaseio.com');
-	var pyroServerUrl = "https://pyro-server.herokuapp.com/";
-	// var pyroServerUrl = "http://localhost:4000/";
+	var pyroServerUrl = SERVERURL;
 	var auth = pyroMaster.getAuth();
 	pyroMaster.$generatePyro = function(argInstanceName){
 		//request server for new instance. Create

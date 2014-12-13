@@ -1,23 +1,22 @@
 angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroApp.services','ui.ace', 'treeControl','json-tree'])
-.constant('FBURL', 'https://pruvit.firebaseio.com/')
-.run(function($rootScope, FBURL, $window, $location) {
+.constant('SERVERURL', 'https://pyro-server.herokuapp.com/')
+// .constant('SERVERURL', 'http://localhost:4000/')
+.run(function($rootScope, $window, $location) {
   console.log('Angular is running');
   $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){ 
     console.log('route change from:', fromState, ' to: ', toState);
     $rootScope.currentState = toState;
   });
-
-     $rootScope
-        .$on('$stateChangeSuccess',
-          function(event){
-            if (!$window.ga)
-              return;
-            $window.ga('send', 'pageview', { page: $location.path() });
-        });
-
+  $rootScope.$on('$stateChangeSuccess',
+    function(event){
+      if (!$window.ga)
+        return;
+      $window.ga('send', 'pageview', { page: $location.path() });
+  });
 })
-.config(['$sceDelegateProvider', function($sceDelegateProvider){
-  $sceDelegateProvider.resourceUrlWhitelist(['self', 'https://pyro-server.herokuapp.com/**', 'https://pyro-server/api/fb/**', 'https://pyro-server/api/app/**',"https://pyro-test-01.s3.amazonaws.com/**" ]);
+// Whitelist Urls
+.config(['$sceDelegateProvider', 'SERVERURL', function($sceDelegateProvider, SERVERURL){
+  $sceDelegateProvider.resourceUrlWhitelist(['self', SERVERURL + '**' ]);
 }])
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
