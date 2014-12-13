@@ -1,6 +1,5 @@
-angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroApp.services','ui.ace', 'treeControl','json-tree'])
-.constant('SERVERURL', 'https://pyro-server.herokuapp.com/')
-// .constant('SERVERURL', 'http://localhost:4000/')
+angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroApp.services', 'pyroApp.config','ui.ace', 'treeControl'])
+
 .run(function($rootScope, $window, $location) {
   console.log('Angular is running');
   $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){ 
