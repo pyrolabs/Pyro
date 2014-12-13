@@ -208,8 +208,17 @@ angular.module('pyro.service', ['firebase'])
 					newInstanceRef.set(instanceObj, function(err){
 						if(!err) {
 							// resolve with newInstanceRef data
-							console.log('[pyroService.$generatePyro] new app generated successfully');
-							deferred.resolve(newInstanceRef);
+							console.log('Enabling email auth...');
+							var emailEnableEndpoint = pyroServerUrl + "api/fb/config";
+							var enableReqObj = {uid:auth.uid, name:argInstanceName};
+							console.log('requesting to:', emailEnableEndpoint, ' with: ', enableReqObj);
+							$http.post(emailEnableEndpoint, enableReqObj).success(function(data, status, headers){
+								console.log('[pyroService.$generatePyro] new app generated successfully');
+								deferred.resolve(newInstanceRef);
+							}).error(function(data, status, headers){
+								console.error('Error enabling email auth on new instance:', data);
+								deferred.reject(data);
+							});
 						} else {
 							console.error('[pyroService.$generatePyro] Error setting new pyro:', err);
 							deferred.reject(err);
@@ -243,8 +252,17 @@ angular.module('pyro.service', ['firebase'])
 			instanceRef.set(instanceData, function(err){
 				if(!err) {
 					// resolve with instanceRef data
-					console.log('new app generated successfully');
-					deferred.resolve(instanceData);
+					console.log('new app generated successfully. Enabling email auth.');
+					var emailEnableEndpoint = pyroServerUrl + "api/fb/config";
+					var enableReqObj = {uid:auth.uid, name:argAppName};
+					console.log('requesting to:', emailEnableEndpoint, ' with: ', enableReqObj);
+					$http.post(emailEnableEndpoint, enableReqObj).success(function(data, status, headers){
+						console.log('App generation and setup was sucessful');
+						deferred.resolve(instanceData);
+					}).error(function(data, status, headers){
+						console.error('Error enabling email auth on new instance:', data);
+						deferred.reject(data);
+					});
 				} else {
 					console.error('Error setting new pyro:', err);
 					deferred.reject(err);
@@ -300,18 +318,27 @@ angular.module('pyro.service', ['firebase'])
 					// });
 				return deferredCreate.promise;
 			};
-	pyroMaster.$deleteInstance = function(){
+	pyroMaster.$deleteInstance = function(argInstanceName){
 		console.log('deleteInstance called with:', argInstanceName);
 		var deferred = $q.defer();
-		var postObj = {name: argInstanceName};
-		$http.post(pyroServerUrl + 'api/delete', postObj).success(function(data, status, headers){
-			console.log('deleteSuccessful:', data);
-			deferred.resolve(data);
-		}).error(function(data, status, headers){
-			var errorObj = {data:data, status:status, headers:headers};
-			console.error('error creating new instance:', errorObj);
-			deferred.reject(errorObj);
+		var postObj = {name: argInstanceName, uid:auth.uid};
+		var self = this;
+		// [TODO] put deleteObject after successful return of delete server call. It is flipped becuase delete functionality fails on server (deleting fb instance)
+		self.$deleteObject('instances', argInstanceName).then(function(){
+			$http.post(pyroServerUrl + 'api/delete', postObj).success(function(data, status, headers){
+				console.log('Delete call responded:', data, status);
+				console.log('Delete instace completed successfully for:', argInstanceName);
+				deferred.resolve();
+			}).error(function(data, status, headers){
+				console.warn('[pyroMaster.$deleteInstance] Error deleting firebase instance, but Bucket and app were deleted:', data);
+				deferred.resolve();
+				// deferred.reject(data);
+			});
+		}, function(){
+			console.error('[pyroMaster.$deleteInstance] error deleting app instance');
+			deferred.reject();
 		});
+		
 		return deferred.promise;
 	}
 	pyroMaster.$pyroLogin = function(argLoginData){

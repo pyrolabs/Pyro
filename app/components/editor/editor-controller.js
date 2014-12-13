@@ -12,27 +12,27 @@ angular.module('pyroApp.controllers')
       console.warn("bucket: ", bucketString);
       return bucketString;
     }
-    // editorService.getFolderStructure().then(function(returnedStructure){
-    //   console.log('folder structure returned:', returnedStructure);
-    //   $scope.files = returnedStructure;
-    // }, function(){
-    //   console.error('[EditorCtrl] error getting folder structure');
-    // });
+    editorService.getFolderStructure($scope.pyroInstance.name).then(function(returnedStructure){
+      console.log('folder structure returned:', returnedStructure);
+      $scope.files = returnedStructure;
+    }, function(){
+      console.error('[EditorCtrl] error getting folder structure');
+    });
 
-    pyroMaster.$loadObject('appFiles', $scope.pyroInstance.name).then(function(returnedObject){
-      if(returnedObject){
-        $scope.files = returnedObject;
-        console.log('$scope.files set:', $scope.files);
+//     pyroMaster.$loadObject('appFiles', $scope.pyroInstance.name).then(function(returnedObject){
+//       if(returnedObject){
+//         $scope.files = returnedObject;
+//         console.log('$scope.files set:', $scope.files);
 
-        if(!$scope.$$phase) {
-          //$digest or $apply
-          $scope.$apply();
-        }
-      } else {
-        console.error('Error loading file stucture from firebase.');
-        $scope.err = {message:'Error loading file structure'};
-      }
-     });
+//         if(!$scope.$$phase) {
+//           //$digest or $apply
+//           $scope.$apply();
+//         }
+//       } else {
+//         console.error('Error loading file stucture from firebase.');
+//         $scope.err = {message:'Error loading file structure'};
+//       }
+//      });
 
 
 
@@ -147,7 +147,7 @@ $scope.saveFile = function(){
     }
 
     if(fileObject){
-      console.log('\nOPEN FILE:', fileObject);
+    console.log('\n[editorCtrl $openFile()]OPEN FILE:', fileObject);
     fileObject.key = fileObject.name.replace('.', ':');
     $scope.appRam.$currentFile = fileObject;
 

@@ -114,7 +114,11 @@ angular.module('pyroApp.controllers')
     var r = confirm("Are you sure you want to delete this app?");
     if (r == true) {
       console.log('confirm was true, deleteing:', argName);
-      pyroMaster.$deleteObject('instances', argName);
+      pyroMaster.$deleteInstance(argName).then(function(){
+        console.log('[InstanceListCtrl] startDelete called');
+      }, function(){
+        console.error('[InstanceListCtrl]Error deleteing instance');
+      });
     }
   }
 })
