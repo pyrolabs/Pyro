@@ -4,56 +4,50 @@
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
   <title>Pyro</title>
-    <!-- Ionic CSS -->
-  <link href="//code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet">
+  <!-- ////// Styles \\\\\\ -->
   <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400' rel='stylesheet' type='text/css'>
+  <!-- Ionic CSS -->
+  <link href="bower_components/ionic/release/css/ionicons.min.css" rel="stylesheet" type="text/css">
   <!-- Bootstrap CSS -->
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <!-- Bootstrap Material Design CSS -->
-  <link rel="stylesheet" href="bower_components/bootstrap-material-design/dist/css/material.min.css" type="text/css" />
-  <link rel="stylesheet" href="bower_components/bootstrap-material-design/dist/css/ripples.min.css" type="text/css" />
-
-  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-
-  <!-- Json Tree CSS -->
-  <link rel="stylesheet" href="lib/json-tree/json-tree.css">
-  <!-- Tree Control -->
-  <link rel="stylesheet" type="text/css" href="lib/angular-tree-control/css/tree-control.css">
-  <link rel="stylesheet" type="text/css" href="lib/angular-tree-control/css/tree-control-attribute.css">
+  <link  href="bower_components/bootstrap-material-design/dist/css/material.min.css" rel="stylesheet" type="text/css" />
+  <link  href="bower_components/bootstrap-material-design/dist/css/ripples.min.css" rel="stylesheet" type="text/css" />
+  <!-- Tree Control Directive CSS -->
+  <link href="bower_components/angular-tree-control/css/tree-control.css" rel="stylesheet" type="text/css">
+  <link href="bower_components/angular-tree-control/css/tree-control-attribute.css" rel="stylesheet" type="text/css">
+  <!-- Font Awesome -->
+  <link href="bower_components/fontawesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
   <!-- Scale Admin Theme CSS -->
-  <link rel="stylesheet" href="lib/scale-admin/css/animate.css" type="text/css" />
-  <link rel="stylesheet" href="lib/scale-admin/css/font-awesome.min.css" type="text/css" />
-  <link rel="stylesheet" href="lib/scale-admin/css/icon.css" type="text/css" />
-  <link rel="stylesheet" href="lib/scale-admin/css/font.css" type="text/css" />
-  <link rel="stylesheet" href="lib/scale-admin/css/app.css" type="text/css" />
-
+  <link href="lib/scale-admin/css/animate.css" rel="stylesheet" type="text/css" />
+  <link href="lib/scale-admin/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+  <link href="lib/scale-admin/css/icon.css" rel="stylesheet" type="text/css" />
+  <link href="lib/scale-admin/css/font.css" rel="stylesheet" type="text/css" />
+  <link href="lib/scale-admin/css/app.css" rel="stylesheet" type="text/css" />
   <!-- Custom CSS -->
-  <link href="css/style.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet" type="text/css">
+  <!-- bower:js -->
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/bootstrap-material-design/dist/js/material.js"></script>
+  <script src="bower_components/bootstrap-material-design/dist/js/ripples.js"></script>
+  <script src="bower_components/underscore/underscore.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-tree-control/angular-tree-control.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="bower_components/aws-sdk/dist/aws-sdk.js"></script>
+  <script src="bower_components/firebase/firebase.js"></script>
+  <script src="bower_components/angularfire/dist/angularfire.js"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="bower_components/ace-builds/src-noconflict/ace.js"></script>
+  <script src="bower_components/angular-ui-ace/ui-ace.js"></script>
+  <!-- endbower -->
 
-  <!-- Libs -->
-  <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-
-  <script src="lib/underscore/underscore.js"></script>
-  <!-- ionic/angularjs js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular.js"></script>
-  <!-- Firebase -->
-  <script src="https://cdn.firebase.com/js/client/2.0.4/firebase.js"></script>
-  <script src="https://cdn.firebase.com/libs/angularfire/0.9.0/angularfire.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.11/angular-ui-router.js"></script>
-
+  <!-- Pyro Library -->
   <script src="https://s3.amazonaws.com/pyro-cdn/library/v0/pyro.min.js"></script>
+  <!-- Pyro Service -->
   <script src="cdn/pyroService/pyroService.js"></script>
   <!-- Google Analytics -->
-  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.0.29.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js"></script>
-
-  <script src="bower_components/bootstrap-material-design/dist/js/material.min.js"></script>
-  <script src="bower_components/bootstrap-material-design/dist/js/ripples.min.js"></script>
-  <script src="lib/json-tree/json-tree.js"></script>
-  <script src="lib/angular-tree-control/js/angular-tree-control.js"></script>
-  <script src="lib/ui-ace/ui-ace.js"></script>
   <script src="lib/google-analytics/google-analytics.js"></script>
   <!-- Client S3 Keys -->
   <script>
@@ -81,10 +75,5 @@
   <div ui-view="navbar"></div>
   <!-- main container -->
   <div ui-view="main"></div>
-  <!-- App -->
-
-  <!-- // <script src="lib/scale-admin/js/app.plugin.js"></script> -->
-
-
 </body>
 </html>

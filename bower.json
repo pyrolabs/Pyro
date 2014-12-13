@@ -15,6 +15,24 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap-material-design": "~0.2.0"
+    "bootstrap-material-design": "~0.2.0",
+    "underscore": "~1.7.0",
+    "angular-tree-control": "~0.2.7",
+    "bootstrap": "~3.3.1",
+    "aws-sdk": "~2.1.1",
+    "firebase": "~2.0.6",
+    "angularfire": "~0.9.0",
+    "angular-ui-router": "~0.2.13",
+    "angular-ui-ace": "bower",
+    "fontawesome": "~4.2.0",
+    "ionic": "~0.9.27"
+  },
+  "overrides": {
+    "ace-builds": {
+      "main": ["src-noconflict/ace.js"]
+    },
+    "ionic":{
+      "main":[]
+    }
   }
 }
