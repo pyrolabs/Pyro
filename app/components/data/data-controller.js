@@ -3,8 +3,15 @@ angular.module('pyroApp.controllers')
 .controller('DataCtrl', function($scope, $state, $rootScope, $window, instance, pyro, instanceData) {
   console.log('DataCtrl');
   $scope.pyroInstance = pyro(instance);
-  $scope.jsonData = instanceData
-  console.log('pyroInstance: ',$scope.pyroInstance)
+  _.each(instanceData, function(list){
+    list.$size = _.size(list);
+    // _.each(list, function(child){
+      // child.$size = _.size(child);
+    // });
+  });
+  $scope.jsonData = instanceData;
+  console.log('pyroInstance: ',$scope.pyroInstance);
+  console.log('instace data loaded:', instanceData);
   // $scope.instanceList = PyroArray('instances');
   // $scope.instanceList.$loaded().then(function(pyroList) {
   //   // [TODO] get pyro object by selecting from exisiting list

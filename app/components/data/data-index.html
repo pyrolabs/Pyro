@@ -80,7 +80,11 @@
     <!-- data viewer -->
 
     <div id="explorer" class="m-lg panel v-box stretch scrollable" style="padding:2em;background-color:">
-      <json-tree json="jsonData" ng-show="jsonData" collapsed-level='2'></json-tree>
+      <h3 ng-repeat="(name, list) in jsonData">
+        {{name}} {{list.$size || "Null"}}
+        <!-- <p ng-repeat="(childName, child) in list">{{childName}}</p> -->
+      </h3>
+      <!-- <json-tree json="jsonData" ng-show="jsonData" collapsed-level='2'></json-tree> -->
       <h2 class="text-center" ng-hide="jsonData">No data yet!</h2>
     </div>
 
