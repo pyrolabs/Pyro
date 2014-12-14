@@ -15,6 +15,7 @@
     "tests"
   ],
   "dependencies": {
+    "ace-builds":"1.1.8",
     "bootstrap-material-design": "~0.2.0",
     "underscore": "~1.7.0",
     "angular-tree-control": "~0.2.7",
@@ -31,7 +32,7 @@
   "overrides": {
     "ace-builds": {
       "main": [
-        "src-noconflict/ace.js"
+        "src-noconflict/*.*"
       ]
     },
     "ionic": {
@@ -50,7 +51,6 @@
       "svg":"{name}/fonts"
     },
     "sources": {
-      "ace-builds": "bower_components/ace-builds/src-noconflict/ace.js",
       "ionicons":[
         "bower_components/ionicons/css/*.*",
         "bower_components/ionicons/fonts/*.*"
