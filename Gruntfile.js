@@ -32,14 +32,23 @@ module.exports = function(grunt) {
         },
         bower:{
           files:['bower.json'],
-          tasks:['wiredep']
+          // tasks:['wiredep']
         }
       },
       wiredep: {
         task: {
-          // Point to the files that should be updated when
-          // you run `grunt wiredep`
-          src: ['app/index.html']
+          src: ['app/index.html'],
+          // options:{
+          //   fileTypes:{
+          //     fileExtension:{
+          //       replace:{
+          //         anotherTypeOfBowerFile: function (filePath) {
+          //           return '<script src="asdf' + filePath + '"></script>';
+          //         }
+          //       }
+          //     }
+          //   }
+          // }
         }
       }
     });

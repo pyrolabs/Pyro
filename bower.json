@@ -25,14 +25,30 @@
     "angular-ui-router": "~0.2.13",
     "angular-ui-ace": "bower",
     "fontawesome": "~4.2.0",
-    "ionic": "~0.9.27"
+    "ionic": "~0.9.27",
+    "ionicons": "~2.0.0"
   },
   "overrides": {
     "ace-builds": {
-      "main": ["src-noconflict/ace.js"]
+      "main": [
+        "src-noconflict/ace.js"
+      ]
     },
-    "ionic":{
-      "main":[]
+    "ionic": {
+      "main": []
+    }
+  },
+  "install": {
+    "base":"app/bower_libs",
+    "path": {"css":"{name}/css","eot":"{name}/fonts","ttf": "{name}/fonts", "woff": "{name}/fonts", "svg":"{name}/fonts" },
+    "sources": {
+      "ace-builds": "bower_components/ace-builds/src-noconflict/ace.js",
+      "ionicons": ["bower_components/ionicons/css/*.*","bower_components/ionicons/fonts/*.*"],
+      "bootstrap": "bower_components/bootstrap/dist/css/bootstrap.min.css",
+      "bootstrap-material-design":"bower_components/bootstrap-material-design/dist/css/*.*",
+      "angular-tree-control":"bower_components/angular-tree-control/css/tree-control-attribute.css",
+      "fontawesome":"bower_components/fontawesome/css/font-awesome.min.css"
+
     }
   }
 }
