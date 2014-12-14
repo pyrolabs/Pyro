@@ -39,16 +39,35 @@
     }
   },
   "install": {
-    "base":"app/bower_libs",
-    "path": {"css":"{name}/css","eot":"{name}/fonts","ttf": "{name}/fonts", "woff": "{name}/fonts", "svg":"{name}/fonts" },
+    "base":"./app/bower_libs",
+    "path": {
+      "js":"{name}",
+      "css":"{name}/css",
+      "map":"{name}/css",
+      "eot":"{name}/fonts",
+      "ttf": "{name}/fonts", 
+      "woff": "{name}/fonts", 
+      "svg":"{name}/fonts"
+    },
     "sources": {
       "ace-builds": "bower_components/ace-builds/src-noconflict/ace.js",
-      "ionicons": ["bower_components/ionicons/css/*.*","bower_components/ionicons/fonts/*.*"],
-      "bootstrap": "bower_components/bootstrap/dist/css/bootstrap.min.css",
-      "bootstrap-material-design":"bower_components/bootstrap-material-design/dist/css/*.*",
-      "angular-tree-control":"bower_components/angular-tree-control/css/tree-control-attribute.css",
+      "ionicons":[
+        "bower_components/ionicons/css/*.*",
+        "bower_components/ionicons/fonts/*.*"
+      ],
+      "bootstrap": [
+        "bower_components/bootstrap/dist/css/bootstrap.min.css", 
+        "bower_components/bootstrap/dist/js/bootstrap.min.js"
+      ],
+      "bootstrap-material-design":[
+        "bower_components/bootstrap-material-design/dist/css/*.*", 
+        "bower_components/bootstrap-material-design/dist/js/*.js"
+      ],
+      "angular-tree-control":[
+        "bower_components/angular-tree-control/css/*.css", 
+        "bower_components/angular-tree-control/angular-tree-control.js"
+      ],
       "fontawesome":"bower_components/fontawesome/css/font-awesome.min.css"
-
     }
   }
 }
