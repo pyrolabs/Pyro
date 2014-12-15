@@ -342,7 +342,7 @@ angular.module('pyro.service', ['firebase'])
 		return deferred.promise;
 	}
 	pyroMaster.$pyroLogin = function(argLoginData){
-		console.log('[pyroMaster] $lockedSignup called');
+		console.log('[pyroMaster] $pyroLogin called');
 		var deferred = $q.defer();
 		// Check for existance of email, password, and code
 		if(argLoginData) {
