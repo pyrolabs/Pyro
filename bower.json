@@ -48,7 +48,8 @@
       "eot":"{name}/fonts",
       "ttf": "{name}/fonts", 
       "woff": "{name}/fonts", 
-      "svg":"{name}/fonts"
+      "svg":"{name}/fonts",
+      "png":"{name}/images"
     },
     "sources": {
       "ionicons":[
@@ -61,11 +62,14 @@
       ],
       "bootstrap-material-design":[
         "bower_components/bootstrap-material-design/dist/css/*.*", 
-        "bower_components/bootstrap-material-design/dist/js/*.js"
+        "bower_components/bootstrap-material-design/dist/js/*.js",
+        "bower_components/bootstrap-material-design/dist/fonts/*.*"
       ],
       "angular-tree-control":[
         "bower_components/angular-tree-control/css/*.css", 
-        "bower_components/angular-tree-control/angular-tree-control.js"
+        "bower_components/angular-tree-control/angular-tree-control.js",
+        "bower_components/angular-tree-control/images/*.png"
+
       ],
       "fontawesome":"bower_components/fontawesome/css/font-awesome.min.css"
     }
