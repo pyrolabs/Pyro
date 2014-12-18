@@ -95,16 +95,23 @@ angular.module('pyroApp.controllers')
     console.log('[InstanceListCtrl] simpleSetup called:');
     $scope.loading.simpleSetup = true;
     if ($scope.newAppData && $scope.newAppData.hasOwnProperty('name')) {
-      pyroMaster.$generatePyro($scope.newAppData.name).then(function(returnedInfo) {
+      // Remove capital letters to fit firebase naming requirements
+      var appName = $scope.newAppData.name.toLowerCase();
+      pyroMaster.$generatePyro(appName).then(function(returnedInfo) {
         console.log('[InstanceListCtrl] newPyroInstance successful with:', returnedInfo);
         $scope.loading.simpleSetup = false;
         $state.go('data', {
-          appId: $scope.newAppData.name
+          appId: appName
         });
       }, function(err) {
         console.error('[InstanceListCtrl] error creating new instance:', err);
         $scope.loading.simpleSetup = false;
-        $scope.err = err;
+        // Catch invalid name error
+        if(err.error == 'Firebase error: invalid') {
+          $scope.err = {message:'Invalid Name'};
+        } else {
+          $scope.err = err;
+        }
       });
     }
 

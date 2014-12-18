@@ -42,7 +42,7 @@ angular.module('editor.service', ['pyro.service'])
 		downloadFileFromS3: function(argAppName, argFilePath){
 			console.log('[editorService]downloadFileFromS3 called to download:' + argFilePath + ' from ' + argAppName);
 			var deferredDownload = $q.defer();
-      var fileKey = argFilePath.replace("/pyro-"+ argAppName + "/", "");
+      var fileKey = argFilePath.replace("fs/pyro-"+ argAppName + "/", "");
       console.log('downloadFileFromS3 filekey:', fileKey);
 			var uploadParams = {Bucket:'pyro-'+argAppName, Key:fileKey};
       console.log('[editorService] downloadParams:', uploadParams);
