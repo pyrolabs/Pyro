@@ -39,34 +39,6 @@ angular.module('editor.service', ['pyro.service'])
       return deferred.promise;
 
     },
-// =======
-// angular.module('editor.service', [])
-// .factory('editorService',function($q, $http){
-//       var s3 = new AWS.S3();
-// 	return{
-
-// 		saveFile:function(argBucketName, argFilePath, argFileContents, argUid){
-// 			console.log('[editorService] saveFile called', arguments);
-//       var deferred = $q.defer();
-//       var postObj = {name:argBucketName, filePath:argFilePath,  uid: argUid};
-
-//         $http.post('//localhost:4000/api/app/upload', postObj).success(function(data, status, headers){
-//           console.log('[$generatePyro] Call to https://pyro-server.herokuapp.com/app/upload returned:', data, status);
-//           var instanceData = data;
-//           delete instanceData.status;
-//           console.log('making request to server to upload file:', instanceData);
-
-//         }).error(function(data, status, headers){
-//           var errorObj = {data:data, status:status, headers:headers}
-//           console.error('error uploading file:', errorObj);
-//           deferred.reject(errorObj);
-//         });
-      
-
-//       return deferred.promise;
-// 		},
-
-// >>>>>>> Stashed changes
 		downloadFileFromS3: function(argAppName, argFilePath){
 			console.log('[editorService]downloadFileFromS3 called to download:' + argFilePath + ' from ' + argAppName);
 			var deferredDownload = $q.defer();

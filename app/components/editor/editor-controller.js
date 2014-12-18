@@ -68,7 +68,7 @@ angular.module('pyroApp.controllers')
     // [TODO] Handle non generated app bucket name
 
       console.log("File ",$scope.appRam.$currentFile, " changed, saving content.");
-      $scope.appRam.$currentFile.newContent = $scope.editorObj.getValue();
+      $scope.appRam.$currentFile.content = $scope.editorObj.getValue();
 
       var filePath = $scope.appRam.$currentFile.path.replace('fs', '');
       filePath = filePath.replace($scope.appRam.$currentFile.name, '')
