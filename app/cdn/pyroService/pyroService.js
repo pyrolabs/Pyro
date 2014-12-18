@@ -493,11 +493,11 @@ angular.module('pyro.service', ['firebase'])
 		        	deferred.resolve(accountData);
 		        }, function(err){
 		        	console.error('Error gettingFBAccount:', err);
-							deferred.reject({status:status, message:body.message})
+							deferred.reject(err);
 		        });
 					} else if(data.hasOwnProperty('status')) {
 						console.warn('has own property status, but not status on $httpPost?', data.status);
-						deferred.reject({status:data.status, message:body.message});
+						deferred.reject({status:data.status});
 					} else {
 						console.error('account load not successful:', status);
 						deferred.reject(data);
