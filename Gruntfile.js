@@ -50,6 +50,37 @@ module.exports = function(grunt) {
           //   }
           // }
         }
+      },
+      bump:{
+        options:{
+          files:['package.json', 'bower.json'],
+          updateConfigs:['pkg'],
+          commit:true,
+          commitMessage:'[RELEASE] Release v%VERSION%',
+          commitFiles:[],
+          createTag:true,
+          tagName:'v%VERSION%',
+          push:true,
+          pushTo:'upstream',
+          gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d',
+          globalReplace: false
+        }
+      },
+       ngconstant: {
+        options: {
+          name: 'pyroApp.config',
+          dest: './app/app-config.js',
+          constants: {
+            version: grunt.file.readJSON('package.json').version,
+            SERVERURL: "https://pyro-server.herokuapp.com/"
+          }
+          // ,
+          // values: {
+          //   debug: false
+          // }
+        },
+        build: {
+        }
       }
     });
 
@@ -61,12 +92,21 @@ module.exports = function(grunt) {
 
     //Watch files for reload
     grunt.loadNpmTasks('grunt-contrib-watch');
-    
+
+    // Wire dependenceies
     grunt.loadNpmTasks('grunt-wiredep');
 
+    //Auto Versioning
+    grunt.loadNpmTasks('grunt-bump');
+
+    //Dynamic generation of angular constants
+    grunt.loadNpmTasks('grunt-ng-constant');
 
     // Default task(s).
     grunt.registerTask('default', ['connect','watch']);
+
+    // Default task(s).
+    grunt.registerTask('release', ['ngconstant', 'bump:prerelease']);
 
     grunt.registerTask('serve', ['connect'], function() {
         grunt.task.run('connect');

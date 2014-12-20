@@ -1,27 +1,28 @@
 {
   "name": "Pyro",
-  "version": "1.0.0",
-  "description": "Pyro is a platform that allows simple setup of standard app features with Firebase",
-  "dependencies": {
-    "bower": "^1.3.12",
-    "wiredep": "^2.2.0"
-  },
+  "version": "1.0.0-a.1",
+  "description": "Pyro is a platform that allows simple setup of cross platform mobile hybrid applications.",
+  "dependencies": {},
   "devDependencies": {
+    "bower": "^1.3.12",
     "firebase-tools": "^1.1.4",
     "grunt": "^0.4.5",
+    "grunt-bump": "0.0.16",
     "grunt-contrib-connect": "^0.9.0",
     "grunt-contrib-uglify": "^0.6.0",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-jsdoc-plugin": "^0.1.4",
+    "grunt-ng-constant": "^1.0.0",
     "grunt-open": "^0.2.3",
-    "grunt-wiredep": "^2.0.0"
+    "grunt-wiredep": "^2.0.0",
+    "wiredep": "^2.2.0"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/sbolel/pyro.git"
   },
   "author": "Scott Prue (sprue.dev@gmail.com)",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/sbolel/pyro/issues"
   },

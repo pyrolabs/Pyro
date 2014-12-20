@@ -18,7 +18,6 @@ angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroA
 }])
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
-
     .state('landing', {
       url: '/',
       views:{
