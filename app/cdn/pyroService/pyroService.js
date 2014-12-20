@@ -172,7 +172,7 @@ angular.module('pyro.service', ['firebase'])
 			return pyro;
 	}
 }])
-.factory('pyroMaster', ['pyro', '$http', '$q', 'SERVERURL', function(pyro, $http, $q, SERVERURL) {
+.factory('pyroMaster', ['pyro', '$http', '$q', 'SERVERURL', '$analytics', function(pyro, $http, $q, SERVERURL, $analytics) {
 	var pyroMaster = pyro({url:'http://pyro.firebaseio.com'});
 	var pyroBase = new Firebase('http://pyro.firebaseio.com');
 	var pyroServerUrl = SERVERURL;
@@ -371,30 +371,49 @@ angular.module('pyro.service', ['firebase'])
 	pyroMaster.$lockedSignup = function(argSignupData){
 		console.log('[pyroMaster] $lockedSignup called');
 		var deferred = $q.defer();
+		const dataLocation = 'alphaData';
+		const codesLocation = 'signupCodes';
+		const eventInfoLocation = 'usage';
+
+		var dataRef = pyroMaster.mainRef.child(dataLocation);
 		// Check for existance of email, password, and code
-		if(argSignupData) {
+		if(argSignupData && argSignupData.hasOwnProperty('code')) {
 			// [TODO] Check that code matches a code in the list
-			// Check for matching firebase account and attempt to create a new one if info doesn't already exist
-		  pyroMaster.$getFbAccount(argSignupData).then(function(fbAccount){
-	      console.warn('[pyroMaster.$lockedSignup] Firebase account exists and logged in successfully:', fbAccount);
-					// Signup to Pyro
-      	  pyroMaster.$signup(argSignupData).then(function(userAccount){
-			      console.log('[pyroMaster.$lockedSignup] pyro signup successful:', userAccount);
-			      // Save fb data to firebase
-			      pyroMaster.$saveFbAccountData(fbAccount).then(function(){
-			      	deferred.resolve(userAccount);
-			      }, function(err){
-							console.error('[PyroMaster.$lockedSignup]fbData set error:', err);
-			      	deferred.reject(err);
-			      });
-			    }, function(err){
-			      console.warn('[pyroMaster.$lockedSignup] Signup error:', err.message);
-			      deferred.reject(err);
-			    });
-	    	}, function(err){
-	      console.error('[pyroMaster.$lockedSignup] Get Firebase account error:', err);
-	      deferred.reject(err);
-	    });
+			var formattedCode = argSignupData.code.toLowerCase();
+			dataRef.child(codesLocation).child(formattedCode).once('value', function(codeSnap){
+				// Check for matching firebase account and attempt to create a new one if info doesn't already exist
+				if(codeSnap.val()){
+      		$analytics.eventTrack('User Signup', {category:'Session', label: formattedCode});
+					pyroMaster.$getFbAccount(argSignupData).then(function(fbAccount){
+		      	console.warn('[pyroMaster.$lockedSignup] Firebase account exists and logged in successfully:', fbAccount);
+						// Signup to Pyro
+	      	  pyroMaster.$signup(argSignupData).then(function(userAccount){
+				      console.log('[pyroMaster.$lockedSignup] pyro signup successful:', userAccount);
+							// Save usage of code
+							var auth = pyroMaster.mainRef.getAuth();
+							if(auth && auth.hasOwnProperty('uid')) {
+								dataRef.child(eventInfoLocation).child(formattedCode).push({uid: auth.uid, createdAt:Firebase.ServerValue.TIMESTAMP});
+								console.log('usage of code pushed to firebase');
+							}
+				      // Save fb data to firebase
+				      pyroMaster.$saveFbAccountData(fbAccount).then(function(){
+				      	deferred.resolve(userAccount);
+				      }, function(err){
+								console.error('[PyroMaster.$lockedSignup]fbData set error:', err);
+				      	deferred.reject(err);
+				      });
+				    }, function(err){
+				      console.warn('[pyroMaster.$lockedSignup] Signup error:', err.message);
+				      deferred.reject(err);
+				    });
+		    	}, function(err){
+		      	console.error('[pyroMaster.$lockedSignup] Get Firebase account error:', err);
+		      	deferred.reject(err);
+		    	});
+				} else {
+					deferred.reject({message:'Invalid Signup Code', error:"INVALID_CODE"});
+				}
+			});
 		} else {
 			deferred.reject({message:'Invalid signup params', error:"INVAILD_PARAMS"})
 		}
