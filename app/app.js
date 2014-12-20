@@ -57,12 +57,12 @@ angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroA
     .state('nav', {
       abstract:true,
       resolve:{
-        auth: function(pyroMaster){
-          return pyroMaster.$auth();
-        },
-        user:function(pyroMaster){
+        "auth":["pyroMaster", function(pyroMaster){
+          return pyroMaster.$auth.$waitForAuth();
+        }],
+        "user":["pyroMaster", function(pyroMaster){
           return pyroMaster.$getUser();
-        }
+        }]
       },
       views: {
         'main':{
