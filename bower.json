@@ -15,7 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "ace-builds":"1.1.8",
+    "ace-builds": "1.1.8",
     "bootstrap-material-design": "~0.2.0",
     "underscore": "~1.7.0",
     "angular-tree-control": "~0.2.7",
@@ -27,7 +27,8 @@
     "angular-ui-ace": "bower",
     "fontawesome": "~4.2.0",
     "ionic": "~0.9.27",
-    "ionicons": "~2.0.0"
+    "ionicons": "~2.0.0",
+    "angulartics": "~0.17.1"
   },
   "overrides": {
     "ace-builds": {
@@ -40,38 +41,45 @@
     }
   },
   "install": {
-    "base":"./app/bower_libs",
+    "base": "./app/bower_libs",
     "path": {
-      "js":"{name}",
-      "css":"{name}/css",
-      "map":"{name}/css",
-      "eot":"{name}/fonts",
-      "ttf": "{name}/fonts", 
-      "woff": "{name}/fonts", 
-      "svg":"{name}/fonts",
-      "png":"{name}/images"
+      "js": "{name}",
+      "css": "{name}/css",
+      "map": "{name}/css",
+      "eot": "{name}/fonts",
+      "ttf": "{name}/fonts",
+      "woff": "{name}/fonts",
+      "svg": "{name}/fonts",
+      "png": "{name}/images"
     },
     "sources": {
-      "ionicons":[
+      "ionicons": [
         "bower_components/ionicons/css/*.*",
         "bower_components/ionicons/fonts/*.*"
       ],
       "bootstrap": [
-        "bower_components/bootstrap/dist/css/bootstrap.min.css", 
+        "bower_components/bootstrap/dist/css/bootstrap.min.css",
         "bower_components/bootstrap/dist/js/bootstrap.min.js"
       ],
-      "bootstrap-material-design":[
-        "bower_components/bootstrap-material-design/dist/css/*.*", 
+      "bootstrap-material-design": [
+        "bower_components/bootstrap-material-design/dist/css/*.*",
         "bower_components/bootstrap-material-design/dist/js/*.js",
         "bower_components/bootstrap-material-design/dist/fonts/*.*"
       ],
-      "angular-tree-control":[
-        "bower_components/angular-tree-control/css/*.css", 
+      "angular-tree-control": [
+        "bower_components/angular-tree-control/css/*.css",
         "bower_components/angular-tree-control/angular-tree-control.js",
         "bower_components/angular-tree-control/images/*.png"
-
       ],
-      "fontawesome":"bower_components/fontawesome/css/font-awesome.min.css"
+      "fontawesome": "bower_components/fontawesome/css/font-awesome.min.css",
+      "angulartics":[
+        "bower_components/angulartics/dist/angulartics.min.js",
+        "bower_components/angulartics/dist/angulartics-ga.min.js",
+        "bower_components/angulartics/dist/angulartics-ga-cordova.min.js",
+        "bower_components/angulartics/src/angulartics.js",
+        "bower_components/angulartics/src/angulartics-ga.js",
+        "bower_components/angulartics/src/angulartics-ga-cordova.js"
+      ]
     }
   }
 }

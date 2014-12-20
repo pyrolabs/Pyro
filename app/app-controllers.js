@@ -1,5 +1,5 @@
-angular.module('pyroApp.controllers', ['pyroApp.services', 'treeControl'])
-.controller('RootCtrl', function($scope, $state, $rootScope, $stateParams, pyroMaster, PyroArray) {
+angular.module('pyroApp.controllers', ['pyroApp.services', 'treeControl', 'angulartics'])
+.controller('RootCtrl', function($scope, $state, $rootScope, $stateParams, pyroMaster, PyroArray, $analytics) {
   console.log('RootCtrl');
   $scope.inDash = false;
   $rootScope.currentState = {};
@@ -20,6 +20,7 @@ angular.module('pyroApp.controllers', ['pyroApp.services', 'treeControl'])
 
 	$scope.logout = function() {
 		pyroMaster.$logout().then(function(){
+      $analytics.eventTrack('User Logout', {category:'Session'});
 			$scope.err.message = 'Logout Successful';
 			$state.go('login');
 		});

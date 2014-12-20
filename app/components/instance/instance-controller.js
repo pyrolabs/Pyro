@@ -28,7 +28,7 @@ angular.module('pyroApp.controllers')
   $scope.instancesArray.$watch(function(event){
 
   });
-
+  // [TODO] Make this an extension of the angularfire array factory
   function populateInstanceUserCounts(argValue, argKey) {
     var ref = new Firebase(argValue.dbUrl);
     // Attach an asynchronous callback to read the data at our posts reference

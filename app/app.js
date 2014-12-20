@@ -1,15 +1,9 @@
-angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroApp.services', 'pyroApp.config','ui.ace', 'treeControl'])
+angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroApp.services', 'pyroApp.config','ui.ace', 'treeControl', 'angulartics', 'angulartics.google.analytics'])
 .run(function($rootScope, $window, $location, version, SERVERURL) {
   console.log('Pyro is running version: ' + version + ' with a serverurl: ' + SERVERURL);
   $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){ 
     console.log('route change from:', fromState, ' to: ', toState);
     $rootScope.currentState = toState;
-  });
-  $rootScope.$on('$stateChangeSuccess',
-    function(event){
-      if (!$window.ga)
-        return;
-      $window.ga('send', 'pageview', { page: $location.path() });
   });
 })
 // Whitelist Urls
