@@ -12,26 +12,24 @@
                 <div class="panel-heading lter" >
                   <!-- Might be good for notifications
                   <span class="pull-right badge dk m-t-sm">17</span> -->
-                  <a href="" class="h4 text-lt text-center m-t-sm m-b-sm block font-bold"><p class="text-dark">New Pyro App</p></a>
+                  <a href="" class="h4 text-lt m-t-sm m-b-sm block font-bold"><p class="text-dark">NEW PYRO APP</p></a>
                 </div>
                 <div class="panel-body text-center" style="padding-top:30px;">
                   <div ng-hide="existingMode == true || simpleMode == true" style="margin-bottom:40px;">
                     <a href="" ng-click="simpleMode = true" class="btn btn-s-md btn-warning">Simple Setup</a>
                   </div>
-                    <a href="" ng-show="existingMode == true || simpleMode == true" ng-click="existingMode = false; simpleMode = false" class="btn btn-warning btn-fab btn-raised" style="position:absolute;top:0.5em;right:1em;"><i class="ion-close-round" style="font-size:1em;margin-top:-.75em;"></i></a>
+                    <!-- <a href="" ng-show="existingMode == true || simpleMode == true" ng-click="existingMode = false; simpleMode = false" class="btn btn-warning btn-fab btn-raised" style="position:absolute;top:0.5em;right:1em;"><i class="ion-close-round" style="font-size:1em;margin-top:-.75em;"></i></a> -->
                   <div ng-show="simpleMode == true" class="ng-hide" style="padding-left:10%; padding-right:10%;">
-            
-                    <a href="" ng-click="simpleSetup()"  class="btn btn-s-md" ng-class="{'btn-default disabled': !newAppData.name || loading.simpleSetup, 'btn-info':newAppData.name}"><span ng-hide="loading.simpleSetup">Create New App</span><i class="icon ion-load-d fa-spin" ng-show="loading.simpleSetup"></i></a>
-                    
-                    <div class="form-group " style="margin-top:40px;">
+                    <a href="" ng-show="simpleMode == true" ng-click="existingMode = false; simpleMode = false" class="btn btn-fab btn-raised" ng-class="{'btn-default disabled': !newAppData.name || loading.simpleSetup, 'btn-warning':newAppData.name}" style="position:absolute;top:0.5em;right:1em;"><i class="ion-android-add" style="font-size:1em;top:-.175em;"></i></a>
+                    <div class="form-group">
                       <h4 style="color:red;" ng-show="err.hasOwnProperty('error') || err.hasOwnProperty('message')">{{err.message || err.error || "Error"}}</h4>
-                      <label class="pull-left">New App Name</label>
-                      <div class="row">
-                        <input type="text" ng-model="newAppData.name" placeholder="exampleApp" class="form-control" style="">
-                      </div>
+                      <h5><label class="pull-left m-b-md font-thin">Enter the name of your new app:</label></h5>
+                      <input type="text" ng-model="newAppData.name" placeholder="exampleApp" class="form-control m-t-lg">
                     </div>
+                    <!-- <a href="" ng-click="simpleSetup()"  class="btn btn-s-md" ng-class="{'btn-default disabled': !newAppData.name || loading.simpleSetup, 'btn-warning':newAppData.name}"><span ng-hide="loading.simpleSetup">Create New App</span><i class="icon ion-load-d fa-spin" ng-show="loading.simpleSetup"></i></a> -->
                   </div>
-                  <div  ng-hide="existingMode == true || simpleMode == true" style="margin-top:20px;">
+                  <!-- <div  ng-hide="existingMode == true || simpleMode == true" style="margin-top:20px;"> -->
+                  <div  ng-hide="true" style="margin-top:20px;">
                     <a href="" ng-click="existingMode = true"  class="btn btn-s-md btn-default btn-secondary">Manage Existing Database</a>
                   </div>
                   <div ng-show="existingMode == true" ng-hide="existingMode != true || simpleMode == true">
@@ -55,13 +53,12 @@
             <div class="col-sm-6 col-md-4" ng-repeat="instance in instanceList">
               <section class="panel b-a">
                 <div class="panel-heading no-border">
-                  <a href="" ng-click="viewDetail(instance.name)" class="btn btn-warning btn-fab btn-raised pull-right"><i class="fa fa-fire" style="font-size:0.75em;margin-top:-0.5em;"></i></a>
-
+                  <a href="" ng-click="viewDetail(instance.name)" class="btn btn-warning btn-fab btn-raised pull-right"><i class="fa fa-fire" style="font-size:0.75em;top:-.4em;"></i></a>
                   <a ng-click="viewDetail(instance.name)" class="h4 text-lt m-t-sm m-b-sm block font-bold"><p class="text-dark">{{instance.name}}</p></a>
                 </div>
                 <div class="panel-body">
                   <!-- <span class="pull-right text-muted">{{instance.createdAt || "At Some Point"}}</span> -->
-                  <h3 class="font-thin">{{instance.url || "unknown url"}}</h3>
+                  <h4 class="font-thin">{{instance.url || "unknown url"}}</h4>
                   <div class="row text-center m-t">
                     <div class="col-xs-6">
                       <h3 class="font-thin">{{instance.userCount || "0"}}</h3>

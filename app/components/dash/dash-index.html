@@ -66,11 +66,21 @@
           <section class="vbox">
             <section class="scrollable padder">
               <section class="row m-b-md">
-                <div class="col-md-8 col-md-offset-2 m-b-xl" style="text-align:center;">
-                  <div class="row navbar nav-header btn-material-deeporange m-b-md">
+                <div class="row navbar nav-header btn-material-deeporange m-b-md">
+                  <div class="text-center">
+                    <h1 class="text-white" style="font-weight:200;">Insights</h1>
+                  </div>
+                </div>
+                <div class="col-md-10 col-md-offset-1 m-b-xl" style="text-align:center;">
+                  <div class="row m-b-md">
                     <div class="text-center">
-                      <h1 class="text-white" style="font-weight:200;">Insights</h1>
+                      <h3 class="text-dark">App URL</h3>
                     </div>
+                  </div>
+                  <div class="padder-v padder panel text-center" ng-show="pyroInstance.appUrl">
+                    <a ng-href="http://{{pyroInstance.appUrl}}" target="_blank" class="m-l-md" style="display:inline;">
+                      <h4 style="display:inline;">{{pyroInstance.appUrl}} <i class="mdi-action-open-in-new m-l-xs" style="font-size:0.5em"></i></h4>
+                    </a>
                   </div>
                   <div class="row m-t-xl m-b-md">
                     <div class="text-center">

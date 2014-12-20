@@ -5,7 +5,8 @@ angular.module('pyroApp.controllers')
   // Form data for the login modal
   $rootScope.auth = auth;
   $rootScope.account = user;
-  $scope.viewingInstance = true;
+  $scope.simpleMode = true; // Temporarily disabling "Manage existing database"
+  $scope.viewingInstance = true; // [TODO] Is this necessary?
   $scope.newAppData = {};
   $scope.err = {};
   $scope.cardClasses = ['bg-primary lt', 'bg-info lt', 'bg-success lter', 'bg-warning lter', 'bg-light dk'];
