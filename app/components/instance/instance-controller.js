@@ -34,25 +34,26 @@ angular.module('pyroApp.controllers')
     // Attach an asynchronous callback to read the data at our posts reference
     ref.once("value", function(snapshot) {
       var db = snapshot.val();
-      if(db.users) {
-        var count = countThis(db.users);
-        console.log("length of users ",count);
-        $scope.instancesArray[argKey].userCount = count;
-      } else {
-        console.log("No users found.");
-        $scope.instancesArray[argKey].userCount = 0;
-      }
-      if(db.sessions){
-        var count2 = countThis(db.sessions);
-        console.log("Total Sessions: ",count2);
-        $scope.instancesArray[argKey].sessionCount = count2;
-
-      } else {
-        console.log("No sessions found.");
-        $scope.instancesArray[argKey].sessionCount = 0;
-      }
-       if(!$scope.$$phase) {
-          $scope.$apply();
+      if(db) {
+        if(db.hasOwnProperty('users')) {
+          var count = countThis(db.users);
+          console.log("length of users ",count);
+          $scope.instancesArray[argKey].userCount = count;
+        } else {
+          console.log("No users found.");
+          $scope.instancesArray[argKey].userCount = 0;
+        }
+        if(db.hasOwnProperty('sessions')){
+          var count2 = countThis(db.sessions);
+          console.log("Total Sessions: ",count2);
+          $scope.instancesArray[argKey].sessionCount = count2;
+        } else {
+          console.log("No sessions found.");
+          $scope.instancesArray[argKey].sessionCount = 0;
+        }
+         if(!$scope.$$phase) {
+            $scope.$apply();
+          }
         }
     }, function (errorObject) {
         console.log("The read failed: " + errorObject.code);
