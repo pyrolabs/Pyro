@@ -15,7 +15,7 @@
       <div id="overview"  class="col-xs-10 col-xs-offset-1" style="padding-top:0;">    
         <div class="text-center">
           <div id="pyro-label" class="vertical-align">
-            <h1 class="h1-md">pyro</h1>
+            <h1 class="h1-md" style="">pyro</h1>
             <h3>realtime apps with ease</h3>
             <button id="pyrobutton" ng-click="pyroSymbolClicked()" class="btn btn-fab btn-raised btn-main btn-material-deeporange"><i class="fa fa-fire"></i></button>
           </div>
@@ -33,17 +33,16 @@
   </div>
 
   <div id="footer" class="row">
-    <div ui-sref="login" class="col-xs-2 text-center text-muted clickable" style="height: 100%;">
+    <div ui-sref="login" class="col-xs-2 text-center text-muted clickable">
       login
     </div>
     <div class="col-xs-8 text-center" style="height: 100%;">
       <small>&copy; 2014 <a href="https://www.linkedin.com/in/prescottprue">Prescott Prue</a> &amp; <a href="https://www.linkedin.com/in/sinanbolel">Sinan Bolel</a></small>
     </div>
-    <div ui-sref="signup" class="col-xs-2 text-center text-muted clickable" style="height: 100%;">
+    <div ui-sref="signup" class="col-xs-2 text-center text-muted clickable">
       signup
     </div>
   </div>
-
 </div>
 
 <script>
@@ -55,10 +54,15 @@
       $('#signup').css({
         bottom: $('#footer').height()
       });
-
-      $('#pyro-label').css({
-        'top': $('#overview').height()/2 - $('#pyro-label').height()/2
-      });
+      if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+        $('#pyro-label').css({
+          'top': $('#overview').height()/2 - $('#pyro-label').height()
+        });
+      } else {
+        $('#pyro-label').css({
+          'top': $('#overview').height()/2 - $('#pyro-label').height()/2
+        });
+      }
     }
     $(window).resize(function() {
       abso();         

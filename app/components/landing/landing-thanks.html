@@ -46,9 +46,15 @@
       $('#thanks').css({
         height: $(window).height()-$('#footer').height()
       });
-      $('#pyro-label').css({
-        'top': $('#thanks').height()/2
-      });
+      if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+        $('#pyro-label').css({
+          'top': $('#thanks').height()/2 - $('#pyro-label').height()
+        });
+      } else {
+        $('#pyro-label').css({
+          'top': $('#thanks').height()/2 - $('#pyro-label').height()/2
+        });
+      }
       $('#contact').css({
         'top': $('#contact').height()/2
       });
