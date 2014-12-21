@@ -52,6 +52,21 @@ h1, h2, h3, h4 {
   color: black;
 }
 
+.form-control:focus {
+  border-bottom-color: #E65100;
+}
+.form-control.form-material-tetradblue:focus {
+   border-bottom-color: #1D71A3;
+}
+
+.text-material-tetradblue {
+  color: #1D71A3;
+}
+
+.btn-material-tetradblue {
+  background-color: #1D71A3 !important;
+}
+
 #content.panel {
   margin: 6em 2em 0 2em;
   height: 440px;
