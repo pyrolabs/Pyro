@@ -20,7 +20,7 @@
                   </div>
                     <!-- <a href="" ng-show="existingMode == true || simpleMode == true" ng-click="existingMode = false; simpleMode = false" class="btn btn-warning btn-fab btn-raised" style="position:absolute;top:0.5em;right:1em;"><i class="ion-close-round" style="font-size:1em;margin-top:-.75em;"></i></a> -->
                   <div ng-show="simpleMode == true" class="ng-hide" style="padding-left:10%; padding-right:10%;">
-                    <a href="" ng-show="simpleMode == true" ng-click="existingMode = false; simpleMode = false" class="btn btn-fab btn-raised" ng-class="{'btn-default disabled': !newAppData.name || loading.simpleSetup, 'btn-warning':newAppData.name}" style="position:absolute;top:0.5em;right:1em;"><i class="ion-android-add" style="font-size:1em;top:-.175em;"></i></a>
+                    <a href="" ng-show="simpleMode == true" ng-click="simpleSetup()" class="btn btn-fab btn-raised" ng-class="{'btn-default disabled': !newAppData.name || loading.simpleSetup, 'btn-warning':newAppData.name}" style="position:absolute;top:0.5em;right:1em;"><i class="ion-android-add" style="font-size:1em;top:-.175em;"></i></a>
                     <div class="form-group">
                       <h4 style="color:red;" ng-show="err.hasOwnProperty('error') || err.hasOwnProperty('message')">{{err.message || err.error || "Error"}}</h4>
                       <h5><label class="pull-left m-b-md font-thin">Enter the name of your new app:</label></h5>
