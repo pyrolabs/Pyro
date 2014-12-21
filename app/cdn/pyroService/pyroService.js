@@ -374,7 +374,6 @@ angular.module('pyro.service', ['firebase'])
 		const dataLocation = 'alphaData';
 		const codesLocation = 'signupCodes';
 		const eventInfoLocation = 'usage';
-
 		var dataRef = pyroMaster.mainRef.child(dataLocation);
 		// Check for existance of email, password, and code
 		if(argSignupData && argSignupData.hasOwnProperty('code')) {
@@ -413,6 +412,9 @@ angular.module('pyro.service', ['firebase'])
 				} else {
 					deferred.reject({message:'Invalid Signup Code', error:"INVALID_CODE"});
 				}
+			}, function(err){
+				console.error('[pyroMaster.$lockedSignup] Error writing code usage to FB:', err);
+				deferred.reject(err);
 			});
 		} else {
 			deferred.reject({message:'Invalid signup params', error:"INVAILD_PARAMS"})

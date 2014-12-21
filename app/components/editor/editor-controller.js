@@ -1,6 +1,6 @@
 angular.module('pyroApp.controllers')
 
-.controller('EditorCtrl', function($scope, $state, $rootScope, $stateParams, instance, editorService, pyroMaster, fileRam) {
+.controller('EditorCtrl', function($scope, $state, $rootScope, $stateParams, instance, editorService, pyroMaster, fileRam, $timeout) {
   console.log('EditorCtrl');
  
     $scope.pyroInstance = instance;
@@ -19,26 +19,9 @@ angular.module('pyroApp.controllers')
       console.error('[EditorCtrl] error getting folder structure');
     });
 
-//     pyroMaster.$loadObject('appFiles', $scope.pyroInstance.name).then(function(returnedObject){
-//       if(returnedObject){
-//         $scope.files = returnedObject;
-//         console.log('$scope.files set:', $scope.files);
-
-//         if(!$scope.$$phase) {
-//           //$digest or $apply
-//           $scope.$apply();
-//         }
-//       } else {
-//         console.error('Error loading file stucture from firebase.');
-//         $scope.err = {message:'Error loading file structure'};
-//       }
-//      });
-
-
-
- $scope.opts = {
+  $scope.opts = {
      dirSelectable: false
- };
+  };
 
   // EDITOR
   $scope.dir = {};
@@ -83,84 +66,49 @@ angular.module('pyroApp.controllers')
       return finalRefArray;
     }
     function saveFileNewContent() {
-    // [TODO] Handle non generated app bucket name
-
+      // [TODO] Handle non generated app bucket name
       console.log("File ",$scope.appRam.$currentFile, " changed, saving content.");
       $scope.appRam.$currentFile.content = $scope.editorObj.getValue();
       var filePath = stringifyPath($scope.appRam.$currentFile);
-      // var filePath = $scope.appRam.$currentFile.path.replace('fs', '');
-      // filePath = filePath.replace($scope.appRam.$currentFile.name, '')
-      // var newFileName = $scope.appRam.$currentFile.name.replace('.', ':');
-      // console.warn("\n\nFILE PATH: ",filePath+newFileName)
-
-      // // Get the full path with : substitution
-      // var finalRef = filePath+newFileName;
-
-      // // Break it down by '/'
-      // var finalRefArray = finalRef.split('/');
-      // console.warn("\n\nfinalRefArray: ",finalRefArray)
-
-      // var finalPropertyLocation = [];
-
-      // finalRefArray.shift();  // rid of first element
-      // finalRefArray.shift();  // rid of first element
-      // finalRefArray = finalRefArray.join(':');
-      // console.log("final ref is ",finalRefArray);
-
       if($scope.appRam[filePath]){
-        console.warn("EXISTING: ",filePath)
+        console.log("[saveFileNewContent]: file path exists in ram: ", filePath);
         $scope.appRam[filePath].content = $scope.editorObj.getValue();
       } else {
-      console.warn("NEW: ",filePath)
+        console.log("[saveFileNewContent]: file path exists in ram: ",filePath)
         $scope.appRam[filePath] = {content: $scope.editorObj.getValue(), filetype:$scope.appRam.$currentFile.filetype, path:$scope.appRam.$currentFile.path};
       }
-
-  }
-  var aceModulo = 0;
-  $scope.aceChanged = function(_editor){
-    console.log('[EditorCtrl] Ace editor changed:', _editor);
-    aceModulo++;
-    if (aceModulo % 2 == 0 && $scope.appRam.$currentFile) {
-    saveFileNewContent();
     }
+  $scope.aceChanged = function(_editor){
+    console.log('[aceChanged] Ace editor changed:', _editor);
+    $timeout(function(){
+      saveFileNewContent();
+    }, 200);
   }
-$scope.saveFile = function(){
-  console.log('saveFile called');
-  var bucketName = "";
-  if($scope.pyroInstance.hasOwnProperty('bucketName')){
-    bucketName = $scope.pyroInstance.bucketName;
-  } else {
-    bucketName = $scope.pyroInstance.name;
+  $scope.saveFile = function(){
+    console.log('saveFile called');
+    var bucketName = "";
+    if($scope.pyroInstance.hasOwnProperty('bucketName')){
+      bucketName = $scope.pyroInstance.bucketName;
+    } else {
+      bucketName = $scope.pyroInstance.name;
+    }
+    editorService.saveContentsToS3(bucketName, $scope.appRam.$currentFile.path).then(function(saveRes){
+      console.warn('saveRes:', saveRes);
+      //[TODO] Notify user of succesful save
+    }, function(err){
+      console.error('error saving file:',err);
+      $scope.err = err;
+    })
   }
-// <<<<<<< Updated upstream
-  editorService.saveContentsToS3(bucketName, $scope.appRam.$currentFile.path).then(function(saveRes){
-        console.warn('saveRes:', saveRes);
-  //   // Notify user of succesful save
-// =======
-//   editorService.saveFile(bucketName, $scope.files.$currentFile.path, $scope.editorObj.getValue(), 'simplelogin:34').then(function(saveRes){
-//     console.log('saveRes:', saveRes);
-// >>>>>>> Stashed changes
-  }, function(err){
-    console.error('error saving file:',err);
-    $scope.err = err;
-  })
-  // editorService.saveFile(bucketName, $scope.files.$currentFile.path, $scope.editorObj.getValue()).then(function(saveRes){
-  //   console.log('saveRes:', saveRes);
-  //   // Notify user of succesful save
-  // }, function(err){
-  //   console.error('error saving file:',err);
-  //   $scope.err = err;
-  // });
-}
-function replaceAll(find, replace, str) {
-  return str.replace(new RegExp(find, 'g'), replace);
-}
+  function replaceAll(find, replace, str) {
+    return str.replace(new RegExp(find, 'g'), replace);
+  }
   function unstringifyPath(argFile){
     // Remove fs from path
     console.log('[unstringifyPath] called with:', argFile);
     var actualFilePath = argFile.path.replace('fs/pyro-'+$scope.pyroInstance.name+'/', '');
     console.log('[unstringifyPath] removed app name and fs:', actualFilePath);
-  actualFilePath = replaceAll('/', ':', actualFilePath);
+    actualFilePath = replaceAll('/', ':', actualFilePath);
     console.log('[unstringifyPath] removed backslashes:', actualFilePath);
     actualFilePath = actualFilePath.replace('.', ':');
     console.log('[unstringifyPath] replaced . :', actualFilePath);
@@ -171,43 +119,38 @@ function replaceAll(find, replace, str) {
   }
   $scope.openFile = function(fileObject){
 
-    // if($scope.appRam.$currentFile) {
-    //   saveFileNewContent();
-    // }
-
     if(fileObject){
-      console.log('\n[editorCtrl $openFile()]OPEN FILE:', fileObject);
+      console.log('[$scope.openFile()] called with:', fileObject);
       $scope.appRam.$currentFile = fileObject;
       var actualFilePath = unstringifyPath(fileObject);
-
       if(!fileObject.hasOwnProperty('content') && !$scope.appRam.hasOwnProperty(actualFilePath)){
         editorService.downloadFileFromS3($scope.pyroInstance.name, fileObject.path).then(function(fileString){
           // Set file to editor
-          console.log('editorService.downloadFileFromS3 returned: ', fileString);
+          console.log('[$scope.openFile()] editorService.downloadFileFromS3 returned: ', fileString);
           $scope.editorObj.getSession().setValue(fileString);
           // Set file mode
           $scope.editorObj.getSession().setMode(getFileMode(fileObject));
           $scope.appRam[actualFilePath] = {content:fileString, filetype:fileObject.filetype, key:actualFilePath};
-          console.log('newly downloaded file set to appRam:', $scope.appRam);
+          console.log('[$scope.openFile()] newly downloaded file set to appRam:', $scope.appRam);
         }, function(err){
-          console.error('[EditorCtrl] Error downloding file from S3:', err);
+          console.error('[$scope.openFile()] Error downloding file from S3:', err);
           $scope.err = err;
         });
       } else if ($scope.appRam && $scope.appRam.hasOwnProperty(actualFilePath)){
         var fileRam = $scope.appRam[actualFilePath];
-        console.log('bound object is already found for that file:', fileRam);
+        console.log('[$scope.openFile()] bound object is already found for that file:', fileRam);
         $scope.editorObj.getSession().setValue(fileRam.content);
         $scope.editorObj.getSession().setMode(getFileMode(fileRam));
       } else {
         //file already exisits in object form in content
-        console.log('fileObject contains a content property');
+        console.log('[$scope.openFile()] fileObject contains a content property');
         $scope.appRam[actualFilePath] = fileObject;
         $scope.editorObj.getSession().setValue(fileObject.content);
         $scope.editorObj.getSession().setMode(getFileMode(fileObject));
       }
       $scope.files.$collapsed = false;
     } else {
-      console.error('File object does not exist');
+      console.error('[$scope.openFile()] File object does not exist');
     }
     
   };
@@ -219,6 +162,4 @@ function replaceAll(find, replace, str) {
     }
     return fileMode;
   }
-  
-  
 })
