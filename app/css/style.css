@@ -4,6 +4,9 @@ body {
   font-family: 'Lato', sans-serif !important; 
 }
 
+.padder-n {
+  padding: 0 !important;
+}
 .clickable {
   cursor: pointer;
 }
@@ -65,6 +68,9 @@ h1, h2, h3, h4 {
 
 .btn-material-tetradblue {
   background-color: #1D71A3 !important;
+}
+.btn-clear {
+  background: none !important;
 }
 
 #content.panel {
@@ -185,6 +191,9 @@ border:none;padding-right:1em;
   color: #E64A19 !important;
 }
 
+.btn-cta {
+  z-index: 2000 !important;
+}
 .btn-fab:hover {
   color: white !important;
 }
