@@ -2,22 +2,16 @@ angular.module('pyroApp.controllers')
 
 .controller('EditorCtrl', function($scope, $state, $rootScope, $stateParams, instance, editorService, pyroMaster, fileRam, $timeout) {
   console.log('EditorCtrl');
- 
-    $scope.pyroInstance = instance;
-    function seperateS3Url(argUrl){
-      console.log('seperateS3Url called with', argUrl);
-      var re = /(.+)(?=\.s3)/g;
-      var bucketArray = argUrl.match(re);
-      var bucketString = bucketArray[0]
-      console.warn("bucket: ", bucketString);
-      return bucketString;
-    }
-    editorService.getFolderStructure($scope.pyroInstance.name).then(function(returnedStructure){
-      console.log('folder structure returned:', returnedStructure);
-      $scope.files = returnedStructure;
-    }, function(){
-      console.error('[EditorCtrl] error getting folder structure');
-    });
+  // Set pyroInstance from resolve
+  $scope.pyroInstance = instance;
+
+  // Load folder stucture
+  editorService.getFolderStructure($scope.pyroInstance.name).then(function(returnedStructure){
+    console.log('folder structure returned:', returnedStructure);
+    $scope.files = returnedStructure;
+  }, function(){
+    console.error('[EditorCtrl] error getting folder structure');
+  });
 
   $scope.opts = {
      dirSelectable: false
@@ -46,44 +40,13 @@ angular.module('pyroApp.controllers')
     // _session.on("change", function(){
     //   console.log('[EditorCtrl] Session changed:', _session);
     // });
-  }
-    function stringifyPath(argFile) {
-      // Remove fs from path
-      console.log('[stringifyPath] called with:', argFile);
-      var strPath = argFile.path.replace('fs', '');
-      // remove app name
-      strPath = strPath.replace(argFile.name, '');
-      var newFileName = argFile.name.replace('.', ':');
-      // Full path with : substitution
-      var finalRef = strPath+newFileName;
-      // Break it down by '/'
-      var finalRefArray = finalRef.split('/');
-      console.warn("[stringifyPath] FinalRefArray: ",finalRefArray);
-      finalRefArray.shift();  // rid of first element
-      finalRefArray.shift();  // rid of second element
-      finalRefArray = finalRefArray.join(':');
-      console.log('[stringifyPath] finalRefStr:', finalRefArray);
-      return finalRefArray;
-    }
-    function saveFileNewContent() {
-      // [TODO] Handle non generated app bucket name
-      console.log("File ",$scope.appRam.$currentFile, " changed, saving content.");
-      $scope.appRam.$currentFile.content = $scope.editorObj.getValue();
-      var filePath = stringifyPath($scope.appRam.$currentFile);
-      if($scope.appRam[filePath]){
-        console.log("[saveFileNewContent]: file path exists in ram: ", filePath);
-        $scope.appRam[filePath].content = $scope.editorObj.getValue();
-      } else {
-        console.log("[saveFileNewContent]: file path exists in ram: ",filePath)
-        $scope.appRam[filePath] = {content: $scope.editorObj.getValue(), filetype:$scope.appRam.$currentFile.filetype, path:$scope.appRam.$currentFile.path};
-      }
-    }
+  };
   $scope.aceChanged = function(_editor){
     console.log('[aceChanged] Ace editor changed:', _editor);
     $timeout(function(){
       saveFileNewContent();
     }, 200);
-  }
+  };
   $scope.saveFile = function(){
     console.log('saveFile called');
     var bucketName = "";
@@ -95,30 +58,16 @@ angular.module('pyroApp.controllers')
     editorService.saveContentsToS3(bucketName, $scope.appRam.$currentFile.path).then(function(saveRes){
       console.warn('saveRes:', saveRes);
       //[TODO] Notify user of succesful save
+      $scope.notification = $scope.appRam.$currentFile.name + " was saved successfully";
     }, function(err){
       console.error('error saving file:',err);
       $scope.err = err;
     })
-  }
-  function replaceAll(find, replace, str) {
-    return str.replace(new RegExp(find, 'g'), replace);
-  }
-  function unstringifyPath(argFile){
-    // Remove fs from path
-    console.log('[unstringifyPath] called with:', argFile);
-    var actualFilePath = argFile.path.replace('fs/pyro-'+$scope.pyroInstance.name+'/', '');
-    console.log('[unstringifyPath] removed app name and fs:', actualFilePath);
-    actualFilePath = replaceAll('/', ':', actualFilePath);
-    console.log('[unstringifyPath] removed backslashes:', actualFilePath);
-    actualFilePath = actualFilePath.replace('.', ':');
-    console.log('[unstringifyPath] replaced . :', actualFilePath);
-    return actualFilePath;
-  }
-   $scope.collapseFolders = function() {
-    $scope.files.$collapsed = !($scope.files.$collapsed);
-  }
+  };
+  $scope.collapseFolders = function() {
+    $scope.files.$collapsed = !($scope.files.$collapsed);
+  };
   $scope.openFile = function(fileObject){
-
     if(fileObject){
       console.log('[$scope.openFile()] called with:', fileObject);
       $scope.appRam.$currentFile = fileObject;
@@ -154,6 +103,51 @@ angular.module('pyroApp.controllers')
     }
     
   };
+  function saveFileNewContent() {
+    // [TODO] Handle non generated app bucket name
+    console.log("File ",$scope.appRam.$currentFile, " changed, saving content.");
+    $scope.appRam.$currentFile.content = $scope.editorObj.getValue();
+    var filePath = stringifyPath($scope.appRam.$currentFile);
+    if($scope.appRam[filePath]){
+      console.log("[saveFileNewContent]: file path exists in ram: ", filePath);
+      $scope.appRam[filePath].content = $scope.editorObj.getValue();
+    } else {
+      console.log("[saveFileNewContent]: file path exists in ram: ",filePath)
+      $scope.appRam[filePath] = {content: $scope.editorObj.getValue(), filetype:$scope.appRam.$currentFile.filetype, path:$scope.appRam.$currentFile.path};
+    }
+  }
+  function replaceAll(find, replace, str) {
+    return str.replace(new RegExp(find, 'g'), replace);
+  }
+  function stringifyPath(argFile) {
+    // Remove fs from path
+    console.log('[stringifyPath] called with:', argFile);
+    var strPath = argFile.path.replace('fs', '');
+    // remove app name
+    strPath = strPath.replace(argFile.name, '');
+    var newFileName = argFile.name.replace('.', ':');
+    // Full path with : substitution
+    var finalRef = strPath+newFileName;
+    // Break it down by '/'
+    var finalRefArray = finalRef.split('/');
+    console.warn("[stringifyPath] FinalRefArray: ",finalRefArray);
+    finalRefArray.shift();  // rid of first element
+    finalRefArray.shift();  // rid of second element
+    finalRefArray = finalRefArray.join(':');
+    console.log('[stringifyPath] finalRefStr:', finalRefArray);
+    return finalRefArray;
+  }
+  function unstringifyPath(argFile){
+    // Remove fs from path
+    console.log('[unstringifyPath] called with:', argFile);
+    var actualFilePath = argFile.path.replace('fs/pyro-'+$scope.pyroInstance.name+'/', '');
+    console.log('[unstringifyPath] removed app name and fs:', actualFilePath);
+    actualFilePath = replaceAll('/', ':', actualFilePath);
+    console.log('[unstringifyPath] removed backslashes:', actualFilePath);
+    actualFilePath = actualFilePath.replace('.', ':');
+    console.log('[unstringifyPath] replaced . :', actualFilePath);
+    return actualFilePath;
+  }
   function getFileMode(argFile){
     var fileMode = 'ace/mode/';
     // [TODO] add regex for file type 
@@ -162,4 +156,12 @@ angular.module('pyroApp.controllers')
     }
     return fileMode;
   }
+      // function seperateS3Url(argUrl){
+    //   console.log('seperateS3Url called with', argUrl);
+    //   var re = /(.+)(?=\.s3)/g;
+    //   var bucketArray = argUrl.match(re);
+    //   var bucketString = bucketArray[0]
+    //   console.warn("bucket: ", bucketString);
+    //   return bucketString;
+    // }
 })

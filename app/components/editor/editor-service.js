@@ -1,7 +1,6 @@
 // <<<<<<< Updated upstream
 angular.module('editor.service', ['pyro.service'])
 .factory('editorService',function($q, $http, pyroMaster){
-      var s3 = new AWS.S3();
 	return{
 		// saveFile:function(argBucketName, argFilePath, argFileContents){
 		// 	console.log('[editorService] saveFile called', arguments);
@@ -46,17 +45,22 @@ angular.module('editor.service', ['pyro.service'])
       console.log('downloadFileFromS3 filekey:', fileKey);
 			var uploadParams = {Bucket:'pyro-'+argAppName, Key:fileKey};
       console.log('[editorService] downloadParams:', uploadParams);
-      s3.getObject(uploadParams, function(err, data){
-        if(!err){
-          console.log('[editorService] object retreived successfully:', data.Body.toString());
-          // Resolve string of file contents
-          deferredDownload.resolve(data.Body.toString());
-          // [TODO] Save content to firebase appFiles/fileContent/$appName/$fileName
-        } else {
-          console.error('[editorService] Error downloading file:', err, err.stack);
-          deferredDownload.reject(err);
-        }
-      });
+      configS3().then(function(){
+        s3.getObject(uploadParams, function(err, data){
+          if(!err){
+            console.log('[editorService] object retreived successfully:', data.Body.toString());
+            // Resolve string of file contents
+            deferredDownload.resolve(data.Body.toString());
+            // [TODO] Save content to firebase appFiles/fileContent/$appName/$fileName
+          } else {
+            console.error('[editorService] Error downloading file:', err, err.stack);
+            deferredDownload.reject(err);
+          }
+        });
+      }, function(err){
+        deferredDownload.reject(err);
+      })
+
       return deferredDownload.promise;
 		}, // /downloadFileFromS3
     getFolderStructure:function(argAppName){
@@ -85,5 +89,38 @@ angular.module('editor.service', ['pyro.service'])
       return deferred.promise;
     }
 	}
-
+  var creds = null;
+  var s3 = null;
+  function configS3() {
+    var deferred = $q.defer();
+    const dataLocation = 'alphaData';
+    const credsLocation = 's3Creds';
+    if(!creds) {
+      console.log('Credentials do not currently exist, retrieving from firebase');
+      var auth =  pyroMaster.mainRef.getAuth();
+      if(auth) {
+        pyroMaster.mainRef.child(dataLocation).child(credsLocation).on('value', function(credsSnap){
+          if(credsSnap.val()){
+            creds = credsSnap.val();
+            console.log('S3 creds loaded from firebase successfully:', creds);
+            AWS.config.update(creds);
+            s3 = new AWS.S3();
+            console.log('AWS config set');
+            deferred.resolve(s3);
+          } else {
+            console.error('s3Creds not found on firebase');
+            deferred.reject({message:'Credentials not found'});
+          }
+        }, function(err){
+          console.error('Error loading s3Creds from firebase:', err);
+          deferred.reject(err);
+        });
+      } else {
+        deferred.reject({message:'Login required'});
+      }
+    } else {
+      deferred.resolve(creds);
+    }
+    return deferred.promise;
+  }
 })
