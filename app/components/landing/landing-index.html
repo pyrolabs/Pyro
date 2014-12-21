@@ -11,22 +11,20 @@
     </nav>
 
     <div class="col-xs-12" style="height: 100%;">
-      <div id="overview"  class="col-xs-10 col-xs-offset-1" style="padding-top:0;">    
-        <div class="text-center">
+      <div id="overview"  class="col-xs-10 col-xs-offset-1 text-center" >    
           <div id="pyro-label" class="vertical-align">
             <img src="images/PyroFire-xs.png" style=""/>
-            <h1 class="h1-md" style="">pyro</h1>
-            <h3>realtime apps with ease</h3>
+            <h1 class="app-title h1-md" style="margin-top: 0">pyro</h1>
+            <h3 class="app-title hidden-mobile">realtime apps with ease</h3>
             <!-- <button id="pyrobutton" ng-click="pyroSymbolClicked()" class="btn btn-fab btn-raised btn-main btn-material-deeporange"><i class="fa fa-fire"></i></button> -->
           </div>
           <div id="signup" style="position:absolute;bottom:0;left:0;right:0;">
-            <h4>sign up for the private alpha:</h4>
+            <h4 style="font-weight:300">sign up for the private alpha:</h4><hr class="hidden-mobile"/>
             <div style="margin: 1em auto;position:relative;">
               <input type="text" class="form-control" placeholder="you@example.com" style="position:absolute;top:0;text-align:center;" ng-model="signupData.email">
               <a href="" class="btn btn-material-deeporange btn-raised" style="margin-top: 3em;" ng-click="betaSignup()">submit<div class="ripple-wrapper"></div></a>
             </div>
           </div>
-        </div>
       </div>
 
     </div>
@@ -49,19 +47,31 @@
   $(function() {
     function abso() {
       $('#overview').css({
-        height: $(window).height()-$('#footer').height()
+        height: $(window).height()-$('#footer').height(),
       });
       $('#signup').css({
         bottom: $('#footer').height()
       });
       if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
         $('#pyro-label').css({
-          'top': $('#overview').height()/2 - $('#pyro-label').height()
+          'top': $('#overview').height()/3
+        });
+        $('h1.app-title').css({
+          'line-height': 0.9
+        });
+        $('#signup').css({
+          'bottom':0
+        });
+        $('.hidden-mobile').css({
+          'display': 'none'
         });
       } else {
         $('#pyro-label').css({
           'top': $('#overview').height()/2 - $('#pyro-label').height()/2
         });
+        $('h1.app-title').css({
+          'line-height': 1.5
+        })
       }
     }
     $(window).resize(function() {
