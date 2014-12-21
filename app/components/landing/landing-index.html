@@ -13,10 +13,10 @@
     <div class="col-xs-12" style="height: 100%;">
       <div id="overview"  class="col-xs-10 col-xs-offset-1 text-center" >    
           <div id="pyro-label" class="vertical-align">
-            <img id="logo" src="images/PyroFire-lg.png" style="height:auto;width:auto;"/>
+            <!-- <img id="logo" src="images/PyroFire-lg.png" style="height:auto;width:auto;"/> -->
             <h1 class="app-title h1-md" style="margin-top: 0">pyro</h1>
-            <h3 class="app-title hidden-mobile">realtime apps with ease</h3>
-            <!-- <button id="pyrobutton" ng-click="pyroSymbolClicked()" class="btn btn-fab btn-raised btn-main btn-material-deeporange"><i class="fa fa-fire"></i></button> -->
+            <h3 class="app-title hidden-mobile m-b-md">realtime apps with ease</h3>
+            <button id="pyrobutton" ng-click="pyroSymbolClicked()" class="btn btn-fab btn-raised btn-main btn-material-deeporange" style="margin-top:1em;"><i class="fa fa-fire"></i></button>
           </div>
           <div id="signup" style="position:absolute;bottom:0;left:0;right:0;">
             <h4 style="font-weight:300">sign up for the private alpha:</h4><hr class="hidden-mobile"/>
@@ -54,7 +54,7 @@
       });
       if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
         $('#pyro-label').css({
-          'top': $('#overview').height()/2 - $('#pyro-label').height()
+          'top': $('#overview').height()/2 - $('#pyro-label').height()/1.5
         });
         $('h1.app-title').css({
           'line-height': 0.9
