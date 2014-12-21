@@ -159,9 +159,17 @@ angular.module('pyro.service', ['firebase'])
 				return deferredLoad.promise;
 			};
 			pyro.$deleteObject = function(argListName, argObjectId){
-				pyro.deleteObject(argListName, argObjectId);
-				console.log(argObjectId + ' was removed from the ' + argListName + ' list');
+				var deferred = $q.defer();
+				pyro.deleteObject(argListName, argObjectId, function(){
+					console.log(argObjectId + ' was removed from the ' + argListName + ' list');
+					deferred.resolve();
+				}, function(err){
+					console.error('[$deleteObject] Error removing' + argObjectId + ' was removed from the ' + argListName + ' list');
+					deferred.reject(err);
+				});
+				return deferred.promise;
 			};
+			// [TODO] Make this $getListCount and also create $getNestedListCount([], success, error)
 			pyro.$getObjectCount = function(argListName) {
 				var deferred = $q.defer();
 				pyro.getObjectCount(argListName,function(count){
@@ -313,6 +321,7 @@ angular.module('pyro.service', ['firebase'])
 	pyroMaster.$deleteInstance = function(argInstanceName){
 		console.log('deleteInstance called with:', argInstanceName);
 		var deferred = $q.defer();
+		var auth = this.pyroRef.getAuth();
 		if(auth) {
 			var postObj = {name: argInstanceName, uid:auth.uid};
 			var self = this;
@@ -392,7 +401,7 @@ angular.module('pyro.service', ['firebase'])
 							var auth = pyroMaster.mainRef.getAuth();
 							if(auth && auth.hasOwnProperty('uid')) {
 								dataRef.child(eventInfoLocation).child(formattedCode).push({uid: auth.uid, createdAt:Firebase.ServerValue.TIMESTAMP});
-								console.log('usage of code pushed to firebase');
+								console.log('[pyroMaster.$lockedSignup] usage of code pushed to firebase');
 							}
 				      // Save fb data to firebase
 				      pyroMaster.$saveFbAccountData(fbAccount).then(function(){

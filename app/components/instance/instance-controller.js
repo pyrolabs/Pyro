@@ -125,8 +125,8 @@ angular.module('pyroApp.controllers')
       console.log('confirm was true, deleteing:', argName);
       pyroMaster.$deleteInstance(argName).then(function(){
         console.log('[InstanceListCtrl] startDelete called');
-      }, function(){
-        console.error('[InstanceListCtrl]Error deleteing instance');
+      }, function(err){
+        console.error('[InstanceListCtrl]Error deleteing instance', err);
       });
     }
   }
