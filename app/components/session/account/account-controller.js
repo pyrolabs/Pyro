@@ -16,7 +16,12 @@ angular.module('pyroApp.controllers')
     }, function(err){
       console.error('[SignupCtrl] Error running $lockedSignup:', err);
       $scope.loading.signup = false;
-      $scope.err = err;
+      if(err.error = "USER_EXISTS") {
+        //Firebase account already exists with different credentials... prompt to login
+        $scope.err = {message:'Firebase account already exists. Please login: '};
+      } else {
+        $scope.err = err;
+      }
     });
   };
   //---------- Fake Signup Button -----------//

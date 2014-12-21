@@ -1,0 +1,40 @@
+<div id="background-container"></div>
+
+<section id="content" class="panel animated fadeIn" style="top:0!important;">
+  <div class="panel-heading">
+    <!-- Might be good for notifications
+    <span class="pull-right badge dk m-t-sm">17</span> -->
+    <p class="h4 text-lt text-center m-t-sm m-b-sm block font-bold">Pyro Platform</p>
+  </div>
+  <div class="panel-body text-center" style="padding-top:30px;">
+    <div class="container aside-xl">
+      <section class="m-b-lg">
+        <header class="wrapper text-center">
+          <strong ng-hide="err.message">Please enter to your exisiting Firebase info:</strong>
+          <strong ng-show="err.message" style="color:red;">{{err.message || 'Error'}}</strong>
+        </header>
+        <form>
+          <div class="list-group">
+            <div class="list-group-item">
+              <input type="email" placeholder="Email" class="form-control no-border" ng-model="loginData.email">
+            </div>
+            <div class="list-group-item">
+               <input type="password" placeholder="Password" class="form-control no-border" ng-model="loginData.password">
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-lg  btn-warning btn-block" ng-click="fbLogin()" ng-class="{'btn-default disabled': loading.login}">
+            <span ng-hide="loading.login">Firebase Sign in</span>
+            <i class="icon ion-load-d fa-spin" ng-show="loading.login"></i>
+          </button>
+          <!-- <div class="text-center m-t m-b"><a href=""><small>Forgot password?</small></a></div> -->
+          <div class="line line-dashed"></div>
+          <p class="text-muted text-center">Don't have an account? <a ui-sref="signup" class="text-warning m-l-xs"> Sign up.</a></p>
+          <!-- <a href="" ui-sref="signup" class="btn btn-lg btn-default btn-secondary btn-block">Sign up</a> -->
+        </form>
+      </section>
+    </div>
+  </div>
+
+</section>
+

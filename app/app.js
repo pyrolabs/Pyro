@@ -39,6 +39,15 @@ angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroA
         }
       }
     })
+    .state('fbLogin', {
+      url: '/fbLogin',
+      views:{
+        'main':{
+          templateUrl: 'components/session/login/login-fb.html',
+          controller: 'LoginCtrl'
+        }
+      }
+    })
     .state('signup', {
       url: '/signup',
       views:{

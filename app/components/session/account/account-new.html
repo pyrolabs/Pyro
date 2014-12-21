@@ -11,7 +11,7 @@
         <section class="m-b-lg">
           <header class="wrapper text-center">
             <strong ng-hide="err.message">please fill out the form below:</strong>
-            <strong ng-show="err.message" style="color:red;">{{err.message || 'Error'}}</strong>
+            <strong ng-show="err.message" style="color:red;">{{err.message || 'Error'}} <a ui-sref="fbLogin">Log into Firebase</a></strong>
           </header>
           <form>
             <div class="list-group">
