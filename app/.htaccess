@@ -1,0 +1,25 @@
+SetEnvIfNoCase Referer ILoveVitaly.com spambot=yes
+
+SetEnvIfNoCase Referer ILoveVitaly.ru spambot=yes
+
+SetEnvIfNoCase Referer ILoveVitaly.Org spambot=yes
+
+SetEnvIfNoCase Referer ILoveVitaly.Info spambot=yes
+
+SetEnvIfNoCase Referer ILoveItaly.Ru spambot=yes
+
+SetEnvIfNoCase Referer shopping.ilovevitaly.ru spambot=yes
+
+SetEnvIfNoCase Referer maps.ilovevitaly.com spambot=yes
+
+SetEnvIfNoCase Referer 230-60-110-78.net.hts.ru spambot=yes
+
+SetEnvIfNoCase Referer net.hts.ru spambot=yes
+
+SetEnvIfNoCase Referer 78.110.60.230 spambot=yes
+
+Order allow,deny
+
+Allow from all
+
+Deny from env=spambot
