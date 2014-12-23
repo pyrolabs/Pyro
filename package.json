@@ -14,6 +14,7 @@
     "grunt-jsdoc-plugin": "^0.1.4",
     "grunt-ng-constant": "^1.0.0",
     "grunt-open": "^0.2.3",
+    "grunt-shell": "^1.1.1",
     "grunt-wiredep": "^2.0.0",
     "wiredep": "^2.2.0"
   },

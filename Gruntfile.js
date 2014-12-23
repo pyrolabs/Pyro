@@ -91,7 +91,11 @@ module.exports = function(grunt) {
             }
           }
         }
-
+      },
+      shell:{
+        deploy:{
+          command:'firebase deploy'
+        }
       }
     });
 
@@ -113,13 +117,16 @@ module.exports = function(grunt) {
     //Dynamic generation of angular constants
     grunt.loadNpmTasks('grunt-ng-constant');
 
+    //Run shell commands (Firebase deploy)
+    grunt.loadNpmTasks('grunt-shell');
+
     // Default task(s).
     grunt.registerTask('default', ['connect','watch']);
 
     grunt.registerTask('stage', ['ngconstant:stage']);
 
-    // Default task(s).
-    grunt.registerTask('release', ['ngconstant:release', 'bump:prerelease']);
+    // Relase Task (Update version number then angular constants then deploy)
+    grunt.registerTask('release', ['bump:prerelease', 'ngconstant:release',  'shell:deploy']);
 
     grunt.registerTask('serve', ['connect'], function() {
         grunt.task.run('connect');
