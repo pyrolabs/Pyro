@@ -1,58 +1,32 @@
 <div id="content" class="builder">
   <div class="hbox vbox stretch">
     <!-- .aside -->
-    <aside class="bg-white aside-md hidden-print hidden-xs" id="nav">          
+    <aside class="bg-white aside-sm hidden-print hidden-xs" id="nav">          
       <div class="vbox">
         <div class="w-f scrollable">
           <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railOpacity="0.2">           
             <!-- nav -->                 
             <nav class="nav-primary hidden-xs">
-              <div class="btn-group" style="background:none;">
+<!--               <div class="btn-group" style="background:none;">
                 <a class="btn btn-default dropdown-toggle" ng-cloak data-toggle="dropdown"><i class="fa fa-cube ion-icon-lg" style="margin-right:5px;"></i> {{pyroInstance.name || 'App'}} <div class="caret"></div></a>
                 <ul class="dropdown-menu dropdown-select"style="width:100%;text-align:center;">
                   <li ng-repeat="(key, val) in instanceList"><a ui-sref="{{currentState.name}}({ appId: '{{val.name}}'})"><input type="radio" name="b">{{val.name}}</a></li>
                 </ul>
-              </div>
+              </div> -->
               <ul class="nav nav-main">
-                <li ng-click="goToData();" class="item menu-item">
-                  <a>
-                    <i class="icon ion-icon main-icon ion-merge">
-                    </i>
-                    <span class="font-bold">Data</span>
-                  </a>
-                </li>
-                <li ng-click="goToEditor();" class="item menu-item">
-                  <a>
-                    <i class="icon ion-icon main-icon ion-code">
-                    </i>
-                    <span class="font-bold">Editor</span>
-                    <div class="pull-right" style="margin-top:-0.25em;">
-                      <i class="icon ion-icon m-r-xs ion-ios-cloud-download-outline text-muted"></i>
-                      <i class="icon ion-icon m-l-xs ion-ios-cloud-upload-outline text-muted"></i>
-                    </div>
-                  </a>
-                </li>
-                <li ng-click="goToTester();" class="item menu-item active">
+                <li class="item menu-item">
                   <a class="auto">
                     <i class="icon ion-icon main-icon ion-iphone">
                     </i>
                     <span class="font-bold">Tester</span>
                   </a>
                   <ul class="nav" style="display: block;">
-                    <li ng-class="{'active': '{{emuRender.type}}' == 'web'}"><a class="item menu-item second-item" ng-click="setEmulator('web')">Website</a></li>
-                    <li ng-class="{'active': '{{emuRender.type}}' == 'iphone6'}"><a class="item menu-item second-item" ng-click="setEmulator('iphone6')">iPhone 6</a></li>
-                    <li ng-class="{'active': '{{emuRender.type}}' == 'iphone5'}"><a class="item menu-item second-item" ng-click="setEmulator('iphone5')">iPhone 5</a></li>
+                    <li ng-class="{'active': '{{emuRender.type}}' === 'web'}"><a ng-click="setEmulator('web')">Website</a></li>
+                    <li ng-class="{'active': '{{emuRender.type}}' === 'iphone6'}"><a ng-click="setEmulator('iphone6')">iPhone 6</a></li>
+                    <li ng-class="{'active': '{{emuRender.type}}' === 'iphone5'}"><a ng-click="setEmulator('iphone5')">iPhone 5</a></li>
                   </ul>
                 </li>
-                <li ng-click="goToDash()" class="item menu-item">
-                  <a class="auto">
-                    <i class="icon ion-icon main-icon ion-ios-analytics-outline">
-                    </i>
-                    <span class="font-bold">Insights</span>
-                  </a>
-                </li>
               </ul>
-              <div class="line dk hidden-nav-xs"></div>
             </nav> <!-- / nav -->
           </div>
         </div>

@@ -110,7 +110,7 @@ angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroA
             });
             return deferred.promise;
           },
-          instance:function(pyroMaster, $stateParams, $q, pyro){
+          instance:function($rootScope, pyroMaster, $stateParams, $q, pyro){
             var deferred = $q.defer()
             pyroMaster.$loadObject('instances', $stateParams.appId).then(function(returnedInstance){
               var pyroObj = pyro(returnedInstance);

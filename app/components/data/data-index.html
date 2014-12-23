@@ -6,67 +6,7 @@
   }
   </style>
   <div class="hbox vbox stretch scrollabe">
-    <!-- .aside -->
-    <aside class="bg-white aside-md hidden-print hidden-xs" id="nav">
-      <div class="vbox">
-        <div class="w-f scrollable">
-          <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railOpacity="0.2">
 
-            <!-- nav -->
-
-            <nav class="nav-primary hidden-xs">
-              <div class="btn-group" style="background:none;">
-                <a class="btn btn-default dropdown-toggle" ng-cloak data-toggle="dropdown"><i class="fa fa-cube ion-icon-lg" style="margin-right:5px;"></i> {{pyroInstance.name || 'App'}} <div class="caret" ng-hide="!instanceList" ></div></a>
-                <ul class="dropdown-menu dropdown-select" ng-hide="!instanceList" style="width:100%;text-align:center;">
-                  <li ng-repeat="(key, val) in instanceList"><a ui-sref="{{currentState.name}}({ appId: '{{val.name}}'})"><input type="radio" name="b">{{val.name}}</a></li>
-                </ul>
-              </div>
-              <ul class="nav nav-main" data-ride="collapse">
-                
-                <li ng-click="goToData();" class="item menu-item">
-                  <a>
-                    <i class="icon ion-icon main-icon ion-merge text-warning">
-                    </i>
-                    <span class="font-bold">Data</span>
-                  </a>
-                </li>
-                
-                <li ng-click="goToEditor();" class="item menu-item">
-                  <a>
-                    <i class="icon ion-icon main-icon ion-code">
-                    </i>
-                    <span class="font-bold">Editor</span>
-                    <div class="pull-right" style="margin-top:-0.25em;">
-                      <i class="icon ion-icon m-r-xs ion-ios-cloud-download-outline text-muted"></i>
-                      <i class="icon ion-icon m-l-xs ion-ios-cloud-upload-outline text-muted"></i>
-                    </div>
-                  </a>
-                </li>
-                
-                <li ng-click="goToTester();" class="item menu-item">
-                  <a>
-                    <i class="icon ion-icon main-icon ion-iphone">
-                    </i>
-                    <span class="font-bold">Tester</span>
-                  </a>
-                </li>
-                <li ng-click="goToDash()" class="item menu-item">
-                  <a class="auto">
-                    <i class="icon ion-icon main-icon ion-ios-analytics-outline">
-                    </i>
-                    <span class="font-bold">Insights</span>
-                  </a>
-                </li>
-              </ul>
-              <div class="line dk hidden-nav-xs"></div>
-            </nav>
-
-            <!-- / nav -->
-          </div>
-        </div>
-      </div>
-    </aside>
-    <!-- /.aside -->
     <div class="row navbar nav-header m-b-md tetrad-blue" style="z-index:-1;">
       <div class="text-center">
         <h1 class="text-white" style="font-weight:200;">Data Viewer</h1>

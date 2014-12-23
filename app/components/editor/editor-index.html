@@ -1,56 +1,15 @@
 <div id="content" class="builder">
   <div class="hbox stretch" style="height:100%;">
     <!-- .aside -->
-    <aside class="bg-white aside-md hidden-print hidden-xs" id="nav">
+    <aside class="bg-white aside-md hidden-print hidden-xs animated fadeInLeft" id="nav"  ng-show="files.$collapsed == true">
       <div class="vbox">
         <div class="w-f scrollable">
           <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railOpacity="0.2">
             <!-- nav -->
-            <nav class="nav-primary hidden-xs">
-              <div class="btn-group" style="background:none;">
-                <a class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cube ion-icon-lg" style="margin-right:5px;"></i> {{pyroInstance.name || 'App'}} <div class="caret"></div></a>
-                <ul class="dropdown-menu dropdown-select"style="width:100%;text-align:center;">
-                  <li ng-repeat="(key, val) in instanceList"><a ui-sref="{{currentState.name}}({ appId: '{{val.name}}'})"><input type="radio" name="b">{{val.name}}</a></li>
-                </ul>
-              </div>
-              <ul class="nav nav-main">
-                <li ng-click="goToData()" class="item menu-item">
-                  <a>
-                    <i class="icon ion-icon main-icon ion-merge">
-                    </i>
-                    <span class="font-bold">Data</span>
-                  </a>
-                </li>
-                <li class="item menu-item active">
-                  <a>
-                    <i class="icon ion-icon main-icon ion-code-working text-warning">
-                    </i>
-                    <span class="font-bold">Editor</span>
-                  </a>
-                </li>
-                <li class="item menu-item vbox stretch">
-                  <!-- /filelist -->
-                  <treecontrol class="tree-classic" tree-model="files" options="opts" on-selection="openFile(node)">
-                    {{node.name}}
-                  </treecontrol>
-                  <!-- /filelist -->
-                </li>
-                <li ng-click="goToTester()" class="item menu-item">
-                  <a>
-                    <i class="icon ion-icon main-icon ion-iphone">
-                    </i>
-                    <span class="font-bold">Tester</span>
-                  </a>
-                </li>
-                <li ng-click="goToDash()" class="item menu-item">
-                  <a class="auto">
-                    <i class="icon ion-icon main-icon ion-ios-analytics-outline">
-                    </i>
-                    <span class="font-bold">Insights</span>
-                  </a>
-                </li>
-              </ul>
-              <div class="line dk hidden-nav-xs"></div>
+            <nav class="nav-primary" style="padding-top:2em;">
+              <treecontrol class="tree-classic" tree-model="files" options="opts" on-selection="openFile(node)">
+                {{node.name}}
+              </treecontrol>
             </nav>
             <!-- / nav -->
           </div>
@@ -66,10 +25,7 @@
     <!-- editor -->
 
     <div id="builder">
-      <button class="btn-cta btn btn-flat btn-clear m-n visible-xs" ng-click="toggleFolders()" style="position:fixed;left:-0.75em;top:5.5em;">
-        <i class="ion-android-folder text-white" style="font-size:2em;"></i>
-      </button>
-      <div class="m-t-sm ng-hide" ng-show="files.$collapsed == true">
+      <div class="ng-hide" ng-show="files.$collapsed == true">
         <treecontrol class="tree-classic visible-xs m-t-md m-b-sm animated fadeInDown" tree-model="files" options="opts" on-selection="openFile(node)">
           {{node.name}}
         </treecontrol>
@@ -77,15 +33,22 @@
       <div ui-ace="{useWrapMode: true, theme:'monokai', onLoad:aceLoaded, onChange:aceChanged}" id="build-editor"></div>
     </div>
 
-    <div >
-    <div class="btn-cta cta-set visible-xs" style="position:fixed;right:2em;bottom:2em;">
-      <button class="btn btn-fab btn-raised btn-material-lightgrey text-center padder-n" ng-click="saveFile()" ng-class="{'disabled' : !(appRam.$currentFile)}"><i class="ion-upload" style="font-size:1.25em;top:-.05em;" ng-class="{'text-muted' : !(appRam.$currentFile), ' text-warning':appRam.$currentFile}"></i></button>
-    </div>
+    <div>
+      <div class="btn-cta cta-set visible-xs" style="position:fixed;right:2em;top:6.75em;">
+        <button class="btn btn-fab btn-raised btn-material-lightgrey text-center padder-n" ng-click="saveFile()" ng-class="{'disabled' : !(appRam.$currentFile)}"><i class="ion-upload" style="font-size:1.25em;top:-.05em;" ng-class="{'text-muted' : !(appRam.$currentFile), ' text-warning':appRam.$currentFile}"></i></button>
+      </div>
+      <div class="btn-cta cta-set visible-xs" style="position:fixed;right:2em;bottom:2em;">
+        <button class="btn btn-fab btn-raised btn-material-lightgrey text-center padder-n" ng-click="toggleFolders()"><i class="ion-android-folder text-white" style="font-size:1.25em;top:-.05em;" ng-class="{'text-muted' : !(appRam.$currentFile), ' text-warning':appRam.$currentFile}"></i></button>
+      </div>
 
-    <div class="btn-cta cta-set hidden-xs" style="position:fixed;right:1em;top:6.75em;">
-      <button class="btn btn-fab btn-raised btn-material-lightgrey text-center padder-n" ng-click="saveFile()" ng-class="{'disabled' : !(appRam.$currentFile)}"><i class="ion-upload" style="font-size:1.25em;top:-.05em;" ng-class="{'text-muted' : !(appRam.$currentFile), ' text-warning':appRam.$currentFile}"></i></button>
+      <div class="btn-cta cta-set hidden-xs" style="position:fixed;right:1em;top:6.75em;">
+        <button class="btn btn-fab btn-raised btn-material-lightgrey text-center padder-n" ng-click="saveFile()" ng-class="{'disabled' : !(appRam.$currentFile)}"><i class="ion-upload" style="font-size:1.25em;top:-.05em;" ng-class="{'text-muted' : !(appRam.$currentFile), ' text-warning':appRam.$currentFile}"></i></button>
+      </div>
+      <div class="btn-cta cta-set hidden-xs" style="position:fixed;right:1em;top:11.75em;">
+        <button class="btn btn-fab btn-raised btn-material-lightgrey text-center padder-n" ng-click="toggleFolders()"><i class="ion-android-folder text-white" style="font-size:1.25em;top:-.05em;" ng-class="{'text-muted' : !(appRam.$currentFile), ' text-warning':appRam.$currentFile}"></i></button>
+      </div>
+
     </div>
-</div>
     <!-- /editor -->
   </div>
 </div>

@@ -101,7 +101,7 @@ angular.module('pyroApp.controllers')
         $scope.editorObj.getSession().setValue(fileObject.content);
         $scope.editorObj.getSession().setMode(getFileMode(fileObject));
       }
-      $scope.files.$collapsed = false;
+      // $scope.files.$collapsed = false;
     } else {
       console.error('[$scope.openFile()] File object does not exist');
     }

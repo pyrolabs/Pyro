@@ -1,10 +1,12 @@
 angular.module('pyroApp.controllers')
 
-.controller('DashCtrl', function($scope, $state, $rootScope, $stateParams, instance) {
+.controller('DashCtrl', function($scope, $state, $rootScope, $stateParams, instance, instanceData) {
   console.log('DashCtrl');
   // $rootScope.account = user;
   // $scope.instanceList = PyroArray('instances');
     $scope.pyroInstance = instance;
+    $scope.jsonData = instanceData;
+
     console.log('instance:', instance);
     $scope.pyroInstance.getUserCount(function(userCount){
       $scope.userCount = userCount;

@@ -1,15 +1,33 @@
-/* Empty. Add your own CSS if you like */
-
+/* ----- #GENERAL ----- */
 body {
   font-family: 'Lato', sans-serif !important; 
 }
+h1, h2, h3, h4 {
+  font-weight:200;
+}
+.h1-md {
+  font-size:10em;
+}
 
+
+/* ----- #GRID ----- */
 .padder-n {
   padding: 0 !important;
 }
+.vertical-align {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+
+/* --- #MODIFIERS ----- */
 .clickable {
   cursor: pointer;
 }
+
+
+/* ----- #COLORS-BACKGROUND ----- */
 .tetrad-blue {
   background-color: #1E71A2;
 }
@@ -22,27 +40,20 @@ body {
 .tetrad-orange {
   background-color: #FF5722;
 }
-h1, h2, h3, h4 {
-  font-weight:100;
+
+/* ----- COLORS-TEXT ----- */
+.text-material-tetradblue {
+  color: #1D71A3;
 }
 
-.h1-md {
-  font-size:10em;
-}
 
-#content {
-  position:absolute;
-  top:69px !important; right:0;
-  bottom:0; left:0;
-}
-
+/* ----- BACKGROUND ----- */
 #background-header {
   position:absolute;
   height: 140px;
   top:0; right:0;
   bottom:auto; left:0;
 }
-
 #background-container {
   position:absolute;
   top:0; right:0;
@@ -50,11 +61,43 @@ h1, h2, h3, h4 {
 }
 
 
+/* ----- #CONTENT ----- */
+#content {
+  position:absolute;
+  top:69px !important; right:0;
+  bottom:0; left:0;
+}
+#content.panel {
+  margin: 6em 2em 0 2em;
+  height: 440px;
+}
+#content.panel .panel-heading {
+  font-size: 1.375em;
+  background-color: #E0E0E0 !important;
+}
+
+
+/* ----- #SECTIONS ----- */
+#landing {
+  margin: 0;
+}
+#builder {
+  height: 100%;
+}
+#build-editor {
+  width: auto;
+  height: 100%;
+}
+.tree-label span {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+}
+
+
+/* ----- #FORMS ----- */
 .form-control,
 .form-control:active {
   color: black;
 }
-
 .form-control:focus {
   border-bottom-color: #E65100;
 }
@@ -62,135 +105,20 @@ h1, h2, h3, h4 {
    border-bottom-color: #1D71A3;
 }
 
-.text-material-tetradblue {
-  color: #1D71A3;
-}
-
-.btn-material-tetradblue {
-  background-color: #1D71A3 !important;
-}
-.btn-clear {
-  background: none !important;
-}
-
-#content.panel {
-  margin: 6em 2em 0 2em;
-  height: 440px;
-}
-
-#content.panel .panel-heading {
-  font-size: 1.375em;
-  background-color: #E0E0E0 !important;
-}
-
-#landing {
-  margin: 0;
-  padding: 
-}
-/*
-.panel-heading .panel-warning {
-  background-color: 
-}*/
-
-#builder {
-  height: 100%;
-}
-
-#build-editor {
-  width: auto;
-  height: 100%;
-}
-
-ul.ng-scope {
-  display: block !important;
-}
-.tree-label span {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
-}
-
-
-.ion-icon{ 
-  font-size: 1.5em;
-}
-
-.ion-icon-lg{ 
-  font-size: 1.5em;
-}
-
-.menu-item {
-  margin: 0.75em 0 0.75em 1em;
-}
-.menu-item .active,
-.menu-item .active a {
-  cursor: default !important;
-}
-.menu-item.second-item {
-  margin: 0.75em 0 0.75em 0;
-  padding-left: 4.5em !important;
-}
-.navbar-fixed-top {
-  text-align: center;
-  display: block;
-}
-
-.navbar-brand {
-  padding-top: 15px;
-}
-
-.nav .nav-main {
-  margin-left: 10px;
-}
-
-#nav .btn-group {
-  border: none !important;
-  box-shadow: none !important;
-}
-
+/* ----- #LISTS -----*/
 .list.card {
   max-width: 20em !important;
   margin-right: 1em !important;
 }
-
-.item.item-input {
-border:none;padding-right:1em;
+ul.ng-scope {
+  display: block !important;
 }
 
-.item.menu-item,
-.item.menu-item i.main-icon {
-  transition: color 0.3s ease;
-  transition: background-color 0.3s ease;
-}
 
-.item.menu-item > a {
-  width: 100%;
+/* ----- #BUTTONS ----- */
+.btn-clear {
+  background: none !important;
 }
-.item.menu-item > a > i {
-  text-align: center;
-}
-.item.menu-item {
-  cursor: pointer;
-}
-.item.menu-item:hover {
-  background-color: auto!important;
-}
-.item.menu-item:hover i.main-icon,
-.item.menu-item.active i.main-icon,
-.item.menu-item.active li.active .second-item:not(i):not(.nonactive) {
-  color: #E64A19 !important;
-}
-.item.menu-item.active .second-item {
-  margin-top: 0;
-  margin-bottom: 0;
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-
-.item.menu-item.active .second-item:hover {
-  color: #E64A19 !important;
-}
-
 .btn-cta {
   z-index: 2000 !important;
 }
@@ -203,28 +131,137 @@ border:none;padding-right:1em;
 .btn-warning.btn-secondary {
   background-color: #FF9675 !important;
 }
-
 .btn-warning.btn-seethru {
   background-color: rgba(255, 87, 34, 1) !important;
 }
-
-.text-warning {
-  color: rgb(255, 87, 34) !important;
+.btn-material-tetradblue {
+  background-color: #1D71A3 !important;
 }
 
+
+
+/* ----- #NAV ----- */
+.nav .nav-main {
+  margin-left: 10px;
+}
+.navbar-fixed-top {
+  text-align: center;
+  display: block;
+}
+.navbar-brand {
+  padding-top: 15px;
+}
+#nav .btn-group {
+  border: none !important;
+  box-shadow: none !important;
+}
 .navbar-dark {
   background-color: #616161 !important;
 }
-.vertical-align {
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-}
 
-a.dropdown-toggle:hover {
+
+/* ----- #DROPDOWN ----- */
+.header-panel .dropdown .dropdown-toggle {
+  position:fixed;
+  top:0;
+  width:6em;
+  background:none;
+  cursor:pointer;
+}
+.header-panel .dropdown-menu {
+  position: fixed;
+  margin: 0;
+}
+.header-panel .dropdown.dropdown-right .dropdown-menu,
+.header-panel .dropdown.dropdown-right .dropdown-toggle {
+  right:1em;
+}
+.header-panel .dropdown.dropdown-right .dropdown-menu {
+  left:auto;
+  width:8em;
+  top: 1.5em;
+}
+.header-panel .dropdown.dropdown-left .dropdown-menu,
+.header-panel .dropdown.dropdown-left .dropdown-toggle {
+  left:-0.1em;
+}
+.header-panel .dropdown.dropdown-left .dropdown-menu {
+  right:auto;
+  bottom: 0;
+  top:5.25em;
+  width:8em;
+}
+.header-panel .dropdown-toggle i {
+  font-size:3.5em;
+  color: white;
+}
+.header-panel .dropdown-menu a {
+  font-size:1.325em;
+  line-height:2em;
+}
+.header-panel a.dropdown-toggle:hover {
   background: none !important;
 }
+.header-panel .dropdown.dropdown-apps .dropdown-menu,
+.header-panel .dropdown.dropdown-apps .dropdown-toggle {
+  left:6em;
+}
+.header-panel .dropdown.dropdown-apps .dropdown-menu {
+}
+/* ----- #ICONS ----- */
+.ion-icon{ 
+  font-size: 1.5em;
+}
+.ion-icon-lg{ 
+  font-size: 1.5em;
+}
 
+
+/* ----- #MENUS ----- */
+.menu-item {
+  margin: 0.75em 0 0.75em 1em;
+}
+.menu-item .active,
+.menu-item .active a {
+  cursor: default !important;
+}
+.menu-item.second-item {
+  margin: 0.75em 0 0.75em 0;
+  padding-left: 4.5em !important;
+}
+.item.item-input {
+border:none;padding-right:1em;
+}
+.item.menu-item,
+.item.menu-item i.main-icon {
+  transition: color 0.3s ease;
+  transition: background-color 0.3s ease;
+}
+.item.menu-item > a {
+  width: 100%;
+}
+.item.menu-item > a > i {
+  text-align: center;
+}
+.item.menu-item {
+  cursor: pointer;
+}
+
+.item.menu-item.active .second-item {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+.item.menu-item.active .second-item:hover {
+  color: #E64A19 !important;
+}
+
+
+
+/* ----- #SIZING ----- */
 *,
 *:after,
 *::before {

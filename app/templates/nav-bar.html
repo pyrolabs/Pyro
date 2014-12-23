@@ -1,62 +1,41 @@
 <div class="header-panel navbar-dark navbar-fixed-top shadow-z-2" style="margin-bottom:69px;">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-xs-2 hidden-xs" >
-        <a style="color:white" href="" ui-sref="home"><h1>Pyro</h1></a>
-      </div>
-      <ul class="nav navbar-nav navbar-right hidden-xs nav-user user m-t-md m-r-sm" ng-cloak>
-        <li class="dropdown">
-          <a href="" class="dropdown-toggle pull-right" style="width:4em;bottom:0.75em;padding:0 0.5em 0 0;background:none;" data-toggle="dropdown">
-            <i class="text-white ion-android-more-vertical" style="font-size:4em;"></i>
-          </a>
-          <ul class="dropdown-menu animated fadeInRight" style="top:-0.25em;left:-10em;right:0em;">            
-            <li class="ng-hide">
-              <span class="arrow top"></span>
-              <a style="line-height:2em;font-size:1.325em;" href="">Settings</a>
-            </li>
-            <li>
-              <a style="line-height:2em;font-size:1.325em;" href="" ui-sref="account">Profile</a>
-            </li>
-            <li class="divider"></li>
-            <li>
-              <a style="line-height:2em;font-size:1.325em;" href="" ng-click="logout()" >Logout</a>
-            </li>
-          </ul>
-        </li>
-      </ul>
+      <ul class="row m-n" style="padding:0;list-style:none;">
 
-      <ul class="visible-xs row m-n" style="padding:0;list-style:none;">
-        <div class="col-xs-2" style="position:fixed;left:0.75em;background:none;cursor:pointer;height:100%">
-          <li class="dropdown" ng-hide="currentState.parent !== 'instance'">
-            <div class="dropdown-toggle" data-toggle="dropdown" style="position:absolute;top:0.125em;">
-              <i class="text-white ion-navicon" style="font-size:4em;"></i>
-            </div>
-          <ul class="dropdown-menu animated fadeInLeft" style="top:1em;right:-10em;left:0em;">            
-            <li><a style="line-height:2em;font-size:1.325em;" href="" ng-click="goToData();">Data</a></li>
-            <li><a style="line-height:2em;font-size:1.325em;" href="" ng-click="goToEditor();" >Editor</a></li>
-            <li><a style="line-height:2em;font-size:1.325em;" href="" ng-click="goToTester();" >Tester</a></li>
-            <li><a style="line-height:2em;font-size:1.325em;" href="" ng-click="goToDash();" >Insights</a></li>
-          </ul>
-         </li>
-        </div>
-        <div class="col-xs-2"></div>
-        <div class="col-xs-8">
-          <a style="color:white" href="" ui-sref="home"><h1>Pyro</h1></a>
-        </div>
         <div class="col-xs-2">
-          <li class="dropdown">
-          <div class="dropdown-toggle" style="width:5em;position:fixed;top:-.125em;right:0.75em;background:none;cursor:pointer;" data-toggle="dropdown">
-            <i class="text-white ion-android-more-vertical" style="font-size:4em;"></i>
-          </div>
-          <ul class="dropdown-menu animated fadeInRight" style="top:1em;left:-10em;right:0em;">            
-            <li><a style="line-height:2em;font-size:1.325em;" href="" ui-sref="account">Profile</a></li>
-            <li class="divider"></li>
-            <li><a style="line-height:2em;font-size:1.325em;" href="" ng-click="logout()" >Logout</a></li>
-          </ul>
-         </li>
+          <li class="dropdown dropdown-left" ng-hide="currentState.parent !== 'instance'">
+            <div class="dropdown-toggle" data-toggle="dropdown">
+              <i class="ion-navicon"></i>
+            </div>
+            <ul class="dropdown-menu animated fadeInLeft">
+              <li><a ng-click="goToData();">Data</a></li>
+              <li><a ng-click="goToEditor();">Editor</a></li>
+              <li><a ng-click="goToTester();">Tester</a></li>
+              <li><a ng-click="goToDash();">Insights</a></li>
+            </ul>
+          </li>
         </div>
-      </ul>
 
+        <div class="col-xs-8" style="padding: 0 6em;">
+          <h1 class="text-white">Pyro</h1>
+        </div>
+        
+        <div class="col-xs-2">
+          <li class="dropdown dropdown-right">
+            <div class="dropdown-toggle" data-toggle="dropdown">
+              <i class="ion-android-more-vertical"></i>
+            </div>
+            <ul class="dropdown-menu animated fadeInRight">
+              <li><a ui-sref="home"><i class="ion-android-apps m-r-md"></i>All Apps</a></li>
+              <li class="divider"></li>
+              <li><a ui-sref="account"><i class="ion-person m-r-md"></i>Account</a></li>
+              <li><a ng-click="logout()"><i class="ion-log-out m-r-md"></i>Logout</a></li>
+            </ul>
+          </li>
+        </div>
+
+      </ul>
     </div>
   </div>
 </div>
