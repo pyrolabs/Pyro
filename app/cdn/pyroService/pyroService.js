@@ -199,7 +199,7 @@ angular.module('pyro.service', ['firebase'])
 				var dbUrl = "https://"+dbName+".firebaseio.com"
 				var appUrl = "pyro-"+ argInstanceName + ".s3-website-us-east-1.amazonaws.com"
 				var instanceObj = {name: argInstanceName, bucketName:dbName, author:auth.uid, dbName:dbName, createdAt:Firebase.ServerValue.TIMESTAMP, dbUrl:dbUrl, url:dbUrl, appUrl:appUrl};
-				var endpointLocation = pyroServerUrl + 'api/generate';
+				const endpointLocation = pyroServerUrl + 'generate';
 				var postObj = {name: argInstanceName, uid:auth.uid};
 				$http.post(endpointLocation, postObj).success(function(data, status, headers){
 					console.log('[$generatePyro] Call to :' + endpointLocation + ' returned:', data, status);
@@ -210,7 +210,7 @@ angular.module('pyro.service', ['firebase'])
 						if(!err) {
 							// resolve with newInstanceRef data
 							console.log('Enabling email auth...');
-							var emailEnableEndpoint = pyroServerUrl + "api/fb/config";
+							const emailEnableEndpoint = pyroServerUrl + "fb/config";
 							var enableReqObj = {uid:auth.uid, name:argInstanceName};
 							console.log('requesting to:', emailEnableEndpoint, ' with: ', enableReqObj);
 							$http.post(emailEnableEndpoint, enableReqObj).success(function(data, status, headers){
@@ -243,7 +243,7 @@ angular.module('pyro.service', ['firebase'])
 	pyroMaster.$createApp = function(argAppName){
 		console.log('$createApp called');
 		var deferred = $q.defer();
-		var endpointLocation = pyroServerUrl + 'api/app/new';
+		const endpointLocation = pyroServerUrl + 'app/new';
 		if(auth) {
 			var postObj = {name: argAppName, uid:auth.uid};
 			var instanceRef = pyroBase.child('instances').child(argAppName);
@@ -255,7 +255,7 @@ angular.module('pyro.service', ['firebase'])
 					if(!err) {
 						// resolve with instanceRef data
 						console.log('new app generated successfully. Enabling email auth.');
-						var emailEnableEndpoint = pyroServerUrl + "api/fb/config";
+						var emailEnableEndpoint = pyroServerUrl + "fb/config";
 						var enableReqObj = {uid:auth.uid, name:argAppName};
 						console.log('requesting to:', emailEnableEndpoint, ' with: ', enableReqObj);
 						$http.post(emailEnableEndpoint, enableReqObj).success(function(data, status, headers){
@@ -283,7 +283,7 @@ angular.module('pyro.service', ['firebase'])
 	pyroMaster.$manageInstance = function(argInstanceData) {
 		var deferredCreate = $q.defer();
 		// [TODO] Do this correctly with the library
-		var endpointLocation = pyroServerUrl + 'api/fb/instance/get';
+		const endpointLocation = pyroServerUrl + 'fb/instance/get';
 			if(auth) {
 				var postObj = {name: argInstanceData.name, uid:auth.uid};
 				var newInstanceRef = pyroBase.child('instances').child(argInstanceData.name);
@@ -322,12 +322,13 @@ angular.module('pyro.service', ['firebase'])
 		console.log('deleteInstance called with:', argInstanceName);
 		var deferred = $q.defer();
 		var auth = this.pyroRef.getAuth();
+		const apiEndpoint = pyroServerUrl + 'delete';
 		if(auth) {
 			var postObj = {name: argInstanceName, uid:auth.uid};
 			var self = this;
 			// [TODO] put deleteObject after successful return of delete server call. It is flipped becuase delete functionality fails on server (deleting fb instance)
 			self.$deleteObject('instances', argInstanceName).then(function(){
-				$http.post(pyroServerUrl + 'api/delete', postObj).success(function(data, status, headers){
+				$http.post(apiEndpoint, postObj).success(function(data, status, headers){
 					console.log('Delete call responded:', data, status);
 					console.log('Delete instace completed successfully for:', argInstanceName);
 					deferred.resolve();
@@ -454,7 +455,7 @@ angular.module('pyro.service', ['firebase'])
 		if(argSignupData.hasOwnProperty('email') && argSignupData.hasOwnProperty('password')) {
 			// Make sure password is long enough
 			if(argSignupData.password.length >= 8){
-				var endpointUrl = pyroServerUrl + 'api/fb/account/new';
+				const endpointUrl = pyroServerUrl + 'fb/account/new';
 				console.log('[pyroService PyroMaster.$createFbAccount] Calling to server endpoint:', endpointUrl);
 				$http.post(endpointUrl, argSignupData).success(function(data, status, headers){
 					console.warn('[pyroService PyroMaster.$createFbAccount]'+ endpointUrl + ' call returned data:', data, ' status:', status, ' headers:' ,headers);
@@ -496,14 +497,15 @@ angular.module('pyro.service', ['firebase'])
 		console.log('[PyroMaster] getFbAccount called:', argSignupData);
 		var self = this;
 		var deferred = $q.defer();
+		const getAccountEndpoint = pyroServerUrl + 'fb/account/get';
 		// [TODO] look into if password should just be uid to be able to get the account later
 		if(argSignupData.hasOwnProperty('email') && argSignupData.hasOwnProperty('password')) {
 			// Make sure password is long enough
 			if(argSignupData.password.length >= 8){
 				var signupInfo = argSignupData;
 				if(!storedFbAccount) {
-					$http.post(pyroServerUrl + 'api/fb/account/get', argSignupData).success(function(data, status, headers){
-						console.log('[pyroService pyroMaster.$getFbAccount] api/fb/acount/get returned:', data, status);
+					$http.post(getAccountEndpoint, argSignupData).success(function(data, status, headers){
+						console.log('[pyroService pyroMaster.$getFbAccount] fb/acount/get returned:', data, status);
 						if(status && status == 200){
 							console.log('account load successful:', data, status);
 							if(data.hasOwnProperty('adminToken')){

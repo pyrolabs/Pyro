@@ -67,20 +67,31 @@ module.exports = function(grunt) {
         }
       },
        ngconstant: {
-        options: {
-          name: 'pyroApp.config',
-          dest: './app/app-config.js',
-          constants: {
-            version: grunt.file.readJSON('package.json').version,
-            SERVERURL: "https://pyro-server.herokuapp.com/"
+        stage:{
+          options: {
+            name: 'pyroApp.config',
+            dest: './app/app-config.js',
+            constants: {
+              version: "<%= pkg.version %>",
+              SERVERURL: "localhost:4000/staging/"
+            }
+            // ,
+            // values: {
+            //   debug: false
+            // }
           }
-          // ,
-          // values: {
-          //   debug: false
-          // }
         },
-        build: {
+        release:{
+          options: {
+            name: 'pyroApp.config',
+            dest: './app/app-config.js',
+            constants: {
+              version: "<%= pkg.version %>",
+              SERVERURL: "https://pyro-server.herokuapp.com/<%= pkg.version %>/"
+            }
+          }
         }
+
       }
     });
 
@@ -105,8 +116,10 @@ module.exports = function(grunt) {
     // Default task(s).
     grunt.registerTask('default', ['connect','watch']);
 
+    grunt.registerTask('stage', ['ngconstant:stage']);
+
     // Default task(s).
-    grunt.registerTask('release', ['ngconstant', 'bump:prerelease']);
+    grunt.registerTask('release', ['ngconstant:release', 'bump:prerelease']);
 
     grunt.registerTask('serve', ['connect'], function() {
         grunt.task.run('connect');
