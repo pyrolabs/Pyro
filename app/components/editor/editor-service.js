@@ -1,6 +1,9 @@
-// <<<<<<< Updated upstream
-angular.module('editor.service', ['pyro.service'])
-.factory('editorService',function($q, $http, pyroMaster){
+angular.module('editor.service', ['pyro.service', 'pyroApp.config'])
+.factory('editorService',function($q, $http, pyroMaster, SERVERURL){
+  const folderStuctureLocation = 'appFiles';
+  const dataLocation = 'alphaData';
+  const credsLocation = 's3Creds';
+  const uploadFileEndpoint = SERVERURL + "/app/upload"
 	return{
 		// saveFile:function(argBucketName, argFilePath, argFileContents){
 		// 	console.log('[editorService] saveFile called', arguments);
@@ -18,21 +21,19 @@ angular.module('editor.service', ['pyro.service'])
   //     return deferred.promise;
 		// },
     saveContentsToS3:function(argAppName, argFilePath){
-      var endpointLocation = "https://pyro-server.herokuapp.com/api/app/upload";
       var auth = pyroMaster.getAuth();
       if(!auth) {
         console.error('Not logged in');
         deferred.reject({message:'Not logged in'});
       }
       argFilePath = argFilePath.replace('fs', '');
-
       var postObj = {name:argAppName, filePath:argFilePath, uid:auth.uid};
       var deferred = $q.defer();
-      $http.post(endpointLocation, postObj).success(function(data, status, headers){
-        console.log('post to /app/upload returned successfully with:', data);
+      $http.post(uploadFileEndpoint, postObj).success(function(data, status, headers){
+        console.log('upload call returned successfully with:', data);
         deferred.resolve(data);
       }).error(function(data, status, headers){
-        console.error('error posting to /app/upload:', data);
+        console.error('error with upload call:', data);
         deferred.reject(data);
       });
       return deferred.promise;
@@ -64,7 +65,7 @@ angular.module('editor.service', ['pyro.service'])
       return deferredDownload.promise;
 		}, // /downloadFileFromS3
     getFolderStructure:function(argAppName){
-      console.log('getFolderStucture called:')
+      console.log('getFolderStucture called:');
       var deferred = $q.defer();
       // var params = {Bucket:"pyro-" + argAppName};
       // s3.listObjects(params, function(err, data){
@@ -76,25 +77,23 @@ angular.module('editor.service', ['pyro.service'])
       //     deferred.reject(err);
       //   }
       // });
-    pyroMaster.$loadObject('appFiles', argAppName).then(function(returnedObject){
-      if(returnedObject){
-        console.log('[editorService.getFolderStructure]:', returnedObject);
-        deferred.resolve(returnedObject);
-
-      } else {
-        console.error('Error loading file stucture from firebase.');
-        deferred.reject({message:'Error loading file structure'});
-      }
-     });
+      pyroMaster.$loadObject(folderStuctureLocation, argAppName).then(function(returnedObject){
+        if(returnedObject){
+          console.log('[editorService.getFolderStructure]:', returnedObject);
+          deferred.resolve(returnedObject);
+        } else {
+          console.error('Error loading file stucture from firebase.');
+          deferred.reject({message:'Error loading file structure'});
+        }
+      });
       return deferred.promise;
     }
 	}
   var creds = null;
   var s3 = null;
+  // Configure S3 credentials using key loaded from FB
   function configS3() {
     var deferred = $q.defer();
-    const dataLocation = 'alphaData';
-    const credsLocation = 's3Creds';
     if(!creds) {
       console.log('Credentials do not currently exist, retrieving from firebase');
       var auth =  pyroMaster.mainRef.getAuth();

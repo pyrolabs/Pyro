@@ -16,7 +16,9 @@ angular.module('pyroApp.controllers')
   $scope.opts = {
      dirSelectable: false
   };
-
+  // $scope.newFolder = function(){
+  //   //Create new folder in app structure
+  // };
   // EDITOR
   $scope.dir = {};
   $scope.loading.editor = true;
@@ -62,6 +64,7 @@ angular.module('pyroApp.controllers')
       $scope.notification = $scope.appRam.$currentFile.name + " was saved successfully";
     }, function(err){
       console.error('error saving file:',err);
+      $scope.notification = "Error saving file";
       $scope.err = err;
     })
   };
@@ -105,7 +108,6 @@ angular.module('pyroApp.controllers')
     } else {
       console.error('[$scope.openFile()] File object does not exist');
     }
-    
   };
   function saveFileNewContent() {
     // [TODO] Handle non generated app bucket name
@@ -123,6 +125,7 @@ angular.module('pyroApp.controllers')
   function replaceAll(find, replace, str) {
     return str.replace(new RegExp(find, 'g'), replace);
   }
+  //[TODO] These functions should be prototypes of an angularfire object
   function stringifyPath(argFile) {
     // Remove fs from path
     console.log('[stringifyPath] called with:', argFile);
