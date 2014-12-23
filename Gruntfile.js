@@ -57,11 +57,11 @@ module.exports = function(grunt) {
           updateConfigs:['pkg'],
           commit:true,
           commitMessage:'[RELEASE] Release v%VERSION%',
-          commitFiles:[],
+          commitFiles:['-a'],
           createTag:true,
           tagName:'v%VERSION%',
           push:true,
-          pushTo:'upstream',
+          pushTo:'origin',
           gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d',
           globalReplace: false
         }
