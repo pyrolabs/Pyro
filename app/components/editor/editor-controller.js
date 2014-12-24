@@ -16,9 +16,18 @@ angular.module('pyroApp.controllers')
   $scope.opts = {
      dirSelectable: false
   };
-  // $scope.newFolder = function(){
-  //   //Create new folder in app structure
-  // };
+  $scope.startNewFolder = function(){
+    //Show area to type in name of new folder
+  }
+  $scope.newFolder = function(){
+    //Create new folder in app structure
+    editorService.addNewFolder('test-folder', 'components', $scope.pyroInstance.name).then(function(){
+      console.log('Folder created successfully');
+    }, function(err){
+      console.error('Error creating new folder:', err);
+      $scope.err = err;
+    })
+  };
   // EDITOR
   $scope.dir = {};
   $scope.loading.editor = true;

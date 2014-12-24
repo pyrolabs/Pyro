@@ -193,6 +193,7 @@ angular.module('pyro.service', ['firebase'])
 		if(argInstanceName) {
 			//Instance name exists
 			var newInstanceRef = pyroBase.child('instances').child(argInstanceName);
+			auth = pyroMaster.mainRef.getAuth();
 			if(auth) {
 				//Auth exists
 				var dbName = "pyro-"+ argInstanceName;
@@ -435,7 +436,7 @@ angular.module('pyro.service', ['firebase'])
 	pyroMaster.$saveFbAccountData = function(argFbAccountData) {
 		console.log('[PyroMaster]$saveFbAccountData called:', argFbAccountData);
 		var deferred = $q.defer();
-		var auth = self.pyroRef.getAuth();
+		var auth = pyroMaster.mainRef.getAuth();
 		console.log('[PyroMaster]$saveFbAccountData auth:', auth);
 		self.pyroRef.child('fbData').child(auth.uid).setWithPriority(argFbAccountData, argFbAccountData.email, function(err){
 			if(!err) {
@@ -514,7 +515,7 @@ angular.module('pyro.service', ['firebase'])
 							} else {
 								deferred.reject({status:500, message:'Invalid return from server'});
 							}
-							
+
 						} else if(status && status == 204) {
 							console.warn('[pyroService pyroMaster.$getFbAccount] status of $httppost is good:', status, data);
 			        //Firebase information is incorrect

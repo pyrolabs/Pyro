@@ -67,15 +67,17 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config'])
     getFolderStructure:function(argAppName){
       console.log('getFolderStucture called:');
       var deferred = $q.defer();
-      // var params = {Bucket:"pyro-" + argAppName};
-      // s3.listObjects(params, function(err, data){
-      //   if(!err){
-      //     console.log('Objects loaded from S3:', data);
-      //     deferred.resolve(data);
-      //   } else {
-      //     console.error('Error getting objects from S3');
-      //     deferred.reject(err);
-      //   }
+      var params = {Bucket:"pyro-" + argAppName};
+      // configS3().then(function(){
+      //   s3.listObjects(params, function(err, data){
+      //     if(!err){
+      //       console.log('Objects loaded from S3:', data);
+      //       deferred.resolve(data);
+      //     } else {
+      //       console.error('Error getting objects from S3');
+      //       deferred.reject(err);
+      //     }
+      //   });
       // });
       pyroMaster.$loadObject(folderStuctureLocation, argAppName).then(function(returnedObject){
         if(returnedObject){
@@ -86,6 +88,53 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config'])
           deferred.reject({message:'Error loading file structure'});
         }
       });
+      return deferred.promise;
+    },
+    addNewFolder:function(argFolderName, argFolderPath, argAppName){
+      console.log('addNewFolder called:');
+      var deferred = $q.defer();
+      const actualFolderPath = "fs/pyro-"+argAppName +"/" + argFolderPath;
+      var pathArray = argFolderPath.split("/");
+      var appStructurePathArray = [folderStuctureLocation, argAppName];
+      //Add folder to firebase location
+      pyroMaster.fbRef(appStructurePathArray).on('value', function(appStructureSnap){
+        var appStructure = appStructureSnap.val();
+        if(appStructure){
+          console.log('App structure found for ' + argAppName);
+          var newFolderPathArray = appStructurePathArray.concat(pathArray);
+          // New Folder ref
+          // [TODO] Enforce with with a rule as well
+          pyroMaster.fbRef(newFolderPathArray).on('value', function(newFolderSnap){
+            if(!newFolderSnap.val()){
+              var folderObj = {path:actualFolderPath, type:'folder'};
+              console.log('setting new folderObj:', folderObj);
+              newFolderSnap.ref().set(folderObj, function(err){
+                if(!err){
+                  console.log('New folder created successfully');
+                  deferred.resolve();
+                } else {
+                  deferred.reject({message:'Error creating folder', error:err});
+                }
+              });
+            } else {
+              deferred.reject({message:'A Folder with that name already exists'});
+            }
+          });
+        } else {
+          console.error('App structure not found for ' + argAppName);
+          deferred.reject({message:'App structure does not exist'})
+        }
+      }, function(err){
+        console.error('Error loading file stucture from firebase.');
+        deferred.reject({message:'Error loading file structure', error:err});
+      });
+      return deferred.promise;
+
+    },
+    createNewFile:function(){
+      console.log('createNewFile called:');
+      var deferred = $q.defer();
+
       return deferred.promise;
     }
 	}
