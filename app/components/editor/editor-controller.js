@@ -30,19 +30,32 @@ angular.module('pyroApp.controllers')
   };
   // EDITOR
   $scope.dir = {};
-  $scope.loading.editor = true;
+  // $scope.loading.editor = true;
   // $scope.setFolderTreeState(true);
+  var auth = pyroMaster.mainRef.getAuth();
+  var editor = ace.edit('firepad');
+  editor.setTheme("ace/theme/monokai");
+  var firepadRef = pyroMaster.mainRef.child('instances').child(instance.name).child('editor');
+  //// Create Firepad.
+  if(auth) {
+    var firepad = Firepad.fromACE(firepadRef, editor, { userId:auth.uid
+    });
+  }
+
   $scope.aceLoaded = function(_editor){
     console.log('[EditorCtrl] Ace editor loaded successfully');
     $scope.editorObj = _editor;
     var _session = _editor.getSession();
     var _renderer = _editor.renderer;
-    _session.setUndoManager(new ace.UndoManager());
+    // _session.setUndoManager(new ace.UndoManager());
+    _session.setUseWorker(false);
     // setup ram to store file content in real time
-    fileRam("pyro-" + $scope.pyroInstance.name).$bindTo($scope, 'appRam').then(function(){
-      $scope.loading.appRam = false;
-      console.log('$scope.appRam bound:', $scope.appRam);
-    });
+    //// Initialize Firebase.
+
+    // fileRam("pyro-" + $scope.pyroInstance.name).$bindTo($scope, 'appRam').then(function(){
+    //   $scope.loading.appRam = false;
+    //   console.log('$scope.appRam bound:', $scope.appRam);
+    // });
     $scope.loading.editor = false;
     // _renderer.setShowGutter(false);
     // Editor Events
@@ -166,12 +179,14 @@ angular.module('pyroApp.controllers')
   }
   function getFileMode(argFile){
     var fileMode = 'ace/mode/';
-    // [TODO] add regex for file type 
+    // [TODO] add regex for file type
     if(argFile.hasOwnProperty('filetype')){
       fileMode = fileMode + argFile.filetype;
     }
     return fileMode;
   }
+
+
       // function seperateS3Url(argUrl){
     //   console.log('seperateS3Url called with', argUrl);
     //   var re = /(.+)(?=\.s3)/g;

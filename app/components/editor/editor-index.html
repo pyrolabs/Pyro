@@ -31,7 +31,7 @@
                 <li class="item menu-item vbox stretch">
                   <!-- /filelist -->
                   <treecontrol class="tree-classic" tree-model="files" options="opts" on-selection="openFile(node)">
-                    {{node.name}}
+                    {{node.Key}}
                   </treecontrol>
                   <!-- /filelist -->
                 </li>
@@ -74,7 +74,8 @@
           {{node.name}}
         </treecontrol>
       </div>
-      <div ui-ace="{useWrapMode: true, theme:'monokai', onLoad:aceLoaded, onChange:aceChanged}" id="build-editor"></div>
+      <div id ="firepad" style="width: 100%; height: 100%;"></div>
+      <!-- <div ui-ace="{useWrapMode: true, theme:'monokai', onLoad:aceLoaded, onChange:aceChanged}" id="build-editor"></div> -->
     </div>
 
     <div >

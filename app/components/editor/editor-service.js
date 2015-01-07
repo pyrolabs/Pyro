@@ -68,26 +68,31 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config'])
       console.log('getFolderStucture called:');
       var deferred = $q.defer();
       var params = {Bucket:"pyro-" + argAppName};
-      // configS3().then(function(){
-      //   s3.listObjects(params, function(err, data){
-      //     if(!err){
-      //       console.log('Objects loaded from S3:', data);
-      //       deferred.resolve(data);
-      //     } else {
-      //       console.error('Error getting objects from S3');
-      //       deferred.reject(err);
-      //     }
-      //   });
-      // });
-      pyroMaster.$loadObject(folderStuctureLocation, argAppName).then(function(returnedObject){
-        if(returnedObject){
-          console.log('[editorService.getFolderStructure]:', returnedObject);
-          deferred.resolve(returnedObject);
-        } else {
-          console.error('Error loading file stucture from firebase.');
-          deferred.reject({message:'Error loading file structure'});
-        }
-      });
+      configS3().then(function(){
+        s3.listObjects(params, function(err, data){
+          if(!err){
+            console.log('Objects loaded from S3:', data);
+            var filesByLevel = _.groupBy(data.Contents, function(file){
+              return file.Key.split("/").length;
+            });
+            console.warn('TreeStructure:', filesByLevel);
+            deferred.resolve(filesByLevel);
+
+          } else {
+            console.error('Error getting objects from S3');
+            deferred.reject(err);
+          }
+        });
+      });
+  //     pyroMaster.$loadObject(folderStuctureLocation, argAppName).then(function(returnedObject){
+  //       if(returnedObject){
+  //         console.log('[editorService.getFolderStructure]:', returnedObject);
+  //         deferred.resolve(returnedObject);
+  //       } else {
+  //         console.error('Error loading file stucture from firebase.');
+  //         deferred.reject({message:'Error loading file structure'});
+  //       }
+  //     });
       return deferred.promise;
     },
     addNewFolder:function(argFolderName, argFolderPath, argAppName){
