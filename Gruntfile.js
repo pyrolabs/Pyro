@@ -9,7 +9,7 @@ module.exports = function(grunt) {
             port: '<%= conf.port %>',
             // keepalive: true, keeping grunt running
             livereload:true,
-            base: './app/',
+            base: './<%= conf.devFolder %>/',
             open: {
               target: 'http://localhost:<%= conf.port %>',
               appName: 'Google Chrome',
@@ -19,13 +19,13 @@ module.exports = function(grunt) {
       },
       watch: {
         html: {
-            files: ['app/**/*.html'],
+            files: ['<%= conf.devFolder %>/**/*.html'],
             options: {
               livereload: true
             }
         },
         js: {
-          files: ['app/**/*.js'],
+          files: ['<%= conf.devFolder %>/**/*.js'],
           options: {
             livereload:true
           }
@@ -37,7 +37,7 @@ module.exports = function(grunt) {
       },
       wiredep: {
         task: {
-          src: ['app/index.html'],
+          src: ['<%= conf.devFolder %>/index.html'],
           // options:{
           //   fileTypes:{
           //     fileExtension:{
@@ -70,7 +70,7 @@ module.exports = function(grunt) {
         stage:{
           options: {
             name: 'pyroApp.config',
-            dest: './app/app-config.js',
+            dest: './<%= conf.devFolder %>/app-config.js',
             constants: {
               version: "<%= pkg.version %>",
               SERVERURL: "localhost:4000/staging/"
@@ -84,12 +84,34 @@ module.exports = function(grunt) {
         release:{
           options: {
             name: 'pyroApp.config',
-            dest: './app/app-config.js',
+            dest: './<%= conf.devFolder %>/app-config.js',
             constants: {
               version: "<%= pkg.version %>",
               SERVERURL: "https://pyro-server.herokuapp.com/<%= pkg.version %>/"
             }
           }
+        }
+      },
+      copy:{
+        dist:{
+          files:[{expand: true, cwd:'./<%= conf.devFolder %>/', src:'**', dest:'<%= conf.distFolder %>/'}]
+        }
+      },
+      ngAnnotate: {
+        options: {
+          // Task-specific options go here.
+        },
+        dist: {
+          // Target-specific file lists and/or options go here.
+          files:[{expand: true, src:['<%= conf.distFolder %>/**/*.js']}]
+        },
+      },
+      uglify: {
+        dist: {
+          files: [
+            {expand:true, cwd:'<%= conf.distFolder %>/components', src:'**/*.js', dest:'<%= conf.distFolder %>/components'},
+            {expand:true, cwd:'<%= conf.distFolder %>', src:'*.js', dest:'<%= conf.distFolder %>'},
+          ]
         }
       },
       shell:{
@@ -108,6 +130,8 @@ module.exports = function(grunt) {
     //Watch files for reload
     grunt.loadNpmTasks('grunt-contrib-watch');
 
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+
     // Wire dependenceies
     grunt.loadNpmTasks('grunt-wiredep');
 
@@ -117,16 +141,22 @@ module.exports = function(grunt) {
     //Dynamic generation of angular constants
     grunt.loadNpmTasks('grunt-ng-constant');
 
+    // Handle Angular dependencies (needed for successful minification)
+    grunt.loadNpmTasks('grunt-ng-annotate');
+
     //Run shell commands (Firebase deploy)
     grunt.loadNpmTasks('grunt-shell');
+
+    //Copy files to dist folder for production processing
+    grunt.loadNpmTasks('grunt-contrib-copy')
 
     // Default task(s).
     grunt.registerTask('default', ['connect','watch']);
 
-    grunt.registerTask('stage', ['ngconstant:stage']);
+    grunt.registerTask('stage', ['ngconstant:stage','copy:dist', 'ngAnnotate:dist', 'uglify:dist']);
 
     // Relase Task (Update version number then angular constants then deploy)
-    grunt.registerTask('release', ['bump:prerelease', 'ngconstant:release',  'shell:deploy']);
+    grunt.registerTask('release', ['bump-only:prerelease', 'ngconstant:release', 'copy:dist', 'ngAnnotate:dist', 'uglify:dist',  'bump-commit', 'shell:deploy']);
 
     grunt.registerTask('serve', ['connect'], function() {
         grunt.task.run('connect');
