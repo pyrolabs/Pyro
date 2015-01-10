@@ -1,9 +1,11 @@
 angular.module('editor.service', ['pyro.service', 'pyroApp.config'])
 .factory('editorService',function($q, $http, pyroMaster, SERVERURL){
   const folderStuctureLocation = 'appFiles';
+  const fileStorageLocation = 'appRam'
   const dataLocation = 'alphaData';
   const credsLocation = 's3Creds';
   const uploadFileEndpoint = SERVERURL + "/app/upload"
+  var firepad = null;
 	return{
 		// saveFile:function(argBucketName, argFilePath, argFileContents){
 		// 	console.log('[editorService] saveFile called', arguments);
@@ -20,6 +22,55 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config'])
   //     });
   //     return deferred.promise;
 		// },
+    //Open file using ace editor and firepad
+    initializeFirepad:function(argAppName, argFileObject, argEditor){
+      var deferred = $q.defer();
+      var self = this;
+      var auth = pyroMaster.getAuth();
+      var fileObject = argFileObject;
+      fileObject.pathStr = stringifyPath(fileObject, argAppName);
+      fileObject.path = fileObject.path.replace("fs/pyro-"+argAppName+"/", "");
+      if(auth){
+        //User is authenticated
+        var firepadRef = pyroMaster.mainRef.child(fileStorageLocation).child(argAppName).child(fileObject.pathStr);
+        //Check if firepad exists
+        if(!firepad){
+          //firepad already exists
+          console.warn('firepad does not already exist:');
+          firepad = Firepad.fromACE(firepadRef, argEditor);
+        } else {
+          console.log('[initializeFirepad] firepad already exists');
+          firepad.dispose();
+          argEditor.getSession().setValue(null);
+          console.log('editor reset');
+          firepad = Firepad.fromACE(firepadRef, argEditor);
+        }
+          console.warn('ref stuff:', fileStorageLocation, argAppName, argFileObject.path);
+          firepad.on('ready', function(){
+            firepad.setUserId(auth.uid);
+            //Check for file contents at ref
+            if(firepad.isHistoryEmpty()){
+              //New File
+              console.log('[initializeFirepad] File does not already exist');
+              self.downloadFileFromS3(argAppName, argFileObject.path).then(function(fileContentString){
+                console.log('[initializeFirepad] File contents returned', fileContentString);
+                firepad.setText(fileContentString);
+                deferred.resolve(firepad);
+              }, function(err){
+                deferred.reject(err);
+              });
+            } else {
+              console.log('[initializeFirepad]  File already exists');
+              deferred.resolve(firepad);
+            }
+          });
+
+      } else {
+        deferred.reject({message:'You must be logged into edit code', error:'AUTH_REQUIRED'})
+      }
+
+      return deferred.promise;
+    },
     saveContentsToS3:function(argAppName, argFilePath){
       var auth = pyroMaster.getAuth();
       if(!auth) {
@@ -39,12 +90,11 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config'])
       return deferred.promise;
 
     },
-		downloadFileFromS3: function(argAppName, argFilePath){
-			console.log('[editorService]downloadFileFromS3 called to download:' + argFilePath + ' from ' + argAppName);
+		downloadFileFromS3: function(argAppName, argFileKey){
+			console.log('[editorService]downloadFileFromS3 called to download:' + argFileKey+ ' from ' + argAppName);
 			var deferredDownload = $q.defer();
-      var fileKey = argFilePath.replace("fs/pyro-"+ argAppName + "/", "");
-      console.log('downloadFileFromS3 filekey:', fileKey);
-			var uploadParams = {Bucket:'pyro-'+argAppName, Key:fileKey};
+      console.log('downloadFileFromS3 filekey:', argFileKey);
+			var uploadParams = {Bucket:'pyro-'+argAppName, Key:argFileKey};
       console.log('[editorService] downloadParams:', uploadParams);
       configS3().then(function(){
         s3.getObject(uploadParams, function(err, data){
@@ -63,36 +113,76 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config'])
       })
 
       return deferredDownload.promise;
-		}, // /downloadFileFromS3
+		},
+    // /downloadFileFromS3
     getFolderStructure:function(argAppName){
       console.log('getFolderStucture called:');
       var deferred = $q.defer();
       var params = {Bucket:"pyro-" + argAppName};
-      configS3().then(function(){
-        s3.listObjects(params, function(err, data){
-          if(!err){
-            console.log('Objects loaded from S3:', data);
-            var filesByLevel = _.groupBy(data.Contents, function(file){
-              return file.Key.split("/").length;
-            });
-            console.warn('TreeStructure:', filesByLevel);
-            deferred.resolve(filesByLevel);
-
-          } else {
-            console.error('Error getting objects from S3');
-            deferred.reject(err);
-          }
-        });
-      });
-  //     pyroMaster.$loadObject(folderStuctureLocation, argAppName).then(function(returnedObject){
-  //       if(returnedObject){
-  //         console.log('[editorService.getFolderStructure]:', returnedObject);
-  //         deferred.resolve(returnedObject);
-  //       } else {
-  //         console.error('Error loading file stucture from firebase.');
-  //         deferred.reject({message:'Error loading file structure'});
-  //       }
-  //     });
+      // configS3().then(function(){
+      //   s3.listObjects(params, function(err, data){
+      //     if(!err){
+      //       console.log('Objects loaded from S3:', data);
+      //       arrayOfFileObjectsToStructure(data.Contents).then(function(returnedStructure) {
+      //
+      //         deferred.resolve(returnedStructure);
+      //
+      //       })
+      //     } else {
+      //       console.error('Error getting objects from S3');
+      //       deferred.reject(err);
+      //     }
+      //   });
+      // });
+      // function arrayOfFileObjectsToStructure(argArray){
+      //   var deferred = $q.defer();
+      //
+      //   var modifiedArray = _.each(argArray, function(fileObject){
+      //     if(fileObject.hasOwnProperty('Key')){
+      //       var itemInfo = {
+      //         path:,
+      //         name:
+      //       }
+      //       if(keyIsDirectory(fileObject.Key)){
+      //
+      //       } else {
+      //
+      //       }
+      //     } else {
+      //       var err = {message:'Object does not have property "Key"', error:"INVALID_S3_OBJECT"};
+      //       console.error(, fileObject);
+      //       deferred.reject({});
+      //     }
+      //   })
+      //   deferred.resolve();
+      //
+      //   return deferred.promise;
+      //
+      // }
+      //
+      // function keyIsDirectory(key){
+      //   if(key && typeof key == 'string'){
+      //     console.warn('key split:', key.split("/"));
+      //     if(key.split("/").length > 1){
+      //       return true
+      //     } else {
+      //       return false
+      //     }
+      //   } else {
+      //     console.error('[keyIsDirectory] Invalid key');
+      //     return false
+      //   }
+      // }
+      // TODO Make this an angularfire object with path strinify/unstrinify attributes
+      pyroMaster.$loadObject(folderStuctureLocation, argAppName).then(function(returnedObject){
+        if(returnedObject){
+          console.log('[editorService.getFolderStructure]:', returnedObject);
+          deferred.resolve(returnedObject);
+        } else {
+          console.error('Error loading file stucture from firebase.');
+          deferred.reject({message:'Error loading file structure'});
+        }
+      });
       return deferred.promise;
     },
     addNewFolder:function(argFolderName, argFolderPath, argAppName){
@@ -175,5 +265,44 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config'])
       deferred.resolve(creds);
     }
     return deferred.promise;
+  }
+  function replaceAll(find, replace, str) {
+    return str.replace(new RegExp(find, 'g'), replace);
+  }
+  //[TODO] These functions should be prototypes of an angularfire object
+  function stringifyPath(argFile, argAppName) {
+    // Remove fs from path
+    console.log('[stringifyPath] called with:', argFile);
+    var strPath = argFile.path.replace('fs/', '');
+    console.log('[stringifyPath] fs removed:', strPath);
+    // remove app name
+    strPath = strPath.replace("pyro-"+ argAppName +'/', '');
+    strPath = strPath.replace('.', ':');
+    console.log('[stringifyPath] remeved app name:', strPath);
+    // Break it down by '/'
+    var finalRefArray = strPath.split('/');
+    console.warn("[stringifyPath] FinalRefArray: ",finalRefArray);
+    finalRefArray = finalRefArray.join('-');
+    console.log('[stringifyPath] finalRefStr:', finalRefArray);
+    return finalRefArray;
+  }
+  function unstringifyPath(argFile){
+    // Remove fs from path
+    console.log('[unstringifyPath] called with:', argFile);
+    var actualFilePath = argFile.path.replace('fs/pyro-'+$scope.pyroInstance.name+'/', '');
+    console.log('[unstringifyPath] removed app name and fs:', actualFilePath);
+    actualFilePath = replaceAll('/', '-', actualFilePath);
+    console.log('[unstringifyPath] removed backslashes:', actualFilePath);
+    actualFilePath = actualFilePath.replace('.', ':');
+    console.log('[unstringifyPath] replaced . :', actualFilePath);
+    return actualFilePath;
+  }
+  function getFileMode(argFile){
+    var fileMode = 'ace/mode/';
+    // [TODO] add regex for file type
+    if(argFile.hasOwnProperty('filetype')){
+      fileMode = fileMode + argFile.filetype;
+    }
+    return fileMode;
   }
 })

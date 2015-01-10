@@ -85,7 +85,21 @@ module.exports = function(grunt) {
              dest: './<%= conf.devFolder %>/app-config.js',
              constants: {
                version: "<%= pkg.version %>",
-               SERVERURL: "localhost:4000/staging/"
+               SERVERURL: "https://pyro-server.herokuapp.com/<%= pkg.version %>/"
+             }
+             // ,
+             // values: {
+             //   debug: false
+             // }
+           }
+         },
+         local:{
+           options: {
+             name: 'pyroApp.config',
+             dest: './<%= conf.devFolder %>/app-config.js',
+             constants: {
+               version: "<%= pkg.version %>",
+               SERVERURL: "localhost:4000/api/"
              }
              // ,
              // values: {
@@ -99,7 +113,7 @@ module.exports = function(grunt) {
             dest: './<%= conf.distFolder %>/app-config.js',
             constants: {
               version: "<%= pkg.version %>",
-              SERVERURL: "https://pyro-server.herokuapp.com/<%= pkg.version %>/"
+              SERVERURL: "https://pyro-server.herokuapp.com/staging/"
             }
             // ,
             // values: {
