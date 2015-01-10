@@ -6,6 +6,7 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config'])
   const credsLocation = 's3Creds';
   const uploadFileEndpoint = SERVERURL + "/app/upload"
   var firepad = null;
+
 	return{
 		// saveFile:function(argBucketName, argFilePath, argFileContents){
 		// 	console.log('[editorService] saveFile called', arguments);
@@ -23,52 +24,54 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config'])
   //     return deferred.promise;
 		// },
     //Open file using ace editor and firepad
-    initializeFirepad:function(argAppName, argFileObject, argEditor){
+    openWithFirepad:function(argAppName, argFileObject, argEditor){
       var deferred = $q.defer();
       var self = this;
       var auth = pyroMaster.getAuth();
       var fileObject = argFileObject;
       fileObject.pathStr = stringifyPath(fileObject, argAppName);
+      // Remove Extra stuff left from server
       fileObject.path = fileObject.path.replace("fs/pyro-"+argAppName+"/", "");
       if(auth){
         //User is authenticated
         var firepadRef = pyroMaster.mainRef.child(fileStorageLocation).child(argAppName).child(fileObject.pathStr);
         //Check if firepad exists
-        if(!firepad){
-          //firepad already exists
-          console.warn('firepad does not already exist:');
-          firepad = Firepad.fromACE(firepadRef, argEditor);
-        } else {
+        if(firepad){
           console.log('[initializeFirepad] firepad already exists');
+          // Disconnect old firepad session
           firepad.dispose();
+          // Empty out editor
           argEditor.getSession().setValue(null);
-          console.log('editor reset');
-          firepad = Firepad.fromACE(firepadRef, argEditor);
         }
-          console.warn('ref stuff:', fileStorageLocation, argAppName, argFileObject.path);
-          firepad.on('ready', function(){
-            firepad.setUserId(auth.uid);
-            //Check for file contents at ref
-            if(firepad.isHistoryEmpty()){
-              //New File
-              console.log('[initializeFirepad] File does not already exist');
-              self.downloadFileFromS3(argAppName, argFileObject.path).then(function(fileContentString){
-                console.log('[initializeFirepad] File contents returned', fileContentString);
-                firepad.setText(fileContentString);
-                deferred.resolve(firepad);
-              }, function(err){
-                deferred.reject(err);
-              });
-            } else {
-              console.log('[initializeFirepad]  File already exists');
+        // Setup new Firepad
+        firepad = Firepad.fromACE(firepadRef, argEditor, {userId:auth.uid});
+        //Set File mode in editor
+        argEditor.getSession().setMode(getFileMode(fileObject));
+        // Wait for firepad to be ready
+        firepad.on('ready', function(){
+          //Check for existing file contents at ref
+          if(firepad.isHistoryEmpty()){
+            // File does not already exist
+            console.log('[initializeFirepad] File does not already exist');
+            self.downloadFileFromS3(argAppName, argFileObject.path).then(function(fileContentString){
+              console.log('[initializeFirepad] File contents returned', fileContentString);
+              firepad.setText(fileContentString);
               deferred.resolve(firepad);
-            }
-          });
-
+            }, function(err){
+              deferred.reject(err);
+            });
+          } else {
+            // File already exists
+            console.log('[initializeFirepad]  File already exists');
+            deferred.resolve(firepad);
+          }
+        });
       } else {
-        deferred.reject({message:'You must be logged into edit code', error:'AUTH_REQUIRED'})
+        // Not Authenticated
+        var err = {message:'You must be logged in to use the editor.', error:'AUTH_REQUIRED'};
+        console.error(err.message);
+        deferred.reject(err);
       }
-
       return deferred.promise;
     },
     saveContentsToS3:function(argAppName, argFilePath){
@@ -305,4 +308,16 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config'])
     }
     return fileMode;
   }
+  function isAuthenticated(){
+    var auth = pyroMaster.getAuth();
+    if(auth && auth.hasOwnProperty('uid')){
+      return true
+    } else {
+      return false
+    }
+  }
+  // Replace all occurences of a string within another string
+  // function replaceAll(find, replace, str) {
+  //   return str.replace(new RegExp(find, 'g'), replace);
+  // }
 })
