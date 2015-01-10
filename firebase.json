@@ -1,6 +1,6 @@
 {
   "firebase": "pyro-platform",
-  "public": "app",
+  "public": "dist",
   "ignore": [
     "firebase.json",
     "**/.*",
