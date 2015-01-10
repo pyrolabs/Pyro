@@ -1,6 +1,6 @@
 
 angular.module('pyroApp.controllers')
-.controller('SignupCtrl', function($rootScope, $scope, $state, pyroMaster, $window) {
+.controller('SignupCtrl', function($rootScope, $scope, $state, pyroMaster) {
   console.log('SignupCtrl');
 	$scope.signupData = {};
   $scope.err = {};
@@ -9,7 +9,6 @@ angular.module('pyroApp.controllers')
     // [TODO] This should be a service and error checked.
     $scope.loading.signup = true;
     pyroMaster.$lockedSignup($scope.signupData).then(function(newAccount){
-      $window.ga('send','event', 'account-controller', 'CreateAccount', $scope.signupData.email);
       console.log('$lockedSignup successful:', newAccount);
       $scope.loading.signup = false;
       $state.go('home');
@@ -55,7 +54,7 @@ angular.module('pyroApp.controllers')
     }
   };
   $scope.changeEmail = function(pass, newEmail) {
-    
+
   };
   function resetInfo() {
     $scope.err = null;
