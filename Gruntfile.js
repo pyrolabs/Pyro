@@ -189,7 +189,7 @@ module.exports = function(grunt) {
     grunt.registerTask('default', ['ngconstant:dev', 'connect:dev','watch']);
 
     // Copy files to dist, set config vars for angular, depencency handling, minfication
-    grunt.registerTask('stage', ['copy:dist','ngconstant:stage', 'ngAnnotate:dist', 'uglify:dist']);
+    grunt.registerTask('stage', ['copy:dist','ngconstant:stage', 'ngAnnotate:dist', 'uglify:dist', 'htmlmin:dist']);
     // Stage and serve dist folder
     grunt.registerTask('test', ['stage', 'connect:dist']);
 
