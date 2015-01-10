@@ -154,9 +154,11 @@ module.exports = function(grunt) {
             removeComments: true,
             collapseWhitespace: true
           },
-          files: {
-            '<%= conf.distFolder %>/index.html': '<%= conf.distFolder %>/index.html',
-          }
+          files: [
+            {expand:true, cwd:'<%= conf.distFolder %>/', src:'index.html', dest:'<%= conf.distFolder %>/'},
+            {expand:true, cwd:'<%= conf.distFolder %>/components', src:'**/*.html', dest:'<%= conf.distFolder %>/components'},
+            {expand:true, cwd:'<%= conf.distFolder %>/templates', src:'**/*.html', dest:'<%= conf.distFolder %>/templates'}
+          ]
         }
       }
     });
