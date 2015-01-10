@@ -1,5 +1,7 @@
 {
 	"port": "9000",
 	"devFolder":"app",
-	"distFolder":"dist"
+	"distFolder":"dist",
+	"stageFB": "pyro",
+	"prodFB":"pyro-platform"
 }

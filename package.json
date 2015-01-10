@@ -17,8 +17,11 @@
     "grunt-ng-annotate": "^0.8.0",
     "grunt-ng-constant": "^1.0.0",
     "grunt-open": "^0.2.3",
+    "grunt-replace": "^0.8.0",
     "grunt-shell": "^1.1.1",
+    "grunt-update-json": "^0.2.1",
     "grunt-wiredep": "^2.0.0",
+    "load-grunt-tasks": "^2.0.0",
     "wiredep": "^2.2.0"
   },
   "repository": {

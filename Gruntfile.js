@@ -1,5 +1,6 @@
 module.exports = function(grunt) {
     // Project configuration.
+    require('load-grunt-tasks')(grunt);
     grunt.initConfig({
       pkg: grunt.file.readJSON('package.json'),
       conf: grunt.file.readJSON('config.json'),
@@ -176,41 +177,33 @@ module.exports = function(grunt) {
         }
       }
     });
-
-    //Connect plugin
-    grunt.loadNpmTasks('grunt-contrib-connect');
-    //Open plugin
-    grunt.loadNpmTasks('grunt-open');
-    //Watch files for reload
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    // Wire dependenceies
-    grunt.loadNpmTasks('grunt-wiredep');
-    //Auto Versioning
-    grunt.loadNpmTasks('grunt-bump');
-    //Dynamic generation of angular constants
-    grunt.loadNpmTasks('grunt-ng-constant');
-    // Uglify and closure
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    // Handle Angular dependencies (needed for successful minification)
-    grunt.loadNpmTasks('grunt-ng-annotate');
-    //Run shell commands (Firebase deploy)
-    grunt.loadNpmTasks('grunt-shell');
-    //Copy files to dist folder for production processing
-    grunt.loadNpmTasks('grunt-contrib-copy')
-    //Minify Html Files
-    grunt.loadNpmTasks('grunt-contrib-htmlmin');
-
-
+    grunt.registerTask('prodFb', function (key, value) {
+      var fbFile = "firebase.json"
+      var fb = grunt.file.readJSON(fbFile);
+      var config = grunt.file.readJSON("config.json");
+      fb['firebase'] = config['prodFB'] ;//edit the value of json object, you can also use projec.key if you know what you are updating
+      grunt.file.write(fbFile, JSON.stringify(fb, null, 2));//serialize it back to file
+    });
+    grunt.registerTask('stageFb', function (key, value) {
+      var fbFile = "firebase.json"
+      var fb = grunt.file.readJSON(fbFile);
+      var config = grunt.file.readJSON("config.json");
+      fb['firebase'] = config['stageFB'];
+      grunt.file.write(fbFile, JSON.stringify(fb, null, 2));
+    });
     // Default task(s).
     grunt.registerTask('default', ['ngconstant:dev', 'connect:dev','watch']);
 
     // Copy files to dist, set config vars for angular, depencency handling, minfication
-    grunt.registerTask('stage', ['copy:dist','ngconstant:stage', 'ngAnnotate:dist', 'uglify:dist', 'htmlmin:dist']);
-    // Stage and serve dist folder
-    grunt.registerTask('test', ['stage', 'connect:dist']);
+    grunt.registerTask('build', ['copy:dist','ngconstant:stage', 'ngAnnotate:dist', 'uglify:dist', 'htmlmin:dist']);
+
+    // Build and serve dist folder
+    grunt.registerTask('test', ['build', 'connect:dist']);
+
+    grunt.registerTask('stage', ['build', 'stageFb', 'shell:deploy']);
 
     // Relase Task (Update version number
-    grunt.registerTask('release', ['stage', 'bump-only:prerelease', 'ngconstant:dist', 'bump-commit', 'shell:deploy']);
+    grunt.registerTask('release', ['build', 'bump-only:prerelease', 'ngconstant:dist','prodFb', 'bump-commit', 'shell:deploy']);
 
     grunt.registerTask('serve', ['connect'], function() {
         grunt.task.run('connect');
