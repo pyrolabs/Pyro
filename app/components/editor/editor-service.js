@@ -138,12 +138,13 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config'])
       });
       return deferred.promise;
     },
-    addNewFolder:function(argFolderName, argFolderPath, argAppName){
+    addNewItemToStructure:function(argItemType, argItemPath, argAppName){
       console.log('addNewFolder called:');
       var deferred = $q.defer();
-      var folderPath = argFolderPath +"/" + argFolderName;
-      console.log('folderPath:', folderPath);
-      var strPath = stringifyPath(folderPath, argAppName);
+      console.log('folderPath:', argItemPath);
+      var strPath = stringifyPath(argItemPath, argAppName);
+      var pathArray = strPath.split("_");
+      var folderName = _.last(argItemPath.split("/"));
       console.log('strPath:', strPath);
       var appStructurePathArray = [folderStuctureLocation, argAppName];
       //Add folder to firebase location
@@ -153,73 +154,25 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config'])
           console.log('App structure found for ' + argAppName);
           // New Folder ref
           var folderRefArray = [appStructurePathArray];
-          _.each(folderPath.split("/"), function(location){
+          _.each(pathArray, function(location){
             folderRefArray.push('children');
             folderRefArray.push(location);
           });
-          console.warn('Folder ref array', folderRefArray);
           // [TODO] Enforce with with a rule as well
           pyroMaster.fbRef(folderRefArray).once('value', function(newFolderSnap){
             if(!newFolderSnap.val()){
-              var folderObj = {path:folderPath, type:'folder', name:argFolderName};
-              console.log('setting new folderObj:', folderObj);
+              var folderObj = {path:argItemPath, type:argItemType, name:folderName};
+              console.log('setting new:', folderObj);
               newFolderSnap.ref().set(folderObj, function(err){
                 if(!err){
-                  console.log('New folder created successfully');
+                  console.log('New '+ argItemType +' created successfully');
                   deferred.resolve();
                 } else {
-                  deferred.reject({message:'Error creating folder', error:err});
+                  deferred.reject({message:'Error creating ' + argItemType, error:err});
                 }
               });
             } else {
-              deferred.reject({message:'A Folder with that name already exists'});
-            }
-          });
-        } else {
-          console.error('App structure not found for ' + argAppName);
-          deferred.reject({message:'App structure does not exist'})
-        }
-      }, function(err){
-        console.error('Error loading file stucture from firebase.');
-        deferred.reject({message:'Error loading file structure', error:err});
-      });
-      return deferred.promise;
-    },
-    createNewFile:function(argFileName, argFilePath, argAppName){
-      console.log('createNewFile called:');
-      var deferred = $q.defer();
-      var filePath = argFilePath +"/" + argFileName;
-      console.log('filePath:', filePath);
-      var strPath = stringifyPath(filePath, argAppName);
-      console.log('strPath:', strPath);
-      var appStructurePathArray = [folderStuctureLocation, argAppName];
-      //Add folder to firebase location
-      pyroMaster.fbRef(appStructurePathArray).once('value', function(appStructureSnap){
-        var appStructure = appStructureSnap.val();
-        if(appStructure){
-          console.log('App structure found for ' + argAppName);
-          // New File reference array
-          var fileRefArray = [appStructurePathArray];
-          _.each(strPath.split("_"), function(location){
-            fileRefArray.push('children');
-            fileRefArray.push(location);
-          });
-          console.warn('Folder ref array', fileRefArray);
-          // [TODO] Enforce with with a rule as well
-          pyroMaster.fbRef(fileRefArray).once('value', function(newFolderSnap){
-            if(!newFolderSnap.val()){
-              var fileObj = {path:filePath, type:'file', name:argFileName};
-              console.log('setting new fileObj:', fileObj);
-              newFolderSnap.ref().set(fileObj, function(err){
-                if(!err){
-                  console.log('New file created successfully');
-                  deferred.resolve();
-                } else {
-                  deferred.reject({message:'Error creating file', error:err});
-                }
-              });
-            } else {
-              deferred.reject({message:'A File with that name already exists'});
+              deferred.reject({message:'A '+argItemType+' with that name already exists'});
             }
           });
         } else {

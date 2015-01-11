@@ -69,26 +69,40 @@ angular.module('pyroApp.controllers')
   // Start creating a new folder
   $scope.startNewFolder = function(){
     //Show area to type in name of new folder
-    $scope.showTextBox = true;
+    $scope.createItem = {mode:"folder", placeholder:"components/new-folder"};
+  };
+  $scope.startNewFile = function(){
+    //Show area to type in name of new folder
+    $scope.createItem = {mode:"file", placeholder:"components/home/new-file.html"};
   }
   $scope.newFolder = function(){
     //Create new folder in app structure
-    editorService.addNewFolder('test-folder', 'components/home', $scope.pyroInstance.name).then(function(){
-      console.log('Folder created successfully');
-    }, function(err){
-      console.error('Error creating new folder:', err);
-      $scope.err = err;
-    });
+    if($scope.createItem && $scope.createItem.hasOwnProperty('path')){
+      editorService.addNewItemToStructure('folder', $scope.createItem.path, $scope.pyroInstance.name).then(function(){
+        console.log('Folder created successfully');
+      }, function(err){
+        console.error('Error creating new folder:', err);
+        $scope.err = err;
+      });
+    } else {
+      $scope.err = {message:'Path needed to create new folder', error:"INVALID_PATH"};
+    }
+
   };
   $scope.newFile = function(){
     //Create new file in app structure
-    editorService.createNewFile('testfile.html', 'components/home', $scope.pyroInstance.name).then(function(){
-      console.log('File created successfully');
-    }, function(err){
-      console.error('Error creating new file:', err);
-      $scope.err = err;
-    });
+    if($scope.createItem && $scope.createItem.hasOwnProperty('path')){
+      editorService.addNewItemToStructure('file', $scope.createItem.path, $scope.pyroInstance.name).then(function(){
+        console.log('File created successfully');
+      }, function(err){
+        console.error('Error creating new file:', err);
+        $scope.err = err;
+      });
+    } else {
+      $scope.err = {message:'Path needed to create new file', error:"INVALID_PATH"};
+    }
   };
+
   // $scope.setFolderTreeState = function(state) {
   //   $scope.files.$collapsed = state;
   // };

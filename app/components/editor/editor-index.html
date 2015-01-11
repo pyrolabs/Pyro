@@ -74,6 +74,20 @@
           {{node.name}}
         </treecontrol>
       </div>
+      <div ng-show="createItemMode == 'folder'">
+        <span>New folder Name</span>
+        <input type="text" placeholder="components/new-folder" ng-model="newItemPath">
+        <button class="btn">Create</button>
+        <button class="btn" ng-click="createItemMode = null">Cancel</button>
+
+      </div>
+      <div ng-show="createItem.mode">
+        <span style="margin-left:15px; margin-right:15px;">New {{createItem.mode}} path:</span>
+        <input type="text" placeholder="{{createItem.placeholder}}" ng-model="createItem.path" style="margin-left:10px; margin-right:15px; width:40%">
+        <button class="btn" ng-click="newFolder()" ng-show="createItem.mode == 'folder'">Create Folder</button>
+        <button class="btn" ng-click="newFile()" ng-show="createItem.mode == 'file'">Create File</button>
+        <button class="btn" ng-click="createItem = null">Cancel</button>
+      </div>
       <div ui-ace="{useWrapMode: true, theme:'monokai', onLoad:aceLoaded, onChange:aceChanged}" id="build-editor"></div>
     </div>
 
@@ -86,11 +100,11 @@
       <button class="btn btn-fab btn-raised btn-material-lightgrey text-center padder-n" ng-click="saveFile()" ng-class="{'disabled' : !(appRam.$currentFile)}"><i class="ion-upload" style="font-size:1.25em;top:-.05em;" ng-class="{'text-muted' : !(appRam.$currentFile), ' text-warning':appRam.$currentFile}"></i></button>
     </div>
     <div class="btn-cta cta-set hidden-xs" style="position:fixed;right:1em;top:11.75em;">
-      <button class="btn btn-fab btn-raised btn-material-lightgrey text-center padder-n" ng-click="newFolder()"><i class="ion-folder" style="font-size:1.25em;top:-.05em;" ng-class="{'text-muted' : !(appRam.$currentFile), ' text-warning':appRam.$currentFile}"></i></button>
+      <button class="btn btn-fab btn-raised btn-material-lightgrey text-center padder-n" ng-click="startNewFolder()"><i class="ion-folder" style="font-size:1.25em;top:-.05em;" ng-class="{'text-muted' : !(appRam.$currentFile), ' text-warning':appRam.$currentFile}"></i></button>
     </div>
-    
+
     <div class="btn-cta cta-set hidden-xs" style="position:fixed;right:1em;top:16.75em;">
-      <button class="btn btn-fab btn-raised btn-material-lightgrey text-center padder-n" ng-click="newFile()"><i class="ion-compose" style="font-size:1.25em;top:-.05em;" ng-class="{'text-muted' : !(appRam.$currentFile), ' text-warning':appRam.$currentFile}"></i></button>
+      <button class="btn btn-fab btn-raised btn-material-lightgrey text-center padder-n" ng-click="startNewFile()"><i class="ion-compose" style="font-size:1.25em;top:-.05em;" ng-class="{'text-muted' : !(appRam.$currentFile), ' text-warning':appRam.$currentFile}"></i></button>
     </div>
 </div>
     <!-- /editor -->
