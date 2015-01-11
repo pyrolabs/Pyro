@@ -19,6 +19,10 @@ angular.module('pyroApp.controllers')
       console.log('[LoginCtrl] Error logging in: ', err);
       if(err){
         $scope.err = err;
+
+        if(err.hasOwnProperty('error') && err.error == 'USER_EXISTS'){
+          $scope.err.message = "Invalid Login Information"; 
+        }
       } else {
         $scope.err = {message:'Server Error'};
       }
