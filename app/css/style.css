@@ -1,9 +1,17 @@
 /* Empty. Add your own CSS if you like */
-
-body {
-  font-family: 'Lato', sans-serif !important; 
+html, body, .main {
+  min-height: 100%; /* you Already have this */
+  height: 100%; /* Add this */
 }
-
+body {
+  font-family: 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif !important;
+}
+.main {
+  margin: 0 auto -110px;
+}
+ul, li {
+  list-style: none;
+}
 .padder-n {
   padding: 0 !important;
 }
@@ -23,7 +31,7 @@ body {
   background-color: #FF5722;
 }
 h1, h2, h3, h4 {
-  font-weight:100;
+  font-weight:200;
 }
 
 .h1-md {
@@ -36,6 +44,12 @@ h1, h2, h3, h4 {
   bottom:0; left:0;
 }
 
+.footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
 #background-header {
   position:absolute;
   height: 140px;
@@ -66,11 +80,29 @@ h1, h2, h3, h4 {
   color: #1D71A3;
 }
 
+.btn.active {
+  color: black !important;
+  background-color: #e3e3e3 !important;
+}
+.btn:hover * {
+  color: inherit !important;
+}
 .btn-material-tetradblue {
   background-color: #1D71A3 !important;
 }
 .btn-clear {
   background: none !important;
+}
+.btn-account {
+  margin-left: 1em;
+}
+.btn-login {
+  border: 1px solid rgb(120, 130, 136);
+  color: rgb(120, 130, 136) !important;
+}
+.btn-signup {
+  border: 1px solid rgb(255, 87, 34);
+  color: rgb(255, 87, 34) !important;
 }
 
 #content.panel {

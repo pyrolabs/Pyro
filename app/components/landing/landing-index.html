@@ -1,90 +1,65 @@
-<div class="container-fluid main animated fadeIn" style="height: 100%;">
+  <nav class="navbar navbar-material-white navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">SITE MENU</span>
+          <span class="text-warning">SITE MENU</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" ui-sref="landing" ><button id="pyrobutton" class="btn btn-fab btn-main btn-material-deeporange"><i class="fa fa-fire"></i></button><span class="m-l-sm">Pyro</span></a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+         <li><a href="http://pyrolabs.readme.io/v1.0/docs/getting-started" class="btn btn-default btn-flat">Getting Started</a></li>
+          <li><a href="http://pyrolabs.readme.io/v1.0/docs/developer-docs" class="btn btn-default btn-flat">Docs</a></li>
+          <li><a class="btn btn-default btn-flat btn-outline btn-account btn-login" ui-sref="login">Login</a></li>
+          <li><a class="btn btn-default btn-flat btn-outline btn-account btn-signup" ui-sref="signup">Sign Up</a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="text-center" style="margin-top:6em;">
+      <div class="page-header">
+        <h1>Develop Powerful Apps on the Web</h1>
+      </div>
+      <p class="lead">An intuitive web platform for building, testing, deploying, and analyzing realtime apps.</p>
+    </div>
+    <div class="text-center" style="margin-top:6em;margin-bottom:6em;">
+      <h4 style="font-weight:300">sign up to get updates about the beta:</h4>
+      <div style="margin: 1em auto;position:relative;">
+        <input type="text" class="form-control text-center" placeholder="you@example.com" ng-model="signupData.email">
+        <a href="" class="btn btn-material-deeporange btn-raised" style="margin-top: 3em;" ng-click="betaSignup()">submit<div class="ripple-wrapper"></div></a>
+      </div>
+    </div>
+  </div>
+
+  <div id="footer" class="m-t-lg text-center">
+      <small>&copy; 2014-2015 <a href="https://www.linkedin.com/in/prescottprue">Prescott Prue</a> &amp; <a href="https://www.linkedin.com/in/sinanbolel">Sinan Bolel</a></small>
+  </div>
+<!--
+ <div class="container main animated fadeIn" style="height: 100%;">
+
   <div class="row">
-
-    <nav class="col-xs-1 menu ng-hide" style="height: 100%;">
-      <ul>
-        <li class="withripple" data-target="#overview">Overview</li>
-        <li class="withripple" data-target="#how">How It Works</li>
-        <li class="withripple" data-target="#team">Our Team</li>
-        <li class="withripple" data-target="#contact">Contact</li>
-      </ul>
-    </nav>
-
     <div class="col-xs-12" style="height: 100%;">
       <div id="overview"  class="col-xs-10 col-xs-offset-1 text-center" >    
           <div id="pyro-label" class="vertical-align">
-            <!-- <img id="logo" src="images/PyroFire-lg.png" style="height:auto;width:auto;"/> -->
             <h1 class="app-title h1-md" style="margin-top: 0">pyro</h1>
             <h3 class="app-title hidden-mobile m-b-md">realtime apps with ease</h3>
             <button id="pyrobutton" ng-click="pyroSymbolClicked()" class="btn btn-fab btn-raised btn-main btn-material-deeporange" style="margin-top:1em;"><i class="fa fa-fire"></i></button>
           </div>
-          <div id="signup" style="position:absolute;bottom:0;left:0;right:0;">
-            <h4 style="font-weight:300">sign up for the private alpha:</h4><hr class="hidden-mobile"/>
-            <div style="margin: 1em auto;position:relative;">
-              <input type="text" class="form-control" placeholder="you@example.com" style="position:absolute;top:0;text-align:center;" ng-model="signupData.email">
-              <a href="" class="btn btn-material-deeporange btn-raised" style="margin-top: 3em;" ng-click="betaSignup()">submit<div class="ripple-wrapper"></div></a>
-            </div>
-          </div>
       </div>
-
     </div>
   </div>
 
   <div id="footer" class="row">
-    <div ui-sref="login" class="col-xs-2 text-center text-muted clickable">
-      login
-    </div>
-    <div class="col-xs-8 text-center" style="height: 100%;">
-      <small>&copy; 2014 <a href="https://www.linkedin.com/in/prescottprue">Prescott Prue</a> &amp; <a href="https://www.linkedin.com/in/sinanbolel">Sinan Bolel</a></small>
-    </div>
-    <div ui-sref="signup" class="col-xs-2 text-center text-muted clickable">
-      signup
+    <div class="col-xs-12 text-center">
+      <small>&copy; 2014-2015 <a href="https://www.linkedin.com/in/prescottprue">Prescott Prue</a> &amp; <a href="https://www.linkedin.com/in/sinanbolel">Sinan Bolel</a></small>
     </div>
   </div>
-</div>
 
-<script>
-  $(function() {
-    function abso() {
-      $('#overview').css({
-        height: $(window).height()-$('#footer').height(),
-      });
-      $('#signup').css({
-        bottom: $('#footer').height()
-      });
-      if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-        $('#pyro-label').css({
-          'top': $('#overview').height()/2 - $('#pyro-label').height()/1.5
-        });
-        $('h1.app-title').css({
-          'line-height': 0.9
-        });
-        $('#signup').css({
-          'bottom':0
-        });
-        $('.hidden-mobile').css({
-          'display': 'none'
-        });
-        $('#logo').css({
-          'max-height': '150px',
-          'max-width': '150px'
-        });
-      } else {
-        $('#pyro-label').css({
-          'top': $('#overview').height()/2 - $('#pyro-label').height()/2
-        });
-        $('h1.app-title').css({
-          'line-height': 1.5
-        })
-        $('#logo').css({
-          'max-height': '200px',
-          'max-width': '200px'
-        });
-      }
-    }
-    $(window).resize(function() {
-      abso();         
-    });
-    abso();
-  });
-</script>
+
+
+</div> -->
