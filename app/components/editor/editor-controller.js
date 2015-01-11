@@ -39,7 +39,7 @@ angular.module('pyroApp.controllers')
   };
   // Open file from list
   $scope.openFile = function(fileObject){
-    if(fileObject){
+    if(fileObject && fileObject.type == 'file'){
       console.log('[$scope.openFile()] called with:', fileObject);
       $scope.currentFile = fileObject;
       editorService.openWithFirepad($scope.pyroInstance.name, fileObject, $scope.editorObj).then(function(returnedFirepad){

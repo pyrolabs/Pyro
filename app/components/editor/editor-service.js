@@ -285,21 +285,21 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config'])
     // Break it down by '/'
     var finalRefArray = strPath.split('/');
     console.warn("[stringifyPath] FinalRefArray: ",finalRefArray);
-    finalRefArray = finalRefArray.join('-');
+    finalRefArray = finalRefArray.join('_');
     console.log('[stringifyPath] finalRefStr:', finalRefArray);
     return finalRefArray;
   }
-  function unstringifyPath(argFile){
-    // Remove fs from path
-    console.log('[unstringifyPath] called with:', argFile);
-    var actualFilePath = argFile.path.replace('fs/pyro-'+$scope.pyroInstance.name+'/', '');
-    console.log('[unstringifyPath] removed app name and fs:', actualFilePath);
-    actualFilePath = replaceAll('/', '-', actualFilePath);
-    console.log('[unstringifyPath] removed backslashes:', actualFilePath);
-    actualFilePath = actualFilePath.replace('.', ':');
-    console.log('[unstringifyPath] replaced . :', actualFilePath);
-    return actualFilePath;
-  }
+  // function unstringifyPath(argFile){
+  //   // Remove fs from path
+  //   console.log('[unstringifyPath] called with:', argFile);
+  //   var actualFilePath = argFile.path.replace('fs/pyro-'+$scope.pyroInstance.name+'/', '');
+  //   console.log('[unstringifyPath] removed app name and fs:', actualFilePath);
+  //   actualFilePath = replaceAll('/', '-', actualFilePath);
+  //   console.log('[unstringifyPath] removed backslashes:', actualFilePath);
+  //   actualFilePath = actualFilePath.replace('.', ':');
+  //   console.log('[unstringifyPath] replaced . :', actualFilePath);
+  //   return actualFilePath;
+  // }
   function getFileMode(argFile){
     var fileMode = 'ace/mode/';
     // [TODO] add regex for file type
