@@ -80,6 +80,15 @@ angular.module('pyroApp.controllers')
       $scope.err = err;
     });
   };
+  $scope.newFile = function(){
+    //Create new file in app structure
+    editorService.createNewFile('testfile.html', 'components/home', $scope.pyroInstance.name).then(function(){
+      console.log('File created successfully');
+    }, function(err){
+      console.error('Error creating new file:', err);
+      $scope.err = err;
+    });
+  };
   // $scope.setFolderTreeState = function(state) {
   //   $scope.files.$collapsed = state;
   // };

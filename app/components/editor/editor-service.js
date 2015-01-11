@@ -184,12 +184,52 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config'])
         deferred.reject({message:'Error loading file structure', error:err});
       });
       return deferred.promise;
-
     },
-    createNewFile:function(){
+    createNewFile:function(argFileName, argFilePath, argAppName){
       console.log('createNewFile called:');
       var deferred = $q.defer();
-
+      var filePath = argFilePath +"/" + argFileName;
+      console.log('filePath:', filePath);
+      var strPath = stringifyPath(filePath, argAppName);
+      console.log('strPath:', strPath);
+      var appStructurePathArray = [folderStuctureLocation, argAppName];
+      //Add folder to firebase location
+      pyroMaster.fbRef(appStructurePathArray).once('value', function(appStructureSnap){
+        var appStructure = appStructureSnap.val();
+        if(appStructure){
+          console.log('App structure found for ' + argAppName);
+          // New File reference array
+          var fileRefArray = [appStructurePathArray];
+          _.each(strPath.split("_"), function(location){
+            fileRefArray.push('children');
+            fileRefArray.push(location);
+          });
+          console.warn('Folder ref array', fileRefArray);
+          // [TODO] Enforce with with a rule as well
+          pyroMaster.fbRef(fileRefArray).once('value', function(newFolderSnap){
+            if(!newFolderSnap.val()){
+              var fileObj = {path:filePath, type:'file', name:argFileName};
+              console.log('setting new fileObj:', fileObj);
+              newFolderSnap.ref().set(fileObj, function(err){
+                if(!err){
+                  console.log('New file created successfully');
+                  deferred.resolve();
+                } else {
+                  deferred.reject({message:'Error creating file', error:err});
+                }
+              });
+            } else {
+              deferred.reject({message:'A File with that name already exists'});
+            }
+          });
+        } else {
+          console.error('App structure not found for ' + argAppName);
+          deferred.reject({message:'App structure does not exist'})
+        }
+      }, function(err){
+        console.error('Error loading file stucture from firebase.');
+        deferred.reject({message:'Error loading file structure', error:err});
+      });
       return deferred.promise;
     }
 	}
