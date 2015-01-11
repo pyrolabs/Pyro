@@ -353,13 +353,9 @@ angular.module('pyro.service', ['firebase'])
 		// Check for existance of email, password, and code
 		if(argLoginData) {
 			pyroMaster.$getFbAccount(argLoginData).then(function(fbAccount){
-        console.log('[pyroMaster.$pyroLogin] Fb account returned:', fbAccount);
         pyroMaster.$login(argLoginData).then(function(userData){
-      		console.log('[pyroMaster.$pyroLogin] login successful:', userData);
         	auth = userData.auth;
-      		console.log('[pyroMaster.$pyroLogin] auth variable set:', auth);
       		pyroMaster.$saveFbAccountData(fbAccount).then(function(){
-      			console.log('[pyroMaster.$pyroLogin] fbData saved successfully');
       			console.log('[pyroMaster.$pyroLogin] pyroLogin completed successfully. Returning:', userData);
       			deferred.resolve(userData);
       		}, function(err){
@@ -371,8 +367,7 @@ angular.module('pyro.service', ['firebase'])
         	deferred.reject({error:err, message:'Error logging into Pyro'});
       	});
       }, function(err){
-        console.error('error getting fb Account:', err);
-        deferred.reject({error:err, message:'No Firebase Account exists for this information'});
+        deferred.reject(err);
       });
 		} else {
       deferred.reject({error:"INVAILD_PARAMS", message:'Invalid Login Params'});
@@ -515,7 +510,6 @@ angular.module('pyro.service', ['firebase'])
 							} else {
 								deferred.reject({status:500, message:'Invalid return from server'});
 							}
-
 						} else if(status && status == 204) {
 							console.warn('[pyroService pyroMaster.$getFbAccount] status of $httppost is good:', status, data);
 			        //Firebase information is incorrect
@@ -535,7 +529,7 @@ angular.module('pyro.service', ['firebase'])
 							deferred.reject(data);
 						}
 					}).error(function(data, status, headers){
-						console.error('[pyroMaster.$getFbAccount] error getting fb account:',data, status, headers);
+						console.log('[pyroMaster.$getFbAccount] error getting fb account:',headers);
 						deferred.reject(data);
 					});
 				} else {
@@ -544,12 +538,12 @@ angular.module('pyro.service', ['firebase'])
 					deferred.resolve(storedFbAccount);
 				}
 			} else {
-				console.error('[pyroMaster.$getFbAccount] Email must be at least 8 characters');
-				deferred.reject({message:'Email must be at least 8 characters long'});
+				console.log('[pyroMaster.$getFbAccount] Email must be at least 8 characters');
+				deferred.reject({message:'Email must be at least 8 characters long', error:"INVALID_PASS"});
 			}
 		} else {
-			console.error('email and password nessesary for getting a firebase account');
-			deferred.reject();
+			console.log('[pyroMaster.$getFbAccount] Invalid login credentials');
+			deferred.reject({message:'Email and password nessesary for login', error:"INVALID_PARAMS"});
 		}
 		return deferred.promise;
 	};

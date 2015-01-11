@@ -73,7 +73,7 @@ angular.module('pyroApp.controllers')
   }
   $scope.newFolder = function(){
     //Create new folder in app structure
-    editorService.addNewFolder('test-folder', 'components', $scope.pyroInstance.name).then(function(){
+    editorService.addNewFolder('test-folder', 'components/home', $scope.pyroInstance.name).then(function(){
       console.log('Folder created successfully');
     }, function(err){
       console.error('Error creating new folder:', err);

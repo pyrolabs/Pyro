@@ -11,20 +11,17 @@ angular.module('pyroApp.controllers')
     console.log('[LoginCtrl] Login called:');
     $scope.loading.login = true;
     pyroMaster.$pyroLogin($scope.loginData).then(function(userData){
-      console.log('login successful:', userData);
+      console.log('[LoginCtrl] Login successful:', userData);
       $scope.loading.login = false;
       $state.go('home');
     }, function(err){
       $scope.loading.login = false;
-      if(err.error = "USER_EXISTS") {
-        //Firebase login info is not the same as given password (maybe it changed?)
-        $scope.err = {message:'Info does not match Firebase account.'};
-        // $state.go('fbLogin');
-      } else {
+      console.log('[LoginCtrl] Error logging in: ', err);
+      if(err){
         $scope.err = err;
-        console.error('[LoginCtrl] Error Logging In:', err);
+      } else {
+        $scope.err = {message:'Server Error'};
       }
-     
     });
   };
   $scope.fbLogin = function() {

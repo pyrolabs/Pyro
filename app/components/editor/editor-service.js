@@ -30,11 +30,14 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config'])
       var auth = pyroMaster.getAuth();
       var fileObject = argFileObject;
       fileObject.pathStr = stringifyPath(fileObject, argAppName);
-      // Remove Extra stuff left from server
-      fileObject.path = fileObject.path.replace("fs/pyro-"+argAppName+"/", "");
+      // Incase of old file structure
+      fileObject.path = fileObject.path.replace("fs/");
+      // Remove App name
+      fileObject.path = fileObject.path.replace("pyro-"+argAppName+"/", "");
       if(auth){
         //User is authenticated
         var firepadRef = pyroMaster.mainRef.child(fileStorageLocation).child(argAppName).child(fileObject.pathStr);
+        firepadRef.update({path:argFileObject.path, name:argFileObject.name, filetype:argFileObject.filetype});
         //Check if firepad exists
         if(firepad){
           console.log('[initializeFirepad] firepad already exists');
@@ -53,6 +56,7 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config'])
           if(firepad.isHistoryEmpty()){
             // File does not already exist
             console.log('[initializeFirepad] File does not already exist');
+
             self.downloadFileFromS3(argAppName, argFileObject.path).then(function(fileContentString){
               console.log('[initializeFirepad] File contents returned', fileContentString);
               firepad.setText(fileContentString);
@@ -122,60 +126,6 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config'])
       console.log('getFolderStucture called:');
       var deferred = $q.defer();
       var params = {Bucket:"pyro-" + argAppName};
-      // configS3().then(function(){
-      //   s3.listObjects(params, function(err, data){
-      //     if(!err){
-      //       console.log('Objects loaded from S3:', data);
-      //       arrayOfFileObjectsToStructure(data.Contents).then(function(returnedStructure) {
-      //
-      //         deferred.resolve(returnedStructure);
-      //
-      //       })
-      //     } else {
-      //       console.error('Error getting objects from S3');
-      //       deferred.reject(err);
-      //     }
-      //   });
-      // });
-      // function arrayOfFileObjectsToStructure(argArray){
-      //   var deferred = $q.defer();
-      //
-      //   var modifiedArray = _.each(argArray, function(fileObject){
-      //     if(fileObject.hasOwnProperty('Key')){
-      //       var itemInfo = {
-      //         path:,
-      //         name:
-      //       }
-      //       if(keyIsDirectory(fileObject.Key)){
-      //
-      //       } else {
-      //
-      //       }
-      //     } else {
-      //       var err = {message:'Object does not have property "Key"', error:"INVALID_S3_OBJECT"};
-      //       console.error(, fileObject);
-      //       deferred.reject({});
-      //     }
-      //   })
-      //   deferred.resolve();
-      //
-      //   return deferred.promise;
-      //
-      // }
-      //
-      // function keyIsDirectory(key){
-      //   if(key && typeof key == 'string'){
-      //     console.warn('key split:', key.split("/"));
-      //     if(key.split("/").length > 1){
-      //       return true
-      //     } else {
-      //       return false
-      //     }
-      //   } else {
-      //     console.error('[keyIsDirectory] Invalid key');
-      //     return false
-      //   }
-      // }
       // TODO Make this an angularfire object with path strinify/unstrinify attributes
       pyroMaster.$loadObject(folderStuctureLocation, argAppName).then(function(returnedObject){
         if(returnedObject){
@@ -191,20 +141,27 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config'])
     addNewFolder:function(argFolderName, argFolderPath, argAppName){
       console.log('addNewFolder called:');
       var deferred = $q.defer();
-      const actualFolderPath = "fs/pyro-"+argAppName +"/" + argFolderPath;
-      var pathArray = argFolderPath.split("/");
+      var folderPath = argFolderPath +"/" + argFolderName;
+      console.log('folderPath:', folderPath);
+      var strPath = stringifyPath(folderPath, argAppName);
+      console.log('strPath:', strPath);
       var appStructurePathArray = [folderStuctureLocation, argAppName];
       //Add folder to firebase location
-      pyroMaster.fbRef(appStructurePathArray).on('value', function(appStructureSnap){
+      pyroMaster.fbRef(appStructurePathArray).once('value', function(appStructureSnap){
         var appStructure = appStructureSnap.val();
         if(appStructure){
           console.log('App structure found for ' + argAppName);
-          var newFolderPathArray = appStructurePathArray.concat(pathArray);
           // New Folder ref
+          var folderRefArray = [appStructurePathArray];
+          _.each(folderPath.split("/"), function(location){
+            folderRefArray.push('children');
+            folderRefArray.push(location);
+          });
+          console.warn('Folder ref array', folderRefArray);
           // [TODO] Enforce with with a rule as well
-          pyroMaster.fbRef(newFolderPathArray).on('value', function(newFolderSnap){
+          pyroMaster.fbRef(folderRefArray).once('value', function(newFolderSnap){
             if(!newFolderSnap.val()){
-              var folderObj = {path:actualFolderPath, type:'folder'};
+              var folderObj = {path:folderPath, type:'folder', name:argFolderName};
               console.log('setting new folderObj:', folderObj);
               newFolderSnap.ref().set(folderObj, function(err){
                 if(!err){
@@ -248,7 +205,6 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config'])
         pyroMaster.mainRef.child(dataLocation).child(credsLocation).on('value', function(credsSnap){
           if(credsSnap.val()){
             creds = credsSnap.val();
-            console.log('S3 creds loaded from firebase successfully:', creds);
             AWS.config.update(creds);
             s3 = new AWS.S3();
             console.log('AWS config set');
@@ -276,7 +232,12 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config'])
   function stringifyPath(argFile, argAppName) {
     // Remove fs from path
     console.log('[stringifyPath] called with:', argFile);
-    var strPath = argFile.path.replace('fs/', '');
+    // No longer needed for newly generated apps
+    if(argFile.hasOwnProperty('path')){
+      var strPath = argFile.path.replace('fs/', '');
+    } else {
+      var strPath = argFile;
+    }
     console.log('[stringifyPath] fs removed:', strPath);
     // remove app name
     strPath = strPath.replace("pyro-"+ argAppName +'/', '');
@@ -315,6 +276,16 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config'])
     } else {
       return false
     }
+  }
+  // Random letter/number generator
+  function makeid() {
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for( var i=0; i < 5; i++ )
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
   }
   // Replace all occurences of a string within another string
   // function replaceAll(find, replace, str) {
