@@ -1,7 +1,7 @@
-angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroApp.services', 'pyroApp.config','ui.ace', 'treeControl', 'angulartics', 'angulartics.google.analytics'])
+angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroApp.services', 'pyroApp.config','ui.ace', 'treeControl', 'angulartics', 'angulartics.google.analytics', 'angular-timeago'])
 .run(function($rootScope, $window, $location, version, SERVERURL) {
   console.log('Pyro is running version: ' + version + ' with a serverurl: ' + SERVERURL);
-  $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){ 
+  $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
     console.log('route change from:', fromState, ' to: ', toState);
     $rootScope.currentState = toState;
   });
@@ -82,7 +82,7 @@ angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroA
         templateUrl:"components/instance/instance-list.html",
         controller: 'InstanceListCtrl'
       })
-      
+
       .state('account', {
         parent:'nav',
         url: "/account",
@@ -160,8 +160,7 @@ angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroA
         templateUrl:"components/admin/admin-index.html",
         controller: 'AdminCtrl'
       })
-    
+
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/');
 });
-

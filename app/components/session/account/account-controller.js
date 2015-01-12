@@ -34,8 +34,9 @@ angular.module('pyroApp.controllers')
   // };
 })
 
-.controller('AccountCtrl', function($rootScope, $scope, $state) {
+.controller('AccountCtrl', function($rootScope, $scope, $state, user) {
   console.log('AccountCtrl');
+  $scope.account = user;
   $scope.changePassword = function(pass, confirm, newPass) {
     resetInfo();
     if( !pass || !confirm || !newPass ) {

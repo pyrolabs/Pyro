@@ -1,17 +1,41 @@
+<section id="content" class="panel b-a animated fadeIn" style="top:0!important;">
 
-	<ion-nav-buttons side="left">
-   <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
-  </ion-nav-buttons>
-	<div class="has-header">
-		<ion-list>
-			<label class="item item-input">
-    		<span class="input-label">Email</span>
-    		<input type="text" ng-model="profile.email">
-		  </label>
-		  <label class="item item-input">
-		    <span class="input-label">Password</span>
-		    <input type="password">
-		  </label>
-
-		</ion-list>
+	<div class="panel-heading">
+		<!-- Might be good for notifications
+		<span class="pull-right badge dk m-t-sm">17</span> -->
+		<p class="h4 text-lt text-center m-t-sm m-b-sm block font-bold">Account</p>
 	</div>
+
+	<div class="panel-body text-center" style="padding-top:30px;">
+		<div class="container aside-xl">
+			<section class="m-b-lg">
+				<form>
+					<div class="list-group">
+						<div class="list-group-item">
+							<!-- <input type="email" placeholder="Email" class="form-control no-border form-material-tetradblue" ng-model="account.email"> -->
+							<span>Account Created: {{account.createdAt | timeAgo}}</span>
+
+						</div>
+						<div class="list-group-item">
+							<!-- <input type="email" placeholder="Email" class="form-control no-border form-material-tetradblue" ng-model="account.email"> -->
+							<span>{{account.email}}</span>
+						</div>
+						<div class="list-group-item">
+							<input type="password" placeholder="New Password" class="form-control no-border form-material-tetradblue" ng-model="signupData.password">
+						</div>
+					</div>
+			<!-- <button type="submit" class="btn btn-lg btn-primary btn-block btn-material-tetradblue" ng-click="createAccount()" ng-class="{'btn-default disabled': loading.signup}">
+				<span ng-hide="loading.signup">Sign up</span>
+				<i class="icon ion-load-d fa-spin" ng-show="loading.signup"></i>
+			</button> -->
+
+		</form>
+			</section>
+</div>
+
+</div>
+<div class="clearfix panel-footer ng-hide" ng-show="existingMode == true">
+	<a href="" ng-click="existingMode = false" class="pull-right"><i class="i i-trashcan text-muted"></i></a>
+</div>
+
+</section>
