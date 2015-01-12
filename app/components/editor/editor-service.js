@@ -36,8 +36,13 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config'])
       fileObject.path = fileObject.path.replace("pyro-"+argAppName+"/", "");
       if(auth){
         //User is authenticated
+        // Reference to file
         var firepadRef = pyroMaster.mainRef.child(fileStorageLocation).child(argAppName).child(fileObject.pathStr);
-        firepadRef.update({path:argFileObject.path, name:argFileObject.name, filetype:argFileObject.filetype});
+        var fileDataObj = {path:argFileObject.path, name:argFileObject.name};
+        if(fileDataObj.hasOwnProperty('filetype')){
+          fileDataObj.filetype = argFileObject.filetype;
+        }
+        firepadRef.update(fileDataObj);
         //Check if firepad exists
         if(firepad){
           console.log('[initializeFirepad] firepad already exists');
@@ -46,6 +51,7 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config'])
           // Empty out editor
           argEditor.getSession().setValue(null);
         }
+        argEditor.getSession().setValue(null);
         // Setup new Firepad
         firepad = Firepad.fromACE(firepadRef, argEditor, {userId:auth.uid});
         //Set File mode in editor
@@ -54,14 +60,20 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config'])
         firepad.on('ready', function(){
           //Check for existing file contents at ref
           if(firepad.isHistoryEmpty()){
-            // File does not already exist
+            // File history does not already exist
             console.log('[initializeFirepad] File does not already exist');
-
             self.downloadFileFromS3(argAppName, argFileObject.path).then(function(fileContentString){
               console.log('[initializeFirepad] File contents returned', fileContentString);
               firepad.setText(fileContentString);
               deferred.resolve(firepad);
             }, function(err){
+              if(err.code="NoSuchKey"){
+                console.log('[initializeFirepad] File does not currenlty exist on s3');
+                // Hasn't been saved to S3 yet
+                firepadRef.update({hasBeenUploaded:false});
+                // Resolve with firepad with ref that has not yet been uploaded to s3
+                deferred.resolve(firepad);
+              }
               deferred.reject(err);
             });
           } else {
@@ -84,7 +96,7 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config'])
         console.error('Not logged in');
         deferred.reject({message:'Not logged in'});
       }
-      argFilePath = argFilePath.replace('fs', '');
+      var strPath = stringifyPath()
       var postObj = {name:argAppName, filePath:argFilePath, uid:auth.uid};
       var deferred = $q.defer();
       $http.post(uploadFileEndpoint, postObj).success(function(data, status, headers){
@@ -110,6 +122,9 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config'])
             // Resolve string of file contents
             deferredDownload.resolve(data.Body.toString());
             // [TODO] Save content to firebase appFiles/fileContent/$appName/$fileName
+          } else if(err.code="NoSuchKey"){
+            console.warn('[editorService] File has not yet been saved to S3');
+            deferredDownload.reject(err);
           } else {
             console.error('[editorService] Error downloading file:', err, err.stack);
             deferredDownload.reject(err);
@@ -117,7 +132,7 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config'])
         });
       }, function(err){
         deferredDownload.reject(err);
-      })
+      });
 
       return deferredDownload.promise;
 		},
