@@ -117,11 +117,11 @@ h1, h2, h3, h4 {
 
 #landing {
   margin: 0;
-  padding: 
+  padding:
 }
 /*
 .panel-heading .panel-warning {
-  background-color: 
+  background-color:
 }*/
 
 #builder {
@@ -137,15 +137,15 @@ ul.ng-scope {
   display: block !important;
 }
 .tree-label span {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 
-.ion-icon{ 
+.ion-icon{
   font-size: 1.5em;
 }
 
-.ion-icon-lg{ 
+.ion-icon-lg{
   font-size: 1.5em;
 }
 
@@ -262,4 +262,21 @@ a.dropdown-toggle:hover {
 *::before {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+}
+/*Editor*/
+.editor-notification {
+  color:white;
+  text-align:center;
+  position:fixed;
+  bottom:0;
+  color:white;
+  text-align:center;
+  width:100%;
+  z-index:100;
+}
+.editor-error{
+  background-color:#FF0000;
+}
+.editor-success{
+  background-color:#18B364;
 }

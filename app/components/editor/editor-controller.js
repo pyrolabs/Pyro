@@ -5,13 +5,16 @@ angular.module('pyroApp.controllers')
   // Set pyroInstance from resolve
   $scope.pyroInstance = instance;
   $scope.loading = {editor:true, structure:true};
+  $scope.err = null;
+  $scope.notification = null;
   // Load folder stucture
   editorService.getFolderStructure($scope.pyroInstance.name).then(function(returnedStructure){
     console.log('folder structure returned:', returnedStructure);
     $scope.files = returnedStructure;
     $scope.loading.structure = false;
-  }, function(){
+  }, function(err){
     console.error('[EditorCtrl] error getting folder structure');
+    $scope.err = err;
   });
 
   // EDITOR
@@ -44,6 +47,8 @@ angular.module('pyroApp.controllers')
       $scope.currentFile = fileObject;
       editorService.openWithFirepad($scope.pyroInstance.name, fileObject, $scope.editorObj).then(function(returnedFirepad){
         console.log('firepad initialized and returned:', returnedFirepad);
+      }, function(err){
+        $scope.err = err;
       });
     }
   };
@@ -62,7 +67,6 @@ angular.module('pyroApp.controllers')
       $scope.notification = $scope.currentFile.name + " was saved successfully";
     }, function(err){
       console.error('error saving file:',err);
-      $scope.notification = "Error saving file";
       $scope.err = err;
     });
   };
@@ -80,6 +84,7 @@ angular.module('pyroApp.controllers')
     if($scope.createItem && $scope.createItem.hasOwnProperty('path')){
       editorService.addNewItemToStructure('folder', $scope.createItem.path, $scope.pyroInstance.name).then(function(){
         console.log('Folder created successfully');
+        $scope.notification = "New folder created successfully";
       }, function(err){
         console.error('Error creating new folder:', err);
         $scope.err = err;
@@ -94,6 +99,7 @@ angular.module('pyroApp.controllers')
     if($scope.createItem && $scope.createItem.hasOwnProperty('path')){
       editorService.addNewItemToStructure('file', $scope.createItem.path, $scope.pyroInstance.name).then(function(){
         console.log('File created successfully');
+        $scope.notification = 'File saved successfully';
       }, function(err){
         console.error('Error creating new file:', err);
         $scope.err = err;
