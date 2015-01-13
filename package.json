@@ -1,6 +1,6 @@
 {
   "name": "Pyro",
-  "version": "1.0.0-a.2",
+  "version": "1.0.0-a.3",
   "description": "Pyro is a platform that allows simple setup of cross platform mobile hybrid applications.",
   "dependencies": {},
   "devDependencies": {
