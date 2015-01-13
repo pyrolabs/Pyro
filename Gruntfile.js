@@ -111,7 +111,7 @@ module.exports = function(grunt) {
         stage:{
           options: {
             name: 'pyroApp.config',
-            dest: './<%= conf.distFolder %>/app-config.js',
+            dest: './<%= conf.devFolder %>/app-config.js',
             constants: {
               version: "<%= pkg.version %>",
               SERVERURL: "https://pyro-server.herokuapp.com/staging/"
@@ -120,16 +120,6 @@ module.exports = function(grunt) {
             // values: {
             //   debug: false
             // }
-          }
-        },
-        dist:{
-          options: {
-            name: 'pyroApp.config',
-            dest: './<%= conf.distFolder %>/app-config.js',
-            constants: {
-              version: "<%= pkg.version %>",
-              SERVERURL: "https://pyro-server.herokuapp.com/<%= pkg.version %>/"
-            }
           }
         }
       },
@@ -193,17 +183,16 @@ module.exports = function(grunt) {
     });
     // Default task(s).
     grunt.registerTask('default', ['ngconstant:dev', 'connect:dev','watch']);
-
-    // Copy files to dist, set config vars for angular, depencency handling, minfication
-    grunt.registerTask('build', ['copy:dist','ngconstant:stage', 'ngAnnotate:dist', 'uglify:dist', 'htmlmin:dist']);
-
+    // Copy files to dist, set version in dist app, depencency handling, minfication
+    grunt.registerTask('build', ['copy:dist', 'ngAnnotate:dist', 'uglify:dist', 'htmlmin:dist']);
     // Build and serve dist folder
-    grunt.registerTask('test', ['build', 'connect:dist']);
-
+    grunt.registerTask('test', ['connect:dist']);
+    // Build, set staging Firebase, and deploy
     grunt.registerTask('stage', ['build', 'stageFb', 'shell:deploy']);
-
-    // Relase Task (Update version number
-    grunt.registerTask('release', ['build', 'bump-only:prerelease', 'ngconstant:dist','prodFb', 'bump-commit', 'shell:deploy']);
+    // bump version in package/bower files, set angular vars to dev app, build
+    grunt.registerTask('version', ['bump-only:prerelease','ngconstant:dev', 'build']);
+    // Set production firebase, commit, deploy
+    grunt.registerTask('release', ['prodFb', 'bump-commit', 'shell:deploy']);
 
     grunt.registerTask('serve', ['connect'], function() {
         grunt.task.run('connect');
