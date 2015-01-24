@@ -466,7 +466,6 @@ angular.module('pyro.service', ['firebase'])
 						}
 					} else if(status && status == 401) {
 						console.warn('status of $httppost is good:', status);
-
 						deferred.reject({status:status, message:body.message})
 					} else if(data.hasOwnProperty('status')) {
 						console.warn('has own property status, but not status on $httpPost?', data.status);
@@ -484,7 +483,7 @@ angular.module('pyro.service', ['firebase'])
 				deferred.reject();
 			}
 		} else {
-			console.error('email and password nessesary for creating a firebase account');
+			console.error('email and password necessary for creating a firebase account');
 			deferred.reject();
 		}
 		return deferred.promise;
@@ -543,7 +542,7 @@ angular.module('pyro.service', ['firebase'])
 			}
 		} else {
 			console.log('[pyroMaster.$getFbAccount] Invalid login credentials');
-			deferred.reject({message:'Email and password nessesary for login', error:"INVALID_PARAMS"});
+			deferred.reject({message:'Email and password necessary for login', error:"INVALID_PARAMS"});
 		}
 		return deferred.promise;
 	};
