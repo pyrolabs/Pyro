@@ -14,7 +14,7 @@
                 <ul class="dropdown-menu dropdown-select">
                   <li ng-repeat="(key, val) in instanceList"><a ui-sref="{{currentState.name}}({ appId: '{{val.name}}'})"><input type="radio" name="b">{{val.name}}</a></li>
                 </ul>
-                <a class="btn btn-default btn-flat pull-right" ng-href="http://{{pyroInstance.appUrl}}" target="_blank"><i class="ion-android-open"></i></a>
+                <a class="btn btn-default btn-flat pull-right" ng-href="http://{{pyroInstance.appUrl}}" target="_blank"></a>
               </div>
               <ul class="nav nav-main">
                 <li ng-click="goToData();" class="item menu-item">
@@ -31,8 +31,6 @@
                     </i>
                     <span class="font-bold">Editor</span>
                     <div class="pull-right" style="margin-top:-0.25em;">
-                      <i class="icon ion-icon m-r-xs ion-ios-cloud-download-outline text-muted"></i>
-                      <i class="icon ion-icon m-l-xs ion-ios-cloud-upload-outline text-muted"></i>
                     </div>
                   </a>
                 </li>
