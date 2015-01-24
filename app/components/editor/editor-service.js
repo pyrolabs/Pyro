@@ -8,21 +8,23 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config'])
   var firepad = null;
 
 	return{
-		// saveFile:function(argBucketName, argFilePath, argFileContents){
-		// 	console.log('[editorService] saveFile called', arguments);
-  //     var deferred = $q.defer();
-  //     var saveParams = {Bucket:argBucketName, Key:argFilePath,  Body: argFileContents};
-  //     s3.putObject(saveParams, function(err, data){
-  //       if(!err){
-  //         console.log('file saved successfully');
-  //         deferred.resolve(data);
-  //       } else {
-  //         console.log('error saving file:', err);
-  //         deferred.reject(err);
-  //       }
-  //     });
-  //     return deferred.promise;
-		// },
+		saveFile:function(argBucketName, argFilePath, argFileContents){
+			console.log('[editorService] saveFile called', arguments);
+      var deferred = $q.defer();
+      var saveParams = {Bucket:argBucketName, Key:argFilePath,  Body: argFileContents};
+      configS3().then(function(){
+        s3.putObject(saveParams, function(err, data){
+          if(!err){
+            console.log('file saved successfully');
+            deferred.resolve(data);
+          } else {
+            console.error('error saving file:', err);
+            deferred.reject(err);
+          }
+        });
+      });
+      return deferred.promise;
+		},
     //Open file using ace editor and firepad
     openWithFirepad:function(argAppName, argFileObject, argEditor){
       var deferred = $q.defer();
@@ -90,37 +92,37 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config'])
       }
       return deferred.promise;
     },
-    saveContentsToS3:function(argAppName, argFilePath, argFileContent){
-      var auth = pyroMaster.getAuth();
-      if(!auth) {
-        console.error('Not logged in');
-        deferred.reject({message:'Not logged in'});
-      }
-      // var putParams = {Bucket:bucketName, Key:argFileObject.path, Body:argFileContent};
-      var deferred = $q.defer();
-      // configS3().then(function(){
-      //   s3.putObject(putParams,function(err, data){
-      //     if(!err){
-      //       console.log('file saved successfully');
-      //       deferred.resolve(data);
-      //     } else {
-      //       console.error('error saving file to s3')
-      //       deferred.reject(err);
-      //     }
-      //   });
-      // });
-      var postObj = {name:argAppName, filePath:argFilePath, uid:auth.uid};
-      console.log('Posting to server with ', postObj);
-      $http.post(uploadFileEndpoint, postObj).success(function(data, status, headers){
-        console.log('upload call returned successfully with:', data);
-        deferred.resolve(data);
-      }).error(function(data, status, headers){
-        console.error('error with upload call:', data);
-        deferred.reject(data);
-      });
-      return deferred.promise;
-
-    },
+    // saveContentsToS3:function(argAppName, argFilePath, argFileContent){
+    //   var auth = pyroMaster.getAuth();
+    //   if(!auth) {
+    //     console.error('Not logged in');
+    //     deferred.reject({message:'Not logged in'});
+    //   }
+    //   // var putParams = {Bucket:bucketName, Key:argFileObject.path, Body:argFileContent};
+    //   var deferred = $q.defer();
+    //   // configS3().then(function(){
+    //   //   s3.putObject(putParams,function(err, data){
+    //   //     if(!err){
+    //   //       console.log('file saved successfully');
+    //   //       deferred.resolve(data);
+    //   //     } else {
+    //   //       console.error('error saving file to s3')
+    //   //       deferred.reject(err);
+    //   //     }
+    //   //   });
+    //   // });
+    //   var postObj = {name:argAppName, filePath:argFilePath, uid:auth.uid};
+    //   console.log('Posting to server at ' + uploadFileEndpoint, postObj);
+    //   $http.post(uploadFileEndpoint, postObj).success(function(data, status, headers){
+    //     console.log('upload call returned successfully with:', data);
+    //     deferred.resolve(data);
+    //   }, function(data, status, headers){
+    //     console.error('error with upload call:', data);
+    //     deferred.reject(data);
+    //   });
+    //   return deferred.promise;
+    //
+    // },
 		downloadFileFromS3: function(argAppName, argFileKey){
 			console.log('[editorService]downloadFileFromS3 called to download:' + argFileKey+ ' from ' + argAppName);
 			var deferredDownload = $q.defer();

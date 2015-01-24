@@ -61,7 +61,7 @@ angular.module('pyroApp.controllers')
     } else {
       bucketName = "pyro-"+ $scope.pyroInstance.name;
     }
-    editorService.saveContentsToS3($scope.pyroInstance.name, $scope.currentFile.path , $scope.editorObj.getSession().getValue()).then(function(saveRes){
+    editorService.saveFile(bucketName, $scope.currentFile.path , $scope.editorObj.getSession().getValue()).then(function(saveRes){
       console.warn('saveRes:', saveRes);
       //[TODO] Notify user of succesful save
       $scope.notification = $scope.currentFile.name + " was saved successfully";
