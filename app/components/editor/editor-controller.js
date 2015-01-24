@@ -1,6 +1,6 @@
 angular.module('pyroApp.controllers')
 
-.controller('EditorCtrl', function($scope, $state, $rootScope, $stateParams, instance, editorService, pyroMaster, fileRam, $timeout) {
+.controller('EditorCtrl', function($scope, $state, $rootScope, instance, editorService, pyroMaster, $timeout) {
   console.log('EditorCtrl');
   // Set pyroInstance from resolve
   $scope.pyroInstance = instance;
@@ -90,7 +90,7 @@ angular.module('pyroApp.controllers')
     if($scope.createItem && $scope.createItem.hasOwnProperty('path')){
       editorService.addNewItemToStructure('folder', $scope.createItem.path, $scope.pyroInstance.name).then(function(){
         console.log('Folder created successfully');
-        $scope.notification = "New folder created successfully";
+        notify("New folder created successfully");
       }, function(err){
         console.error('Error creating new folder:', err);
         $scope.err = err;
@@ -98,14 +98,13 @@ angular.module('pyroApp.controllers')
     } else {
       $scope.err = {message:'Path needed to create new folder', error:"INVALID_PATH"};
     }
-
   };
   $scope.newFile = function(){
     //Create new file in app structure
     if($scope.createItem && $scope.createItem.hasOwnProperty('path')){
       editorService.addNewItemToStructure('file', $scope.createItem.path, $scope.pyroInstance.name).then(function(){
         console.log('File created successfully');
-        $scope.notification = 'File saved successfully';
+        notify('File saved successfully');
       }, function(err){
         console.error('Error creating new file:', err);
         $scope.err = err;
@@ -114,7 +113,17 @@ angular.module('pyroApp.controllers')
       $scope.err = {message:'Path needed to create new file', error:"INVALID_PATH"};
     }
   };
-
+  // Notify content for certain time of seconds
+  function notify(argContent, argTime){
+    var notificationTime = 3;
+    $scope.notification = argContent;
+    if(argTime){
+      notificationTime = argTime;
+    }
+    $timeout(function(){
+      $scope.notification = null;
+    }, notificationTime * 1000); //Convert time to ms for timeout
+  }
   // $scope.setFolderTreeState = function(state) {
   //   $scope.files.$collapsed = state;
   // };

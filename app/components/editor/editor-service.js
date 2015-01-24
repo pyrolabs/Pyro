@@ -320,8 +320,4 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config', 'firebase'])
 
     return text;
   }
-  // Replace all occurences of a string within another string
-  // function replaceAll(find, replace, str) {
-  //   return str.replace(new RegExp(find, 'g'), replace);
-  // }
-})
+}])
