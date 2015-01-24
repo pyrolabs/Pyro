@@ -4,7 +4,7 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config'])
   const fileStorageLocation = 'appRam'
   const dataLocation = 'alphaData';
   const credsLocation = 's3Creds';
-  const uploadFileEndpoint = SERVERURL + "/app/upload"
+  const uploadFileEndpoint = SERVERURL + "app/upload"
   var firepad = null;
 
 	return{
@@ -90,15 +90,27 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config'])
       }
       return deferred.promise;
     },
-    saveContentsToS3:function(argAppName, argFilePath){
+    saveContentsToS3:function(argAppName, argFilePath, argFileContent){
       var auth = pyroMaster.getAuth();
       if(!auth) {
         console.error('Not logged in');
         deferred.reject({message:'Not logged in'});
       }
-      var strPath = stringifyPath()
-      var postObj = {name:argAppName, filePath:argFilePath, uid:auth.uid};
+      // var putParams = {Bucket:bucketName, Key:argFileObject.path, Body:argFileContent};
       var deferred = $q.defer();
+      // configS3().then(function(){
+      //   s3.putObject(putParams,function(err, data){
+      //     if(!err){
+      //       console.log('file saved successfully');
+      //       deferred.resolve(data);
+      //     } else {
+      //       console.error('error saving file to s3')
+      //       deferred.reject(err);
+      //     }
+      //   });
+      // });
+      var postObj = {name:argAppName, filePath:argFilePath, uid:auth.uid};
+      console.log('Posting to server with ', postObj);
       $http.post(uploadFileEndpoint, postObj).success(function(data, status, headers){
         console.log('upload call returned successfully with:', data);
         deferred.resolve(data);
