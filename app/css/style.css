@@ -63,6 +63,26 @@ h1, h2, h3, h4 {
   bottom:0; left:0;
 }
 
+.logo.partner {
+  height: 80px;
+  width: 80px;
+}
+
+img.desaturate{
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+  filter: url(desaturate.svg#greyscale);
+  transition: all 0.3s ease;
+}
+
+img.desaturate:hover{
+  -webkit-filter: grayscale(0%);
+  filter: grayscale(0%);
+}
+
+.italic {
+  font-style: italic; 
+}
 
 .form-control,
 .form-control:active {
