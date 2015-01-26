@@ -67,11 +67,12 @@ angular.module('pyro.service', ['firebase'])
 		return $firebase(ramRef, {arrayFactory:PyroObjectFactory()}).$asObject();
 	}
 })
-.factory('pyro', ['$q', '$firebaseAuth', function($q, $firebaseAuth){
+.factory('pyro', ['$q', '$firebaseAuth','$firebase', function($q, $firebaseAuth, $firebase){
 	return function (argPyroObj){
 		var auth = null;
 		var account = null;
 		var pyro = new Pyro(argPyroObj);
+		var sync = $firebase(pyro.mainRef);
 		pyro.$auth = $firebaseAuth(pyro.mainRef);
 
 			pyro.$signup =  function(argSignupData) {
@@ -157,6 +158,16 @@ angular.module('pyro.service', ['firebase'])
 					deferredLoad.resolve(loadedObject);
 				});
 				return deferredLoad.promise;
+			};
+			pyro.$bindObjectTo = function(argListName, argObjectId, argScope, argName){
+				var deferred = $q.defer();
+				var sync = $firebase(pyro.mainRef);
+				var afObject = sync.$asObject();
+				afObject.$bindTo(argScope, argName).then(function(unbind){
+			 	console.log(argObjectId + ' was bound to scope under the name: ' + argName);
+					deferred.resolve();
+				});
+				return deferred.promise;
 			};
 			pyro.$deleteObject = function(argListName, argObjectId){
 				var deferred = $q.defer();

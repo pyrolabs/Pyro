@@ -7,16 +7,22 @@ angular.module('pyroApp.controllers')
   $scope.loading = {editor:true, structure:true};
   $scope.err = null;
   $scope.notification = null;
-  // Load folder stucture
-  editorService.getFolderStructure($scope.pyroInstance.name).then(function(returnedStructure){
-    console.log('folder structure returned:', returnedStructure);
-    $scope.files = returnedStructure;
+  // Load folder stucture one time
+  // editorService.getFolderStructure($scope.pyroInstance.name).then(function(returnedStructure){
+  //   console.log('folder structure returned:', returnedStructure);
+  //   $scope.files = returnedStructure;
+  //   $scope.loading.structure = false;
+  // }, function(err){
+  //   console.error('[EditorCtrl] error getting folder structure');
+  //   $scope.err = err;
+  // });
+  editorService.bindFolderStructure($scope.pyroInstance.name, $scope, 'files').then(function(){
+    console.log('folder structure returned:', $scope.files);
     $scope.loading.structure = false;
   }, function(err){
-    console.error('[EditorCtrl] error getting folder structure');
+    console.error('[EditorCtrl] error binding folder structure');
     $scope.err = err;
   });
-
   // EDITOR
   // Runs when ace editor is loaded
 
@@ -59,9 +65,9 @@ angular.module('pyroApp.controllers')
     if($scope.pyroInstance.hasOwnProperty('bucketName')){
       bucketName = $scope.pyroInstance.bucketName;
     } else {
-      bucketName = "pyro-"+ $scope.pyroInstance.name;
+      bucketName = $scope.pyroInstance.name;
     }
-    editorService.saveFile(bucketName, $scope.currentFile.path , $scope.editorObj.getSession().getValue()).then(function(saveRes){
+    editorService.saveContentsToS3(bucketName, $scope.editorObj.getSession().getValue()).then(function(saveRes){
       console.warn('saveRes:', saveRes);
       //[TODO] Notify user of succesful save
       $scope.notification = $scope.currentFile.name + " was saved successfully";
