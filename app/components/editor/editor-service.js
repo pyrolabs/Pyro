@@ -274,7 +274,7 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config', 'firebase'])
     console.log('[stringifyPath] fs removed:', strPath);
     // remove app name
     strPath = strPath.replace("pyro-"+ argAppName +'/', '');
-    strPath = strPath.replace('.', ':');
+    strPath = strPath.replace(".", ':');
     console.log('[stringifyPath] remeved app name:', strPath);
     // Break it down by '/'
     var finalRefArray = strPath.split('/');

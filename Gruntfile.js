@@ -189,8 +189,8 @@ module.exports = function(grunt) {
     grunt.registerTask('test', ['connect:dist']);
     // Build, set staging Firebase, and deploy
     grunt.registerTask('stage', ['build', 'stageFb', 'shell:deploy']);
-    // Set production firebase and deploy
-    grunt.registerTask('release', ['prodFb',  'shell:deploy']);
+    // Set production firebase and deploy then set back to stage
+    grunt.registerTask('release', ['prodFb',  'shell:deploy', 'stageFb']);
     // bump version in package/bower files, set angular vars to dev app, build
     grunt.registerTask('version', ['bump-only:prerelease','ngconstant:dev', 'build']);
     // Set production firebase, commit, deploy

@@ -65,9 +65,9 @@ angular.module('pyroApp.controllers')
     if($scope.pyroInstance.hasOwnProperty('bucketName')){
       bucketName = $scope.pyroInstance.bucketName;
     } else {
-      bucketName = $scope.pyroInstance.name;
+      bucketName = "pyro-" + $scope.pyroInstance.name;
     }
-    editorService.saveContentsToS3(bucketName, $scope.editorObj.getSession().getValue()).then(function(saveRes){
+    editorService.saveFile(bucketName, $scope.currentFile.path, $scope.editorObj.getSession().getValue()).then(function(saveRes){
       console.warn('saveRes:', saveRes);
       //[TODO] Notify user of succesful save
       $scope.notification = $scope.currentFile.name + " was saved successfully";
