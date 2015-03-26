@@ -6,7 +6,6 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config', 'firebase'])
   const credsLocation = 's3Creds';
   const uploadFileEndpoint = SERVERURL + "app/upload"
   var firepad = null;
-
 	return{
     // Save file to S3
 		saveFile:function(argBucketName, argFilePath, argFileContents){
@@ -26,6 +25,25 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config', 'firebase'])
       });
       return deferred.promise;
 		},
+    saveContentsToS3:function(argAppName, argFilePath, argFileContent){
+      var auth = pyroMaster.getAuth();
+      if(!auth) {
+        console.error('Not logged in');
+        deferred.reject({message:'Not logged in'});
+      }
+      var deferred = $q.defer();
+      //Post to uploadFileEndpoint on server (server saves contents to s3)
+      var postObj = {name:argAppName, filePath:argFilePath, uid:auth.uid, content: argFileContent};
+      console.log('Posting to server at ' + uploadFileEndpoint, postObj);
+      $http.post(uploadFileEndpoint, postObj).success(function(data, status, headers){
+        console.log('upload call returned successfully with:', data);
+        deferred.resolve(data);
+      }, function(data, status, headers){
+        console.error('error with upload call:', data);
+        deferred.reject(data);
+      });
+      return deferred.promise;
+    },
     //Open file using ace editor and firepad
     openWithFirepad:function(argAppName, argFileObject, argEditor){
       var deferred = $q.defer();
@@ -193,38 +211,8 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config', 'firebase'])
         deferred.reject({message:'Error loading file structure', error:err});
       });
       return deferred.promise;
-    },
-    // saveContentsToS3:function(argAppName, argFilePath, argFileContent){
-    //   var auth = pyroMaster.getAuth();
-    //   if(!auth) {
-    //     console.error('Not logged in');
-    //     deferred.reject({message:'Not logged in'});
-    //   }
-    //   // var putParams = {Bucket:bucketName, Key:argFileObject.path, Body:argFileContent};
-    //   var deferred = $q.defer();
-    //   // configS3().then(function(){
-    //   //   s3.putObject(putParams,function(err, data){
-    //   //     if(!err){
-    //   //       console.log('file saved successfully');
-    //   //       deferred.resolve(data);
-    //   //     } else {
-    //   //       console.error('error saving file to s3')
-    //   //       deferred.reject(err);
-    //   //     }
-    //   //   });
-    //   // });
-    //   var postObj = {name:argAppName, filePath:argFilePath, uid:auth.uid};
-    //   console.log('Posting to server at ' + uploadFileEndpoint, postObj);
-    //   $http.post(uploadFileEndpoint, postObj).success(function(data, status, headers){
-    //     console.log('upload call returned successfully with:', data);
-    //     deferred.resolve(data);
-    //   }, function(data, status, headers){
-    //     console.error('error with upload call:', data);
-    //     deferred.reject(data);
-    //   });
-    //   return deferred.promise;
-    //
-    // },
+    }
+
 	}
   var creds = null;
   var s3 = null;
@@ -312,12 +300,12 @@ angular.module('editor.service', ['pyro.service', 'pyroApp.config', 'firebase'])
   }
   // Random letter/number generator
   function makeid() {
-  var text = "";
-  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-  for( var i=0; i < 5; i++ )
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-
+    for( var i=0; i < 5; i++ ){
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
     return text;
   }
-}])
+})

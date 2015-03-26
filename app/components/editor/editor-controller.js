@@ -25,9 +25,8 @@ angular.module('pyroApp.controllers')
   });
   // EDITOR
   // Runs when ace editor is loaded
-
   $scope.aceLoaded = function(_editor){
-    console.log('[EditorCtrl] Ace editor loaded successfully');
+    // console.log('[EditorCtrl] Ace editor loaded successfully');
     var _session = _editor.getSession();
     var _renderer = _editor.renderer;
     _session.setUndoManager(new ace.UndoManager());
@@ -44,7 +43,7 @@ angular.module('pyroApp.controllers')
   };
   // Runs every time there is a change within ace editor
   $scope.aceChanged = function(_editor){
-    console.log('[aceChanged] Ace editor changed:', _editor);
+    // console.log('[aceChanged] Ace editor changed:', _editor);
   };
   // Open file from list
   $scope.openFile = function(fileObject){
@@ -60,16 +59,8 @@ angular.module('pyroApp.controllers')
   };
   // Save file to S3
   $scope.saveFile = function(){
-    console.log('saveFile called');
-    var bucketName = "";
-    if($scope.pyroInstance.hasOwnProperty('bucketName')){
-      bucketName = $scope.pyroInstance.bucketName;
-    } else {
-      bucketName = "pyro-" + $scope.pyroInstance.name;
-    }
-    editorService.saveFile(bucketName, $scope.currentFile.path, $scope.editorObj.getSession().getValue()).then(function(saveRes){
+    editorService.saveContentsToS3($scope.pyroInstance.name, $scope.currentFile.path, $scope.editorObj.getSession().getValue()).then(function(saveRes){
       console.warn('saveRes:', saveRes);
-      //[TODO] Notify user of succesful save
       $scope.notification = $scope.currentFile.name + " was saved successfully";
     }, function(err){
       console.error('error saving file:',err);
@@ -103,7 +94,6 @@ angular.module('pyroApp.controllers')
     //Create new file in app structure
     if($scope.createItem && $scope.createItem.hasOwnProperty('path')){
       editorService.addNewItemToStructure('file', $scope.createItem.path, $scope.pyroInstance.name).then(function(){
-        console.log('File created successfully');
         notify('File saved successfully');
       }, function(err){
         console.error('Error creating new file:', err);
