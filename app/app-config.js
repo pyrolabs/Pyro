@@ -4,4 +4,6 @@ angular.module('pyroApp.config', [])
 
 .constant('SERVERURL', 'https://pyro-server.herokuapp.com/1.0.0-a.3/')
 
+.value('debug', false)
+
 ;

@@ -1,5 +1,5 @@
 {
-  "firebase": "pyro",
+  "firebase": "pyro-platform",
   "public": "dist",
   "ignore": [
     "firebase.json",
