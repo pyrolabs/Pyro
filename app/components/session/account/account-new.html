@@ -11,7 +11,10 @@
         <section class="m-b-lg">
           <header class="wrapper text-center">
             <strong ng-hide="err.message">please fill out the form below:</strong>
-            <strong ng-show="err.message" style="color:red;">{{err.message || 'Error'}} <a ui-sref="fbLogin">Log into Firebase</a></strong>
+            <strong ng-show="err.message" style="color:red;">{{err.message || 'Error'}}</strong>
+              <button ng-show="err && err.error =='USER_EXISTS'" class="btn btn-lg btn-primary btn-block btn-material-tetradblue" ui-sref="fbLogin">
+                <span>Log into Firebase</span>
+              </button>
           </header>
           <form>
             <div class="list-group">
@@ -25,23 +28,18 @@
                  <input type="password" placeholder="Confirm" class="form-control no-border form-material-tetradblue" ng-model="signupData.confirm">
               </div>
               <hr/>
-              <div class="list-group-item">
-                <input type="text" placeholder="Invite Code" class="form-control no-border form-material-tetradblue" ng-model="signupData.code">
-              </div>
             </div>
-<!--             <div class="checkbox m-b">
+<!--        <div class="checkbox m-b">
               <label>
                 <input type="checkbox"> Agree the <a href="">terms and policy</a>
               </label>
             </div> -->
-            <p ng-show="showSignupAttemptedMessage == true" class="text-warning animated fadeInDown">Coming soon :)</p>
             <button type="submit" class="btn btn-lg btn-primary btn-block btn-material-tetradblue" ng-click="createAccount()" ng-class="{'btn-default disabled': loading.signup}">
               <span ng-hide="loading.signup">Sign up</span>
               <i class="icon ion-load-d fa-spin" ng-show="loading.signup"></i>
             </button>
             <div class="line line-dashed"></div>
             <p class="text-muted text-center"><small>Already have an account? <a ui-sref="login" class="text-material-tetradblue m-l-xs"> Sign in.</a></small></p>
-            <!-- <a href="" ui-sref="login" class="btn btn-lg btn-default btn-secondary btn-block">Sign in</a> -->
           </form>
         </section>
       </div>

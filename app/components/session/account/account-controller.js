@@ -3,35 +3,26 @@ angular.module('pyroApp.controllers')
 .controller('SignupCtrl', function($rootScope, $scope, $state, pyroMaster) {
   console.log('SignupCtrl');
 	$scope.signupData = {};
-  $scope.err = {};
   $scope.createAccount = function() {
   	console.log('[SignupCtrl] createAccount called');
     // [TODO] This should be a service and error checked.
     $scope.loading.signup = true;
-    pyroMaster.$lockedSignup($scope.signupData).then(function(newAccount){
+    pyroMaster.$pyroSignup($scope.signupData).then(function(newAccount){
       console.log('$lockedSignup successful:', newAccount);
       $scope.loading.signup = false;
       $state.go('home');
     }, function(err){
       console.error('[SignupCtrl] Error running $lockedSignup:', err);
       $scope.loading.signup = false;
-      if(err.error = "USER_EXISTS") {
-        //Firebase account already exists with different credentials... prompt to login
-        $scope.err = {message:'Firebase account already exists. Please login: '};
-      } else {
-        $scope.err = err;
-      }
+      $scope.err = err;
+      // if(err.error = "USER_EXISTS") {
+      //   //Firebase account already exists with different credentials... prompt to login
+      //   $scope.err = {message:'Firebase account already exists. Please login: ', error:'USER_EXISTS'};
+      // } else {
+      //   $scope.err = err;
+      // }
     });
   };
-  //---------- Fake Signup Button -----------//
-  // $showSignupAttemptedMessage = false;
-  // $scope.signupAttempt = function(){
-  //   // Record Signup Attempt while signup is closed
-  //   $scope.showSignupAttemptedMessage = true;
-  //   pyroMaster.$createObject('betaAccountCreateAttempts', $scope.signupData.email).then(function(objectSnap){
-  //     console.log('Signup attempted:', objectSnap);
-  //   });
-  // };
 })
 
 .controller('AccountCtrl', function($rootScope, $scope, $state, user) {

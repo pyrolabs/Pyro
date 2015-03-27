@@ -196,7 +196,8 @@ angular.module('pyro.service', ['firebase'])
 	var pyroBase = new Firebase('http://pyro.firebaseio.com');
 	var pyroServerUrl = SERVERURL;
 	var auth = null;
-
+	const dataLocation = 'alphaData';
+	const eventInfoLocation = 'usage';
 	pyroMaster.$generatePyro = function(argInstanceName){
 		//request server for new instance. Create
 		console.log('generatePyro called with:', argInstanceName);
@@ -394,7 +395,6 @@ angular.module('pyro.service', ['firebase'])
 		var dataRef = pyroMaster.mainRef.child(dataLocation);
 		// Check for existance of email, password, and code
 		if(argSignupData && argSignupData.hasOwnProperty('code')) {
-			// [TODO] Check that code matches a code in the list
 			var formattedCode = argSignupData.code.toLowerCase();
 			dataRef.child(codesLocation).child(formattedCode).once('value', function(codeSnap){
 				// Check for matching firebase account and attempt to create a new one if info doesn't already exist
@@ -433,6 +433,40 @@ angular.module('pyro.service', ['firebase'])
 				console.error('[pyroMaster.$lockedSignup] Error writing code usage to FB:', err);
 				deferred.reject(err);
 			});
+		} else {
+			deferred.reject({message:'Invalid signup params', error:"INVAILD_PARAMS"})
+		}
+		// Check for exising Pyro account
+		return deferred.promise;
+	};
+	pyroMaster.$pyroSignup = function(argSignupData){
+		console.log('[pyroMaster] $pyroSignup called');
+		var deferred = $q.defer();
+		// Check for existance of email, password, and code
+		if(argSignupData) {
+			// Check for matching firebase account and attempt to create a new one if info doesn't already exist
+  		$analytics.eventTrack('User Signup', {category:'Session'});
+			pyroMaster.$getFbAccount(argSignupData).then(function(fbAccount){
+      	console.warn('[pyroMaster.$pyroSignup] Firebase account exists and logged in successfully:', fbAccount);
+				// Signup to Pyro
+    	  pyroMaster.$signup(argSignupData).then(function(userAccount){
+		      console.log('[pyroMaster.$pyroSignup] pyro signup successful:', userAccount);
+					var auth = pyroMaster.mainRef.getAuth();
+		      // Save fb data to firebase
+		      pyroMaster.$saveFbAccountData(fbAccount).then(function(){
+		      	deferred.resolve(userAccount);
+		      }, function(err){
+						console.error('[PyroMaster.$pyroSignup]fbData set error:', err);
+		      	deferred.reject(err);
+		      });
+		    }, function(err){
+		      console.warn('[pyroMaster.$pyroSignup] Signup error:', err.message);
+		      deferred.reject(err);
+		    });
+    	}, function(err){
+      	console.error('[pyroMaster.$pyroSignup] Get Firebase account error:', err);
+      	deferred.reject(err);
+    	});
 		} else {
 			deferred.reject({message:'Invalid signup params', error:"INVAILD_PARAMS"})
 		}
