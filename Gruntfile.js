@@ -20,7 +20,6 @@ module.exports = function (grunt) {
       dist: {
         options: {
           port: '<%= conf.port %>',
-          keepalive: true,
           livereload: true,
           base: './<%= conf.distFolder %>/',
           open: {

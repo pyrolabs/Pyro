@@ -41,5 +41,6 @@ angular.module('pyroApp.controllers')
     }
   }
     $scope.pyroInstance = instance;
-    $scope.emuRender.url = $sce.trustAsResourceUrl('https://s3.amazonaws.com/pyro-'+$scope.pyroInstance.name + "/index.html");
+    var s3Url = "https://"+ $scope.pyroInstance.appUrl.replace("s3-website-us-east-1", "s3")
+    $scope.emuRender.url = $sce.trustAsResourceUrl(s3Url + "/index.html");
 })
