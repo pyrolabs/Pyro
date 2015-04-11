@@ -78,34 +78,33 @@ module.exports = function (grunt) {
         globalReplace: false
       }
     },
-     ngconstant: {
-       dist:{
-         options: {
-           name: 'pyroApp.config',
-           dest: './<%= conf.devFolder %>/app-config.js',
-           constants: {
-             version: "<%= pkg.version %>",
-             SERVERURL: "https://pyro-server.herokuapp.com/<%= pkg.version %>/"
-           },
-           values: {
-             debug: false
-           }
+    ngconstant: {
+      dist:{
+        options: {
+          name: 'pyroApp.config',
+          dest: './<%= conf.devFolder %>/app-config.js',
+          constants: {
+            version: "<%= pkg.version %>",
+            SERVERURL: "https://pyro-server.herokuapp.com/<%= pkg.version %>/"
+          },
+          values: {
+            debug: false
+          }
+        }
+      },
+      local:{
+        options: {
+         name: 'pyroApp.config',
+         dest: './<%= conf.devFolder %>/app-config.js',
+         constants: {
+           version: "<%= pkg.version %>",
+           SERVERURL: "localhost:4000/api/"
+         },
+         values: {
+           debug: true
          }
-       },
-       local:{
-         options: {
-           name: 'pyroApp.config',
-           dest: './<%= conf.devFolder %>/app-config.js',
-           constants: {
-             version: "<%= pkg.version %>",
-             SERVERURL: "localhost:4000/api/"
-           }
-           // ,
-           // values: {
-           //   debug: false
-           // }
-         }
-       },
+        }
+      },
       stage:{
         options: {
           name: 'pyroApp.config',
@@ -179,8 +178,10 @@ module.exports = function (grunt) {
     fb['firebase'] = config['stageFB'];
     grunt.file.write(fbFile, JSON.stringify(fb, null, 2));
   });
-  // Default task(s).
+  // Default task
   grunt.registerTask('default', ['ngconstant:dist', 'connect:dev','watch']);
+  // Run with local server
+  grunt.registerTask('dev', ['ngconstant:local', 'connect:dev','watch']);
   // Copy files to dist, set version in dist app, depencency handling, minfication
   grunt.registerTask('build', ['ngconstant:dist','copy:dist', 'ngAnnotate:dist', 'uglify:dist', 'htmlmin:dist']);
   // Build and serve dist folder
