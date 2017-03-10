@@ -1,9 +1,9 @@
 angular.module('pyroApp.config', [])
 
-.constant('version', '1.0.0-a.3')
+.constant('SERVERURL', 'https://pyro-server.herokuapp.com/1.1.0/')
 
-.constant('SERVERURL', 'localhost:4000/api/')
+.constant('version', '1.1.0')
 
-.value('debug', true)
+.value('debug', false)
 
 ;

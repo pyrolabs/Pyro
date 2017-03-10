@@ -1,4 +1,5 @@
 angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroApp.services', 'pyroApp.config','ui.ace', 'treeControl', 'angulartics', 'angulartics.google.analytics', 'angular-timeago'])
+
 .run(function($rootScope, $window, $location, version, SERVERURL) {
   console.log('Pyro is running version: ' + version + ' with a serverurl: ' + SERVERURL);
   $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
@@ -6,10 +7,12 @@ angular.module('pyroApp', ['firebase','ui.router', 'pyroApp.controllers', 'pyroA
     $rootScope.currentState = toState;
   });
 })
+
 // Whitelist Urls
 .config(['$sceDelegateProvider', 'SERVERURL', function($sceDelegateProvider, SERVERURL){
   $sceDelegateProvider.resourceUrlWhitelist(['self', SERVERURL + '**' ]);
 }])
+
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('landing', {

@@ -1,105 +1,54 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-  <title>Pyro</title>
 
-<link rel="apple-touch-icon" sizes="57x57" href="lib/favicon/apple-touch-icon-57x57.png">
-<link rel="apple-touch-icon" sizes="114x114" href="lib/favicon/apple-touch-icon-114x114.png">
-<link rel="apple-touch-icon" sizes="72x72" href="lib/favicon/apple-touch-icon-72x72.png">
-<link rel="apple-touch-icon" sizes="144x144" href="lib/favicon/apple-touch-icon-144x144.png">
-<link rel="apple-touch-icon" sizes="60x60" href="lib/favicon/apple-touch-icon-60x60.png">
-<link rel="apple-touch-icon" sizes="120x120" href="lib/favicon/apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" sizes="76x76" href="lib/favicon/apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" sizes="152x152" href="lib/favicon/apple-touch-icon-152x152.png">
-<link rel="apple-touch-icon" sizes="180x180" href="lib/favicon/apple-touch-icon-180x180.png">
-<link rel="icon" type="image/png" href="lib/favicon/favicon-192x192.png" sizes="192x192">
-<link rel="icon" type="image/png" href="lib/favicon/favicon-160x160.png" sizes="160x160">
-<link rel="icon" type="image/png" href="lib/favicon/favicon-96x96.png" sizes="96x96">
-<link rel="icon" type="image/png" href="lib/favicon/favicon-16x16.png" sizes="16x16">
-<link rel="icon" type="image/png" href="lib/favicon/favicon-32x32.png" sizes="32x32">
-<meta name="msapplication-TileColor" content="#aa2900">
-<meta name="msapplication-TileImage" content="/mstile-144x144.png">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>Pyro Platform</title>
+    <base href="/">
+    <link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32">
+    <meta name="msapplication-TileColor" content="#aa2900">
+    <meta name="msapplication-TileImage" content="mstile-144x144.png">
+    <link href="css/pyro.min.css" rel="stylesheet" type="text/css">
+  </head>
 
+  <body ng-app="pyroApp" ng-controller="RootCtrl" ng-cloak>
+    <div ui-view="navbar"></div>
+    <div ui-view="main"></div>
+    <!-- scripts:vendor -->
+    <script src="vendor.min.js"></script>
+    <!-- scripts:app -->
+    <script src="init.js"></script>
+    <script src="app.js"></script>
+    <script src="app-config.js"></script>
+    <script src="app-controllers.js"></script>
+    <script src="app-services.js"></script>
+    <script src="components/instance/instance-controller.js"></script>
+    <script src="components/session/login/login-controller.js"></script>
+    <script src="components/session/account/account-controller.js"></script>
+    <script src="components/dash/dash-controller.js"></script>
+    <script src="components/admin/admin-controller.js"></script>
+    <script src="components/editor/editor-controller.js"></script>
+    <script src="components/editor/editor-service.js"></script>
+    <script src="components/data/data-controller.js"></script>
+    <script src="components/tester/tester-controller.js"></script>
+    <script src="components/landing/landing-controller.js"></script>
+    <!-- scripts:trackers -->
+    <script src="lib/google-analytics/google-analytics.js" async defer></script>
+    <script src="//d2zah9y47r7bi2.cloudfront.net/releases/current/tracker.js" data-token="ed516eb0cc0d496baa85001a07ff5d42" async defer></script>
+  </body>
 
-  <!-- ////// Styles \\\\\\ -->
-  <link href='//fonts.googleapis.com/css?family=Lato:100,300,400' rel='stylesheet' type='text/css'>
-  <!-- Font Awesome -->
-  <link href="bower_libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-  <!-- Bootstrap CSS -->
-  <link href="bower_libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-  <!-- Bootstrap Material Design CSS -->
-  <link  href="bower_libs/bootstrap-material-design/css/material.min.css" rel="stylesheet" type="text/css" />
-  <link  href="bower_libs/bootstrap-material-design/css/ripples.min.css" rel="stylesheet" type="text/css" />
-  <!-- Tree Control Directive CSS -->
-  <link href="bower_libs/angular-tree-control/css/tree-control.css" rel="stylesheet" type="text/css">
-  <link href="bower_libs/angular-tree-control/css/tree-control-attribute.css" rel="stylesheet" type="text/css">
-  <!-- Ionic CSS -->
-  <link href="bower_libs/ionicons/css/ionicons.min.css" rel="stylesheet" type="text/css">
-  <!-- Scale Admin Theme CSS -->
-  <link href="lib/scale-admin/css/animate.css" rel="stylesheet" type="text/css" />
-  <link href="lib/scale-admin/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-  <link href="lib/scale-admin/css/icon.css" rel="stylesheet" type="text/css" />
-  <link href="lib/scale-admin/css/font.css" rel="stylesheet" type="text/css" />
-  <link href="lib/scale-admin/css/app.css" rel="stylesheet" type="text/css" />
-  <!-- Custom CSS -->
-  <link href="css/style.css" rel="stylesheet" type="text/css">
-  <!-- bower:js -->
-  <script src="bower_libs/jquery/jquery.js"></script>
-  <script src="bower_libs/bootstrap-material-design/material.js"></script>
-  <script src="bower_libs/bootstrap-material-design/ripples.js"></script>
-  <script src="bower_libs/underscore/underscore.js"></script>
-  <script src="bower_libs/angular/angular.js"></script>
-  <script src="bower_libs/angular-tree-control/angular-tree-control.js"></script>
-  <script src="bower_libs/bootstrap/bootstrap.min.js"></script>
-  <script src="bower_libs/aws-sdk/aws-sdk.js"></script>
-  <script src="bower_libs/firebase/firebase.js"></script>
-  <script src="bower_libs/angularfire/angularfire.js"></script>
-  <script src="bower_libs/angular-ui-router/angular-ui-router.js"></script>
-  <script src="bower_libs/ace-builds/ace.js"></script>
-  <script src="bower_libs/angular-ui-ace/ui-ace.js"></script>
-  <script src="bower_libs/angulartics/angulartics.js"></script>
-  <script src="bower_libs/angulartics/angulartics-ga.js"></script>
-  <!-- endbower -->
-  <!-- Firepad -->
-  <link rel="stylesheet" href="lib/firepad/firepad.css" />
-  <script src="lib/firepad/firepad.min.js"></script>
-  <!-- Pyro Library -->
-  <!-- <script src="//dnzqutlnv2py6.cloudfront.net/library/1.0.0-a.2/pyro.min.js"></script> -->
-  <script src="cdn/pyroLibrary/pyro.min.js"></script>
-  <!-- Pyro Service -->
-  <script src="cdn/pyroService/pyroService.js"></script>
-  <!-- Google Analytics -->
-  <script src="lib/google-analytics/google-analytics.js"></script>
-  <!-- TimeAgo -->
-  <script src="lib/timeAgo/timeAgo.js"></script>
-  <!-- S3 Region -->
-  <script>
-    AWS.config.region = 'us-east-1';
-  </script>
-  <!-- TrackJS -->
-  <script type="text/javascript" src="//d2zah9y47r7bi2.cloudfront.net/releases/current/tracker.js" data-token="ed516eb0cc0d496baa85001a07ff5d42"></script>
-  <!-- Angular App -->
-  <script src="app.js"></script>
-  <script src="app-config.js"></script>
-  <script src="app-controllers.js"></script>
-  <script src="app-services.js"></script>
-  <script src="components/instance/instance-controller.js"></script>
-  <script src="components/session/login/login-controller.js"></script>
-  <script src="components/session/account/account-controller.js"></script>
-  <script src="components/dash/dash-controller.js"></script>
-  <script src="components/admin/admin-controller.js"></script>
-  <script src="components/editor/editor-controller.js"></script>
-  <script src="components/editor/editor-service.js"></script>
-  <script src="components/data/data-controller.js"></script>
-  <script src="components/tester/tester-controller.js"></script>
-  <script src="components/landing/landing-controller.js"></script>
-</head>
-<body ng-app="pyroApp" ng-controller="RootCtrl" ng-cloak>
-  <!-- navbar -->
-  <div ui-view="navbar"></div>
-  <!-- main container -->
-  <div ui-view="main"></div>
-</body>
 </html>
